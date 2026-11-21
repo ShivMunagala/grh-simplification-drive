@@ -1,0 +1,92 @@
+{
+ "targets": [
+  "riemannHypothesis",
+  "riemannZeta_eq_zero_re",
+  "LFunction_ne_zero_of_half_lt_re",
+  "LFunction_eq_zero_re",
+  "LFunction_eq_zero_re_of_isPrimitive"
+ ],
+ "target_statement_hashes": {
+  "riemannHypothesis": 1861633140,
+  "riemannZeta_eq_zero_re": 2328504431,
+  "LFunction_ne_zero_of_half_lt_re": 556389678,
+  "LFunction_eq_zero_re": 2817823469,
+  "LFunction_eq_zero_re_of_isPrimitive": 2570636111
+ },
+ "tree": {
+  "declarations": 1905922,
+  "modules": 175187,
+  "written_out_size": 3747880861,
+  "by_kind": {
+   "thm": 1548656,
+   "def": 331347,
+   "ind": 8509,
+   "rec": 8509,
+   "ctor": 8899,
+   "opq": 2
+  }
+ },
+ "cone": {
+  "declarations": 1265254,
+  "by_kind": {
+   "thm": 1075009,
+   "def": 178302,
+   "ind": 5569,
+   "ctor": 5710,
+   "rec": 664
+  },
+  "modules_touched": 146536,
+  "written_out_size": 2789304299,
+  "written_out_statements": 395917884,
+  "written_out_bodies": 2393386415,
+  "source_tokens": 183118239,
+  "source_lines": 10616192,
+  "source_ranges": 805451,
+  "declarations_without_source_range": 9040,
+  "source_files_missing": 0,
+  "per_declaration_written_out": {
+   "count": 1265254,
+   "p50": 721,
+   "p90": 4857,
+   "p95": 8685,
+   "p99": 23409,
+   "p999": 63789,
+   "max": 5538772
+  },
+  "per_declaration_source_tokens": {
+   "count": 805451,
+   "p50": 115,
+   "p90": 531,
+   "p95": 827,
+   "p99": 1656,
+   "p999": 3139,
+   "max": 63189
+  }
+ },
+ "cone_rh_only": {
+  "declarations": 1265234,
+  "by_kind": {
+   "thm": 1074995,
+   "def": 178296,
+   "ind": 5569,
+   "ctor": 5710,
+   "rec": 664
+  },
+  "modules_touched": 146534,
+  "written_out_size": 2789290590,
+  "written_out_statements": 395917090,
+  "written_out_bodies": 2393373500,
+  "source_tokens": 183116460,
+  "source_lines": 10616059,
+  "source_ranges": 805432,
+  "declarations_without_source_range": 9040,
+  "source_files_missing": 0
+ },
+ "references_to_base": 128790912,
+ "forbidden_uses": [],
+ "axioms_declared": [],
+ "module_read_errors": [],
+ "repeated_auxiliaries": 39597,
+ "patched_modules": [],
+ "removed_modules": []
+}

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 524" width="760" height="524" role="img" font-family="system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif">
+<title>Dials over time. Latest: Source size 183.1M; Written-out proof size 2.79B; Time change 0</title>
+<rect x="0.5" y="0.5" width="759" height="523" rx="8" fill="#1a1a19" stroke="rgba(255,255,255,0.10)"/>
+<text x="70" y="30" font-size="13" fill="#f0efec" font-weight="600">Source size<tspan font-weight="400" fill="#898781" dx="6">tokens</tspan></text>
+<text x="736" y="30" font-size="12" text-anchor="end" fill="#898781"><tspan font-size="14" font-weight="600" fill="#f0efec">183.1M</tspan><tspan dx="8">no change since baseline</tspan></text>
+<line x1="70" y1="150.0" x2="736" y2="150.0" stroke="#2c2c2a" stroke-width="1"/>
+<text x="62" y="154.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">180M</text>
+<line x1="70" y1="116.0" x2="736" y2="116.0" stroke="#2c2c2a" stroke-width="1"/>
+<text x="62" y="120.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">182M</text>
+<line x1="70" y1="82.0" x2="736" y2="82.0" stroke="#2c2c2a" stroke-width="1"/>
+<text x="62" y="86.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">184M</text>
+<line x1="70" y1="48.0" x2="736" y2="48.0" stroke="#2c2c2a" stroke-width="1"/>
+<text x="62" y="52.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">186M</text>
+<line x1="70" y1="150" x2="736" y2="150" stroke="#383835" stroke-width="1"/>
+<circle cx="403.0" cy="97.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<text x="70" y="198" font-size="13" fill="#f0efec" font-weight="600">Written-out proof size<tspan font-weight="400" fill="#898781" dx="6">term nodes</tspan></text>
+<text x="736" y="198" font-size="12" text-anchor="end" fill="#898781"><tspan font-size="14" font-weight="600" fill="#f0efec">2.79B</tspan><tspan dx="8">no change since baseline</tspan></text>
+<line x1="70" y1="318.0" x2="736" y2="318.0" stroke="#2c2c2a" stroke-width="1"/>
+<text x="62" y="322.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.75B</text>
+<line x1="70" y1="267.0" x2="736" y2="267.0" stroke="#2c2c2a" stroke-width="1"/>
+<text x="62" y="271.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.80B</text>
+<line x1="70" y1="216.0" x2="736" y2="216.0" stroke="#2c2c2a" stroke-width="1"/>
+<text x="62" y="220.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.85B</text>
+<line x1="70" y1="318" x2="736" y2="318" stroke="#383835" stroke-width="1"/>
+<circle cx="403.0" cy="277.9" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<text x="70" y="366" font-size="13" fill="#f0efec" font-weight="600">Time change<tspan font-weight="400" fill="#898781" dx="6">CPU seconds on recompiled files, running total</tspan></text>
+<text x="736" y="366" font-size="12" text-anchor="end" fill="#898781"><tspan font-size="14" font-weight="600" fill="#f0efec">0</tspan><tspan dx="8">no change since baseline</tspan></text>
+<line x1="70" y1="486.0" x2="736" y2="486.0" stroke="#2c2c2a" stroke-width="1"/>
+<text x="62" y="490.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">-1</text>
+<line x1="70" y1="435.0" x2="736" y2="435.0" stroke="#2c2c2a" stroke-width="1"/>
+<text x="62" y="439.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">0</text>
+<line x1="70" y1="384.0" x2="736" y2="384.0" stroke="#2c2c2a" stroke-width="1"/>
+<text x="62" y="388.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">1</text>
+<line x1="70" y1="486" x2="736" y2="486" stroke="#383835" stroke-width="1"/>
+<circle cx="403.0" cy="435.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<line x1="70.0" y1="486" x2="70.0" y2="490" stroke="#383835" stroke-width="1"/>
+<text x="70.0" y="504" font-size="11" text-anchor="start" fill="#898781">21 Nov 07:14</text>
+<line x1="236.5" y1="486" x2="236.5" y2="490" stroke="#383835" stroke-width="1"/>
+<text x="236.5" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 13:14</text>
+<line x1="403.0" y1="486" x2="403.0" y2="490" stroke="#383835" stroke-width="1"/>
+<text x="403.0" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 19:14</text>
+<line x1="569.5" y1="486" x2="569.5" y2="490" stroke="#383835" stroke-width="1"/>
+<text x="569.5" y="504" font-size="11" text-anchor="middle" fill="#898781">22 Nov 01:14</text>
+<line x1="736.0" y1="486" x2="736.0" y2="490" stroke="#383835" stroke-width="1"/>
+<text x="736.0" y="504" font-size="11" text-anchor="end" fill="#898781">22 Nov 07:14</text>
+</svg>

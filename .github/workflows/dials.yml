@@ -1,0 +1,25 @@
+# Keeps the dial chart and the README block in step with metrics/history.csv.
+#
+# This job does not measure anything. The dials are measured by tools/judge.py on a machine that
+# has the compiled base (about 30 GB download, 100 GB unpacked), and recorded with tools/record.py.
+# A hosted runner is too small for that, so here we only check that what was recorded is what the
+# README and the images show. A self-hosted runner with the compiled base could run the judge on
+# pull requests; that is not set up.
+name: dials
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  chart:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Chart and README match the recorded history
+        run: python3 tools/chart.py --check
+      - name: Tools parse
+        run: python3 -m py_compile tools/*.py

@@ -1,0 +1,6 @@
+name = "moddump"
+defaultTargets = ["moddump"]
+
+[[lean_exe]]
+name = "moddump"
+root = "ModDump"

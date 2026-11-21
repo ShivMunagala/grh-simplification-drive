@@ -1,0 +1,27 @@
+# Alpöge's archive and our working copy of it. Not stored here: it is fetched by
+# tools/setup_proof.sh, and our changes to it are kept as patches under patches/.
+/proof/
+
+# downloaded archive parts and compiled archive (re-fetch with the tools)
+/upstream-dl/
+
+# compiled modules of the base version (unpacked from the published archive)
+/compiled/
+
+# generated tables (large); summaries worth keeping are copied to baseline/
+/data/
+
+# output of compile_one.py and judge.py
+/build/
+
+# Lean / Lake build output
+.lake/
+*.olean
+*.ilean
+
+# machine-specific settings (for example where a compiled Mathlib already lives)
+/grh.local.json
+
+# scratch
+__pycache__/
+/tmp/

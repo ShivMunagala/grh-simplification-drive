@@ -1,0 +1,5 @@
+{
+ "written_out": 25000,
+ "source_tokens": 1700,
+ "note": "Provisional. Set near the 99th percentile of declarations in the baseline cone (written-out 23,409 nodes, source 1,656 tokens). Applies to declarations a change adds or modifies; existing larger ones are tolerated until touched."
+}
