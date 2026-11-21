@@ -3,3 +3,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-21T19:52:16Z,30fd1c8bf,drop redundant parentheses in Bl.FirstBlockLemmaI.goal1,183118237,2789304299,0.1,1265254,146536
 2026-11-21T20:11:33Z,6370ac734,drop redundant parentheses in Bl.CurryModusPonens.curry_mp,183118233,2789304299,0.0,1265254,146536
 2026-11-21T21:10:10Z,4038a8f9d,fewer case-split branches in PG_conjTranspose and PG_mul_PG,183118221,2789164165,0.3,1265167,146536
+2026-11-21T21:24:58Z,6b5727bf8,prove same_basic without taking the structures apart,183118012,2787043943,-7.5,1265167,146536
