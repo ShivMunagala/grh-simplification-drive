@@ -31,15 +31,26 @@ def compile_module(module, out, src=C.SRC, overlays=(), threads=1, mem_gb=8.0, t
         if os.path.exists(p):
             os.remove(p)
     setup = olean + '.setup.json'
-    with open(setup, 'w') as fh:
-        # imports are resolved through LEAN_PATH, so no pre-resolved artifacts are listed
-        json.dump({'name': module, 'isModule': False, 'importArts': {}, 'dynlibs': [], 'plugins': [],
-                   'options': {}}, fh)
     log = olean + '.log'
     overlays = [os.path.abspath(o) for o in overlays]
     if use_accepted and os.path.isdir(C.OVERLAY) and C.OVERLAY not in overlays:
         overlays.append(C.OVERLAY)          # modules changed by earlier accepted changes
-    lean_path = ':'.join(overlays + [C.COMPILED] + C.package_libs())
+    # Overlay modules are named one by one in the setup file. They cannot simply go first on the
+    # search path: Lean resolves a whole top-level folder (say `Development`) to the first path
+    # entry that has it, so a partial overlay would hide every other module under that folder.
+    arts = {}
+    for o in overlays:
+        for dp, dn, fn in os.walk(o):
+            for f in fn:
+                if f.endswith('.olean'):
+                    p = os.path.join(dp, f)
+                    mod = os.path.relpath(p, o)[:-6].replace(os.sep, '.')
+                    if mod != module and mod not in arts:
+                        arts[mod] = [[p]]
+    with open(setup, 'w') as fh:
+        json.dump({'name': module, 'isModule': False, 'importArts': arts, 'dynlibs': [], 'plugins': [],
+                   'options': {}}, fh)
+    lean_path = ':'.join([C.COMPILED] + C.package_libs())
     opts = list(C.LEAN_OPTS)
     if module.startswith(C.FIELDS_PREFIXES):
         opts += C.FIELDS_OPTS

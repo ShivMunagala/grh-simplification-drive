@@ -1,18 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 524" width="760" height="524" role="img" font-family="system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif">
-<title>Dials over time. Latest: Source size 183.1M; Written-out proof size 2.79B; Time change 0.1</title>
+<title>Dials over time. Latest: Source size 183.1M; Written-out proof size 2.79B; Time change 0</title>
 <rect x="0.5" y="0.5" width="759" height="523" rx="8" fill="#1a1a19" stroke="rgba(255,255,255,0.10)"/>
 <text x="70" y="30" font-size="13" fill="#f0efec" font-weight="600">Source size<tspan font-weight="400" fill="#898781" dx="6">tokens</tspan></text>
-<text x="736" y="30" font-size="12" text-anchor="end" fill="#0ca30c"><tspan font-size="14" font-weight="600" fill="#f0efec">183.1M</tspan><tspan dx="8">▼ 2 since baseline</tspan></text>
+<text x="736" y="30" font-size="12" text-anchor="end" fill="#0ca30c"><tspan font-size="14" font-weight="600" fill="#f0efec">183.1M</tspan><tspan dx="8">▼ 6 since baseline</tspan></text>
 <line x1="70" y1="150.0" x2="736" y2="150.0" stroke="#2c2c2a" stroke-width="1"/>
-<text x="62" y="154.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">183.118237M</text>
+<text x="62" y="154.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">183.118230M</text>
 <line x1="70" y1="99.0" x2="736" y2="99.0" stroke="#2c2c2a" stroke-width="1"/>
-<text x="62" y="103.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">183.118238M</text>
+<text x="62" y="103.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">183.118235M</text>
 <line x1="70" y1="48.0" x2="736" y2="48.0" stroke="#2c2c2a" stroke-width="1"/>
-<text x="62" y="52.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">183.118239M</text>
+<text x="62" y="52.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">183.118240M</text>
 <line x1="70" y1="150" x2="736" y2="150" stroke="#383835" stroke-width="1"/>
-<path d="M70.0,48.0 L736.0,48.0 L736.0,150.0" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-<circle cx="70.0" cy="48.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="736.0" cy="150.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<path d="M70.0,58.2 L511.8,58.2 L511.8,78.6 L736.0,78.6 L736.0,119.4" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="70.0" cy="58.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="511.8" cy="78.6" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="736.0" cy="119.4" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
 <text x="70" y="198" font-size="13" fill="#f0efec" font-weight="600">Written-out proof size<tspan font-weight="400" fill="#898781" dx="6">term nodes</tspan></text>
 <text x="736" y="198" font-size="12" text-anchor="end" fill="#898781"><tspan font-size="14" font-weight="600" fill="#f0efec">2.79B</tspan><tspan dx="8">no change since baseline</tspan></text>
 <line x1="70" y1="318.0" x2="736" y2="318.0" stroke="#2c2c2a" stroke-width="1"/>
@@ -22,11 +23,12 @@
 <line x1="70" y1="216.0" x2="736" y2="216.0" stroke="#2c2c2a" stroke-width="1"/>
 <text x="62" y="220.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.85B</text>
 <line x1="70" y1="318" x2="736" y2="318" stroke="#383835" stroke-width="1"/>
-<path d="M70.0,277.9 L736.0,277.9 L736.0,277.9" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M70.0,277.9 L511.8,277.9 L511.8,277.9 L736.0,277.9 L736.0,277.9" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
 <circle cx="70.0" cy="277.9" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="511.8" cy="277.9" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
 <circle cx="736.0" cy="277.9" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
 <text x="70" y="366" font-size="13" fill="#f0efec" font-weight="600">Time change<tspan font-weight="400" fill="#898781" dx="6">CPU seconds on recompiled files, running total</tspan></text>
-<text x="736" y="366" font-size="12" text-anchor="end" fill="#e66767"><tspan font-size="14" font-weight="600" fill="#f0efec">+0.1</tspan><tspan dx="8">▲ 0.1 since baseline</tspan></text>
+<text x="736" y="366" font-size="12" text-anchor="end" fill="#898781"><tspan font-size="14" font-weight="600" fill="#f0efec">0</tspan><tspan dx="8">no change since baseline</tspan></text>
 <line x1="70" y1="486.0" x2="736" y2="486.0" stroke="#2c2c2a" stroke-width="1"/>
 <text x="62" y="490.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">0</text>
 <line x1="70" y1="435.0" x2="736" y2="435.0" stroke="#2c2c2a" stroke-width="1"/>
@@ -34,17 +36,18 @@
 <line x1="70" y1="384.0" x2="736" y2="384.0" stroke="#2c2c2a" stroke-width="1"/>
 <text x="62" y="388.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">0.1</text>
 <line x1="70" y1="486" x2="736" y2="486" stroke="#383835" stroke-width="1"/>
-<path d="M70.0,486.0 L736.0,486.0 L736.0,384.0" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M70.0,486.0 L511.8,486.0 L511.8,384.0 L736.0,384.0 L736.0,486.0" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
 <circle cx="70.0" cy="486.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="736.0" cy="384.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="511.8" cy="384.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="736.0" cy="486.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
 <line x1="70.0" y1="486" x2="70.0" y2="490" stroke="#383835" stroke-width="1"/>
 <text x="70.0" y="504" font-size="11" text-anchor="start" fill="#898781">21 Nov 19:14</text>
 <line x1="236.5" y1="486" x2="236.5" y2="490" stroke="#383835" stroke-width="1"/>
-<text x="236.5" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 19:23</text>
+<text x="236.5" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 19:28</text>
 <line x1="403.0" y1="486" x2="403.0" y2="490" stroke="#383835" stroke-width="1"/>
-<text x="403.0" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 19:33</text>
+<text x="403.0" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 19:42</text>
 <line x1="569.5" y1="486" x2="569.5" y2="490" stroke="#383835" stroke-width="1"/>
-<text x="569.5" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 19:42</text>
+<text x="569.5" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 19:57</text>
 <line x1="736.0" y1="486" x2="736.0" y2="490" stroke="#383835" stroke-width="1"/>
-<text x="736.0" y="504" font-size="11" text-anchor="end" fill="#898781">21 Nov 19:52</text>
+<text x="736.0" y="504" font-size="11" text-anchor="end" fill="#898781">21 Nov 20:11</text>
 </svg>
