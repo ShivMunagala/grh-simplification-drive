@@ -191,11 +191,17 @@ def main():
     report = {'base': base_commit, 'problems': [], 'notes': []}
 
     modified, added, removed = changed_files(base)
+    src_override = {}          # files edited in the working tree but not part of this judgement
     if a.only:
         only = set(a.only.split(','))
         skipped = [m for m in modified + added + removed if m not in only]
         if skipped:
             report['notes'].append(f'{len(skipped)} other changed files ignored because of --only')
+        for m in skipped:
+            try:
+                src_override[m] = git('show', f'{base}:{to_path(m)}')     # judged as they are in the base
+            except subprocess.CalledProcessError:
+                pass                                                         # new file: not in any table
         modified, added, removed = ([m for m in l if m in only] for l in (modified, added, removed))
     report['modified'], report['added'], report['removed'] = modified, added, removed
     print(f'changed: {len(modified)} modified, {len(added)} added, {len(removed)} deleted')
@@ -344,7 +350,8 @@ def main():
     summary = None
     if not report['problems'] and 'incomplete' not in report:
         try:
-            summary = CONE.compute(C.DATA_BASE, C.SRC, work, patch_consts, patch_decls, all_removed, verbose=False)
+            summary = CONE.compute(C.DATA_BASE, C.SRC, work, patch_consts, patch_decls, all_removed, verbose=False,
+                                   src_override=src_override)
         except RuntimeError as e:
             report['problems'].append(str(e))
     if summary and base_summary and before:

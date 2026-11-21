@@ -247,7 +247,11 @@ def find_names(g, wanted):
     return {nm: i for i, nm in enumerate(g.names) if nm in wanted}
 
 
-def compute(data, src, out=None, patch_consts=None, patch_decls=None, removed=(), targets=None, verbose=True):
+def compute(data, src, out=None, patch_consts=None, patch_decls=None, removed=(), targets=None, verbose=True,
+            src_override=None):
+    """src_override: {module: source text} for modules whose text must not be read from `src`
+    (files that are edited in the working tree but are not part of what is being judged)."""
+    src_override = src_override or {}
     targets = targets or C.TARGETS
     rh_only = [t for t in RH_ONLY if t in targets] or targets[:1]
     t0 = time.time()
@@ -327,12 +331,15 @@ def compute(data, src, out=None, patch_consts=None, patch_decls=None, removed=()
         tokens = lines_total = missing_files = 0
         per_decl_tokens = []
         for m, rs in byfile.items():
-            try:
-                with open(C.module_path(m, src), encoding='utf-8') as fh:
-                    lines = fh.read().split('\n')
-            except OSError:
-                missing_files += 1
-                continue
+            if m in src_override:
+                lines = src_override[m].split('\n')
+            else:
+                try:
+                    with open(C.module_path(m, src), encoding='utf-8') as fh:
+                        lines = fh.read().split('\n')
+                except OSError:
+                    missing_files += 1
+                    continue
             rs.sort(key=lambda r: (r[1], r[2], -r[3], -r[4]))
             last_end = (-1, -1)
             for (_, sl, sc, el, ec) in rs:

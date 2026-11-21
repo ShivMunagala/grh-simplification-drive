@@ -18,16 +18,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 183.1M, written-out proof size 2.79B, time change 0" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 183.1M, written-out proof size 2.79B, time change 0.3" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 183,118,233 | −6 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,789,304,299 | 0 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | 0.0 | 0 |
+| Source size (tokens) | 183,118,239 | 183,118,221 | −18 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,789,164,165 | −140,134 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | 0.3 | +0.3 |
 
-Cone: 1,265,254 declarations in 146,536 files. Recorded changes: 2. Latest row: drop redundant parentheses in Bl.CurryModusPonens.curry_mp (2026-11-21 20:11 UTC).
+Cone: 1,265,167 declarations in 146,536 files. Recorded changes: 3. Latest row: fewer case-split branches in PG_conjTranspose and PG_mul_PG (2026-11-21 21:10 UTC).
 <!-- dials:end -->
 
 ## Fixed

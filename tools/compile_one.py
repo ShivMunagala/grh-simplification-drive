@@ -11,10 +11,41 @@ The archive's source is untrusted and compiling it runs code, so the compiler ru
 with no network and a read-only filesystem, and under a memory cap so that a file that is too big
 for this machine fails cleanly instead of making it swap.
 """
-import argparse, fcntl, json, os, sys
+import argparse, fcntl, json, os, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as C
+
+
+SECOND_SLOT_MIN_FREE_GB = 6.5
+
+
+def mem_available_gb():
+    try:
+        with open('/proc/meminfo') as fh:
+            for line in fh:
+                if line.startswith('MemAvailable:'):
+                    return int(line.split()[1]) / (1024.0 * 1024.0)
+    except OSError:
+        pass
+    return 0.0
+
+
+def acquire_slot():
+    """Wait for a compile slot. Memory is the limit on this machine: one compile at a time,
+    and a second one only while plenty of memory is free."""
+    os.makedirs(os.path.dirname(C.LOCK), exist_ok=True)
+    while True:
+        for i, path in enumerate((C.LOCK, C.LOCK + '2')):
+            if i == 1 and mem_available_gb() < SECOND_SLOT_MIN_FREE_GB:
+                continue
+            fh = open(path, 'w')
+            try:
+                fcntl.flock(fh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                return fh
+            except BlockingIOError:
+                fh.close()
+        time.sleep(2)
 
 
 def compile_module(module, out, src=C.SRC, overlays=(), threads=1, mem_gb=8.0, timeout=3600, quiet=False,
@@ -62,9 +93,7 @@ def compile_module(module, out, src=C.SRC, overlays=(), threads=1, mem_gb=8.0, t
            C.LEAN, f'-j{threads}', f'--setup={setup}', '-o', olean, '-i', ilean] + opts + [source]
     ro = [C.TOOLCHAIN, C.PACKAGES, C.COMPILED, src, tools] + overlays
     boxed = C.sandbox(cmd, ro=ro, rw=[out], env={'LEAN_PATH': lean_path, 'LEAN_ABORT_ON_PANIC': '1'})
-    os.makedirs(os.path.dirname(C.LOCK), exist_ok=True)
-    with open(C.LOCK, 'w') as lock, open(log, 'w') as lf:
-        fcntl.flock(lock, fcntl.LOCK_EX)    # wait for any other compile to finish: memory is the limit here
+    with acquire_slot() as _slot, open(log, 'w') as lf:
         rc, _, wall, _ = C.run_timed(boxed, mem_gb=mem_gb, stdout=lf, stderr=lf, timeout=timeout)
     st = C.load_json(stats, {}) or {}
     cpu = st.get('user_s', 0.0)             # user time only: system time swings with memory pressure

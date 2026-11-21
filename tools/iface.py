@@ -22,7 +22,8 @@ import argparse, json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as C
 
-AUX = re.compile(r"(\._proof_\d+|\.proof_\d+|\.match_\d+|\._simp_\d+|\.eq_\d+|\.eq_def|\.congr_simp|\._sunfold|"
+AUX = re.compile(r"(\._proof_\d+(?:_\d+)*|\.proof_\d+(?:_\d+)*|\.match_\d+(?:_\d+)*|\._simp_\d+(?:_\d+)*|"
+                 r"\.eq_\d+|\.eq_def|\.congr_simp|\._sunfold|"
                  r"\._unsafe_rec|\._unary|\._mutual|\._lambda_\d+|\._closed_\d+|\.splitter|\._auxLemma\.\d+|"
                  r"\._aux_\w+|\.omega_nat|\.hcongr_\d+|\._eq_\d+|\.sizeOf_spec|\.injEq|\.inj|\.noConfusion\w*|"
                  r"\._nativeDecide\w*|\._cstage\d+|\._boxed|\._redArg|\._spec_\d+)($|\.)")
