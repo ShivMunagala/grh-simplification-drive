@@ -318,6 +318,9 @@ def compute(data, src, out=None, patch_consts=None, patch_decls=None, removed=()
                 no_range += 1
             else:
                 rset.add(r)
+                if want_dist:
+                    g = groups.setdefault(r, [0, 0])
+                    g[0] += tsize[i] + vsize[i]; g[1] += 1
         byfile = collections.defaultdict(list)
         for r in rset:
             byfile[r[0]].append(r)
@@ -342,6 +345,7 @@ def compute(data, src, out=None, patch_consts=None, patch_decls=None, removed=()
                 lines_total += el - sl + 1
                 if want_dist:
                     per_decl_tokens.append(k)
+                    range_tokens[(m, sl, sc, el, ec)] = k
                 last_end = (el, ec)
         res = {
             'declarations': sum(kinds_c.values()),
@@ -361,6 +365,7 @@ def compute(data, src, out=None, patch_consts=None, patch_decls=None, removed=()
             res['per_declaration_source_tokens'] = distribution(per_decl_tokens)
         return res
 
+    groups, range_tokens = {}, {}        # per source declaration: [written-out incl. auxiliaries, count], tokens
     d_all = dials(cone, want_dist=True)
     say('dials for the five theorems done')
     d_rh = dials(cone_rh)
@@ -404,6 +409,16 @@ def compute(data, src, out=None, patch_consts=None, patch_decls=None, removed=()
         for mi, m in enumerate(modnames):
             pm = per_mod.get(mi, [0, 0, 0, 0, 0])
             z.stdin.write(f'{m}\t{pm[0]}\t{pm[1]}\t{pm[2]}\t{pm[3]}\t{pm[4]}\n'.encode())
+        z.stdin.close(); z.wait()
+        # one row per source declaration in the cone: what it costs on each size dial
+        owner = {}
+        for (m, nm), r in ranges.items():
+            owner.setdefault((m,) + r, nm)
+        z = subprocess.Popen(['zstd', '-q', '-3', '-f', '-o', os.path.join(out, 'worklist.tsv.zst')], stdin=subprocess.PIPE)
+        z.stdin.write(b'written_out\tsource_tokens\tconstants\tmodule\tfirst_line\tlast_line\tname\n')
+        for r, (w, cnt) in sorted(groups.items(), key=lambda kv: -kv[1][0]):
+            tk = range_tokens.get(r, 0)
+            z.stdin.write(f'{w}\t{tk}\t{cnt}\t{r[0]}\t{r[1] + 1}\t{r[3] + 1}\t{owner.get(r, "?")}\n'.encode())
         z.stdin.close(); z.wait()
         say('tables written')
     return summary

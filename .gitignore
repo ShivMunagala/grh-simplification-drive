@@ -8,6 +8,9 @@
 # compiled modules of the base version (unpacked from the published archive)
 /compiled/
 
+# compiled modules of accepted changes, stacked on top of the base
+/compiled-overlay/
+
 # generated tables (large); summaries worth keeping are copied to baseline/
 /data/
 

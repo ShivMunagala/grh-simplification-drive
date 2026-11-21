@@ -11,13 +11,14 @@ The archive's source is untrusted and compiling it runs code, so the compiler ru
 with no network and a read-only filesystem, and under a memory cap so that a file that is too big
 for this machine fails cleanly instead of making it swap.
 """
-import argparse, json, os, sys
+import argparse, fcntl, json, os, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as C
 
 
-def compile_module(module, out, src=C.SRC, overlays=(), threads=1, mem_gb=8.0, timeout=3600, quiet=False):
+def compile_module(module, out, src=C.SRC, overlays=(), threads=1, mem_gb=8.0, timeout=3600, quiet=False,
+                   use_accepted=True):
     out = os.path.abspath(out)
     src = os.path.abspath(src)
     source = C.module_path(module, src)
@@ -36,6 +37,8 @@ def compile_module(module, out, src=C.SRC, overlays=(), threads=1, mem_gb=8.0, t
                    'options': {}}, fh)
     log = olean + '.log'
     overlays = [os.path.abspath(o) for o in overlays]
+    if use_accepted and os.path.isdir(C.OVERLAY) and C.OVERLAY not in overlays:
+        overlays.append(C.OVERLAY)          # modules changed by earlier accepted changes
     lean_path = ':'.join(overlays + [C.COMPILED] + C.package_libs())
     opts = list(C.LEAN_OPTS)
     if module.startswith(C.FIELDS_PREFIXES):
@@ -48,10 +51,12 @@ def compile_module(module, out, src=C.SRC, overlays=(), threads=1, mem_gb=8.0, t
            C.LEAN, f'-j{threads}', f'--setup={setup}', '-o', olean, '-i', ilean] + opts + [source]
     ro = [C.TOOLCHAIN, C.PACKAGES, C.COMPILED, src, tools] + overlays
     boxed = C.sandbox(cmd, ro=ro, rw=[out], env={'LEAN_PATH': lean_path, 'LEAN_ABORT_ON_PANIC': '1'})
-    with open(log, 'w') as lf:
+    os.makedirs(os.path.dirname(C.LOCK), exist_ok=True)
+    with open(C.LOCK, 'w') as lock, open(log, 'w') as lf:
+        fcntl.flock(lock, fcntl.LOCK_EX)    # wait for any other compile to finish: memory is the limit here
         rc, _, wall, _ = C.run_timed(boxed, mem_gb=mem_gb, stdout=lf, stderr=lf, timeout=timeout)
     st = C.load_json(stats, {}) or {}
-    cpu = st.get('user_s', 0.0) + st.get('sys_s', 0.0)
+    cpu = st.get('user_s', 0.0)             # user time only: system time swings with memory pressure
     rss = st.get('max_rss_mb', 0.0)
     ok = rc == 0 and os.path.exists(olean)
     messages = ''

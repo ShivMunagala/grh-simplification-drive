@@ -57,8 +57,9 @@ def compare(old, new):
     return res
 
 
-def check_module(module, new_root, old_root=C.COMPILED):
-    old_p = C.module_path(module, old_root, '.olean')
+def check_module(module, new_root, old_root=None, old_path=None):
+    """Compare a recompiled module with its accepted version (overlay if changed before, else base)."""
+    old_p = old_path or (C.module_path(module, old_root, '.olean') if old_root else C.current_olean(module))
     new_p = C.module_path(module, new_root, '.olean')
     pairs = []
     if os.path.exists(old_p):
@@ -79,7 +80,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('module')
     ap.add_argument('--new', required=True)
-    ap.add_argument('--old', default=C.COMPILED)
+    ap.add_argument('--old', default=None, help='root of the old compiled modules (default: the accepted state)')
     a = ap.parse_args()
     res, _, _ = check_module(a.module, a.new, a.old)
     if not res['has_new']:

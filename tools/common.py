@@ -8,6 +8,12 @@ PATCHES = os.path.join(ROOT, 'patches')      # our changes to the proof, as stor
 UPSTREAM_TAG = 'upstream'                    # tag of the unmodified archive inside proof/
 COMPILED = os.path.join(ROOT, 'compiled', 'lib', 'lean')        # compiled modules of the base version
 DATA_BASE = os.path.join(ROOT, 'data', 'base')
+# Accepted changes stack on top of the base: the compiled form of every module they touched,
+# and the table rows for those modules. Together with the base this is "the accepted state".
+OVERLAY = os.path.join(ROOT, 'compiled-overlay', 'lib', 'lean')
+DATA_OVERLAY = os.path.join(ROOT, 'data', 'overlay')
+STATE = os.path.join(DATA_OVERLAY, 'state.json')
+LOCK = os.path.join(ROOT, 'build', '.compile.lock')             # one compiler at a time on this machine
 MODDUMP = os.path.join(ROOT, 'tools', 'moddump', '.lake', 'build', 'bin', 'moddump')
 
 TOOLCHAIN = os.path.expanduser('~/.elan/toolchains/leanprover--lean4---v4.33.1')
@@ -44,6 +50,21 @@ FORBIDDEN = {
     15389850631415614753: 'Lean.ofReduceBool',
     4149518281782852217: 'Lean.trustCompiler',
 }
+
+
+def accepted_state():
+    """State left by the last recorded change: proof commit, dials, modules in the overlay."""
+    try:
+        with open(STATE) as fh:
+            return json.load(fh)
+    except (OSError, ValueError):
+        return None
+
+
+def current_olean(module):
+    """Compiled form of a module in the accepted state: overlay if it was changed, else the base."""
+    p = module_path(module, OVERLAY, '.olean')
+    return p if os.path.exists(p) else module_path(module, COMPILED, '.olean')
 
 
 def package_libs():

@@ -18,16 +18,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 183.1M, written-out proof size 2.79B, time change 0" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 183.1M, written-out proof size 2.79B, time change 0.1" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 183,118,239 | 0 |
+| Source size (tokens) | 183,118,239 | 183,118,237 | −2 |
 | Written-out proof size (term nodes) | 2,789,304,299 | 2,789,304,299 | 0 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | 0.0 | 0 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | 0.1 | +0.1 |
 
-Cone: 1,265,254 declarations in 146,536 files. Recorded changes: 0. Latest row: baseline (unmodified archive) (2026-11-21 19:14 UTC).
+Cone: 1,265,254 declarations in 146,536 files. Recorded changes: 1. Latest row: drop redundant parentheses in Bl.FirstBlockLemmaI.goal1 (2026-11-21 19:52 UTC).
 <!-- dials:end -->
 
 ## Fixed
