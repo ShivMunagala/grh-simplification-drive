@@ -52603,6 +52603,9 @@ have hinj := (
 = 8243 90
 + 5
 ).2.1
+== src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/QEqColPer.lean faef569554c41638fa900758b3ecf80891fabf54881216ea86a50cc88deda544 c22ec049530cde7d7f34ca5bfdcf3488f4eaa6da56f58d9c471b842d916c0b25
+@@ 4118 52 109
+GlobalTheory.T.iteratedThetaUnfolding_of_weilDatumDescent D (GlobalTheory.T.weilDatum_descends_to_wittCore D)
 == src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/QuadraticPowerCharacterSplitPlacesValuesInverse.lean 06394d5fc8c4085916f61a7e4ab0e7353bde49de0b94eea6e969bf1a1e9a9f18 41441d569c520d09a4196bd43808c298b6a75aa4eababc114d10c3c64c3ebe67
 @% 5712 578 3
 + 22

@@ -27,11 +27,11 @@ One point per recorded change, placed at the time of its commit.
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 176,827,209 | −7,421,001 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,697,233,252 | −92,071,047 |
+| Source size (tokens) | 184,248,210 | 176,799,735 | −7,448,475 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,696,656,150 | −92,648,149 |
 | Time (CPU seconds on recompiled files, running total) | 0.0 | -3,808.3 | −3,808.3 |
 
-Cone: 1,259,050 declarations in 146,508 files. Recorded changes: 32. Latest row: duplicate proofs cite a copy through one added import (3243 theorems; 2502 files) (2026-11-22 13:59 UTC).
+Cone: 1,258,898 declarations in 146,496 files. Recorded changes: 33. Latest row: iter_chain cites the one unfolding it uses; seven unfolding statements no longer needed (152 declarations leave the cone) (2026-11-22 14:07 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -57,7 +57,7 @@ Cone: 1,259,050 declarations in 146,508 files. Recorded changes: 32. Latest row:
 | 2026-11-22 | Plain-language map of the argument, first version: the chain at the top, the four lines of argument under it and what each costs, known theorems proved inside (8.4% in all), six places where a shorter route might exist ([map](campaign/argument-map/MAP.md)). Everything above is about how the proof is written; this is the first step on the mathematics | done |
 | 2026-11-22 | All four large candidates for a shorter route tested by reading every statement and every use: the covolume bound (13.6%), the Galois representations (6.1%), the vanishing statement VWin (8.2%) and the staging of the family construction. None can be replaced or narrowed; the reasons are in the map | done |
 | 2026-11-22 | What the five theorems actually ask of each intermediate statement, measured on the compiled proof (`tools/demand.py`): parts of conjunctions, fields of records, local steps and whole declarations that nothing needed reads come to 0.84% of the written-out size (first sweep). The proof uses almost everything it proves | done |
-| | Removing those unneeded parts, largest first: theorems that prove a list of statements of which only some are read ([brief](campaign/unneeded-parts/BRIEF.md)) | in progress |
+| | Removing those unneeded parts, largest first: theorems that prove a list of statements of which only some are read ([brief](campaign/unneeded-parts/BRIEF.md)). First one recorded: of eight statements about period unfoldings only one is used; citing it directly takes the other seven and 152 declarations out of what the five theorems need (−577,102 nodes) | in progress |
 
 ## Fixed
 
