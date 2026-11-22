@@ -47,3 +47,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-22T20:54:20Z,b0e9347b3,heavy transport proofs: six declarations of 0.4-0.95M nodes cut to 10-25k; goodTw_transfer 2.26M to 1.78M,175765110,2675985273,-4519.4,1255853,146191
 2026-11-22T22:59:52Z,9cc7176ff,Zero-free regions and Siegel-Walfisz: shared bounds and shorter numeric steps (16 files),175760150,2675866033,-4596.9,1255851,146191
 2026-11-22T23:12:51Z,47fdd9572,Statements proved twice: users cite one proof (35 files),175378059,2670171956,-4619.3,1253113,145784
+2026-11-22T23:24:41Z,6c46f2024,Resolution of singularities without base-change compatibility (25 files) [review],175313986,2669868989,-4628.4,1252745,145773

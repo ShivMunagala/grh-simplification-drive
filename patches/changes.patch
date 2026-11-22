@@ -98199,6 +98199,13 @@ have hgi := (hg1 i hi hni).1
 = 2496 24
 + 37
 .mem_boundaryLocus_iff <;> assumption
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/DivisorReduction/CanonicalDivisorReduction.lean 43bbbce807574a0fd140b6b3187400f210458c24784a9652ad24583f31943e26 3130ca8f5b9bcbe5cf4a143fe038376c6c464be7c4aa5931cd721ccb33a1e6b6
+@@ 6948 1996 0
+
+@@ 13150 110 0
+
+@@ 13344 54 0
+
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/DivisorReduction/ClopenStrictTransform.lean f417b24099a1bc07a9eb599430e96c08b9559ddf002c1cdc79dff6c487917aa7 91903e50836b32d324567eeb2cd0eced9078e2c519d604a386b2a490f06e23c5
 @% 4377 37 3
 + 22
@@ -98228,6 +98235,15 @@ Hom.range_comp_base <;> assumption
 = 4739 38
 + 16
  <;> assumption)
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/DivisorReduction/DivisorReductionHypotheses.lean 3623a28f595cc6a304b18c2af245d9ff4a4e814aac1a5dd575d9b8392d28021b f501bc12accff0dfce449aa9275d70e0ba1cdd2a37afa71f1310d886cc9bd089
+@@ 3899 66 0
+
+@@ 4031 53 0
+
+@% 8112 1480 2
+= 8525 30
++ 1
+⟩
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/DivisorReduction/DivisorReductionPushforward.lean 7d3b12c4ca7a7bf7f788060586eb79dde2f8bac93e724a096322b24b46a6f11f 01f0f5d474e8f10d79ec9eacc8d7a7ff065f54c514047ab8bdab50441dbc0d62
 @% 2237 0 2
 = 1310 101
@@ -98255,7 +98271,9 @@ toSequenceOfBlowups_heq_of_eq <;> assumption
 = 2321 39
 + 56
 .IsPushforwardBlowupSeq.of_length_eq_zero <;> assumption
-== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/DivisorReduction/DivisorRestrictionFieldBaseChange.lean 579533e67534f1181e14ea528f2265824b1c3d9e07b73283219879a75e4d13bc b529b0e0a8b2cdfeb75b746030ad4f70e91d284c8c1fc4c84c1883c64bf476a0
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/DivisorReduction/DivisorRestrictionFieldBaseChange.lean 579533e67534f1181e14ea528f2265824b1c3d9e07b73283219879a75e4d13bc 374fd4302c838a18b7873f9a6561e5f1016287bd4bc6fcf68bcf423b305c1eaf
+@@ 3804 238 0
+
 @% 4484 15 6
 + 22
  intros; apply _root_.
@@ -98266,6 +98284,8 @@ toSequenceOfBlowups_heq_of_eq <;> assumption
 = 4302 30
 + 14
 <;> assumption
+@@ 21428 4772 0
+
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/DivisorReduction/GoingUpInvariantOnOpens.lean fbf4eccd60524c216e43b86d20a0a4d218ad29b808c11ebf8930064b5d3227fc 5785ee5329c9164ae2dcfec11620a1dc009f66cfd0e0dda2defb23e16255a005
 @% 14360 3015 5
 + 22
@@ -98286,6 +98306,11 @@ toSequenceOfBlowups_heq_of_eq <;> assumption
 = 24477 27
 + 44
 toSequenceOfBlowups_heq_of_eq <;> assumption
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/FunctorialPrincipalization.lean dde6070622fe9bbdec88ac8224f5d484468d0d1b4840cbbb5578e67675a4df04 c6b41ec35fb3e2b5f48fcf04c129f23f39a3145b2fd41c65652dc49d85bf5bd5
+@@ 3441 2626 0
+
+@@ 7387 954 0
+
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/MarkedBlowupSequence/ControlledTransform.lean 8f52cc0ac65feb8d7ccc2a17976152d951fb6eabf6298b83fbf227f46f74f68a c98bec3199ba947167dc623c5f10013cfa9ed893eab24c483d535d54551e9d54
 @% 13082 182 5
 + 22
@@ -98323,6 +98348,40 @@ have hideal := (
 = 31537 91
 + 3
 ).1
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/MarkedOrderReduction/FieldExtensionBaseChange.lean 5007f29f29fbd15877f17120a8bc66fb59c95aba62137151abc621212571f3a5 ce1048f5d3840f9d352e0606e9fac92384bc45742299422804081a3c5bff94b1
+@@ 9893 8763 0
+
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/MarkedOrderReduction/MaxOrderReduction.lean b8d1ead7e918812f1e94a364ca9ac1e5f85f295946c64db15d4b57a49050c78c eed085bc13e55ce7910211835cc16f77ce4f90d2d097eb39aa71150182995fc0
+@@ 3089 1741 0
+
+@% 4994 479 15
++ 9
+
+  { cert
+= 5870 29
++ 27
+principalizationCertificate
+= 5068 28
++ 15
+center_nonempty
+= 5870 29
++ 23
+center_support_nonempty
+= 5068 28
++ 8
+resolves
+= 5870 29
++ 8
+isResolu
+= 5064 32
+= 5382 30
+= 4838 25
++ 28
+length_eq_zero_of_empty hinv
+@@ 6514 55 0
+
+@@ 6634 1002 0
+
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/MarkedOrderReduction/MonomialFactorTransform.lean 17f2f4fa8cc4d8bdea966f0311e70e04eac3c694086a202a23dfca45dd996c52 02ed9200bfc116afdcf9ba05ac5417aa8278b5cb8323c0ca48b7e333849a88a7
 @% 40538 231 3
 + 22
@@ -98409,6 +98468,11 @@ have hposall := (
 = 52654 29
 + 26
 length_zero <;> assumption
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/OrderReduction/DescentHypotheses.lean d377104db81d53890cf3ea750c683d94f7e1471ac9eec9b99971e0fcaf9646dc 55b78e98ada1dddbe6836985c16e61bc01af21f753cb06a67d4ef683e10daf03
+@@ 6826 1744 0
+
+@@ 11475 939 0
+
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/OrderReduction/LevelwiseIso.lean cf53bb79f4c218a2578e80f075f69a4a7ad49046967d2c76242fa637a0d99c94 eab88898e4850aedfdce78e06c73d52613d8bd64c4631d1f948f0966a3ae1679
 @% 1478 196 3
 + 22
@@ -98416,6 +98480,9 @@ length_zero <;> assumption
 = 1302 39
 + 35
 .strictTransform_top <;> assumption
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/OrderReduction/LowerDimReductionFieldBaseChange.lean b8f7b2d3bc9e2a8f09de4be2429cae44ff67f3bdabfbb9b6fa008af3c1a6da2d 2346cad14546abeb2c6b98399d961870f4ca171d5312ea2222a490780c132eaf
+@@ 14131 18705 0
+
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/OrderReduction/MarkedBlowupSequenceBoundary.lean b9c09ce637627cf379d991dd9f0a378a8ba8a0fdd2ed0648d4c4c262331ec819 03acd589491c121575816fbc66ea78e035dc5e9accef4397f16ecc4f04ec9f5d
 @% 11584 172 5
 + 22
@@ -98459,6 +98526,15 @@ _of_le <;> assumption
 = 7915 24
 + 45
 .isMarked_toBlowupSequenceData <;> assumption
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/OrderReduction/MaxContactOrderReduction.lean d897c1241c38e9e551508f67b306558206c0c45ef4bfc2157e7a7f5edf5062c4 b96cbaef246c451b9d7f5a68f4de6693e963efd5b37ca9966abaed8d16ea785c
+@@ 1898 45 0
+
+@@ 2052 30 0
+
+@@ 2295 1119 0
+
+@@ 4807 705 0
+
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/OrderReduction/OrderCertificatesMultiplicityOne.lean f95863276a64532ddc9275c773691c8dc0a4f9de2a9186b7cb93ae3fc52b13e0 d2bc5a0137c106393aca3e85a8acfb10c4a56c329ddfbf10b6623b85a0a611ac
 @% 19072 100 3
 + 17
@@ -98466,22 +98542,31 @@ hV2, hP2, -⟩ := (
 = 19097 75
 + 3
 ).2
-== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/OrderReduction/OrderReductionCompatibility.lean 66a69fb24993eca733a1f630c2ee35623869461ed0f8cde3f9493b374c2893ed 9450ea6db8439169e877122f6c0d18fea1e7390bfdf13d7f0733a0d9493c4f22
-@@ 10629 39 0
-
-@@ 10679 63 0
-
-@@ 13204 39 0
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/OrderReduction/OrderReductionCompatibility.lean 66a69fb24993eca733a1f630c2ee35623869461ed0f8cde3f9493b374c2893ed fecaa4ee7c16bab8e63c1615391aae1bf4744d280a0e62284100e1c0b448d8f7
+@@ 10250 4354 0
 
 @@ 14901 24 0
+
+@@ 28857 745 0
+
+@@ 35602 19901 0
 
 @@ 58365 147 0
 
 @@ 62111 208 0
 
+@% 71246 400 1
+= 71538 92
+@@ 71975 342 0
+
 @@ 72864 92 0
 
-== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/OrderReduction/SeparateBoundaryFieldBaseChange.lean 0f19149cc962a927d288689b4227fb24c188904bb352b193f7df9eba40b04204 9d88c2a5adafa8c9dc3f81cde3f291304230e651c796bdbd0537295287c75068
+@@ 74567 1678 0
+
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/OrderReduction/OrderReductionFieldBaseChange.lean 20cc6cfae085a247f2e465ea7e89584adee02037c67ccc8eb6e9fff75724a15a 727fae4a6edce4dd0f06a1d11fcc3733556b928858230a3433a1600b86eeb4f4
+@@ 28857 32202 0
+
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/OrderReduction/SeparateBoundaryFieldBaseChange.lean 0f19149cc962a927d288689b4227fb24c188904bb352b193f7df9eba40b04204 da2a8ed5736e5879f2c57bcdc990377941f561f4a3861309241a6437f2f74b4d
 @% 5493 283 5
 + 15
  intros; apply 
@@ -98490,6 +98575,8 @@ hV2, hP2, -⟩ := (
 = 5215 29
 + 25
 _drop_zero <;> assumption
+@@ 13766 19006 0
+
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/OrderReduction/TrivialDivisorContinuation.lean d8bec45258294904adf28cd86676781e6ec0d9e336ae595d3bc33c4718206366 39e8ea0938e8e4bf2bd32d718df4c11f2378237e48ecf4feec23ee8b2c12b107
 @@ 10375 32 28
 have hD1 := (hbtrue hb1).2.2
@@ -98510,6 +98597,28 @@ have hD1 := (hbtrue hb1).2.2
 = 5573 30
 + 30
 _boundary_of_le <;> assumption
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/OrderReductionProperties.lean 24c07e7c7cb309f52a897759c25174a3adbcc4f269c409b0149f2d6fecc90dbb d92a66d046b0e6cde713b2ef657327760640b625d973c56630a81ec53460e048
+@@ 15733 1200 0
+
+@@ 19288 225 0
+
+@@ 21458 1373 0
+
+@@ 23259 1382 0
+
+@@ 26760 753 0
+
+@@ 27833 2287 0
+
+@@ 38280 1019 0
+
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/IdealPrincipalization/PrincipalizationConstruction.lean f6f0ef05ba1829a13233dae152cef07699fe2e3fd68f7b828b43a0e569106d02 e4866c5442e22c144eff87a6c88198a7f61be915bf20146795653291a3e2e711
+@@ 12647 9843 0
+
+@@ 24518 1237 0
+
+@@ 26301 377 0
+
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/IteratedBlowups/Saturation.lean ceb36419785d01a975ba28508c69f4bb6116ede014cfd23699626ab10af31947 0a5dc3db6d422daaf381e29f9ea5d83ed043c90c165a241a5924993c60d2f326
 @% 8845 312 3
 + 22
@@ -98526,6 +98635,9 @@ _boundary_of_le <;> assumption
 = 8591 25
 + 14
 <;> assumption
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/ResolutionDescent/AffineResolutionRuleCompatibility.lean e15777ccd39072e0757fee4e73e5741444783494767ec90f6f979fcae301f87e 649a9406d77a0c60ca43dcf112332e7d877ec48e288acc7c163db138f75c3af6
+@@ 6005 1078 0
+
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/ResolutionDescent/BlowupSequenceFlatBaseChange.lean f82b7984cc168543c1954300aae01a66defaeb70246db23850fbab753a9ac384 eb907bc0069275fb9b4332a7e70739f3a195f57f5f1391901e2617ebbe726981
 @% 1127 100 3
 + 22
@@ -98533,6 +98645,34 @@ _boundary_of_le <;> assumption
 = 895 39
 + 52
 .SequenceOfBlowups.transitionMap_self <;> assumption
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/ResolutionDescent/ChartFlatBaseChange.lean b9a86c1aaef7c87e10158a2e11d47c4567ed5701b08f2251359010d155365471 926fbe488bc2c7a3dc7fd852a835b1d37422310966f97a3d104a8bbf66ad42a4
+@@ 17156 4 15
+theorem exists_
+@% 17455 1197 6
++ 2
+∃ 
+= 3792 28
++ 43
+, F.baseMap = b := by
+  obtain ⟨r, l, h⟩ :=
+= 17393 25
+= 17615 32
++ 145
+
+  exact ⟨⟨f, inferInstance, b, hb, r, l, h.1, h.2.1, h.2.2.1, h.2.2.2.1, h.2.2.2.2.1, h.2.2.2.2.2.1,
+    h.2.2.2.2.2.2.1, h.2.2.2.2.2.2.2⟩, rfl⟩
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/ResolutionDescent/EmbeddedResolutionRuleLocality.lean 953707042417982b660d8fa369d59a92098f4077f2ab3a56a69e86d3a3e28fa8 1580f1d74a7622040dd6b1edf2ad1a9f303d30e46548ef4bb3c7fe643c6efdde
+@% 5096 126 4
++ 25
+obtain ⟨F, hF⟩ := exists_
+= 10300 70
+= 5169 35
++ 35
+ hsq.flip hpb
+  rw [← hF]
+  exact F
+@@ 5743 5428 0
+
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/ResolutionDescent/GraphChartLocalAmbientEmbedding.lean 864de99d16f7baea2adee4bffc01fe2765fe25764614999b9fdb1ad90739fd7d eea639b02944a47382bc40d272ed1dee27b8cf6b1d175a70c091264c4bd166ce
 @% 5414 200 3
 + 40
@@ -98540,6 +98680,24 @@ _boundary_of_le <;> assumption
 = 5339 32
 + 25
 _ideal_top <;> assumption
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/ResolutionDescent/IndependenceOfEmbedding.lean 685bf0c4cd821213c4af698234f9bf247ed1b09b6151221ce72b3591829aee0c 50f3131668ccffc55deba66f33ce36c3096d65d076b13c5d3801f37a8fac3622
+@@ 8803 126 0
+
+@% 9296 411 8
++ 25
+obtain ⟨F, hF⟩ := exists_
+= 9546 67
++ 4
+
+   
+= 9613 46
++ 27
+ hpbk hpb2
+  have hres := F
+= 9488 50
+= 9680 30
++ 15
+rw [hF] at hres
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/ResolutionDescent/IsoBlowupRemovalBaseChange.lean 0c9b74941fae66e2bc8edc3efdb46ab3c8b5e2ee26f4ac1c7b9e1e8f5c719599 d0c7804eab9a7a33e5effade332e807e128c2abe4b4f1b3b9fc18e4b511f249b
 @% 1997 278 5
 + 22
@@ -98563,6 +98721,9 @@ transitionMap_self <;> assumption
 = 2827 75
 + 19
 zero <;> assumption
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/ResolutionOfSingularities.lean 256caf835fef583b3dcc566c38d3a7da630504d5d57e1b3cfab139d06ded2e68 90616b2f36fbd7ef28d8c9cefe31609f3e04a1ec0cd2d54d40ac7f8d5c040810
+@@ 7425 98 23
+ IsStrongResolutionRule
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/StrictTransformCharts/BlowupFlatBaseChange.lean a6f3ef51e01fee2d2b7f9b10c234c9e5039aa8d7f65af813ae72764a4be28358 5d182ec1f2797468ed61161d04d858f04fa1e10c6aca495181d4841d2f43dfec
 @% 2541 138 3
 + 22
@@ -98619,6 +98780,13 @@ IdealSheafData.isReduced_subscheme_vanishingIdeal <;> assumption
 = 10070 31
 + 15
  <;> assumption
+== src/Development/ResolutionOfSingularities/EmbeddedResolution/StrongResolution/GlobalResolutionFromAffine.lean 2cd0a83aff148369d5258fdc6178ba333f94616672deadfe7aa2e73df4abb705 6f43cbc3a5a492a3e26020c4793ef648b55b5f283aa2d060ebe0a5f33ea8ec64
+@@ 20850 45 0
+
+@@ 22066 71 0
+
+@@ 23514 111 0
+
 == src/Development/ResolutionOfSingularities/EmbeddedResolution/StrongResolution/LocalResolutionCenters.lean 9873f3201bc09f8626f7aa7842e096e5aea8bc2fa64468f03050bbfac2061855 f0be891ce9b6dd679e7ebf1f61b7d983ce2cb8bf2eb15723f33e89b4eaa73eb3
 @@ 2861 29 33
 have hC := hres.2.2.2.2.1
@@ -98645,6 +98813,31 @@ import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.IsIsoAppTopOfIs
 
 @@ 2908 302 206
  first | exact @_root_.GlobalTheory.ProperFunctions.appLE_top_top | exact _root_.GlobalTheory.ProperFunctions.appLE_top_top | (intros; apply _root_.GlobalTheory.ProperFunctions.appLE_top_top <;> assumption)
+== src/Development/ResolutionOfSingularities/HasSimpleNormalCrossingsOfInStrictNormalCrossing.lean 1a2c5251c5b31df2f46c5ddba3823dd004f11b01ed52a8b9266660546fb17304 e6969e98464f9e2f92715801846b426344ec276e38798f687d7ee912045d7208
+@@ 893 8 0
+
+@@ 1101 8 0
+
+@% 5977 773 4
++ 3
+⟩
+ 
+= 5990 35
+= 6027 124
+= 6153 96
+== src/Development/ResolutionOfSingularities/Statements.lean e052180af1a92133f931070677f1e112c3cfc8fc07afc816003879fff622a216 74ee33abe65eb58779d220d48b0c8060274f9c089f18825787e4b37249f8e32b
+@@ 2558 370 0
+
+@@ 3502 1699 0
+
+@@ 6001 886 0
+
+@% 6965 91 1
+= 5422 25
+@@ 11773 1602 0
+
+@% 13465 135 1
+= 11362 31
 == src/Development/WeilBound/CoreStatements/AbelianHeightsDuality/AbelianHodgeDeRham/Bridge.lean 382b8b572ae6a4ea8c5ecb3615d0e6493152311704008ec5079677dae23997f1 11ec220bd5d1c5327b4d70e6310aeacbf804bc484d7cc0d1622a412718d0aeca
 @% 5295 57 4
 = 5301 24
@@ -102386,11 +102579,21 @@ AlgPoly.mem_of_aeval_eq_zero <;> assumption)
 == src/Development/WeilBound/CoreStatements/RegularisedThetaMirabolic/KFiniteCuspForms/CuspSp.lean e517d43b091dc8914e23aea73a645194d06be4a75e56f23b14d5b5e1bf54398f 8b312fa04c5f62e817b9df7cd3106ca810f627eb344b3a2faa6e9bca6c07fa31
 @@ 3581 28 28
 h, hH'⟩ := ((hV φ).1 hφ).2.2
+== src/Development/WeilBound/CoreStatements/ResolutionCharZero/FromRes.lean d281e645b84af2428a0a8344957d7cc10d54dffe4f96502f765b8e680bd61c0f acf2cfe2670fd1a4e9689a7b0b441b90eb8e8db0a15cced5581aa75e10b68f5a
+@@ 2339 6 0
+
+@@ 3507 6 0
+
 == src/Development/WeilBound/CoreStatements/ResolutionCharZero/FromResIso.lean 1da7b0bcab208c7878c7d32996ea2eae7429734552bee7ee5bbd10e67c5d70ca 21cb33f464c405ea098b3cf31cedb8b174711f843217d3edf2992602bccc9387
 @@ 1286 12 0
 
-== src/Development/WeilBound/CoreStatements/ResolutionCharZero/ResolutionCharZeroOfTop.lean 32d75b3b10713a4f5d55bf808c4e5d50416fcfb9961470651d98b0473a6aa3de 6678c48b1d3fa586f267d7f33cd49246f6db9cff6442569c9d3c26e3e5f3d15d
-@@ 1978 3 0
+== src/Development/WeilBound/CoreStatements/ResolutionCharZero/PrincipalisationCharZeroBotOfEff.lean ff8a2aadb4c685d05420b9726c84808e60135e622f1d8c7b5b5285ce9140403a 37922a40cf0d8a37cc5de090e9f27e13367803cb67a6b7f6f006a5c1876fe92b
+@@ 7967 6 0
+
+@@ 9859 6 0
+
+== src/Development/WeilBound/CoreStatements/ResolutionCharZero/ResolutionCharZeroOfTop.lean 32d75b3b10713a4f5d55bf808c4e5d50416fcfb9961470651d98b0473a6aa3de 475aedddaf8b6a27d8b1b0838c98f02a45bab684bdb0d7fdc5f1598548eb6afb
+@@ 1975 6 0
 
 == src/Development/WeilBound/CoreStatements/ResolutionCharZero/RqGbnd.lean ebc4a65f46abd1ad471298e784471f2e18b6a625f7eb1cab93c4587ddfdc051c 9685c20b72076f9ff7ce11963175096359f59baf744f7a7aed9fbce6e5bce922
 @% 26789 268 5
