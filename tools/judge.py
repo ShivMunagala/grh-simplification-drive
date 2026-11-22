@@ -651,6 +651,7 @@ def main():
     # the like, or a namespace that is gone, can change how other modules elaborate without any
     # statement changing. A new namespace matters only if some `open` in the tree can resolve to it.
     registers_changed, ns_added = [], collections.defaultdict(list)
+    ns_tables = [None]
     for m, res in ifaces.items():
         ext = dict(res.get('ext_changed') or {})
         if ALLOWED_TAG in ext and m in snapshot:
@@ -671,8 +672,21 @@ def main():
                 imp_added = []
             else:
                 plain_imports.reasons[refused] += 1
-        if ext or res.get('ns_removed') or imp_added or res.get('imports_removed'):
-            registers_changed.append({'module': m, 'entries': ext or None, 'namespaces_removed': res.get('ns_removed'),
+        ns_gone = list(res.get('ns_removed') or [])
+        if ns_gone:
+            # A namespace this module no longer registers itself is still registered for every file that
+            # imports the module if one of the module's own imports registers it (a structure defined
+            # there, say): then nothing any file can see has changed.
+            import nscheck as NS
+            if ns_tables[0] is None:
+                ns_tables[0] = NS.load()
+            still = [n for n in ns_gone if m in NS.seen_by(ns_tables[0][0], ns_tables[0][1], n)]
+            if still:
+                ns_gone = [n for n in ns_gone if n not in still]
+                report['notes'].append(f'{m} no longer registers {still}; a module it imports does, so every file '
+                                       'that saw the namespace still sees it')
+        if ext or ns_gone or imp_added or res.get('imports_removed'):
+            registers_changed.append({'module': m, 'entries': ext or None, 'namespaces_removed': ns_gone or None,
                                       'imports_added': imp_added or None, 'imports_removed': res.get('imports_removed')})
     if plain_imports.allowed:
         report['notes'].append(

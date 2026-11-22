@@ -40022,55 +40022,38 @@ exists_ccIs_equivAt_serOf_oneMapRow_ofFive
 @@ 6666 17 26
 hsp, hP⟩ := hk.2.2
   clear
-== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/HeckeTieMoveOfPin.lean 66ef3b66eab715be16a927799ea616be4caae3b0b08cd6edd5e8c3726eb67923 323971f3b3eb2995ea49ad6db537b7b0c0663dba0ab6e23fd64fc624d76a460b
-@% 2055 2147 24
-+ 245
-D₁, N₁, X₁, Y₁, hD, hN, hX, hY, g1, g2, g3, g4⟩ : ∃ (D₁ : D7) (N₁ : NData D₁.R D₁.host D₁.what₂)
-      (X₁ : NTw D₁.R D₁.host D₁.what₂ D₁.LL0 N₁) (Y₁ : NExp D₁.R D₁.host D₁.what₂ D₁.LL0 N₁ X₁),
-      D' = D₁ ∧ HEq N' N₁ ∧ HEq X' X₁ ∧ HEq Y' Y₁ ∧
-= 1430 40
-+ 11
-₁ ∧
-       
-= 1478 62
-+ 3
-₁ ∧
-= 1548 39
-+ 86
-₁ ∧
-        HEq D.sp D₁.sp :=
-    ⟨_, _, _, _, rfl, .rfl, .rfl, .rfl, h1, h2, h3, hsp⟩
-= 2044 61
-+ 123
-g1
-  cases D₁
-  dsimp +instances only at a1 a2 a3 g4
-  subst a1 a2 a3 g4
-  dsimp +instances only at N₁ X₁ Y₁ hN hX hY g2 g3
-= 2773 33
+== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/HeckeTieMoveOfPin.lean 66ef3b66eab715be16a927799ea616be4caae3b0b08cd6edd5e8c3726eb67923 901cf470e69c70701dd587514d2d9346a5037b2909dedd6cc14cb0d00df48563
+@% 1181 485 2
+= 6290 121
 + 27
-cases N₁
-  dsimp +instances
-= 2765 50
-= 2777 29
-+ 8
-cases X₁
-= 2107 388
-+ 21
-g2
-  dsimp +instances
-= 2897 364
-= 2909 343
-+ 8
-cases Y₁
-= 2497 147
-+ 21
-g3
-  dsimp +instances
-= 3832 134
-= 3844 119
-+ 11
-hD hN hX hY
+{i : D.ntw.Tw} {i' : D'.ntw
+@% 1865 82 3
++ 33
+D.nexp i j b) (r' : Rd ρ' D'.nexp
+= 1888 27
+= 5778 42
+@% 2055 2147 2
++ 1
+r
+= 6688 24
+@@ 4568 47 94
+exact (ρ'.hecke_apply i j b k P R z F x).trans (hmu' ▸ (ρ.hecke_apply i j b k P R z F x).symm)
+@% 4907 142 7
++ 19
+(e g).symm.trans ((
+= 4918 29
++ 96
+).trans
+        ((hk k P R z (r' f)).trans (congrArg (fun y => ρ.hecke i j b k P R z y) (e f))))
+= 4971 26
++ 14
+(e g).trans ((
+= 5021 29
++ 100
+).trans
+        ((hk k P R z (r' f)).trans (congrArg (fun y => ρ.hecke i j b k P R z y) (e f))).symm
+@@ 6092 21 0
+
 == src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/HeckeTransformCuspFormsReadsCosetSum.lean 7494149067723b3b9e8b2b0d216d8a365b6e0b6b754aa95d51a4487b16e9a288 5508b7050db162ba15cc31713fd15f8a811733c6de8be2cb9b95c7e23a3e19d7
 @@ 3665 23 42
 exists_ccIs_equivAt_serOf_oneMapRow_ofFive
@@ -40390,10 +40373,10 @@ by intros; apply _root_.Formalism.L2.Col.mem_dualFr <;> assumption
 == src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/IsCartanInvOneOfOnb.lean 4ae8f92a30bf12a0aa25642879cdafdfe2707d9d2cdf0aef7487e0962bd1d2f0 b441ec9de66924c76725b32b290578cfacada0d25c1d94225c8946b05481c114
 @@ 4617 42 42
 v, w, hv1, -, hio⟩ := (hL.thP.ioP i t).2.2
-== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/IsClassSystem.lean ff6a2ff76ae10c79983f52c17be97819210cef1c2ee210280290d62e0fc4ace1 d80ab59d2de748d0991d216d98641e7946a78fb9f35288c6f333fc14b2aa4e2d
+== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/IsClassSystem.lean ff6a2ff76ae10c79983f52c17be97819210cef1c2ee210280290d62e0fc4ace1 0af2b1dc40f8f6b4d97892447b6b021e9dd12870bb7d7ae1870d9081cd63bdbd
 @@ 3161 330 0
 
-@% 4075 0 94
+@% 4075 0 98
 = 829 25
 + 63
 3200000 in
@@ -40474,11 +40457,20 @@ theorem SameGeo.transfer (h : SameGeo D D') :
 
      
 = 8561 41
-+ 36
-, HEq χ χ' → ChrEq c χ → ChrEq c' χ'
-= 7125 29
-+ 53
-refine ⟨?_, ?_, ?_, ?_, ?_⟩
++ 44
+, HEq χ χ' → ChrEq c χ → ChrEq c' χ') := by
+
+= 1507 41
++ 12
+h
+  cases D'
+= 1638 59
+= 1699 37
+= 1738 31
++ 143
+obtain ⟨x, rfl⟩ := exists_restRows D.what₂ rows' (heq_of_eq a4) a5
+  subst a6; subst a7
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · intro A _ t t' r g
   
 = 3333 30
@@ -42068,127 +42060,28 @@ w, hw, ht, -⟩ := (
 = 6573 47
 + 5
 ).2.2
-== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/SetupRelIffSameData.lean 568628f8e3d4e7b99bed73014556225005875e1315b0da8dd35d96f95d7f94d0 09267374e9fac6a85ad803ce3005edcff4251b8477b78caf5946abf5c5856512
-@@ 2167 1791 0
+== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/SetupRelIffSameData.lean 568628f8e3d4e7b99bed73014556225005875e1315b0da8dd35d96f95d7f94d0 29759aeddf2aacd1b3c17c54cc23b8aa715783e60b424deb0f581bf168be63d2
+@@ 2166 4599 0
 
-@% 4415 0 68
-+ 21
-theorem setupRel_move
-= 2190 292
-+ 21
-:
-    (∀ ρ : Setup X,
-= 2501 31
-+ 35
-) ∧ (HEq X.delta X'.delta →
-      (
-= 4769 103
-+ 323
- →
-      ∀ (ρ : Setup X) (ρ' : Setup X'), SetupRel ρ ρ' → ρ.Good → ρ'.Good) := by
-  have h0 := h
-  obtain ⟨a1, a2, a3, a4, a5, a6, a7⟩ := h
-  cases D' with | mk R' host' sp' vol' volp' rows' eTau' hc' => ?_
-  dsimp only at a1 a2 a3 a4 a5 a6 a7
-  subst a1 a2 a3
-  cases rows'
-  dsimp only at a4 a5 a6 a7
-  subst a4 a5 a6 a7
-
-= 1282 53
-+ 14
-h1
-  cases N'
-
-= 1606 42
-+ 4
-subs
-= 1620 28
-+ 25
-obtain ⟨-, xTw, -, x1, x2
-= 1446 71
-+ 50
-xS0, -⟩ := h2
-  cases X'
-  dsimp only at xTw x1 x2
-= 1842 36
-+ 21
-xS0
-  subst xTw x1 x2
-= 1842 36
-+ 56
-xS0
-  refine ⟨fun ρ => ?_, fun hδ he ρ ρ' r g => ?_⟩
-  ·
-= 2587 59
-+ 17
-  rename_i fin
-  
-= 2659 57
-= 2714 132
-= 2844 122
-= 2964 62
-= 3024 133
-= 3155 102
-= 3255 59
-= 3312 70
-= 3380 32
-= 3410 33
-= 3441 117
-= 3556 54
-= 3608 66
-= 3672 63
-+ 8
-  rfl
-  
-= 3608 66
-= 3672 63
-+ 18
-  exact HEq.rfl
-  
-= 3380 32
-= 3410 33
-+ 19
-  exact HEq.rfl
-  ·
-= 4957 24
-+ 57
-0 rfl .rfl .rfl g.rc
-    dsimp only at hδ
-    subst hδ
-  
-= 5180 79
-= 5257 66
-= 5321 39
-= 5358 31
-= 5387 224
-= 5609 77
-= 5684 88
-= 5770 90
-= 5858 127
-= 5983 29
-= 6010 47
-+ 21
-  exact (congrArg (ρ.
-= 6074 63
-= 6135 45
-= 6178 30
-= 6206 53
-= 6257 70
-= 6325 85
-= 6408 113
-= 6519 103
-= 6620 93
-= 6711 63
-= 2175 360
+@% 8870 107 8
++ 62
+ by
+  obtain ⟨rr, rfl⟩ := h.exists_rest
+  have h0 := h.sameGeo
+= 5179 218
 + 32
-
-  (setupRel_move h h1 h2).1 ρ
-
-
-@@ 4952 1812 43
-
-  (setupRel_move h h1 h2).2 hδ he ρ ρ' r g
+⟨g.rc.1, g.rc.2, g.rc.3, g.rc.4⟩
+= 5400 614
++ 81
+exact (congrArg (ρ.e i b) (eq_of_heq (h.sideEmb_heq (i := i) (i' := i) .rfl b x')
+= 6094 28
++ 30
+(e x')).trans (h.embLL0_eq x')
+= 6133 631
+@@ 12666 84 78
+s⟩ := h.exists_sameData ρ
+  have r := setupRel_iff_sameData.2 s
+  exact ⟨ρ', s
 == src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/SgnLatProdEqEtaResultantMul.lean b68069987009fcb32b348fd45a199a8eb4409762e0aa665661c2eb2a048cbece f094cc2f23ede88ce5125fb50724b3e3b67ecc997ac737bc6dac5f5cbca6b83d
 @% 993 64 3
 + 22
@@ -42736,17 +42629,21 @@ hnd, hz0⟩ := (
 == src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/TupMemLatT.lean 4be70ff0c13f789de64a0f6dd46f724355ae5512ce7f99a00de12621db643294 cbd60cbb1acfa603f078b67354126762939137e9f3885f08f94325566fd3894f
 @@ 2532 122 67
  intros; apply _root_.GlobalTheory.UnramValue.norm_l <;> assumption
-== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/TwistDataAgreeAcrossCoefficients.lean a9720ff5c95936dc6b8f6d7c07871615437947454bcd512d0525d6ed83b910ab 40b62e6aa2f893c5efa62d88606b827374e84a33d33bc50f102ca412f71de89e
+== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/TwistDataAgreeAcrossCoefficients.lean a9720ff5c95936dc6b8f6d7c07871615437947454bcd512d0525d6ed83b910ab 92cb895b037563571834e0cb13e17285b47d1d0abcb47730b22413d6682f16f4
 @@ 4068 0 11
 +instances 
-@@ 4741 0 11
-+instances 
-@@ 4817 0 11
-+instances 
-@@ 4949 0 11
-+instances 
-@@ 5884 0 11
-+instances 
+@@ 4722 18 20
+'
+  dsimp +instances
+@@ 4798 18 20
+'
+  dsimp +instances
+@@ 4930 18 20
+'
+  dsimp +instances
+@@ 5865 18 20
+'
+  dsimp +instances
 @@ 7479 0 11
 +instances 
 @@ 7501 0 1570
@@ -44695,9 +44592,40 @@ have hr := hκ.2.2
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsRiemannFormPeriodChartGenericFibre.lean c04ca3321632217b9ce67312f6da1b683b2ce4998bf0c3237dfbd06d15794161 041648dbf6603180f53f953124b6a2a983cdfda245aeed52584372ee1bd879e1
 @@ 1756 245 74
  intros; apply _root_.GlobalTheory.PureType.hermForm_mulVec <;> assumption
-== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSelectedRealization.lean 8370fc19690243cf55fb9e495b88aadedc481fe79480798d3b8883ad09aac0fc be35a0ea5479cea691557f1e648f016eea7bbee0bf2fde2d5ded0dc39d9c5f45
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSelectedRealization.lean 8370fc19690243cf55fb9e495b88aadedc481fe79480798d3b8883ad09aac0fc a542378f42cebe6a3c97ac879cb7b9a84367e65770df079fcc34bed7880ae944
 @@ 8517 287 17
 exact a.pack_elim
+@@ 9918 11 0
+
+@% 9971 407 5
++ 267
+kexactB a.pack_elim (motive := fun G grp fin Pl0 I0 T0 A3 C alg R F cG =>
+      ∀ (Y : GlobalTheory.Mem.R3.Read (A3 := A3) R.toRealDat F.lv2 ex.p0) (Cr : GlobalTheory.Mem.R3.ReadC R F ex.p0 Y),
+        HEq Cr.wU wU → HEq Cr.eNu eNu → HEq (F.Sp (zsOf R F))
+          (
+= 9596 41
++ 86
+A3.A.v0) (F.Dc (zsOf R F)) hK Gd pw Cr.wU Cr.bij Cr.eNu))
+    (fun Y Cr hW hN => kq% (
+= 10261 66
++ 77
+r.wU) (kq% Cr.bij) (kq% Cr.eNu)
+      (kq% hW) (kq% hN))))) a.x.Y a.x.C hW hN
+@% 11286 437 8
++ 76
+kexactB a.pack_elim (motive := fun G grp fin Pl0 I0 T0 A3 C alg R F cG =>
+  
+= 11002 47
++ 9
+A3.A.v0) 
+= 10807 59
+= 11123 24
++ 34
+  HEq sE sE' ∧ Places R.toRealDat 
+= 10930 49
++ 54
+A3.A.v0) κ sE')
+    ⟨kq% sE, kq% (HEq.refl sE), kq% h⟩
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSelfDualMeasureGlobalConstRankOnly.lean 074c55184f10f2d8f12574a012eb5bc49f63619e8b2dccd10ed320a219ddcbb6 aaece374ed93f3ccc133d8c57982ae74d101dac3bc3132b4138e8628e7506b39
 @@ 4290 21 71
  intros; apply _root_.GlobalTheory.Mem.VolFin.sigR_inclR <;> assumption
@@ -83364,6 +83292,44 @@ have hPr := (
 == src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/LawsLinksOfGeoRowsCols.lean c7ebffea35ac0a0e17d10258c3d8e1d57956a8d6020e9f5d5bfd07b82e3bc1a2 7fd2b4e499f14de69beb579d312e50b65e51fbfbb9ed5c1543209f6401217d4d
 @@ 5137 12 0
 
+== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/LevGBaseOfBWit.lean 2e81a46597f9fc14f4133be1b574d278a5db585c00f20e713647aa16e2e73ba2 859505f51745cd314c001efa7304b77a0765c03024a295c81883f4d7719a1877
+@% 4448 880 19
++ 259
+kexactB a.pack_elim (motive := fun G grp fin Pl0 I0 T0 A3 C alg R F' cG => letI : Algebra C.Q.c.F (q.w.D q.Z).what₂.LL := alg;
+      ∀ (Yr : GlobalTheory.Mem.R3.Read (A3 := A3) R.toRealDat F'.lv2 q.O.ex.p0), HEq Yr.tup q.x.what₂.r.Y.tup →
+        ∀ t : T0, Yr
+= 5769 32
++ 5
+
+    
+= 3577 38
++ 203
+F.clsP (levS _ R.βX (datXP R.toRealDat (R.toRealDat.levR F'.lv2 true) t))
+            (levChi _ R.βX (datXP R.toRealDat (R.toRealDat.levR F'.lv2 true) t)))
+    (fun Yr htup t ht => by
+      have hT' : Yr
+= 4740 45
++ 2
+  
+= 4783 32
++ 2
+  
+= 4813 50
+= 4859 73
++ 2
+  
+= 4930 129
++ 2
+  
+= 5057 24
++ 23
+    rw [z.C] at hc
+    
+= 5096 132
+= 5224 104
++ 17
+)
+    a.x.Y a.tup
 == src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/LevelComparisonChoicesExistAtAllPlaces.lean 1d7633a687125e70c19b09f1b96836d62531448e763cb7c5e39d82b4081374f2 4d9efff8e285c9865d44460b2b11f2b1306008835384eeaf873c093d260292f5
 @@ 8354 26 25
 art, ha, h⟩ := (hψ v).1.2
@@ -83472,6 +83438,47 @@ have h2 := (
 = 1791 34
 + 3
 ).1
+== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ParameterOfDiscreteSeriesRay.lean 760f135a6cdee3eb980bb5504fb53ce72d317a91427b484255bf0b0577149074 209640e82683bc4f95912914e976be9a9906732df4d22347e4667bcf779be8a9
+@% 5047 727 20
++ 108
+kexactB a.pack_elim (motive := fun G grp fin Pl0 I0 T0 A3 C alg R F cG =>
+      ∀ (Yr : GlobalTheory.Mem.R3.
+= 1842 34
++ 42
+ex.p0), HEq Yr.mj.eW t.r.Y.mj.eW →
+       
+= 4620 38
+= 4662 85
++ 10
+
+         
+= 4747 92
++ 38
+R.Wp3 i c).comap (Yr.mj.eW i) →
+      
+= 2162 83
++ 61
+)
+    (fun Yr heW i π c e he hne hle => by
+      have hW : Yr
+= 5351 51
++ 2
+  
+= 5400 107
++ 38
+    rw [← hW]
+        kexactB hle
+    
+= 5533 159
++ 2
+  
+= 5690 40
++ 2
+a.
+= 5730 44
++ 16
+)
+    a.x.Y a.eW
 == src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/PenVol.lean d311961e55387d01e5e0f2987e94dc2d269ba8188090a7d3a32d4f1fe27817bf d217fedf0090186e82918baad4a175947f21f367da0c81bd9c802dc6972a9ebc
 @@ 4555 3 0
 
@@ -83544,9 +83551,23 @@ hz0⟩ := hK
 @@ 4335 26 29
 have hb := hF.2.2.2.1
   clear
-== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/RealInExists.lean 6d4bf9e16b9160060731f6a6c284058407be74d632ca1dabd2a07e802be30dd7 ff0eae01325fb49e847d61813e21f4e346b9de7ff3cbeaa964acf1e85127b921
-@@ 4070 0 11
-+instances 
+== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/RealInExists.lean 6d4bf9e16b9160060731f6a6c284058407be74d632ca1dabd2a07e802be30dd7 6ce51c08571050c5dd28f5e3a36e340f80fc1bd19a8988aa9c659b2f0f5b2ffb
+@% 3957 302 8
++ 76
+kexactB a.pack_elim (motive := fun G grp fin Pl0 I0 T0 A3 C alg R F cG =>
+  
+= 3553 91
++ 12
+R cG Sx),
+  
+= 3658 166
+= 3822 87
++ 17
+)
+    (by kexactB
+= 4109 100
++ 11
+a.lam a.err
 == src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/RealPins3RealTOf.lean a687d9ce3a8726f2b0d7b8a03036c965a6a83197347533d84583cbd1cf793e6c 2835b44fbc6e6cec41fb631625239362aeab25ab40d81e052adbc328140b2835
 @@ 2451 201 17
 exact a.pack_elim

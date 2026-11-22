@@ -22,49 +22,40 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 175.8M, written-out proof size 2.68B, time change -3.98K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 175.8M, written-out proof size 2.68B, time change -4.52K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 175,766,516 | −8,481,694 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,682,353,662 | −106,950,637 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,980.1 | −3,980.1 |
+| Source size (tokens) | 184,248,210 | 175,765,110 | −8,483,100 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,675,985,273 | −113,319,026 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,519.4 | −4,519.4 |
 
-Cone: 1,255,858 declarations in 146,191 files. Recorded changes: 44. Latest row: pb_abs by a dual family in place of Smith normal form (33k to 5k nodes); shorter classical estimates in two files (2026-11-22 20:06 UTC).
+Cone: 1,255,853 declarations in 146,191 files. Recorded changes: 45. Latest row: heavy transport proofs: six declarations of 0.4-0.95M nodes cut to 10-25k; goodTw_transfer 2.26M to 1.78M (2026-11-22 20:54 UTC).
 <!-- dials:end -->
 
 ## Milestones
 
-| When | Milestone | Status |
-|---|---|---|
-| 2026-11-21 | Archive measured: what the five theorems depend on, and the three dials for it | done |
-| 2026-11-21 | Judge working: a change is compiled, checked and measured before it is recorded | done |
-| 2026-11-22 | First heavy proofs rewritten without taking large structures apart (waves 1 and 2) | done |
-| 2026-11-22 | Restatements removed: 32,172 theorems that only repeated another theorem's statement and cited it are now aliases. Source size −3.5% | done |
-| 2026-11-22 | Repetition measured: 28,313 statements are proved independently more than once ([details](campaign/repetition/RESULTS.md)) | done |
-| 2026-11-22 | Repetition sweep, part 1: 10,064 duplicate proofs now cite a copy their file already imports (two passes), each citation in its shortest form. Written-out size −0.5%, source −0.2% | done |
-| 2026-11-22 | Heaviest proofs, waves 2 to 6: 50 proofs rewritten by hand, each kind of cause written up with its fix ([notes](campaign/proof-shrink/RESULTS.md)) | done |
-| 2026-11-22 | One shared lemma for 24 proofs that take the same record apart: 16 rewritten, written-out size −12.0 million nodes, their files compile in half the time | done |
-| 2026-11-22 | Patterns that drop parts of a conjunction read the kept parts by projection instead of matching every part. 9,519 lines in 7,351 files, −18.7 million nodes, source down ([notes](campaign/proof-shrink/RESULTS.md)) | done |
-| 2026-11-22 | Source dial made stricter: every projection step is a token (before, `h.2.2.1` counted as one). Baseline and history recounted; all 30 recorded changes still pass | done |
-| 2026-11-22 | Patch file stores nothing of the archive: pieces a rewrite kept or moved are given as positions. Earlier versions, which repeated such pieces, removed from this repository's history | done |
-| 2026-11-22 | Repetition sweep, part 2: 3,243 duplicate proofs in 2,502 files cite a copy through one added import. Written-out size −7.2 million nodes, source −402,000 tokens. Before judging, every file that could read a name differently because of the new imports (4,071 of the 101,394 that see something new) was compiled again; two citations whose import made another file stop compiling were taken out | done |
-| | Heavy definitions built from chains of `choose` | next |
-| 2026-11-22 | Wave 7 on the heaviest proofs: 17 more rewritten. Proofs over 100,000 nodes are now only 2.8% of the whole, so returns from this kind of work are falling | done |
-| | Sweep of repetitions: the same argument written out in many proofs | next |
-| 2026-11-22 | Largest declaration in the proof (`lam_copy`, 5.5 million nodes) rewritten: the property is stated once over the 29 components it mentions, and no record is taken apart. 30,000 nodes; its file compiles in 2.7 s, before 108 s ([notes](campaign/proof-shrink/RESULTS.md)) | done |
-| 2026-11-22 | Plain-language map of the argument, first version: the chain at the top, the four lines of argument under it and what each costs, known theorems proved inside (8.4% in all), six places where a shorter route might exist ([map](campaign/argument-map/MAP.md)). Everything above is about how the proof is written; this is the first step on the mathematics | done |
-| 2026-11-22 | All four large candidates for a shorter route tested by reading every statement and every use: the covolume bound (13.6%), the Galois representations (6.1%), the vanishing statement VWin (8.2%) and the staging of the family construction. None can be replaced or narrowed; the reasons are in the map | done |
-| 2026-11-22 | What the five theorems actually ask of each intermediate statement, measured on the compiled proof (`tools/demand.py`): parts of conjunctions, fields of records, arguments, local steps and whole declarations that nothing needed reads come to 1.07% of the written-out size. The proof uses almost everything it proves ([results](campaign/unneeded-parts/RESULTS.md)) | done |
-| | Removing those unneeded parts, largest first ([brief](campaign/unneeded-parts/BRIEF.md), [results](campaign/unneeded-parts/RESULTS.md)). Eight changes so far take 3,051 declarations out of what the five theorems need (−7.7 million nodes, −451,000 tokens): seven of eight statements about period unfoldings; the main theorem of the raw theta lift, which was built only to be passed to a theorem that ignored it; theorems that prove lists of statements of which a few are read (46 so far: users cite the part they read); eight statements trimmed to what their users read | in progress |
-| 2026-11-22 | Local steps whose result nothing uses (`have h : P := proof`, and `h` is never read): the same measurement names them, and 6,343 are deleted in 2,099 files, each deletion kept only if its file still compiles to the same statements and is smaller. Written-out size −1.6 million nodes, source −126,000 tokens. This round took the 3,000 files that hold most of them; about 18,000 files with a few each remain | first round done |
-| 2026-11-22 | Declarations written with every argument explicit (machine-printed terms, about fifty files, 0.37% of the source): 252 reprinted in ordinary form by `tools/compact.py`, each kept only if Lean reads it back at the same place as the same statement and, for a definition, the same value. Source −482,000 tokens; written-out size unchanged. Another project had reported the pattern for four of these files; no text was taken from it ([notes](campaign/proof-shrink/RESULTS.md)) | done |
-| 2026-11-22 | The conditions on the families, read one by one: all 46 fields of the hypothesis list are used, and the costly ones are consumed at the strength in which they are proved. There is room only in error terms and in smallness parameters (two small new candidates: an off-diagonal spectral bound, 1.5%, and a dimension estimate, 0.3%); main terms cancel exactly ([map, section 6](campaign/argument-map/MAP.md)) | done |
-| 2026-11-22 | Lemmas at library level measured: 92,689 theorems the five targets need have statements that mention only Mathlib. Their proofs are 6.9% of the written-out size and 12.2% of the source. They are not copies of library theorems (139 exact matches) and one call of automation proves 0.7% of a sample, so shortening them means proving them again; each is a self-contained task ([results](campaign/library-lemmas/RESULTS.md)) | measured; open |
-| 2026-11-22 | The counting argument read and described in ordinary mathematics: a slope inequality for a nearly tight frame of integral maps between hermitian lattices, with multiplicity from about √x theta lifts. The argument itself is general and costs about 0.1%; the 15.6% in `Formalism` verifies its hypotheses. Three main-term comparisons must be exact to relative accuracy x^(−1/2), so its leading constants have no slack. Seven candidates of at most 0.5% each, most with low odds ([map, section 7](campaign/argument-map/MAP.md)) | done |
-| | Statements still proved more than once in different files (same statement, term for term): 21,558 statements with a second full proof, 45.6 million nodes (1.70%) and 4.0 million tokens beyond one copy each. Needs shared files that both users can import | measured; not started |
-| 2026-11-22 | First proof replaced by a different argument: a statement proved through Smith normal form is proved by a dual family (33,347 → 5,167 nodes; the idea is from another project's notes, the proof is written here) | done |
+By area: where the size is (shares are of the written-out size) and what has been done about it. Details are
+in `campaign/`; every recorded change is a row of `metrics/history.csv`.
+
+| Area | What is known | Done | Next |
+|---|---|---|---|
+| **Repetition** ([results](campaign/repetition/RESULTS.md)) | 7.6% of the proof is repeated in some form: the same statement more than once 6.4%, copies under other names 1.25% | duplicate proofs cite a copy their file imports, or can import by one added line (13,300 proofs) | merge the rest through shared files: the largest lever measured |
+| **Known mathematics proved inside** ([results](campaign/library-lemmas/RESULTS.md)) | published theorems: 8.4% if they were free. Lemmas stated in Mathlib terms only: 6.9%, and 12.2% of the source; they are not copies of Mathlib and automation proves 0.7% of them | one proof replaced by a different argument (Smith normal form by a dual family) | workers on resolution of singularities and Siegel–Walfisz; published results proved twice |
+| **The argument** ([map](campaign/argument-map/MAP.md)) | four lines under one chain: families 39%, covolume bound 13.6%, VWin 8.2%, Galois representations 6.1%. The counting argument is a slope inequality and costs 0.1% itself; all 46 conditions on the families are used at the strength proved; main terms cancel exactly | four large shortcuts tested and ruled out | seven candidates of at most 0.5% each |
+| **What the five theorems need** ([results](campaign/unneeded-parts/RESULTS.md)) | 1.07% of what is proved is never read | 46 bundles bypassed or split, 8 statements trimmed: 3,051 declarations out; 6,343 unused local steps deleted | second round of unused steps; fresh measurement |
+| **How proofs are written** ([notes](campaign/proof-shrink/RESULTS.md)) | sweeps over the whole proof, hand rewrites of the heaviest proofs | 32,172 restatements made aliases; projections in place of long patterns; explicit-argument files reprinted; about a hundred heavy proofs rewritten (largest: 5.5 million nodes to 30 thousand) | returns falling: proofs over 100,000 nodes are under 3% of the whole |
+| **Measurement and judge** | | cone of the five theorems, three dials, judge, strict token count, patches that hold no archive text, check against stale compiles | cone tool: 144 theorems whose name exists in two files; full rebuild from source at the end |
+
+### Log
+
+- **2026-11-21.** Archive measured (cone, dials). Judge working. First changes recorded.
+- **2026-11-22.** Changes 3 to 45. Sweeps: restatements, citations of duplicates (two tiers), projections, unused steps,
+  explicit-argument files. Hand rewrites: waves 2 to 8 on the heaviest proofs. Statements: five lists of unneeded parts.
+  Mathematics: map of the argument; four large shortcuts ruled out; the conditions on the families and the counting
+  argument read in full; library-level lemmas and repetition measured. Tools: strict token count, patch format,
+  judge rules for added imports, stale compiles and registers.
 
 ## Fixed
 

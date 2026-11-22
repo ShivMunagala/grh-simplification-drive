@@ -112,3 +112,45 @@ module registers nothing that acts globally: no instances, simp or grind lemmas,
 lemmas, coercions or exported aliases. Both conditions can be read from the tables. Because this changes
 what other files can see, it should be confirmed by recompiling a sample of the files that use the changed
 ones (`tools/downstream_check.py`).
+
+## Measured again after the sweeps, 2026-11-22 (state of change 42)
+
+This time repetition that is not identical text is included. Classes of "the same term up to renaming" were built
+bottom-up from the tables (same kind, sizes and Mathlib constants; the declarations of the tree that are mentioned lie
+in the same classes), with Lean's own hashes as a negative test, which removed about 30% of a first list (mirror
+variants: left and right, field F and field G). Redundancy is what the five theorems stop reaching when every
+reference points to the earliest member of its class. 63 pairs were read in the source to confirm.
+
+| Kind | Declarations | Nodes | Share |
+|---|---:|---:|---:|
+| Same term under another name (two thirds are helpers the compiler makes) | 176,973 | 53.9 M | 2.01% |
+| Same statement, proof is a citation (the statement is written out again) | 54,141 | 39.0 M | 1.46% |
+| Same statement, independent proof | 30,348 | 46.5 M | 1.73% |
+| What hangs only on those copies | 14,987 | 31.4 M | 1.17% |
+| *Identical statements, subtotal* | | 170.9 M | *6.37%* |
+| Copy under other names, same proof | 24,429 | 15.3 M | 0.57% |
+| Same statement up to renaming, another proof | 4,550 | 7.3 M | 0.27% |
+| Same proofs with one base hypothesis changed | 2,779 | 10.9 M | 0.41% |
+| **All** | 292,597 | 204.3 M | **7.62%** |
+
+Largest families of copies: a copy of the standard Siegel–Weil and theta-kernel development in which one field of
+one hypothesis differs ("E is Galois over ℚ" against "E contains a square root of −d"; 0.39%, 0.45% with what hangs
+on it); pairs of folders whose statements are identical and whose proofs cite differently named copies of the same
+lemmas (0.17% and 0.15%); 27 theorems proved two to four times over three variants of one structure, two of which are
+the same structure defined twice (0.07%). The rest is scattered: helper lemmas and small definitions restated per file.
+
+Theories developed more than once:
+
+| Theory | Developments | Relation |
+|---|---|---|
+| Toroidal compactification | Siegel, with level, integral (0.77%); unitary PEL over a CM field (1.10%); 1.46% more is needed by these two only | different statements for different moduli problems; no short bridge. Deriving one from the other is real mathematics of unknown size (ceiling 1.10%) |
+| Siegel–Weil | five independent proofs, 2.30% together | one is the copy above; three cover different ranges and are different theorems |
+| Published results with several independent proofs | 202 statements, 26 of them named results: Jacquet–Shalika rigidity (0.23%), de Rham cohomology of abelian schemes (0.20%), formal algebraisation (0.10%), finiteness of automorphic forms on GL (0.09%, four proofs) | same statement: cite one proof |
+| Local class field theory | two formalisations that share nothing (0.11% and 0.20%) | the smaller has one consumer |
+| p-adic period rings | built three times | same objects; redundant construction about 0.03% |
+| Hecke algebras, adeles | four models; many local abbreviations | basic theory small; what is built on them differs |
+
+Merges, by certainty: identical statements with independent proofs (1.5% alone); the Siegel–Weil copy (0.4%: keep
+the plain development and replace the one field by the facts drawn from it); local class field theory (0.11%); the
+structure defined twice (0.07%). Not determined: edited copies whose sizes differ (a hash that ignores names, computed
+from the compiled terms, would settle it).
