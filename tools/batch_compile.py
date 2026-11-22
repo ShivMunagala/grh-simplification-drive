@@ -30,6 +30,9 @@ def main():
     ap.add_argument('--jobs', type=int, default=8)
     ap.add_argument('--mem-gb', type=float, default=16.0)
     ap.add_argument('--timeout', type=int, default=1800)
+    ap.add_argument('--recheck', action='store_true',
+                    help='compile nothing: run the equivalence check again on the modules already compiled in '
+                         '<out>/new (after the check itself changed) and rewrite results.jsonl')
     a = ap.parse_args()
     os.environ['GRH_SLOTS'] = str(a.jobs)
     from compile_one import compile_module          # after GRH_SLOTS is set
@@ -50,11 +53,46 @@ def main():
     with open(a.modules) as fh:
         modules = [l.strip() for l in fh if l.strip()]
     todo = [m for m in modules if m not in done]
-    print(f'{len(modules)} modules, {len(done)} already done, {len(todo)} to compile, {a.jobs} at a time', flush=True)
-
     lock = threading.Lock()
     t0 = time.time()
     counter = [0, 0]                                 # finished, good
+
+    def checked(m, rec):
+        """Run the equivalence check on a compiled module and put its outcome into the record."""
+        res, old, new = IFACE.check_module(m, new_dir)
+        rec.update({'compatible': res['compatible'], 'breaking': res['breaking'][:5],
+                    'added': [n for n in res['added'] if not IFACE.AUX.search(n)][:5],
+                    'aux_to_check': len(res['aux_to_check']), 'strict': res.get('strict'),
+                    'signature_changed': res.get('signature_changed', [])[:5],
+                    'ext_changed': res.get('ext_changed'), 'ns_added': res.get('ns_added'),
+                    'ns_removed': res.get('ns_removed')})
+        return rec
+
+    if a.recheck:
+        again = [m for m in modules if done.get(m, {}).get('ok')]
+        print(f'{len(modules)} modules, {len(again)} compiled; checking them again, {a.jobs} at a time', flush=True)
+
+        def recheck(m):
+            try:
+                rec = checked(m, dict(done[m]))
+            except Exception as e:                   # noqa
+                rec = dict(done[m]); rec.update({'compatible': False, 'breaking': [f'exception: {e}']})
+            with lock:
+                done[m] = rec
+                counter[0] += 1
+                if counter[0] % 2000 == 0:
+                    print(f'{counter[0]}/{len(again)} checked, {time.time() - t0:.0f}s', flush=True)
+
+        with ThreadPoolExecutor(max_workers=a.jobs) as pool:
+            list(pool.map(recheck, again))
+        tmp = results_path + '.tmp'
+        with open(tmp, 'w') as fh:
+            for m, rec in done.items():
+                fh.write(json.dumps(rec) + '\n')
+        os.replace(tmp, results_path)
+        todo = []
+    else:
+        print(f'{len(modules)} modules, {len(done)} already done, {len(todo)} to compile, {a.jobs} at a time', flush=True)
 
     def work(m):
         try:
@@ -62,10 +100,7 @@ def main():
             rec = {'module': m, 'ok': r['ok'], 'time_s': r.get('time_s'), 'cpu_s': r.get('cpu_s'),
                    'wall_s': r.get('wall_s'), 'max_rss_mb': r.get('max_rss_mb'), 'sorry': r.get('mentions_sorry')}
             if r['ok']:
-                res, old, new = IFACE.check_module(m, new_dir)
-                rec.update({'compatible': res['compatible'], 'breaking': res['breaking'][:5],
-                            'added': [n for n in res['added'] if not IFACE.AUX.search(n)][:5],
-                            'aux_to_check': len(res['aux_to_check'])})
+                checked(m, rec)
             else:
                 rec['error'] = (r.get('messages_tail') or r.get('error') or '')[-400:]
         except Exception as e:                       # noqa: keep the batch going
@@ -98,7 +133,12 @@ def main():
             d = C.load_json(C.module_path(m, new_dir, '.ilean'), {}) or {}
             for name, r in (d.get('decls') or {}).items():
                 fh.write(f'{m}\t{r[0]}\t{r[1]}\t{r[2]}\t{r[3]}\t{name}\n')
-    print(f'finished: {len(good)} good of {len(modules)}; {time.time() - t0:.0f}s', flush=True)
+    why = {'did not compile': sum(1 for m in modules if m in done and not done[m].get('ok')),
+           'statement or signature differs': sum(1 for m in modules if done.get(m, {}).get('ok') and done[m].get('breaking')),
+           'registers different things': sum(1 for m in modules if done.get(m, {}).get('ok')
+                                              and (done[m].get('ext_changed') or done[m].get('ns_removed'))),
+           'not attempted': sum(1 for m in modules if m not in done)}
+    print(f'finished: {len(good)} good of {len(modules)}; not good: {why}; {time.time() - t0:.0f}s', flush=True)
 
 
 if __name__ == '__main__':

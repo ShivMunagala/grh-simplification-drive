@@ -18,17 +18,30 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 183.1M, written-out proof size 2.79B, time change -7.5" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 183.1M, written-out proof size 2.78B, time change -180.7" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 183,118,012 | −227 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,787,043,943 | −2,260,356 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -7.5 | −7.5 |
+| Source size (tokens) | 183,118,239 | 183,119,401 | +1,162 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,780,473,858 | −8,830,441 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -180.7 | −180.7 |
 
-Cone: 1,265,167 declarations in 146,536 files. Recorded changes: 4. Latest row: prove same_basic without taking the structures apart (2026-11-21 21:24 UTC).
+Cone: 1,265,168 declarations in 146,536 files. Recorded changes: 5. Latest row: sigSpan_copy and nine IsClassSystem transfer proofs without taking the structures apart (2026-11-22 02:14 UTC).
 <!-- dials:end -->
+
+## Milestones
+
+| When | Milestone | Status |
+|---|---|---|
+| 2026-11-21 | Archive measured: what the five theorems depend on, and the three dials for it | done |
+| 2026-11-21 | Judge working: a change is compiled, checked and measured before it is recorded | done |
+| 2026-11-22 | First heavy proofs rewritten without taking large structures apart | done |
+| 2026-11-22 | Restatements removed: theorems that only repeat another theorem's statement and cite it | running |
+| | Sweep of the heaviest proofs, one family of cause at a time | started |
+| | Sweep of repetitions: the same statement proved more than once | next |
+| | Sweep of repetitions: the same argument written out in many proofs | next |
+| | Plain-language map of the argument: which known theorems it rests on, and what each costs | next |
 
 ## Fixed
 
@@ -120,8 +133,9 @@ pre-filter: a full rebuild with Comparator on a large machine remains the final 
 
 ## Layout
 
-- `patches/` — our changes to the proof: deleted paths, a diff of changed and added files, and the hash of the
-  archive they apply to. Empty until the first change.
+- `patches/` — our changes to the proof, with no line of the archive in them: paths of deleted files, names
+  of rewritten wrappers, and for every other changed file the line ranges to replace plus the replacement
+  lines, pinned by the sha256 of the archive's file. Also the hash of the archive they apply to.
 - `tools/` — fetching, measuring, judging, recording.
 - `campaign/` — briefs and results of organised efforts; `campaign/proof-shrink/RESULTS.md` has the first one.
 - `baseline/` — dials, caps and dependency ranking for the unmodified archive.
@@ -143,6 +157,16 @@ Not in git: `proof/` (the archive with our patches applied, its own local reposi
   [Sutherland's verification page](https://math.mit.edu/~drew/grh/),
   [mirror with Comparator setup and build cache](https://github.com/leanprover-community/riemann-hypothesis).
 - The archive was published without a licence, which is why it is fetched and not stored here.
+
+## Licence
+
+Apache License 2.0 (`LICENSE`), the same as Lean and Mathlib. It covers what is in this repository: the
+tools, the measurements, the write-ups, and the replacement text in `patches/`.
+
+It does not cover the proof archive. That is Levent Alpöge's work, it was published without a licence, and no
+line of it is stored here. Where a change only edits a line, the replacement line in `patches/` still
+resembles the line it replaces; the licence covers our part of it and nothing more. Applying `patches/`
+needs the archive, fetched from its author's site.
 
 ## Not built yet
 

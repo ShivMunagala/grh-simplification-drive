@@ -186,6 +186,7 @@ def main():
     ap.add_argument('--base', default=None,
                     help='commit in proof/ to compare with (default: the accepted commit, or the unmodified archive)')
     ap.add_argument('--only', default=None, help='comma-separated modules: judge only these changed files')
+    ap.add_argument('--only-file', default=None, help='the same, as a file with one module per line')
     ap.add_argument('--work', default=os.path.join(C.ROOT, 'build', 'judge'))
     ap.add_argument('--baseline', default=os.path.join(C.ROOT, 'baseline'))
     ap.add_argument('--propagate', action='store_true', help='also recompile modules that use what changed')
@@ -224,8 +225,11 @@ def main():
     report = {'base': base_commit, 'problems': [], 'notes': []}
 
     modified, added, removed = changed_files(base)
-    if a.only:
-        only = set(a.only.split(','))
+    if a.only or a.only_file:
+        only = set(a.only.split(',')) if a.only else set()
+        if a.only_file:
+            with open(a.only_file) as fh:
+                only |= {l.strip() for l in fh if l.strip()}
         skipped = [m for m in modified + added + removed if m not in only]
         if skipped:
             report['notes'].append(f'{len(skipped)} other changed files ignored because of --only')
@@ -341,9 +345,9 @@ def main():
                 except subprocess.CalledProcessError:
                     pass                                  # file is new relative to the base
             if bulk is not None and (m + '@new') in bulk:
-                old = bulk.get(m + '@old', {'decls': {}})['decls']
+                res = IFACE.compare_modules(bulk.get(m + '@old'), bulk[m + '@new'])
+                old = (bulk.get(m + '@old') or {'decls': {}})['decls']
                 new = bulk[m + '@new']['decls']
-                res = IFACE.compare(old, new)
                 res['module'] = m
             else:
                 res, old, new = IFACE.check_module(m, new_dir, old_path=old_olean)
@@ -373,8 +377,52 @@ def main():
                                         f'they must be recompiled (use --propagate, or a larger machine)')
             breaking_ids = {} if todo else breaking_ids
 
+    # What the recompiled modules register with Lean. A changed count of attributes, instances and
+    # the like, or a namespace that is gone, can change how other modules elaborate without any
+    # statement changing. A new namespace matters only if some `open` in the tree can resolve to it.
+    registers_changed, ns_added = [], collections.defaultdict(list)
+    for m, res in ifaces.items():
+        if res.get('ext_changed') or res.get('ns_removed'):
+            registers_changed.append({'module': m, 'entries': res.get('ext_changed'), 'namespaces_removed': res.get('ns_removed')})
+        for n in res.get('ns_added', []):
+            ns_added[n].append(m)
+    report['registers_changed'] = registers_changed[:20]
+    report['registers_changed_count'] = len(registers_changed)
+    report['namespaces_added'] = {}
+    ns_reasons = []
+    if ns_added:
+        import nscheck as NS
+        imports, registers = NS.load()
+        fresh = {}
+        for n, ms in sorted(ns_added.items()):
+            seen = NS.seen_by(imports, registers, n)
+            new_for = [m for m in ms if m not in seen]
+            report['namespaces_added'][n] = {'modules': len(ms), 'not_already_registered_by_an_import': len(new_for)}
+            if new_for:
+                fresh[n] = new_for
+        if fresh:
+            hits = NS.open_commands(sorted(fresh))
+            risky = {f'{k[0]} {k[1]}': len(v) for k, v in hits.items() if k[2] == 'proper suffix'}
+            report['namespaces_added_open_commands'] = {f'{k[0]} {k[1]} ({k[2]})': len(v) for k, v in hits.items()}
+            if risky:
+                ns_reasons.append(f'new namespaces {sorted(fresh)} can be reached by existing commands: {risky}')
+            else:
+                report['notes'].append(
+                    f'{sorted(fresh)} become registered namespaces; no `open` or `export` in the tree names a '
+                    'proper suffix of them, so no existing file can resolve to them')
+
     report['compiled'] = {m: {k: r.get(k) for k in ('ok', 'time_s', 'cpu_s', 'wall_s', 'max_rss_mb')} for m, r in compiled.items()}
-    report['interface'] = {m: {k: (v if not isinstance(v, list) else v[:20]) for k, v in r.items()} for m, r in ifaces.items()}
+    # per-module detail; for a large batch only the modules where something other than a proof changed
+    detail = ifaces if len(ifaces) <= 500 else {
+        m: r for m, r in ifaces.items()
+        if not r['compatible'] or r['added'] or r['aux_to_check'] or r.get('ext_changed')}
+    report['interface'] = {m: {k: (v if not isinstance(v, list) else v[:20]) for k, v in r.items()}
+                           for m, r in list(detail.items())[:2000]}
+    report['interface_counts'] = {
+        'modules': len(ifaces), 'compatible': sum(1 for r in ifaces.values() if r['compatible']),
+        'checked_strictly': sum(1 for r in ifaces.values() if r.get('strict')),
+        'proofs_changed': sum(len(r['proof_changed']) for r in ifaces.values()),
+        'declarations_added': sum(len(r['added']) for r in ifaces.values())}
 
     # tables for the new state: overlay rows of untouched modules + rows of what was just compiled
     ok_mods = [m for m, r in compiled.items() if r['ok']]
@@ -512,6 +560,10 @@ def main():
                                        f'{added_weight} nodes and the cone lost {-wri}')
             else:
                 fences.append('declaration over the size cap')
+        if registers_changed:
+            fences.append(f'{len(registers_changed)} recompiled module(s) register different attributes, instances '
+                          'or namespaces than before')
+        fences += ns_reasons
         if up or fences:
             verdict = 'review'
             report['review_reasons'] = [f'{k} went up' for k in up] + fences
@@ -534,6 +586,11 @@ def main():
         print(f'  {k}: {v}')
     for r in report.get('review_reasons', []):
         print('  review:', r)
+    for n, info in (report.get('namespaces_added') or {}).items():
+        print(f'  namespace {n}: newly registered by {info["modules"]} module(s), '
+              f'{info["not_already_registered_by_an_import"]} of which did not already import one that registers it')
+    for note in report.get('notes', [])[:6]:
+        print('  note:', note[:300])
     if report.get('progress'):
         print('  went down:', ', '.join(report['progress']))
     if report.get('exchange') and verdict == 'accept':

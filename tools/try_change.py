@@ -88,7 +88,14 @@ def main():
 
     reasons = []
     if not res['compatible']:
-        reasons.append('interface changed: ' + ', '.join(res['breaking'][:5]))
+        what = res['breaking'][:5] or [f'{k}: {a} -> {b} entries' for k, (a, b) in res.get('ext_changed', {}).items()] \
+            or ['namespaces removed: ' + ', '.join(res.get('ns_removed', []))]
+        reasons.append('interface changed: ' + ', '.join(what))
+    if res.get('signature_changed'):
+        print('  same statement but different argument names, explicit/implicit arguments or universe order: '
+              + ', '.join(res['signature_changed'][:5]))
+    if res.get('ns_added'):
+        print('  registers new namespaces (the judge decides whether that matters): ' + ', '.join(res['ns_added']))
     named_added = [n for n in res['added'] if not IFACE.AUX.search(n)]
     if k_new > k_old:
         # the one agreed trade: tokens may rise if the written-out size falls enough per token added

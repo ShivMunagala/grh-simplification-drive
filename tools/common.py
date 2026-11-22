@@ -119,8 +119,11 @@ def run_timed(cmd, mem_gb=None, stdin=None, stdout=None, stderr=None, timeout=No
     return rc, cpu, wall, after.ru_maxrss / 1024.0
 
 
-def moddump(pairs, extra=('--noshared',)):
-    """Run moddump (sandboxed) on (module, olean path) pairs; return its output lines as bytes."""
+def moddump(pairs, extra=('--noshared', '--strict')):
+    """Run moddump (sandboxed) on (module, olean path) pairs; return its output lines as bytes.
+
+    `--strict` adds, per declaration, hashes that also cover argument names and kinds, and per
+    module what it registers with Lean (see tools/moddump/ModDump.lean)."""
     tooldir = os.path.dirname(MODDUMP)
     # everything normally lives under the repository; bind that once, plus any stray directories
     dirs = sorted({os.path.dirname(os.path.abspath(p)) for _, p in pairs
@@ -134,9 +137,14 @@ def moddump(pairs, extra=('--noshared',)):
 
 
 def parse_consts(lines):
-    """Parse moddump output into {module: {name: record}}."""
+    """Parse moddump output into {module: {'decls': {name: record}, 'imports', 'ext', 'namespaces', 'error'}}.
+
+    `ext` (extension -> number of entries) and `namespaces` are None unless moddump ran with
+    --strict; a declaration record then also has 'st', 'sv', 'lp' (strict statement hash, strict
+    body hash, universe parameter hash)."""
     mods = {}
     cur = None
+    last = None
     for line in lines:
         if not line:
             continue
@@ -144,17 +152,30 @@ def parse_consts(lines):
         tag = f[0]
         if tag == b'M':
             cur = f[1].decode()
-            mods[cur] = {'imports': f[3].decode().split(',') if len(f) > 3 and f[3] else [], 'decls': {}, 'error': None}
+            last = None
+            mods[cur] = {'imports': f[3].decode().split(',') if len(f) > 3 and f[3] else [], 'decls': {}, 'error': None,
+                         'ext': None, 'namespaces': None}
         elif tag == b'C' and len(f) == 10 and cur is not None:
-            mods[cur]['decls'][f[9].decode('utf-8', 'replace')] = {
+            last = mods[cur]['decls'][f[9].decode('utf-8', 'replace')] = {
                 'kind': f[1].decode(), 'id': int(f[2]), 'tsize': int(f[3]), 'vsize': int(f[4]),
                 'thash': int(f[5]), 'vhash': int(f[6]),
                 'tdeps': [int(x) for x in f[7].split(b' ')] if f[7] else [],
                 'vdeps': [int(x) for x in f[8].split(b' ')] if f[8] else [],
             }
+        elif tag == b'S' and last is not None and len(f) >= 5 and int(f[1]) == last['id']:
+            last['st'], last['sv'], last['lp'] = int(f[2]), int(f[3]), int(f[4])
+        elif tag == b'A' and cur is not None:
+            ext = {}
+            for kv in (f[2].decode().split(',') if len(f) > 2 and f[2] else []):
+                k, _, v = kv.rpartition('=')
+                ext[k] = int(v)
+            mods[cur]['ext'] = ext
+        elif tag == b'N' and cur is not None:
+            mods[cur]['namespaces'] = f[2].decode().split(',') if len(f) > 2 and f[2] else []
         elif tag == b'X':
             m = f[1].decode()
-            mods.setdefault(m, {'imports': [], 'decls': {}, 'error': None})['error'] = b'\t'.join(f[2:]).decode('utf-8', 'replace')
+            mods.setdefault(m, {'imports': [], 'decls': {}, 'error': None, 'ext': None, 'namespaces': None})['error'] = \
+                b'\t'.join(f[2:]).decode('utf-8', 'replace')
     return mods
 
 

@@ -1,0 +1,4 @@
+This earlier version of patches/changes.patch was removed from the history on 2026-11-22.
+The formats used before that date could repeat text of the archive: whole edited lines at
+first, later any piece of a file that a rewrite kept or moved. The current file gives such
+pieces as positions and stores only text written for this project; it holds every change.
