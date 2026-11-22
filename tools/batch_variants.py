@@ -83,7 +83,7 @@ def main():
                             'old_written_out': size_of(old), 'written_out': size_of(new)})
             else:
                 rec['error'] = (r.get('messages_tail') or r.get('error') or '')[-500:]
-            if m in timed and vid in ('all',):
+            if m in timed:                               # once per module, with whichever variant comes first
                 with lock:
                     need = m not in old_times
                     if need:

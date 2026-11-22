@@ -23,3 +23,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-22T08:38:07Z,65b541094,clear_value after set where the value contains a power (16 lines; 12 files),176229350,2730155019,-2886.5,1260827,146522
 2026-11-22T09:10:57Z,b6bfe4e0c,kept parts between dropped ones read by projection (197 lines; 186 files),176229191,2729058271,-2880.3,1260827,146522
 2026-11-22T09:52:17Z,c034e7479,dropped parts of patterns skipped by projection; second round (2712 lines; 2188 files),176217753,2723260092,-2880.9,1260827,146526
+2026-11-22T10:05:02Z,43cc9f42e,citations of a copy written in their short form (9676 theorems; 6127 files),176113724,2723260092,-2855.6,1260827,146526
