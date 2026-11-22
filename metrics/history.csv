@@ -40,3 +40,5 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-22T16:40:44Z,fcea855cb,GlobalTheory list of unneeded parts: 22 files; jetRoad trimmed from 14 conjuncts to 9; ten bundles bypassed or split,176479130,2685407803,-3910.9,1256680,146243
 2026-11-22T17:23:53Z,fb9aa782d,fourth list of unneeded parts: 25 files; two statements trimmed; bundles bypassed or split,176431681,2684702811,-3916.1,1256340,146221
 2026-11-22T17:47:53Z,8e765fbf9,fifth list of unneeded parts: 34 files; four statements trimmed; bundles bypassed or split,176379652,2684030388,-3921.5,1256010,146191
+2026-11-22T18:08:38Z,9ef3c2e1c,6343 local steps whose result nothing uses deleted in 2099 files (first round),176254120,2682414937,-3958.9,1255876,146191
+2026-11-22T18:19:25Z,a1577dc43,fourth list: last file (a bundle of four bypassed),176252414,2682395289,-3954.9,1255860,146191
