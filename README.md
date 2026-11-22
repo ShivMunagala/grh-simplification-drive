@@ -18,16 +18,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.6M, written-out proof size 2.77B, time change -2.23K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.6M, written-out proof size 2.77B, time change -2.25K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 176,619,432 | −6,498,807 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,770,710,875 | −18,593,424 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,229.3 | −2,229.3 |
+| Source size (tokens) | 183,118,239 | 176,620,635 | −6,497,604 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,766,788,620 | −22,515,679 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,248.5 | −2,248.5 |
 
-Cone: 1,265,042 declarations in 146,536 files. Recorded changes: 8. Latest row: wave 3: record_heq; exists_sameVec; simpleU_rev_and_sq; fIwasawa_perm (2026-11-22 03:57 UTC).
+Cone: 1,265,044 declarations in 146,536 files. Recorded changes: 9. Latest row: one shared statement for a six-deep choose chain (rl_spec) (2026-11-22 04:25 UTC).
 <!-- dials:end -->
 
 ## Milestones

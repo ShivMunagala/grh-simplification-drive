@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 524" width="760" height="524" role="img" font-family="system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif">
-<title>Dials over time. Latest: Source size 176.6M; Written-out proof size 2.77B; Time change -2.23K</title>
+<title>Dials over time. Latest: Source size 176.6M; Written-out proof size 2.77B; Time change -2.25K</title>
 <rect x="0.5" y="0.5" width="759" height="523" rx="8" fill="#1a1a19" stroke="rgba(255,255,255,0.10)"/>
 <text x="70" y="30" font-size="13" fill="#f0efec" font-weight="600">Source size<tspan font-weight="400" fill="#898781" dx="6">tokens</tspan></text>
 <text x="736" y="30" font-size="12" text-anchor="end" fill="#0ca30c"><tspan font-size="14" font-weight="600" fill="#f0efec">176.6M</tspan><tspan dx="8">▼ 6.50M (3.55%) since baseline</tspan></text>
@@ -10,37 +10,39 @@
 <line x1="70" y1="48.0" x2="736" y2="48.0" stroke="#2c2c2a" stroke-width="1"/>
 <text x="62" y="52.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">185M</text>
 <line x1="70" y1="150" x2="736" y2="150" stroke="#383835" stroke-width="1"/>
-<path d="M70.0,67.2 L118.4,67.2 L118.4,67.2 L143.0,67.2 L143.0,67.2 L217.6,67.2 L217.6,67.2 L236.5,67.2 L236.5,67.2 L605.2,67.2 L605.2,67.2 L674.3,67.2 L674.3,67.2 L717.7,67.2 L717.7,133.5 L736.0,133.5 L736.0,133.5" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M70.0,67.2 L115.9,67.2 L115.9,67.2 L139.2,67.2 L139.2,67.2 L209.9,67.2 L209.9,67.2 L227.8,67.2 L227.8,67.2 L577.4,67.2 L577.4,67.2 L642.9,67.2 L642.9,67.2 L684.0,67.2 L684.0,133.5 L701.4,133.5 L701.4,133.5 L736.0,133.5 L736.0,133.5" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
 <circle cx="70.0" cy="67.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="118.4" cy="67.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="143.0" cy="67.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="217.6" cy="67.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="236.5" cy="67.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="605.2" cy="67.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="674.3" cy="67.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="717.7" cy="133.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="115.9" cy="67.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="139.2" cy="67.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="209.9" cy="67.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="227.8" cy="67.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="577.4" cy="67.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="642.9" cy="67.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="684.0" cy="133.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="701.4" cy="133.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
 <circle cx="736.0" cy="133.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
 <text x="70" y="198" font-size="13" fill="#f0efec" font-weight="600">Written-out proof size<tspan font-weight="400" fill="#898781" dx="6">term nodes</tspan></text>
-<text x="736" y="198" font-size="12" text-anchor="end" fill="#0ca30c"><tspan font-size="14" font-weight="600" fill="#f0efec">2.77B</tspan><tspan dx="8">▼ 18.6M (0.67%) since baseline</tspan></text>
+<text x="736" y="198" font-size="12" text-anchor="end" fill="#0ca30c"><tspan font-size="14" font-weight="600" fill="#f0efec">2.77B</tspan><tspan dx="8">▼ 22.5M (0.81%) since baseline</tspan></text>
 <line x1="70" y1="318.0" x2="736" y2="318.0" stroke="#2c2c2a" stroke-width="1"/>
-<text x="62" y="322.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.77B</text>
+<text x="62" y="322.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.76B</text>
 <line x1="70" y1="267.0" x2="736" y2="267.0" stroke="#2c2c2a" stroke-width="1"/>
 <text x="62" y="271.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.78B</text>
 <line x1="70" y1="216.0" x2="736" y2="216.0" stroke="#2c2c2a" stroke-width="1"/>
-<text x="62" y="220.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.79B</text>
+<text x="62" y="220.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.80B</text>
 <line x1="70" y1="318" x2="736" y2="318" stroke="#383835" stroke-width="1"/>
-<path d="M70.0,219.5 L118.4,219.5 L118.4,219.5 L143.0,219.5 L143.0,219.5 L217.6,219.5 L217.6,220.3 L236.5,220.3 L236.5,231.1 L605.2,231.1 L605.2,264.6 L674.3,264.6 L674.3,307.5 L717.7,307.5 L717.7,307.5 L736.0,307.5 L736.0,314.4" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-<circle cx="70.0" cy="219.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="118.4" cy="219.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="143.0" cy="219.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="217.6" cy="220.3" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="236.5" cy="231.1" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="605.2" cy="264.6" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="674.3" cy="307.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="717.7" cy="307.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="736.0" cy="314.4" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<path d="M70.0,243.3 L115.9,243.3 L115.9,243.3 L139.2,243.3 L139.2,243.3 L209.9,243.3 L209.9,243.6 L227.8,243.6 L227.8,249.0 L577.4,249.0 L577.4,265.8 L642.9,265.8 L642.9,287.2 L684.0,287.2 L684.0,287.2 L701.4,287.2 L701.4,290.7 L736.0,290.7 L736.0,300.7" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="70.0" cy="243.3" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="115.9" cy="243.3" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="139.2" cy="243.3" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="209.9" cy="243.6" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="227.8" cy="249.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="577.4" cy="265.8" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="642.9" cy="287.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="684.0" cy="287.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="701.4" cy="290.7" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="736.0" cy="300.7" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
 <text x="70" y="366" font-size="13" fill="#f0efec" font-weight="600">Time change<tspan font-weight="400" fill="#898781" dx="6">CPU seconds on recompiled files, running total</tspan></text>
-<text x="736" y="366" font-size="12" text-anchor="end" fill="#0ca30c"><tspan font-size="14" font-weight="600" fill="#f0efec">−2.23K</tspan><tspan dx="8">▼ 2.23K since baseline</tspan></text>
+<text x="736" y="366" font-size="12" text-anchor="end" fill="#0ca30c"><tspan font-size="14" font-weight="600" fill="#f0efec">−2.25K</tspan><tspan dx="8">▼ 2.25K since baseline</tspan></text>
 <line x1="70" y1="486.0" x2="736" y2="486.0" stroke="#2c2c2a" stroke-width="1"/>
 <text x="62" y="490.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">-4K</text>
 <line x1="70" y1="452.0" x2="736" y2="452.0" stroke="#2c2c2a" stroke-width="1"/>
@@ -50,24 +52,25 @@
 <line x1="70" y1="384.0" x2="736" y2="384.0" stroke="#2c2c2a" stroke-width="1"/>
 <text x="62" y="388.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2K</text>
 <line x1="70" y1="486" x2="736" y2="486" stroke="#383835" stroke-width="1"/>
-<path d="M70.0,418.0 L118.4,418.0 L118.4,418.0 L143.0,418.0 L143.0,418.0 L217.6,418.0 L217.6,418.0 L236.5,418.0 L236.5,418.1 L605.2,418.1 L605.2,421.1 L674.3,421.1 L674.3,423.7 L717.7,423.7 L717.7,454.9 L736.0,454.9 L736.0,455.9" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M70.0,418.0 L115.9,418.0 L115.9,418.0 L139.2,418.0 L139.2,418.0 L209.9,418.0 L209.9,418.0 L227.8,418.0 L227.8,418.1 L577.4,418.1 L577.4,421.1 L642.9,421.1 L642.9,423.7 L684.0,423.7 L684.0,454.9 L701.4,454.9 L701.4,455.9 L736.0,455.9 L736.0,456.2" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
 <circle cx="70.0" cy="418.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="118.4" cy="418.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="143.0" cy="418.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="217.6" cy="418.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="236.5" cy="418.1" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="605.2" cy="421.1" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="674.3" cy="423.7" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="717.7" cy="454.9" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="736.0" cy="455.9" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="115.9" cy="418.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="139.2" cy="418.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="209.9" cy="418.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="227.8" cy="418.1" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="577.4" cy="421.1" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="642.9" cy="423.7" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="684.0" cy="454.9" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="701.4" cy="455.9" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="736.0" cy="456.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
 <line x1="70.0" y1="486" x2="70.0" y2="490" stroke="#383835" stroke-width="1"/>
 <text x="70.0" y="504" font-size="11" text-anchor="start" fill="#898781">21 Nov 19:14</text>
 <line x1="236.5" y1="486" x2="236.5" y2="490" stroke="#383835" stroke-width="1"/>
-<text x="236.5" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 21:24</text>
+<text x="236.5" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 21:32</text>
 <line x1="403.0" y1="486" x2="403.0" y2="490" stroke="#383835" stroke-width="1"/>
-<text x="403.0" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 23:35</text>
+<text x="403.0" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 23:50</text>
 <line x1="569.5" y1="486" x2="569.5" y2="490" stroke="#383835" stroke-width="1"/>
-<text x="569.5" y="504" font-size="11" text-anchor="middle" fill="#898781">22 Nov 01:46</text>
+<text x="569.5" y="504" font-size="11" text-anchor="middle" fill="#898781">22 Nov 02:07</text>
 <line x1="736.0" y1="486" x2="736.0" y2="490" stroke="#383835" stroke-width="1"/>
-<text x="736.0" y="504" font-size="11" text-anchor="end" fill="#898781">22 Nov 03:57</text>
+<text x="736.0" y="504" font-size="11" text-anchor="end" fill="#898781">22 Nov 04:25</text>
 </svg>
