@@ -18,16 +18,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 183.1M, written-out proof size 2.77B, time change -334.8" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.6M, written-out proof size 2.77B, time change -2.17K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 183,120,272 | +2,033 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,772,068,048 | −17,236,251 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -334.8 | −334.8 |
+| Source size (tokens) | 183,118,239 | 176,618,818 | −6,499,421 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,772,067,606 | −17,236,693 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,173.2 | −2,173.2 |
 
-Cone: 1,265,169 declarations in 146,536 files. Recorded changes: 6. Latest row: wave 2: six heavy transfer proofs without taking the structures apart (2026-11-22 03:08 UTC).
+Cone: 1,265,169 declarations in 146,536 files. Recorded changes: 7. Latest row: restating theorems turned into aliases (32172 files) (2026-11-22 03:42 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -36,10 +36,13 @@ Cone: 1,265,169 declarations in 146,536 files. Recorded changes: 6. Latest row: 
 |---|---|---|
 | 2026-11-21 | Archive measured: what the five theorems depend on, and the three dials for it | done |
 | 2026-11-21 | Judge working: a change is compiled, checked and measured before it is recorded | done |
-| 2026-11-22 | First heavy proofs rewritten without taking large structures apart | done |
-| 2026-11-22 | Restatements removed: theorems that only repeat another theorem's statement and cite it | running |
-| | Sweep of the heaviest proofs, one family of cause at a time | started |
-| | Sweep of repetitions: the same statement proved more than once | next |
+| 2026-11-22 | First heavy proofs rewritten without taking large structures apart (waves 1 and 2) | done |
+| 2026-11-22 | Restatements removed: 32,172 theorems that only repeated another theorem's statement and cited it are now aliases. Source size −3.5% | done |
+| 2026-11-22 | Repetition measured: 28,313 statements are proved independently more than once ([details](campaign/repetition/RESULTS.md)) | done |
+| | Repetition sweep, part 1: a duplicate proof cites a copy its file already imports | running |
+| | Repetition sweep, part 2: a duplicate proof takes over the shortest proof of the same statement | next |
+| | Repetition sweep, part 3: duplicates in files that cannot see each other share one proof | needs a rule for added imports |
+| | Sweep of the heaviest proofs, one family of cause at a time (wave 3) | running |
 | | Sweep of repetitions: the same argument written out in many proofs | next |
 | | Plain-language map of the argument: which known theorems it rests on, and what each costs | next |
 

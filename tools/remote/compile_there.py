@@ -40,7 +40,8 @@ def main():
         src = C.module_path(m)
         subprocess.run(rsync + [src, f'{host}:{rpath}/proof/src/{rel}.lean'], check=True,
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        cmd = (f'cd {rpath} && export PATH=$HOME/.elan/bin:$PATH GRH_NO_SANDBOX=1 && '
+        # GRH_SLOTS well above what a batch running there uses, so this check does not wait behind it
+        cmd = (f'cd {rpath} && export PATH=$HOME/.elan/bin:$PATH GRH_NO_SANDBOX=1 GRH_SLOTS=160 && '
                f'python3 tools/try_change.py {m}')
         p = subprocess.run(ssh + [cmd], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
         text = p.stdout.decode('utf-8', 'replace')

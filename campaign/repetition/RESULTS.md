@@ -39,7 +39,22 @@ compares the statement before and after strictly.
 - The index file of an alias has no source range, so the token count takes the range stored in the compiled
   module. Otherwise an alias would count as zero tokens.
 
-Result: pending (batch running).
+- Spot check of the claim that nothing else needs rebuilding: 120 files that import rewritten ones were
+  recompiled with the aliases swapped in. All 120 came out identical to their accepted compiled form,
+  declaration by declaration, proofs included. A control run on 37 files with nothing swapped in was
+  identical too, so a plain recompile is reproducible.
+
+Result, recorded 2026-11-22: 32,172 of the 34,430 rewritten files pass the strict check and are now aliases;
+2,258 are left as they were because the alias would rename an argument. Source size −6,501,454 tokens
+(3.55% of the dial), written-out size −442 nodes. Time, measured on a random 3,000 of the files before and
+after under the same load on the rented machine: 8,143 s → 6,305 s.
+
+Seven of the files make `GlobalTheory` visible for the first time to what imports them (85 files, one of
+which did not see it before). None of those 85 opens a namespace of that name, so nothing resolves differently.
+
+Still open in this tier: the 2,258 files with renamed arguments (an alias is only safe there if no user
+passes that argument by name; checking that needs their users recompiled), and about 3,000 restating
+theorems whose statement is not literally the cited one.
 
 ## Tier 2: duplicate proofs become citations
 

@@ -51,6 +51,16 @@ It compiles that one file against the already-compiled rest of the project (sand
 compile errors, or the before/after numbers for the file and for each changed declaration, ending with
 `PRECHECK: pass` or `PRECHECK: fail (reasons)`.
 
+If the coordinator tells you a rented machine is available, use this instead. It sends your file there,
+runs the same check, prints the same report, and brings the compiled result back:
+
+```
+python3 tools/remote/compile_there.py <Module.Name> --out build/pre/<your label>
+```
+
+A run there takes one to five minutes instead of a quarter of an hour, and runs do not queue. Use only
+one of the two commands for a given file, and still think before each run.
+
 If you add a helper in one file and use it in another, check the helper's file first, then the user:
 the tool compiles a file against the accepted versions of other files, so the second check will only
 see your helper once the first file's change has been judged and recorded. Say so in your report and

@@ -113,8 +113,9 @@ def table_blocks(path):
         yield cur, buf
 
 
-def users_of(ids, exclude_modules, overlay_mods, overlay_removed):
-    """Which declarations of the accepted state (by module) mention any of the given ids?"""
+def users_of(ids, exclude_modules, overlay_mods, overlay_removed, used=None):
+    """Which declarations of the accepted state (by module) mention any of the given ids?
+    If `used` is a set, the ids that are mentioned are added to it."""
     want = {str(i).encode() for i in ids}
     users = collections.defaultdict(list)
     sources = [(os.path.join(C.DATA_BASE, 'consts.tsv.zst'), exclude_modules | overlay_mods | overlay_removed)]
@@ -134,6 +135,8 @@ def users_of(ids, exclude_modules, overlay_mods, overlay_removed):
                     continue
                 if (f[7] and not want.isdisjoint(f[7].split(b' '))) or (f[8] and not want.isdisjoint(f[8].split(b' '))):
                     users[cur].append(f[9].decode('utf-8', 'replace'))
+                    if used is not None:
+                        used.update(int(x) for x in (want & (set(f[7].split(b' ')) | set(f[8].split(b' ')))))
     return users
 
 
@@ -194,6 +197,9 @@ def main():
     ap.add_argument('--precompiled', default=None,
                     help='directory holding new/<Module>.olean and .ilean compiled elsewhere (tools/batch_compile.py '
                          'on a rented machine). Nothing is compiled here; interfaces and dials are still checked here.')
+    ap.add_argument('--drop-used', action='store_true',
+                    help='with --precompiled: leave out modules whose change removes or alters something another '
+                         'module still mentions (they are listed in <work>/left_out.txt), and judge the rest')
     ap.add_argument('--threads', type=int, default=1)
     ap.add_argument('--mem-gb', type=float, default=8.0)
     ap.add_argument('--max-propagate', type=int, default=50)
@@ -253,7 +259,7 @@ def main():
 
     # fence 2: no new macros or notation
     paths = [to_path(m) for m in modified + added]
-    diff = git('diff', '-U0', base, '--', *paths) if paths else ''
+    diff = ''.join(git('diff', '-U0', base, '--', *paths[i:i + 400]) for i in range(0, len(paths), 400))
     new_syntax = [l[:160] for l in diff.splitlines() if NEW_SYNTAX.match(l)]
     report['fence_new_syntax'] = new_syntax[:20]
 
@@ -305,6 +311,7 @@ def main():
     compiled, ifaces = {}, {}
     time_before = time_after = 0.0
     breaking_ids = {}
+    breaking_owner = {}
     news, olds = {}, {}
     rounds = 0
     handled_users = set()
@@ -361,6 +368,7 @@ def main():
             for nm in res['breaking'] + res['aux_to_check']:
                 if nm in old:
                     breaking_ids[old[nm]['id']] = nm
+                    breaking_owner[old[nm]['id']] = m
         todo = []
         # declarations of deleted modules are gone too
         if rounds == 1 and removed:
@@ -370,8 +378,48 @@ def main():
                     for nm, rec in info['decls'].items():
                         breaking_ids[rec['id']] = nm
         if breaking_ids:
-            users = users_of(breaking_ids.keys(), set(compiled) | set(removed), overlay_mods, overlay_removed)
-            users = {m: v for m, v in users.items() if m not in handled_users}
+            left_out = report.setdefault('left_out', [])
+            while True:
+                used = set()
+                users = users_of(breaking_ids.keys(), set(compiled) | set(removed), overlay_mods, overlay_removed, used)
+                users = {m: v for m, v in users.items() if m not in handled_users}
+                if bulk is not None:
+                    # Modules compiled elsewhere were each compiled against the accepted state, not against
+                    # each other: one of them may still mention what another one changed or removed.
+                    for m2, decls in news.items():
+                        hit = []
+                        for nm, rec in decls.items():
+                            ids = [d for d in rec['tdeps'] + rec['vdeps'] if d in breaking_ids]
+                            if ids:
+                                hit.append(nm)
+                                used.update(ids)
+                        if hit:
+                            users.setdefault(m2, []).extend(hit)
+                owners = {breaking_owner[i] for i in used if i in breaking_owner}
+                if not (bulk is not None and a.drop_used and users and owners):
+                    break
+                # Leave those modules as they are in the accepted state, and look again: a module that
+                # is no longer part of the change may itself use what another one removes.
+                for m in owners:
+                    for d in (compiled, ifaces, news, olds, snapshot):
+                        d.pop(m, None)
+                    report['changed_hashes'].pop(to_path(m), None)
+                    left_out.append(m)
+                modified[:] = [m for m in modified if m not in owners]
+                added[:] = [m for m in added if m not in owners]
+                breaking_ids = {i: nm for i, nm in breaking_ids.items() if breaking_owner.get(i) not in owners}
+                print(f'  left out {len(owners)} module(s): another module uses what their change removes or alters', flush=True)
+                if not breaking_ids:
+                    users = {}
+                    break
+            if left_out:
+                with open(os.path.join(work, 'left_out.txt'), 'w') as fh:
+                    fh.write('\n'.join(to_path(m) for m in left_out) + '\n')
+                report['notes'].append(f'{len(left_out)} module(s) were left out because another module uses what their '
+                                       'change removes or alters; their files must be restored before committing')
+                time_after = sum(pre_times[m]['after'] for m in compiled if m in pre_times)
+                time_before = sum(pre_times[m]['before'] for m in compiled if m in pre_times)
+            report['changed_or_removed'] = sorted(breaking_ids.values())[:200]
             report['users_of_changed'] = {m: v[:5] for m, v in list(users.items())[:50]}
             report['users_of_changed_count'] = len(users)
             if users and a.propagate and len(users) <= a.max_propagate:
