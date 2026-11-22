@@ -40,7 +40,13 @@ def main():
     # --checksum: files the machine compiled itself and already holds are recognised by content, not by date
     run(rsync + ['--delete', '--checksum', os.path.join(C.ROOT, 'compiled-overlay') + '/',
                  f'{host}:{rpath}/compiled-overlay/'], check=True)
-    run(rsync + [C.DATA_OVERLAY + '/', f'{host}:{rpath}/data/overlay/'], check=True)
+    # state.json names a commit of the proof repository here, which the machine does not have. It is sent
+    # under another name and put in place at the end with the machine's own commit, in one step, so that
+    # jobs running there never see a state that names a commit they cannot read.
+    run(rsync + ['--exclude', 'state.json', '--exclude', 'state.json.incoming', C.DATA_OVERLAY + '/',
+                 f'{host}:{rpath}/data/overlay/'], check=True)
+    run(rsync + [os.path.join(C.DATA_OVERLAY, 'state.json'), f'{host}:{rpath}/data/overlay/state.json.incoming'],
+        check=True)
     # source of the modules recorded changes touched, as committed here
     rels = ['src/' + m.replace('.', '/') + '.lean' for m in state['modules']]
     with tempfile.TemporaryDirectory() as tmp:
@@ -72,11 +78,12 @@ git -C proof add --pathspec-from-file={rpath}/build/sync_files.txt
 git -C proof -c user.name=grh -c user.email=grh@localhost commit -q -m "accepted state" --only --pathspec-from-file={rpath}/build/sync_files.txt 2>/dev/null
 H=$(git -C proof rev-parse HEAD)
 python3 - "$H" <<PY
-import json, sys
+import json, os, sys
 p = "data/overlay/state.json"
-s = json.load(open(p))
+s = json.load(open(p + ".incoming"))
 s["proof_commit"] = sys.argv[1]
-json.dump(s, open(p, "w"), indent=1)
+json.dump(s, open(p + ".incoming", "w"), indent=1)
+os.replace(p + ".incoming", p)
 print("machine is at the accepted state:", len(s["modules"]), "changed modules; its commit", sys.argv[1][:10])
 PY
 '''
