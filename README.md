@@ -18,16 +18,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.2M, written-out proof size 2.74B, time change -2.88K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.2M, written-out proof size 2.73B, time change -2.89K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 176,236,896 | −6,881,343 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,736,118,994 | −53,185,305 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,875.6 | −2,875.6 |
+| Source size (tokens) | 183,118,239 | 176,229,318 | −6,888,921 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,730,248,045 | −59,056,254 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,891.9 | −2,891.9 |
 
-Cone: 1,260,826 declarations in 146,522 files. Recorded changes: 19. Latest row: row_of_pack: no cases x before cases pack (2026-11-22 08:12 UTC).
+Cone: 1,260,827 declarations in 146,522 files. Recorded changes: 20. Latest row: long conjunctions: dropped parts skipped by projection (1063 lines; 851 files) (2026-11-22 08:26 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -42,7 +42,7 @@ Cone: 1,260,826 declarations in 146,522 files. Recorded changes: 19. Latest row:
 | 2026-11-22 | Repetition sweep, part 1: 10,064 duplicate proofs now cite a copy their file already imports (two passes). Written-out size −0.5% | done |
 | 2026-11-22 | Heaviest proofs, waves 2 to 6: 50 proofs rewritten by hand, each kind of cause written up with its fix ([notes](campaign/proof-shrink/RESULTS.md)) | done |
 | | One shared lemma for 24 proofs that take the same record apart: 16 rewritten, 12.5 million nodes down to 0.6 million; not recorded | waits for the owner: the lemma needs one Lean tag the equivalence check sends to review |
-| 2026-11-22 | Long conjunctions read by projection instead of taken apart level by level. First batch: 88 lines in 56 files, −2.1 million nodes. Two larger batches are being compiled | in progress |
+| 2026-11-22 | Patterns that drop parts of a conjunction skip them by projection instead of matching them one by one. So far 1,151 lines in 907 files, −8.0 million nodes, no added source. More batches are being compiled | in progress |
 | | Repetition sweep, part 2: duplicates in files that cannot see each other share one proof | needs a rule for added imports |
 | | Heavy definitions built from chains of `choose` | next |
 | | More waves on the heaviest proofs | ongoing |

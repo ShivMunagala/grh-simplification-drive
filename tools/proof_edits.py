@@ -366,7 +366,7 @@ ATOM_RE = re.compile(r'^[^\s()\[\]{}⟨⟩@]+$')
 PLAIN_RE = re.compile(r"^[^\W\d][\w']*$")
 OPEN, CLOSE = '([{⟨', ')]}⟩'
 SPLIT = 6                          # dropped parts in a row, inside a pattern, from which a new line pays
-MIN_SAVED = 3                      # pattern entries a rewrite must save for a line to be touched
+MIN_SAVED = 3                      # levels of case split a rewrite must save for a line to be touched
 
 
 def split_site(line):
@@ -456,6 +456,13 @@ def projection_lines(line, next_indent, before, after, fresh, min_parts):
     if depth or term.split()[-1] in ('by', 'fun', '=>', ':=', 'with', 'at', 'from', '<|', '$', 'do'):
         return None
     atom = bool(ATOM_RE.match(term))
+    if not atom and term.startswith('('):                # `(f x).1` can be projected from as it stands
+        depth = 0
+        for j, ch in enumerate(term):
+            depth += (ch in OPEN) - (ch in CLOSE)
+            if depth == 0:
+                atom = bool(re.fullmatch(r"(\.[\w']+)*", term[j + 1:]))
+                break
     last_named = max(i for i in range(k) if not drop[i])
 
     # statements: (term to take apart, pattern entries); the first one keeps the line's keyword
@@ -488,15 +495,24 @@ def projection_lines(line, next_indent, before, after, fresh, min_parts):
         i = j
     if pat:
         stmts.append((cur, pat))
-    if k - sum(len(p) for _, p in stmts) < MIN_SAVED:    # too few levels saved to matter
+
+    def left_only(pat):
+        """`⟨h, -⟩` with h named like a hypothesis: the left part of a conjunction, read as `.1`."""
+        return len(pat) == 2 and pat[1] == '-' and pat[0][:1] in 'hH' and bool(IDENT_RE.match(pat[0]))
+
+    # A pattern of n entries is n - 1 levels of case split; a line that only projects has none.
+    levels = sum(0 if len(p) == 1 or left_only(p) else len(p) - 1 for _, p in stmts)
+    if (k - 1) - levels < MIN_SAVED:                      # too few levels saved to matter
         return None
+    if left_only(stmts[0][1]):
+        plain_first = False                              # the first line projects out of the term too
 
     def write(first, cur, pat):
         if first and plain_first:
             cur = term                                   # the whole term, as in the original line
         if len(pat) == 1:
             return f'have {pat[0]} := {cur}' if IDENT_RE.match(pat[0]) else f'obtain {pat[0]} := {cur}'
-        if len(pat) == 2 and pat[1] == '-' and pat[0][:1] in 'hH' and IDENT_RE.match(pat[0]) and not (first and plain_first):
+        if left_only(pat):
             return f'have {pat[0]} := {cur}.1'
         body = '⟨' + ', '.join(pat) + '⟩'
         if not first:
@@ -847,7 +863,7 @@ def main():
         pj.add_argument('--out', required=True)
         pj.add_argument('--min-parts', type=int, default=5)
         pj.add_argument('--min-nodes', type=int, default=20000)
-        pj.add_argument('--min-saved', type=int, default=MIN_SAVED, help='pattern entries a rewrite must save')
+        pj.add_argument('--min-saved', type=int, default=MIN_SAVED, help='levels of case split a rewrite must save')
         pj.add_argument('--skip', default=None, help='file naming modules to leave out, one per line')
     v = sub.add_parser('variants')
     v.add_argument('--edits', required=True); v.add_argument('--work', required=True)
