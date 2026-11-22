@@ -389,7 +389,9 @@ def main():
                     for m2, decls in news.items():
                         hit = []
                         for nm, rec in decls.items():
-                            ids = [d for d in rec['tdeps'] + rec['vdeps'] if d in breaking_ids]
+                            # (a module's own regenerated helpers keep their names: not a foreign use)
+                            ids = [d for d in rec['tdeps'] + rec['vdeps']
+                                   if d in breaking_ids and breaking_owner.get(d) != m2]
                             if ids:
                                 hit.append(nm)
                                 used.update(ids)

@@ -51,6 +51,43 @@ Techniques added by this wave:
 - Take hypotheses apart only just before the step that needs their parts, so earlier substitutions do not
   restate them.
 
+## Wave 3, 2026-11-22
+
+Four workers. Checks ran on a rented machine (one to five minutes each instead of a quarter of an hour), so a
+worker finished in 15 to 25 minutes.
+
+| Theorem | Written-out size | Source tokens | Compile time (file) | Outcome |
+|---|---|---|---|---|
+| `GlobalTheory.TwInputs.Move.Forms.record_heq` | 750,091 → 50,054 | 754 → 1,330 | 41.4 s → 11.6 s (file) | recorded |
+| `GlobalTheory.TwInputs.Move.Forms.exists_sameVec` | 215,910 → 10,458 | 232 → 387 | (same file) | recorded |
+| `GlobalTheory.simpleU_rev_and_sq` | 219,684 → 5,131 | 275 → 222 (file) | 9.3 s → 1.0 s | recorded |
+| `Formalism.UG.P.fIwasawa_perm` | 252,521 → 15,874 | 2,241 → 2,289 (file) | 28.6 s → 5.9 s | recorded |
+| `PositivityTheory.Rg.BcB.F.BC.limAtOf_holds` | 831,837 → 831,795 | −6 | unchanged within tolerance | recorded, but no real gain: 98% of the size is the statement of a six-deep `choose_spec` chain |
+| `GlobalTheory.TwInputs.Move.exists_restX`, `exists_restY` | unchanged | −106 (file) | unchanged | recorded: source only (`subst a b c` in one call) |
+| `GlobalTheory.T.geo_heq_geoHalf_of_same` | 235,821, unchanged | unchanged | — | no gain: one attempt hit the heartbeat limit, the other grew the proof; restored |
+| `GlobalTheory.ColRows.rowsU_of_colPins_alt`, `GlobalTheory.Mem.KeepRef.exists_thPW_keep` | | | | worker still running |
+
+The five recorded files together: source +614 tokens, written-out size −1,356,731 nodes, time 252.9 s → 196.8 s.
+
+Techniques added by this wave:
+
+- Word the equalities of a local `key` so that `subst` removes the fresh variable: put the fresh variable on
+  the right (`HEq V' W`) and pass `h.symm`. Otherwise `subst` removes the outer variable and drags its
+  dependents along.
+- `intros; subst_vars` handles `HEq` hypotheses as well and replaces long `fun e1 … e23 => by subst e1 … e23`.
+- For `split_ifs` on compositions of `Equiv.swap` proving `π (f i) = f (π i)` with `f` injective: use
+  `Function.Injective.swap_apply` and commutation from `Equiv.Perm.disjoint_swap_swap`. No case split is
+  needed. Prove fixed points with `rw [Equiv.swap_apply_of_ne_of_ne (x := i), …] <;> omega`.
+- Inside a `subst` chain, do not `intro` dependent binders early: something a `subst` reverts costs about
+  twice as much as a hypothesis than as a binder still in the goal.
+- A way to find where the size is: copies of the theorem with `sorry` in place of all bullets but one. If the
+  copy with every bullet replaced is already most of the size, the size is in the statement and the
+  definitions it unfolds to, and no proof edit will help.
+
+Open lever found by this wave: the six-deep `choose_spec` chain behind `limAtOf_holds` is rebuilt in at
+least three other files (`ClsFin`, `AllLeavesMono`, `PreEquivSymm`). One helper stating the whole
+conjunction once, next to the definitions, would let all four share it.
+
 ## What the size was made of
 
 - **Taking large structures apart.** `cases` on structures with dozens of fields followed by dozens of

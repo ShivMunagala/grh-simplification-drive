@@ -7,3 +7,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-22T02:14:29Z,4b701e8a3,sigSpan_copy and nine IsClassSystem transfer proofs without taking the structures apart,183119401,2780473858,-180.7,1265168,146536
 2026-11-22T03:08:43Z,ea4955b25,wave 2: six heavy transfer proofs without taking the structures apart,183120272,2772068048,-334.8,1265169,146536
 2026-11-22T03:42:47Z,b76b8f92c,restating theorems turned into aliases (32172 files),176618818,2772067606,-2173.2,1265169,146536
+2026-11-22T03:57:08Z,4010b570d,wave 3: record_heq; exists_sameVec; simpleU_rev_and_sq; fIwasawa_perm,176619432,2770710875,-2229.3,1265042,146536
