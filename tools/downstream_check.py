@@ -37,6 +37,10 @@ def main():
                     help='file with modules never to sample (for instance files that are being rewritten themselves)')
     ap.add_argument('--modules', default=None,
                     help='check exactly the modules listed in this file, not a sample (changed modules are left out)')
+    ap.add_argument('--work', default=None,
+                    help="with --modules: the batch's work directory. A listed module that is itself changed is "
+                         'then compiled again from its chosen text, with every other changed module in place, and '
+                         'compared with its compiled form under --new (it was first compiled without them)')
     ap.add_argument('--out', default=os.path.join(C.ROOT, 'build', 'downstream'))
     ap.add_argument('--mem-gb', type=float, default=16.0)
     a = ap.parse_args()
@@ -54,10 +58,18 @@ def main():
     if a.exclude:
         with open(a.exclude) as fh:
             skip |= {l.strip() for l in fh if l.strip()}
+    variant = {}
+    if a.work:
+        with open(os.path.join(a.work, 'final', 'sources.tsv')) as fh:
+            for l in fh:
+                m, vid, _ = l.rstrip('\n').split('\t')
+                variant[m] = vid
     if a.modules:
         with open(a.modules) as fh:
-            sample = sorted({l.strip() for l in fh if l.strip()} - changed)
-        print(f'{len(changed)} changed modules; checking the {len(sample)} listed files'
+            listed = {l.strip() for l in fh if l.strip()}
+        sample = sorted(m for m in listed if m not in changed or m in variant)
+        print(f'{len(changed)} changed modules; checking the {len(sample)} listed files '
+              f'({sum(1 for m in sample if m in changed)} of them changed files, compiled again from their new text)'
               + (' (control: nothing swapped in)' if a.control else ''), flush=True)
     else:
         users = sorted(m for m, imps in imports.items() if m not in skip and any(i in changed for i in imps))
@@ -75,12 +87,18 @@ def main():
     def work(m):
         rec = {'module': m}
         try:
-            r = compile_module(m, out, overlays=[] if a.control else [new_root], mem_gb=a.mem_gb, quiet=True)
+            if m in changed:
+                r = compile_module(m, out, src=os.path.join(a.work, 'v', variant[m]), overlays=[new_root],
+                                   mem_gb=a.mem_gb, quiet=True)
+                ref = C.module_path(m, new_root, '.olean')
+            else:
+                r = compile_module(m, out, overlays=[] if a.control else [new_root], mem_gb=a.mem_gb, quiet=True)
+                ref = C.current_olean(m)
             rec['ok'] = r['ok']
             if not r['ok']:
                 rec['error'] = (r.get('messages_tail') or r.get('error') or '')[-400:]
             else:
-                parsed = C.parse_consts(C.moddump([(m + '@old', C.current_olean(m)), (m + '@new', r['olean'])]))
+                parsed = C.parse_consts(C.moddump([(m + '@old', ref), (m + '@new', r['olean'])]))
                 o, n = parsed[m + '@old'], parsed[m + '@new']
                 diff = []
                 for name in sorted(set(o['decls']) | set(n['decls'])):

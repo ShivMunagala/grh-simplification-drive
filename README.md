@@ -53,7 +53,9 @@ Cone: 1,260,827 declarations in 146,531 files. Recorded changes: 30. Latest row:
 | | Heavy definitions built from chains of `choose` | next |
 | 2026-11-22 | Wave 7 on the heaviest proofs: 17 more rewritten. Proofs over 100,000 nodes are now only 2.8% of the whole, so returns from this kind of work are falling | done |
 | | Sweep of repetitions: the same argument written out in many proofs | next |
-| 2026-11-22 | Plain-language map of the argument, first version: the chain at the top, the four lines of argument under it and what each costs, known theorems proved inside (8.4% in all), six places where a shorter route might exist ([map](campaign/argument-map/MAP.md)). Everything above is about how the proof is written; this is the first step on the mathematics | done; testing the candidates is next |
+| 2026-11-22 | Plain-language map of the argument, first version: the chain at the top, the four lines of argument under it and what each costs, known theorems proved inside (8.4% in all), six places where a shorter route might exist ([map](campaign/argument-map/MAP.md)). Everything above is about how the proof is written; this is the first step on the mathematics | done |
+| 2026-11-22 | The three largest candidates for a shorter route tested by reading every statement and every use: the covolume bound (13.6%), the Galois representations (6.1%) and the vanishing statement VWin (8.2%). None can be replaced or narrowed; the reasons are in the map | done |
+| | What the five theorems actually ask of each intermediate statement: parts of conjunctions, fields of records, arguments and local steps that nothing needed reads (`tools/demand.py`) | measuring |
 
 ## Fixed
 
@@ -114,11 +116,15 @@ Two such changes are allowed outright (decided 2026-11-22), and the judge checks
   new lemma, so no file that existed before can be read differently.
 - An import added to a file, so that a proof in it can cite a copy of its statement in a file it could not
   see. Two conditions: the file already imported, directly or not, everything the newly imported file
-  imports, so the files that use it get to see exactly one more file; and that file registers nothing
-  that can act on other files, only bookkeeping about its own declarations (the list is
+  imports, so that nothing becomes visible to any file except files added in this way; and such a file
+  registers nothing that can act on other files, only bookkeeping about its own declarations (the list is
   `PLAIN_REGISTERS` in `tools/iface.py`; instances, simp lemmas, notation, coercions and the like are not
-  on it). On top of that, a sample of the files that use the changed ones is recompiled to confirm that
-  nothing else moves.
+  on it). What is left is names: a name in some other file could now resolve to a declaration of a newly
+  visible file. So before such a change is judged, every file that gets to see more than before is
+  searched for an identifier that could do that (`tools/import_visibility.py`), and each file where one
+  is found is recompiled against the changed state and has to come out identical to its accepted
+  compiled form (`tools/downstream_check.py --modules`). A random sample of the files that import a
+  changed file is recompiled the same way.
 
 Reported to steer the work, not enforced: which declarations most of the cone hangs on
 (`tools/ablation.py`), what each known theorem costs on its own, and how often each definition is used.

@@ -8,3 +8,7 @@ root = "ModDump"
 [[lean_exe]]
 name = "liveness"
 root = "Liveness"
+
+[[lean_exe]]
+name = "demand"
+root = "Demand"

@@ -287,6 +287,24 @@ step were replaced by a free proof; a real replacement costs something too.
   generators of known height.
 - **Risk.** Medium to high. The size is measured; the slack in the error term is read from statements
   only; the main term is not understood.
+- **Tested 2026-11-22: not feasible as proposed.** The statements and the one place where the bound is
+  spent (`IndefSide.boundsMu`, called by `divClausesR_of`) were read.
+  - The slack in the error term is real: the unit `B0·log log x` is used in a single line, through
+    log log x ≤ x^ε, so an error of C·x^ε·(B0 + Nc) would do.
+  - The main term is needed exactly. It is a sum of CM periods (`logOm = γ + log(π/v) − Re L'/L(1,χ)`,
+    with weights from the signature), and it cancels against the same sum on the other side of the
+    final inequality. With the sizes of the family it is about x^4 times larger than the error that is
+    allowed, so it must be right to that accuracy.
+  - The lattice is defined by integrality (cusp forms that are integral at every point of the integral
+    model), not by generators. The only spanning-set bound in the tree is off by a large power of x,
+    and theta lifts are known to span it only up to an index of main-term size. So Hadamard's or
+    Minkowski's bounds cannot give the main term.
+  - In the tree the main term does not come from a volume computation but from twisting by a flat line
+    bundle of degree `logOm`; the Arakelov inputs feed one statement, that integral forms of the
+    remaining weight have slope at least −C·B0·log log x. The slack would relax only that statement,
+    by a factor x^ε / log log x. No shorter proof of the relaxed form was found.
+  - Left open: whether a two-sided inner-product formula for theta-lifted lattices could replace the
+    pair of conditions (`L3` and `ON`) at once. The tree has only the lower bound.
 
 ### Candidate 2. Stage-by-stage transport inside the family construction — at least 3.5%, probably more
 
@@ -319,6 +337,13 @@ step were replaced by a free proof; a real replacement costs something too.
   open-literature bundle; for each, which π it is applied to.
 - **Risk.** High. VWin's automorphy-lifting arguments very likely need the general theorem, and then
   line D stays. I could not tell how much a split would save.
+- **Tested 2026-11-22: not feasible.** Every place where the theorem is applied was read. On the VWin
+  side it is used for any CM field, any rank and any polarized regular algebraic cuspidal π (the
+  lemmas of the automorphy-lifting framework are stated for all π), and for base changes of arbitrary
+  Hilbert modular forms. On the definite side it is used for every cuspidal constituent of the base
+  change of an arbitrary automorphic representation of a definite unitary group, in ranks up to about
+  x^4.5. Only one call is a special case (rank 1, a Hecke character). All parts of the conclusion are
+  used, including the statements at places above ℓ. No narrower statement covers the uses.
 
 ### Candidate 4. VWin — 8.2%
 
@@ -334,6 +359,14 @@ step were replaced by a free proof; a real replacement costs something too.
 - **What to check.** Which (ℓ, e, E) actually occur downstream (the supply step uses it only through
   `UpperTheory.Top.supplyChi` with a fixed constant 401); whether a smaller range of twists would do.
 - **Risk.** High. Listed because of its size, not because I see a route.
+- **Tested 2026-11-22: not feasible as a narrowing.** The bound is consumed in one place
+  (`divinN_of_hypV`), through a bound on congruence modules: the lifted Galois representation contains
+  t consecutive Tate twists of one character, and the congruence quotient is bounded by one
+  cohomology group per difference of twists. So every twist 1 ≤ e < t is used, with t about x^399
+  (the rank gap of the theta tower), at every prime including 2. The bound itself has room (the
+  square root is thrown away), but the proof gives no more cheaply for a weaker bound, and it is
+  uniform in t, so a smaller range would remove none of its parts. Shrinking t would mean redesigning
+  the parameters of the family.
 
 ### Candidate 5. Restatement chains and doubled inputs — small, but certain
 
