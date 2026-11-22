@@ -1,4 +1,4 @@
-# grh
+# GRH simplification drive
 
 Working repository for simplifying Levent Alpöge's Lean proof of the Riemann Hypothesis and of GRH for
 Dirichlet L-functions, announced on 2026-11-20 ([remark](https://alpo.ge/remark.pdf)).
