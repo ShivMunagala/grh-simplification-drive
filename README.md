@@ -11,6 +11,10 @@ the proof as differences from the archive (`patches/`). The archive is fetched a
 Make the proof smaller and easier to follow without changing what it proves: delete what is not needed,
 share what is repeated, find shorter arguments.
 
+What is fixed is the task, not the route: the five target theorems and the axioms they may use. Everything
+between them and Mathlib may change. An argument may be replaced by a different proof, and an intermediate
+statement or definition may be changed or dropped, as long as the same five theorems come out.
+
 ## Where it stands
 
 One point per recorded change, placed at the time of its commit.
@@ -47,7 +51,7 @@ Cone: 1,260,830 declarations in 146,531 files. Recorded changes: 26. Latest row:
 | | Heavy definitions built from chains of `choose` | next |
 | | More waves on the heaviest proofs (wave 7 is running; proofs over 100,000 nodes are now only 2.8% of the whole, so returns are falling) | ongoing |
 | | Sweep of repetitions: the same argument written out in many proofs | next |
-| | Plain-language map of the argument: the chain at the top, the largest blocks under it and what each costs, where a shorter route might exist. Everything above is about how the proof is written; this is the first step on the mathematics | started |
+| 2026-11-22 | Plain-language map of the argument, first version: the chain at the top, the four lines of argument under it and what each costs, known theorems proved inside (8.4% in all), six places where a shorter route might exist ([map](campaign/argument-map/MAP.md)). Everything above is about how the proof is written; this is the first step on the mathematics | done; testing the candidates is next |
 
 ## Fixed
 
@@ -92,6 +96,13 @@ Two fences:
   A new helper may be over the cap when it replaces more than it adds: the cone's written-out size must
   fall by at least what the helper weighs.
 - No new macros or notation.
+
+A change to a proof must also leave alone what other files see of its file: the statements, the
+definitions, and what the file registers with Lean (instances, tagged lemmas, namespaces, its imports).
+If that changes, the files that use it have to be recompiled and judged with it, or a person decides.
+One register change is allowed outright (decided 2026-11-22): the tag `@[elab_as_elim]` on a lemma that
+the change itself adds. It only tells Lean how to apply that new lemma, so no file that existed before
+can be read differently. The judge checks that each such tag sits on an added lemma.
 
 Reported to steer the work, not enforced: which declarations most of the cone hangs on
 (`tools/ablation.py`), what each known theorem costs on its own, and how often each definition is used.

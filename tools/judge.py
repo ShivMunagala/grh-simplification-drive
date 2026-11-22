@@ -43,6 +43,32 @@ TIME_SLACK_S = 2.0             # absolute, on top
 # least this many nodes for every token added. (The cone averages about 15 nodes per token.)
 EXCHANGE_NODES_PER_TOKEN = 1000
 TIME_CACHE = os.path.join(C.ROOT, 'data', 'time_cache.json')
+# A register change that is allowed (owner's decision, 2026-11-22): `@[elab_as_elim]` on a lemma that the
+# change itself adds. The tag only tells Lean how to work out the motive when that lemma is applied, so
+# it cannot change how any file that existed before is read.
+ALLOWED_TAG = 'Lean.Elab.Term.elabAsElim'
+TAG_RE = re.compile(r'@\[elab_as_elim\]\s*(?:(?:private|protected|noncomputable)\s+)*(?:theorem|lemma)\s+([^\s:({\[]+)')
+
+
+def tags_only_on_added(new_text, old_text, added, before, after):
+    """Are the `elab_as_elim` entries a module gained exactly tags on declarations the change adds?
+    new_text/old_text: the module's source after and before; added: full names of the declarations the
+    compiled module has now and did not have before; before/after: the register's entry counts."""
+    new_tags, old_tags = TAG_RE.findall(new_text), TAG_RE.findall(old_text)
+    if new_text.count('elab_as_elim') != len(new_tags) or old_text.count('elab_as_elim') != len(old_tags):
+        return False                       # the tag is set in some other way: not covered by this rule
+    gained = list((collections.Counter(new_tags) - collections.Counter(old_tags)).elements())
+    lost = collections.Counter(old_tags) - collections.Counter(new_tags)
+    if lost or after <= before or len(gained) != after - before:
+        return False
+    left = list(added)
+    for name in gained:
+        name = name[len('_root_.'):] if name.startswith('_root_.') else name
+        hit = [a for a in left if a == name or a.endswith('.' + name)]
+        if len(hit) != 1:
+            return False
+        left.remove(hit[0])
+    return True
 
 
 def git(*args):
@@ -474,8 +500,19 @@ def main():
     # statement changing. A new namespace matters only if some `open` in the tree can resolve to it.
     registers_changed, ns_added = [], collections.defaultdict(list)
     for m, res in ifaces.items():
-        if res.get('ext_changed') or res.get('ns_removed') or res.get('imports_added') or res.get('imports_removed'):
-            registers_changed.append({'module': m, 'entries': res.get('ext_changed'), 'namespaces_removed': res.get('ns_removed'),
+        ext = dict(res.get('ext_changed') or {})
+        if ALLOWED_TAG in ext and m in snapshot:
+            try:
+                old_text = git('show', f'{base}:{to_path(m)}')
+            except subprocess.CalledProcessError:
+                old_text = None
+            n_before, n_after = ext[ALLOWED_TAG]
+            if old_text is not None and tags_only_on_added(snapshot[m], old_text, res.get('added') or [], n_before, n_after):
+                del ext[ALLOWED_TAG]
+                report['notes'].append(f'{m}: {n_after - n_before} `elab_as_elim` tag(s), each on a lemma this change '
+                                       'adds; allowed, because such a tag cannot change how an existing file is read')
+        if ext or res.get('ns_removed') or res.get('imports_added') or res.get('imports_removed'):
+            registers_changed.append({'module': m, 'entries': ext or None, 'namespaces_removed': res.get('ns_removed'),
                                       'imports_added': res.get('imports_added'), 'imports_removed': res.get('imports_removed')})
         for n in res.get('ns_added', []):
             ns_added[n].append(m)
