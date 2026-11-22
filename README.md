@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.5M, written-out proof size 2.69B, time change -3.91K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.4M, written-out proof size 2.68B, time change -3.92K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 176,479,130 | −7,769,080 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,685,407,803 | −103,896,496 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,910.9 | −3,910.9 |
+| Source size (tokens) | 184,248,210 | 176,431,681 | −7,816,529 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,684,702,811 | −104,601,488 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,916.1 | −3,916.1 |
 
-Cone: 1,256,680 declarations in 146,243 files. Recorded changes: 38. Latest row: GlobalTheory list of unneeded parts: 22 files; jetRoad trimmed from 14 conjuncts to 9; eleven bundles bypassed or split (2026-11-22 16:40 UTC).
+Cone: 1,256,340 declarations in 146,221 files. Recorded changes: 39. Latest row: fourth list of unneeded parts: 25 files; two statements trimmed; bundles bypassed or split (2026-11-22 17:23 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -58,7 +58,7 @@ Cone: 1,256,680 declarations in 146,243 files. Recorded changes: 38. Latest row:
 | 2026-11-22 | Plain-language map of the argument, first version: the chain at the top, the four lines of argument under it and what each costs, known theorems proved inside (8.4% in all), six places where a shorter route might exist ([map](campaign/argument-map/MAP.md)). Everything above is about how the proof is written; this is the first step on the mathematics | done |
 | 2026-11-22 | All four large candidates for a shorter route tested by reading every statement and every use: the covolume bound (13.6%), the Galois representations (6.1%), the vanishing statement VWin (8.2%) and the staging of the family construction. None can be replaced or narrowed; the reasons are in the map | done |
 | 2026-11-22 | What the five theorems actually ask of each intermediate statement, measured on the compiled proof (`tools/demand.py`): parts of conjunctions, fields of records, arguments, local steps and whole declarations that nothing needed reads come to 1.07% of the written-out size. The proof uses almost everything it proves ([results](campaign/unneeded-parts/RESULTS.md)) | done |
-| | Removing those unneeded parts, largest first ([brief](campaign/unneeded-parts/BRIEF.md), [results](campaign/unneeded-parts/RESULTS.md)). Five changes so far take 2,365 declarations out of what the five theorems need (−6.3 million nodes, −349,000 tokens): seven of eight statements about period unfoldings; the main theorem of the raw theta lift, which was built only to be passed to a theorem that ignored it; theorems that prove lists of statements of which a few are read (21 so far: users cite the part they read); three statements trimmed to what their users read | in progress |
+| | Removing those unneeded parts, largest first ([brief](campaign/unneeded-parts/BRIEF.md), [results](campaign/unneeded-parts/RESULTS.md)). Six changes so far take 2,705 declarations out of what the five theorems need (−7.0 million nodes, −397,000 tokens): seven of eight statements about period unfoldings; the main theorem of the raw theta lift, which was built only to be passed to a theorem that ignored it; theorems that prove lists of statements of which a few are read (33 so far: users cite the part they read); five statements trimmed to what their users read | in progress |
 
 ## Fixed
 

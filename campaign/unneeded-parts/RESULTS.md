@@ -72,13 +72,21 @@ with such an argument, 1.02 million unused local steps.
 | 35 | Eight theorems that prove lists of statements (lengths of kernels and cokernels, bounds along ramified coefficient chains, lifting of points, facts about a host field, hypotheses on parameters): their users cite the lemma for the part they read. No statement changed | 672 declarations, −1,014,148 nodes, −61,839 tokens |
 | 37 | Second list, 13 files. `UpperTheory.V.Af.cuspSpectrumGL` (a tuple of three; both users read the third) and `CrystallineSemistableComparison.cstSmooth_of_etSide` (its users read the first part; that part's proof is split off into two lemmas) are bypassed. Two statements are trimmed: `UpperTheory.V.Loc.isType_and_isLocallyCrystalline_rz` stated two facts and all four uses read the second; `PositivityTheory.PlacePermOperatorBicommutantSpan.ei_inv` likewise. Two proofs lose a step whose result was never mentioned again | 361 declarations, −931,745 nodes, −42,279 tokens |
 | 38 | Third list (GlobalTheory), 22 files. Seven bundles bypassed (de Rham comparison, semicontinuity for a finite projective complex, Galois characters from Artin, and four others). For three more the needed part had no lemma of its own; one is split off next to the bundle (`stokes_dbar`, `rPointT_holds` and `genPointT_holds`, `recognition_of_uRecDvr`). `GlobalTheory.JetRoad.jetRoad` is trimmed from 14 conjuncts to the 9 its five users read | 319 declarations, −1,204,484 nodes, −58,102 tokens |
+| 39 | Fourth list, 25 files. Nine bundles bypassed (rank-zero moduli, eigenparts and conjugate characters at principal level, a uniformised model, finite support of divisors, basics of a level group, a five-term exact sequence, a tensor contraction, a stabiliser lemma, a record of hypotheses of which one field was never read). For three the needed part is split off (`third_hypothesis_dim`, `arch_bdd`, `tTools_of_admitted` and `tTools_of_lattice_hypotheses`). Two statements trimmed: `UpperTheory.tateTwist_generator_of_primitiveRoot_and_roots_etaleLocal` loses a conjunct nobody reads; `KStar.Ram.multiplicity_differentIdeal_eq_of_quotient` and the private lemma that passes it on lose their third. One proof loses a step whose result went to a lemma that ignores it | 340 declarations, −704,992 nodes, −47,449 tokens |
 
-Together: 2,365 declarations, −6,315,333 nodes, −349,319 tokens.
+Together: 2,705 declarations, −7,020,325 nodes, −396,768 tokens.
 
 Two points of the second list were not real (see below). In change 37 one file no longer makes two equation lemmas
 of definitions, because nothing in it unfolds those definitions any more; the judge used to count such marks and now
 compares them by name. In change 38 one user of the trimmed statement needed no change in its source; the judge now
 also takes the compiled file of such a module, when it was compiled with the trimmed module in place.
+
+The files of these lists are compiled on a rented machine, which holds an older accepted state than this one while
+workers are using it. From change 39 on the judge keeps a list of every statement changed or removed since that machine
+was last brought up to date (931 declarations at change 39: five changed statements, the rest helper lemmas Lean no
+longer makes) and refuses a file compiled there that mentions one of them, unless it was compiled with the changed
+module in place. The list was rebuilt for changes 31 to 38 by comparing the two machines' tables; none of the files
+recorded in those changes was affected.
 
 ## What the measurement got wrong
 

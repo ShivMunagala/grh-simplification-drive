@@ -14,6 +14,7 @@ import argparse, json, os, subprocess, sys, tempfile
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 import common as C
+import stale as STALE
 
 
 def main():
@@ -43,7 +44,8 @@ def main():
     # state.json names a commit of the proof repository here, which the machine does not have. It is sent
     # under another name and put in place at the end with the machine's own commit, in one step, so that
     # jobs running there never see a state that names a commit they cannot read.
-    run(rsync + ['--exclude', 'state.json', '--exclude', 'state.json.incoming', C.DATA_OVERLAY + '/',
+    run(rsync + ['--exclude', 'state.json', '--exclude', 'state.json.incoming', '--exclude', 'stale.json',
+                 C.DATA_OVERLAY + '/',
                  f'{host}:{rpath}/data/overlay/'], check=True)
     run(rsync + [os.path.join(C.DATA_OVERLAY, 'state.json'), f'{host}:{rpath}/data/overlay/state.json.incoming'],
         check=True)
@@ -90,6 +92,8 @@ PY
     p = subprocess.run(ssh + ['bash -s'], input=script.encode(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out = p.stdout.decode().strip().splitlines()
     print(out[-1] if out else p.stderr.decode()[-300:])
+    if p.returncode == 0:
+        STALE.reset(state['proof_commit'])       # the machine now has every statement as it is here
     sys.exit(p.returncode)
 
 

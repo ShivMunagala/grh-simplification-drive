@@ -76,7 +76,9 @@ executes anything from a compiled file; it maps the file and walks the data, als
 - `judge.py` — changed files → compile → equivalence check → dials → verdict
   (`accept`, `review`, `incomplete`, `invalid`). Judges against the accepted state (the archive plus every
   recorded change), so changes stack. `--precompiled DIR` takes modules compiled on another machine and
-  still checks interfaces and dials here.
+  still checks interfaces and dials here. Such a module is refused if it mentions a statement that changed
+  here after that machine was last brought up to date (`stale.py` keeps the list; `record.py` adds to it,
+  `remote/sync_there.py` empties it), unless it was compiled with the changed module in place.
 - `try_change.py` — what a worker runs on one edited file before handing it in: compile, equivalence
   check, sizes and time before and after, and `PRECHECK: pass` or `fail`.
 - `alias_wrappers.py` — find theorems that only restate another theorem and cite it, and rewrite them

@@ -385,6 +385,7 @@ def main():
     time_before = time_after = 0.0
     breaking_ids = {}
     breaking_owner = {}
+    all_changed = {}                     # id -> (name, module): everything this change alters or removes
     news, olds = {}, {}
     rounds = 0
     handled_users = set()
@@ -442,6 +443,7 @@ def main():
                 if nm in old:
                     breaking_ids[old[nm]['id']] = nm
                     breaking_owner[old[nm]['id']] = m
+                    all_changed[old[nm]['id']] = (nm, m)
         todo = []
         # A declaration that left one judged module and appears, unchanged, in another judged module that
         # the first one imports has only moved: every file that could see it before still can.
@@ -475,6 +477,7 @@ def main():
                 for nm in moved:
                     breaking_ids.pop(olds[m2][nm]['id'], None)
                     breaking_owner.pop(olds[m2][nm]['id'], None)
+                    all_changed.pop(olds[m2][nm]['id'], None)
                 report['notes'].append(f'{len(moved)} declaration(s) moved from {m2} to a module it imports: '
                                        + ', '.join(moved[:5]))
         # declarations of deleted modules are gone too
@@ -484,6 +487,7 @@ def main():
                 for m, info in C.parse_consts(C.moddump(pairs[i:i + 2000])).items():
                     for nm, rec in info['decls'].items():
                         breaking_ids[rec['id']] = nm
+                        all_changed[rec['id']] = (nm, m)
         with_info = (C.load_json(os.path.join(a.precompiled, 'with.json'), {}) or {}) if a.precompiled else {}
         with_used = set()
 
@@ -591,6 +595,57 @@ def main():
                 todo = order_by_imports(sorted(carried))
                 handled_users |= set(todo)
             breaking_ids = {} if todo else breaking_ids
+
+    # What this change alters or removes, for the list of statements the other machine does not have yet.
+    report['changed_ids'] = {str(i): [nm, m] for i, (nm, m) in all_changed.items() if m in compiled or m in removed}
+
+    # A file compiled on the other machine was compiled against the accepted state THERE. Statements that
+    # were changed or removed here since that machine was last brought up to date are listed in
+    # data/overlay/stale.json. A compiled file that mentions one of them was checked against the old
+    # statement, unless it was compiled with the changed module in place (the hash in with.json is then
+    # that of the accepted compiled module, or of the one judged here).
+    if bulk is not None:
+        import stale as STALE
+        stale_ids = STALE.load()
+        if stale_ids:
+            with_info2 = C.load_json(os.path.join(a.precompiled, 'with.json'), {}) or {}
+            sha_cache = {}
+
+            def with_current(user, owner):
+                want = (with_info2.get(user) or {}).get(owner)
+                if not want:
+                    return False
+                if owner not in sha_cache:
+                    path = (C.module_path(owner, os.path.join(a.precompiled, 'new'), '.olean') if owner in compiled
+                            else C.current_olean(owner))
+                    try:
+                        with open(path, 'rb') as fh:
+                            sha_cache[owner] = sha(fh.read())
+                    except OSError:
+                        sha_cache[owner] = None
+                return sha_cache[owner] == want
+
+            stale_users = {}
+            for m2, decls in news.items():
+                if (m2 + '@new') not in bulk:
+                    continue
+                hit = set()
+                for nm, rec in decls.items():
+                    for d in rec['tdeps'] + rec['vdeps']:
+                        s = stale_ids.get(str(d))
+                        if s and s['module'] != m2 and not with_current(m2, s['module']):
+                            hit.add(s['name'])
+                if hit:
+                    stale_users[m2] = sorted(hit)[:5]
+            report['stale_users'] = dict(list(stale_users.items())[:50])
+            if stale_users and 'incomplete' not in report:
+                report['incomplete'] = (
+                    f'{len(stale_users)} module(s) were compiled on the other machine against a statement that has '
+                    'changed here since that machine was brought up to date; compile them again with the changed '
+                    'module in place, or bring the machine up to date first')
+            elif not stale_users:
+                report['notes'].append(f'none of the modules compiled on the other machine mentions any of the '
+                                       f'{len(stale_ids)} declarations changed here since it was brought up to date')
 
     # What the recompiled modules register with Lean. A changed count of attributes, instances and
     # the like, or a namespace that is gone, can change how other modules elaborate without any

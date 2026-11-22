@@ -88,6 +88,9 @@ def main():
                 os.remove(p)
     shutil.copyfile(plan['consts'], os.path.join(C.DATA_OVERLAY, 'consts.tsv'))
     shutil.copyfile(plan['decls'], os.path.join(C.DATA_OVERLAY, 'decls.tsv'))
+    # statements this change alters or removes: the other machine does not have them until it is synced
+    import stale as STALE
+    STALE.add({i: v for i, v in (verdict.get('changed_ids') or {}).items()}, commit)
     modules = []
     with open(os.path.join(C.DATA_OVERLAY, 'consts.tsv'), 'rb') as fh:
         for line in fh:
