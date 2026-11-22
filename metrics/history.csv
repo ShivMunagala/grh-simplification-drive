@@ -42,3 +42,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-22T17:47:53Z,8e765fbf9,fifth list of unneeded parts: 34 files; four statements trimmed; bundles bypassed or split,176379652,2684030388,-3921.5,1256010,146191
 2026-11-22T18:08:38Z,9ef3c2e1c,6343 local steps whose result nothing uses deleted in 2099 files (first round),176254120,2682414937,-3958.9,1255876,146191
 2026-11-22T18:19:25Z,a1577dc43,fourth list: last file (a bundle of four bypassed),176252414,2682395289,-3954.9,1255860,146191
+2026-11-22T19:39:15Z,2cee531b9,252 declarations written with every argument explicit reprinted in ordinary form (50 files),175770081,2682394619,-3974.5,1255860,146191

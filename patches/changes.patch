@@ -69694,6 +69694,723 @@ import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AevalIntertwin
 
 @@ 585 535 215
  first | exact @_root_.GlobalTheory.AevalIntertwine.aeval_intertwine | exact _root_.GlobalTheory.AevalIntertwine.aeval_intertwine | (intros; apply _root_.GlobalTheory.AevalIntertwine.aeval_intertwine <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/BlockHomomorphism.lean 640b0580788e62e702bd2d17e226ec17463a8efde3dc27f0cb2d72923ef3a0e1 ccbe1fe01ec104b16e1fcb31c75575f4cc874367f89f20a2b1578eb314470580
+@% 87 6952 7
++ 90
+
+    {k : Type}
+    {G : Type}
+    {V : Type}
+    [inst : Field k]
+    [inst_1 : Group G]
+
+= 171 29
++ 29
+
+    [inst_3 : Module k V] :
+
+= 445 26
++ 39
+ Representation k G V → Prop :=
+    fun
+= 1089 30
++ 75
+ (ρ : Representation k G V) ↦
+      ∀ (v : V), IsOpen {g : G | (ρ g) v = v}
+@@ 7111 4863 209
+
+    (k : Type)
+    [inst : Field k]
+    {a : ℕ}
+    {b : ℕ} :
+    a = b → GL (Fin a) k →* GL (Fin b) k :=
+    fun (h : a = b) ↦
+      Units.map (Matrix.reindexAlgEquiv k k (finCongr h)).toMulEquiv.toMonoidHom
+@% 15454 241 5
++ 1
+ℕ
+= 15457 42
++ 17
+Matrix.fromBlocks
+= 15619 76
++ 12
+
+           
+@% 15787 603 2
+= 12401 54
++ 6
+.toMul
+@% 16419 5365 11
++ 16
+0 0 1 =
+        
+= 15631 25
++ 24
+ ⊕ Fin r) (Fin n ⊕ Fin r
+= 31638 28
++ 68
+n ⊕ Fin r) (Fin n ⊕ Fin r) k) (Matrix (Fin n ⊕ Fin r) (Fin n ⊕ Fin r
+= 17938 35
++ 46
+Fin n ⊕ Fin r) (Fin n ⊕ Fin r) k)
+            
+= 12401 54
++ 10
+.toMul)
+  
+= 79064 33
++ 65
+1) (Matrix.fromBlocks B 0 0 1) :=
+    by
+    intro k _ n r A B
+  
+@% 21890 5996 11
++ 66
+
+    (k : Type)
+    [inst : Field k]
+    (n : ℕ)
+    (r : ℕ) :
+   
+= 78984 26
++ 62
+→* Matrix (Fin n ⊕ Fin r) (Fin n ⊕ Fin r) k :=
+    { toFun := 
+= 26213 36
++ 1
+ 
+= 79073 24
++ 20
+1,
+      map_one' :=
+= 11983 51
++ 24
+k n r,
+      map_mul' :=
+= 15360 51
++ 7
+k n r }
+@% 27956 10758 3
++ 183
+
+    (k : Type)
+    [inst : Field k]
+    (n : ℕ)
+    (r : ℕ) :
+    GL (Fin n) k →* GL (Fin (n + r)) k :=
+    Units.map
+      ((Matrix.reindexAlgEquiv k k finSumFinEquiv).toMulEquiv.to
+= 40626 24
+= 38656 53
+@% 38790 6428 5
++ 131
+
+    (k : Type)
+    [inst : Field k]
+    (n : ℕ)
+    (N : ℕ) :
+    n ≤ N → GL (Fin n) k →* GL (Fin N) k :=
+    fun (h : n ≤ N) ↦
+  
+= 96163 50
++ 44
+glCongr k (Nat.add_sub_cancel' h)).comp
+    
+= 96163 53
++ 11
+GL k n (N -
+@% 45291 32765 8
++ 79
+
+    {k : Type}
+    [inst : Field k]
+    {m : ℕ}
+    {N : ℕ} :
+    m + 1 ≤ N →
+
+= 45555 27
+= 45588 38
++ 139
+[inst_2 : Module ℂ V] →
+            Representation ℂ (GL (Fin N) k) V → Subgroup (GL (Fin (m + 1)) k) → V → Prop :=
+    fun (h : m + 1 ≤ N)
+= 49568 37
++ 128
+ [inst_2 : Module ℂ V] (π : Representation ℂ (GL (Fin N) k) V) (K : Subgroup (GL (Fin (m + 1)) k)) (v : V) ↦
+      ∀ g ∈ K, (π (
+= 96167 65
++ 9
+) g)) v =
+@% 80348 2265 8
++ 26
+ [inst_1 : ValuativeRel k]
+= 80490 30
++ 8
+
+      [
+= 80523 28
++ 27
+] {m N : ℕ} {h : m + 2 ≤ N}
+= 80754 54
++ 58
+Module ℂ V] {π : Representation ℂ (GL (Fin N) k) V},
+     
+= 33 54
+@% 82655 12180 7
++ 74
+ Subgroup (GL (Fin (m + 1)) k)),
+            @IsOpen (GL (Fin (m + 1)) k) 
+= 82208 32
++ 18
+↑K ∧
+             
+= 45241 50
++ 20
+
+                  (
+= 94067 25
++ 20
+ fun (a : ¬m + 1 ≤ N
+@% 94937 890 5
++ 23
+π K v ∧
+               
+= 45241 50
++ 20
+
+                  (
+= 94067 25
++ 20
+ fun (a : ¬m + 1 ≤ N
+@% 95929 348 5
++ 18
+π K w :=
+    by
+  
+= 95959 41
+= 95998 37
+= 96033 134
+= 96165 114
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/BorelApproximation.lean 35f4ab7e99598fd10a331eb18834342ca8be3158ab451711d1703673061a9d4f 2eb357cabca2e23af5569e5f7853cd77fcd0024f942ff50975296bb3aaa384a3
+@% 443 2466 7
++ 75
+
+    {E : Type}
+    [inst : Field E]
+    [inst_1 : NumberField E] :
+    ℕ →
+= 46 50
++ 32
+E → Type :=
+    fun (n : ℕ) (w :
+= 46 50
++ 23
+E) ↦
+      GL (Fin n) (
+= 795 50
++ 3
+E w
+@% 3472 2649 9
++ 67
+
+    (k : Type)
+    [inst : Field k]
+    [inst_1 : ValuativeRel k]
+
+= 3647 33
++ 6
+
+    [
+= 3683 28
++ 24
+] :
+    @IsLocalRing (↥(
+= 4194 24
++ 22
+).integer) CommRing.to
+= 7055 24
++ 13
+:=
+    inferI
+@@ 6197 550 147
+
+    {α : Type}
+    {n : Type}
+    {m : α → Type} :
+    (a : α) × m a ≃ n → n → α :=
+    fun (e : (a : α) × m a ≃ n) (i : n) ↦
+      (e.symm i).fst
+@% 6899 6859 33
++ 1
+
+
+= 22252 27
+= 6927 30
++ 68
+(a : α) × m a ≃ n) {x y : GL n R},
+      x ∈
+          {g : GL n R |
+= 7876 42
++ 1
+ 
+= 8149 31
++ 37
+.toSemilatticeInf.toLT
+              
+= 8252 26
++ 26
+.toZero (↑g)
+             
+= 21759 54
++ 41
+} →
+        y ∈
+            {g : GL n R |
+= 9448 44
++ 1
+ 
+= 8149 31
++ 39
+.toSemilatticeInf.toLT
+                
+= 8252 26
++ 28
+.toZero (↑g)
+               
+= 21759 54
++ 50
+} →
+          @HMul.hMul (GL n R) (GL n R) (GL n R
+= 167366 28
++ 2
+GL
+= 8381 24
++ 113
+Group.toDivInvMonoid (GL n R) Units.instGroup).toMulOneClass.toMul)
+              x y ∈
+            {g : GL n R |
+= 9448 44
++ 1
+ 
+= 8149 31
++ 39
+.toSemilatticeInf.toLT
+                
+= 8252 26
++ 28
+.toZero (↑g)
+               
+= 21759 54
++ 14
+} :=
+    by
+  
+= 13722 38
+@% 17205 4784 27
++ 1
+
+
+= 22252 27
+= 6927 30
++ 66
+(a : α) × m a ≃ n) {x : GL n R},
+      x ∈
+          {g : GL n R |
+= 7876 42
++ 1
+ 
+= 8149 31
++ 37
+.toSemilatticeInf.toLT
+              
+= 8252 26
++ 26
+.toZero (↑g)
+             
+= 21759 54
++ 30
+} →
+        @Inv.inv (GL n R) 
+= 21012 32
++ 48
+.toInvOneClass.toInv x ∈
+          {g : GL n R |
+= 7876 42
++ 1
+ 
+= 8149 31
++ 37
+.toSemilatticeInf.toLT
+              
+= 8252 26
++ 26
+.toZero (↑g)
+             
+= 21759 54
++ 14
+} :=
+    by
+  
+= 21675 33
+= 21706 116
+= 21820 25
+= 21843 120
+= 21961 30
+@% 22116 4894 24
++ 91
+
+    (R : Type)
+    [inst : CommRing R]
+    {α : Type}
+    {n : Type}
+    {m : α → Type} :
+
+= 22222 28
++ 22
+[inst_2 : Fintype n] →
+= 22296 27
++ 49
+ (a : α) × m a ≃ n → Subgroup (GL n R) :=
+    fun
+= 6874 46
+= 6926 31
++ 71
+(a : α) × m a ≃ n) ↦
+      {
+        carrier :=
+          {g : GL n R |
+= 7876 42
++ 1
+ 
+= 8149 31
++ 37
+.toSemilatticeInf.toLT
+              
+= 8252 26
++ 26
+.toZero (↑g)
+             
+= 21759 54
++ 23
+},
+        mul_mem' :=
+
+= 88229 57
+= 26769 40
++ 18
+,
+        one_mem'
+= 78349 50
++ 30
+aux7 R e,
+        inv_mem' :=
+
+= 88229 57
+= 26969 40
++ 2
+ }
+@% 27307 814 8
++ 55
+
+    (R : Type)
+    [inst : CommRing R]
+    (n : Type)
+
+= 27382 24
++ 1
+
+
+= 27417 29
++ 52
+:
+    [LinearOrder n] → Subgroup (GL n R) :=
+    fun
+= 27982 34
+= 47 46
++ 15
+parab R
+       
+@% 28251 10112 20
++ 67
+
+    (k : Type)
+    [inst : Field k]
+    [inst_1 : ValuativeRel k]
+
+= 3647 34
++ 7
+:
+    [
+= 3683 28
++ 4
+] →
+
+= 27357 27
++ 22
+[inst_4 : Fintype n] →
+= 28644 27
++ 58
+ [LinearOrder n] → Subgroup (GL n k) :=
+    fun [inst_3 : 
+= 3683 28
++ 12
+] (n : Type)
+= 29569 80
++ 22
+Subgroup.map
+        (
+= 751 25
++ 31
+.map
+          (@algebraMap (↥(
+= 4194 24
++ 10
+).integer)
+= 38217 48
+= 3031 37
++ 11
+inst.toRing
+@% 38453 30606 34
++ 68
+ inst.toDivisionRing.toSemiring inst_1) inst.toRing
+                
+= 4013 65
++ 18
+
+                (
+= 4194 24
++ 19
+))
+              k 
+= 7083 24
++ 33
+Subring.instSetLike
+             
+= 21759 48
++ 32
+aux3 k))
+            CommRing.to
+= 30284 37
+= 4194 24
++ 1
+)
+= 39298 36
++ 12
+))
+        (
+= 39832 26
+= 751 25
++ 4
+.map
+= 64902 34
++ 4
+ (↥(
+= 4194 24
++ 26
+).integer)
+              (
+= 4194 24
++ 34
+).integer.toCommRing
+             
+= 21759 48
++ 19
+aux4 k)))
+         
+= 21759 49
+= 66308 43
++ 4
+ (↥(
+= 4194 24
++ 26
+).integer)
+              (
+= 4194 24
++ 34
+).integer.toCommRing
+             
+= 21759 48
++ 22
+aux4 k))
+            n
+@% 69148 6737 9
++ 51
+
+    {F : Type}
+    [inst : Field F]
+    [inst_1 : 
+= 76043 24
+= 233 36
+= 270 27
++ 24
+F)) :
+    ValuativeRel (
+= 795 50
++ 12
+F p) :=
+    
+= 71924 24
++ 9
+ Valued.v
+@% 79333 2597 24
++ 25
+NumberField F]
+      (p :
+= 75908 36
+= 76085 31
+= 79505 35
++ 2
+ (
+= 795 50
++ 14
+F p)
+        (
+= 2509 60
++ 12
+F p)
+       
+= 21759 48
++ 21
+complRel p)
+        (
+= 2509 54
++ 67
+UniformSpace F p).toTopologicalSpace :=
+    by
+    intro F _ _ p
+  
+= 81215 69
+= 81282 102
+= 81382 39
+= 81419 58
+= 81475 53
+= 81526 82
+= 81606 51
+= 81655 72
+= 81725 64
+= 81787 52
+= 81837 95
+@% 82010 5953 21
++ 86
+
+    {E : Type}
+    [inst : Field E]
+    [inst_1 : NumberField E]
+    (n : ℕ)
+    (w :
+= 46 50
++ 17
+E) :
+    Subgroup
+= 21759 48
++ 12
+GLw n w) :=
+
+= 86082 65
++ 1
+(
+= 795 50
++ 12
+E w)
+      (
+= 2509 60
++ 10
+E w)
+     
+= 21759 48
++ 19
+complRel w)
+      (
+= 2509 54
++ 17
+UniformSpace E w)
+= 80385 26
+= 21760 47
+= 79261 26
++ 11
+w) (Fin n)
+
+= 85880 44
++ 20
+ Fin.instLinearOrder
+@% 88033 33519 15
++ 86
+
+    {E : Type}
+    [inst : Field E]
+    [inst_1 : NumberField E]
+    (n : ℕ)
+    (w :
+= 46 50
++ 5
+E) :
+
+= 79105 50
++ 9
+GLw n w →
+= 79102 53
++ 27
+GLw n w → ℂ :=
+    fun (t :
+= 393 51
++ 9
+n w) (y :
+= 393 51
++ 34
+n w) ↦
+      @ite ℂ
+        (∃ x ∈
+= 28197 49
++ 23
+GL n w,
+          ∃ z ∈
+= 28197 49
++ 21
+GL n w, y = x * t * z
+@% 121600 33902 5
++ 3
+x ∈
+= 28197 49
++ 25
+GL n w,
+            ∃ z ∈
+= 28197 49
++ 35
+GL n w, y = x * t * z))
+        1 0
+@% 155614 16001 19
++ 59
+NumberField E] [NumberField.IsCMField E] {m : ℕ}
+      {w :
+= 46 50
++ 17
+E}
+      (t k g :
+= 393 51
++ 15
+m w),
+      k ∈
+= 28197 49
++ 11
+GL m w →
+  
+= 79103 52
++ 25
+dcos m w t (k * g) =
+    
+= 79103 52
++ 25
+dcos m w t g :=
+    by
+  
+= 171206 31
+= 171235 62
+= 171295 98
+= 171391 33
+= 171422 59
+= 171479 64
+= 171391 33
+= 171572 45
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/CapelliComplements/FirstLemmaD.lean 3df6846564930daabea4d451effe4742a2d9bb4765d948e65789231f568d77bd 4f1c221dc2c651e365d7a67c7f910af67a6fb91088c3c9baa72326fd648fa2e6
 @@ 15 0 100
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsPrimeMemHeightOneSpectrum
@@ -69776,6 +70493,1265 @@ import Lemmata.GeneralBFactSecondMore.Imports
 
 @@ 539 1069 173
  first | exact @_root_.Bl.general_b_fact_second'.goal1 | exact _root_.Bl.general_b_fact_second'.goal1 | (intros; apply _root_.Bl.general_b_fact_second'.goal1 <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/CoboundaryOfGenerator.lean d16aa4ed9342a454195ccb388cb45bb182c36d10468975809b36df784c72b8ce 889079e2b6b5fc0ccc4e0a13bd15ef0bc6ed2d2294c2cde0276899dc561c6494
+@% 109 5410 12
++ 88
+
+    {R : Type u_1}
+    [inst : CommRing R]
+    {G : Type u_2}
+    [inst_1 : Group G] :
+
+= 225 33
+= 266 25
+= 299 38
++ 85
+[inst_4 : Module R M] → [TopologicalSpace M] → Representation R G M → Prop :=
+    fun
+= 947 45
+= 298 27
++ 21
+[inst_4 : Module R M]
+= 5916 31
++ 59
+(rho : Representation R G M) ↦
+      @Continuous (G × M) M 
+= 1495 25
++ 155
+inst_5 fun (p : G × M) ↦
+        (@DFunLike.coe (Representation R G M) G (fun (x : G) ↦ M →ₗ[R] M) MonoidHom.instFunLike rho
+            p.1)
+          p.2
+@% 5675 565 6
++ 6
+
+     
+= 5675 45
+= 298 27
++ 20
+[inst_4 : Module R M
+= 5909 39
++ 52
+IsTopologicalAddGroup M] (rho : Representation R G M
+@% 6270 11923 17
++ 68
+f ∈
+          {f : G → M |
+            Continuous f ∧
+              
+= 6452 29
++ 35
+f (g * h) =
+                  f g +
+= 7125 35
++ 48
+ (Representation R G M) G (fun (x : G) ↦ M →ₗ[R]
+= 13558 28
++ 21
+MonoidHom.instFunLike
+= 12018 35
++ 87
+} →
+        f' ∈
+            {f : G → M |
+              Continuous f ∧
+                
+= 12268 31
++ 37
+f (g * h) =
+                    f g +
+= 8164 37
++ 48
+ (Representation R G M) G (fun (x : G) ↦ M →ₗ[R]
+= 18487 30
++ 21
+MonoidHom.instFunLike
+= 18078 37
++ 24
+} →
+          Continuous
+@% 18302 399 4
+= 27092 107
+= 676 27
++ 83
+inst_3.toAddCommMonoid)).toAddZeroClass.toAdd)
+                f f') ∧
+            
+= 6452 27
+@% 18798 137 6
+= 18460 109
+= 6672 29
++ 45
+inst_3.toAddCommMonoid)).toAddZeroClass.toAdd
+= 19147 24
++ 27
+ (g * h) =
+                
+= 19761 74
+@% 19104 5855 7
++ 45
+inst_3.toAddCommMonoid)).toAddZeroClass.toAdd
+= 20221 28
++ 2
+ +
+= 20250 33
++ 48
+ (Representation R G M) G (fun (x : G) ↦ M →ₗ[R]
+= 7674 26
++ 21
+MonoidHom.instFunLike
+@% 25093 595 9
+= 20032 146
++ 45
+inst_3.toAddCommMonoid)).toAddZeroClass.toAdd
+= 457 24
++ 20
+f f' h) :=
+    by
+  
+= 25503 46
+= 25547 26
+= 25571 29
+= 25598 39
+= 25635 55
+@% 52601 11616 31
++ 88
+
+    {R : Type u_1}
+    [inst : CommRing R]
+    {G : Type u_2}
+    [inst_1 : Group G] :
+
+= 225 33
+= 266 25
+= 299 38
++ 24
+[inst_4 : Module R M] →
+
+= 53027 58
++ 17
+[IsTopologicalAdd
+= 65226 28
++ 80
+ContinuousConstSMul R M] → Representation R G M → Submodule R (G → M) :=
+    fun
+= 947 45
+= 298 27
++ 21
+[inst_4 : Module R M]
+= 55602 41
++ 182
+IsTopologicalAddGroup M] [inst_7 : ContinuousConstSMul R M] (rho : Representation R G M) ↦
+      {
+        carrier :=
+          {f : G → M |
+            Continuous f ∧
+              
+= 6452 29
++ 35
+f (g * h) =
+                  f g +
+= 7125 35
++ 48
+ (Representation R G M) G (fun (x : G) ↦ M →ₗ[R]
+= 13558 28
++ 21
+MonoidHom.instFunLike
+= 12018 35
++ 25
+},
+        add_mem' :=
+  
+= 79931 58
+= 63914 36
++ 1
+
+
+= 11756 24
++ 34
+5 inst_6 rho,
+        zero_mem' :=
+= 25703 54
++ 26
+ rho,
+        smul_mem' :=
+= 33149 54
++ 6
+ rho }
+@% 65058 7395 9
++ 105
+
+    {R : Type u_1}
+    [inst : CommRing R]
+    {G : Type u_2}
+    [inst_1 : Group G]
+    {M : Type u_3}
+
+= 65205 29
++ 108
+
+    [inst_3 : Module R M] :
+    Representation R G M → M →ₗ[R] G → M :=
+    fun (rho : Representation R G M
+= 66923 30
++ 11
+CommRing.to
+= 398 24
++ 93
+inst_2.toAddCommMonoid inst_3
+        (fun (a : G) ↦ M) (fun (i : G) ↦ inst_2.toAddCommMonoid
+= 67151 48
++ 116
+DFunLike.coe (Representation R G M) G (fun (x : G) ↦ M →ₗ[R] M) MonoidHom.instFunLike rho g -
+          LinearMap.id
+@% 72540 2306 14
++ 105
+
+    {R : Type u_1}
+    [inst : CommRing R]
+    {G : Type u_2}
+    [inst_1 : Group G]
+    {M : Type u_3}
+
+= 65205 29
++ 114
+
+    [inst_3 : Module R M] :
+    Representation R G M → Submodule R (G → M) :=
+    fun (rho : Representation R G M
+= 74088 41
++ 54
+CommRing.toCommSemiring.toSemiring
+        CommRing.to
+= 398 24
++ 22
+inst_2.toAddCommMonoid
+= 57040 62
++ 40
+inst_2.toAddCommMonoid) inst_3
+        (
+= 42005 24
++ 24
+) (RingHom.id R)
+       
+= 64533 54
++ 10
+
+        (
+= 64991 51
+@% 74932 1639 9
++ 1
+ℕ
+= 74935 59
++ 6
+
+     
+= 74994 30
++ 57
+ [IsTopologicalGroup Γ] [CompactSpace Γ] (χ : Γ →* ℤ_[l]ˣ
+= 76045 68
++ 21
+ [inst_7 : Module R M
+= 76272 48
++ 45
+DiscreteTopology M] (ρ : Representation R Γ M
+@% 76594 42953 68
++ 23
+Continuous ⇑χ →
+       
+= 33 60
+= 80047 26
++ 31
+ χ g = 1 → ∀ (m : M), (ρ g) m =
+= 89160 29
++ 6
+ χ g ∈
+= 119038 44
++ 120
+) →
+              (Function.Surjective fun (m : M) ↦ (ρ γ) m - m) →
+                ∀
+                  z ∈
+            
+= 79931 58
+= 109253 29
+= 47332 28
++ 16
+6 inst_7 inst_8 
+= 109330 39
++ 22
+
+                     
+= 64226 54
++ 4
+ ρ,
+
+= 110869 29
++ 18
+ χ g = 1 → z g = 0
+= 115480 24
++ 3
+z ∈
+= 72472 52
++ 15
+ ρ :=
+    by
+  
+= 117566 75
+= 117639 36
+= 117673 62
+= 117733 34
+= 117765 37
+= 117800 45
+= 117843 28
+= 117869 43
+= 117910 25
+= 117933 33
++ 16
+  simp [hone]
+  
+= 117978 29
+= 118005 26
+= 118029 43
+= 118070 43
+= 118111 45
+= 118154 69
++ 9
+  abel
+  
+= 118228 29
++ 15
+  intro a ha
+  
+= 118023 49
+= 118315 37
+= 118350 31
+= 118379 46
+= 118423 96
+= 118517 60
+= 118575 55
+= 118628 50
+= 118676 88
+= 118762 44
+= 118804 82
+= 118884 76
+= 118958 28
+= 118984 44
+= 119026 74
+= 119098 46
+= 119142 54
+= 119194 39
++ 12
+  intro g
+  
+= 119241 44
+= 119283 81
+= 119362 38
+= 119398 47
+= 119443 41
+= 119482 34
+= 119514 35
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/CoerciveOfPositiveDefinite.lean ba16c44b804d11b7acc931aabe6904687fc7b2bf9e8e52c531b545d9045c707e a838383f457d6fd04cc79f141a950fddcb922d04b8bb585a1310d6c68711ba78
+@% 168 3853 36
++ 1
+ℂ
+= 175 26
++ 1
+ℂ
+= 208 79
++ 43
+ℝ), 0 < c ∧ ∀ (z : ι → ℂ) (j : ι), c * ‖z j
+= 3709 36
++ 29
+
+    by
+    intro ι _ P hP
+  
+= 2474 46
+= 2518 55
+= 2571 79
+= 2648 49
++ 13
+  fun_prop
+  
+= 2706 59
+= 2763 48
+= 2809 99
+= 2906 29
++ 32
+  rintro rfl
+      simp at hu
+  
+= 2961 72
+= 3031 34
+= 3063 38
++ 11
+  · simp
+  
+= 3108 45
+= 3151 64
+= 3213 90
+= 3301 99
+= 3398 64
+= 3460 58
+= 3516 91
+= 3605 64
+= 3667 86
++ 18
+  rw [h2] at h1
+  
+= 3767 53
+= 3818 71
+= 3887 52
+= 3937 51
+= 3986 37
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ComplexNormedInstanceCompat.lean d396fc699915df148a7cd7fca76723f7574ddeeecb658973ed72803f09112a52 15e6bd7e7d8441a7fc1c332073c56cfe63d08c41ffbeb758c56ae0e586e6676d
+@% 619 1834 6
++ 13
+{n : ℕ} :
+   
+= 85 41
++ 19
+ℂ → Prop :=
+    fun
+= 712 48
++ 12
+ℂ) ↦
+      g
+= 10730 94
+@% 2512 8949 30
++ 24
+ℕ} (ε : Fin n → Bool) {g
+= 10987 32
++ 12
+},
+      g ∈
+= 46468 35
+= 582 37
++ 19
+ε ↑g} →
+        h ∈
+= 46468 35
+= 582 37
++ 18
+ε ↑g} →
+          
+= 823 35
++ 3
+ℂ)ˣ
+= 780 25
++ 3
+ℂ)ˣ
+= 54250 39
++ 3
+ℂ)ˣ
+= 78818 27
+= 10993 26
++ 55
+ Units.instGroup.toMulOneClass.toMul) g h ∈
+           
+= 46468 35
+= 582 37
++ 18
+ε ↑g} :=
+    by
+  
+= 10665 24
+= 10687 146
+= 10831 146
+= 10975 132
+= 11105 109
+= 11212 49
+= 11259 66
+= 11323 109
+= 11430 33
+@% 18876 6231 25
++ 21
+ℕ} (ε : Fin n → Bool)
+= 46468 33
++ 12
+},
+      g ∈
+= 46468 35
+= 582 37
++ 24
+ε ↑g} →
+        @Inv.inv
+= 780 25
++ 4
+ℂ)ˣ 
+= 23211 32
++ 3
+.to
+= 22645 30
++ 13
+g ∈
+         
+= 46468 35
+= 582 37
++ 37
+ε ↑g} :=
+    by
+    intro n ε g hg
+  
+= 10687 146
+= 24248 130
+= 24376 107
+= 24481 100
+= 24579 101
+= 24678 86
+= 24762 130
+= 24890 48
+= 24936 116
+= 25050 59
+@% 25253 5417 14
++ 35
+{n : ℕ} :
+    (Fin n → Bool) → Subg
+= 10356 29
++ 14
+ℂ)ˣ :=
+    fun
+= 154 28
++ 12
+{ carrier :=
+= 46468 35
+= 582 37
++ 26
+ε ↑g},
+        mul_mem' :=
+= 4081 33
++ 28
+aux3 n ε,
+        one_mem' :
+= 10787 33
++ 27
+aux4 ε,
+        inv_mem' :=
+= 4081 33
++ 10
+aux5 n ε }
+@% 30755 3702 4
++ 59
+
+    (n : ℕ)
+    (ε : Fin n → Bool) :
+    MeasurableSpace ↥
+= 46373 36
++ 16
+) :=
+    borel ↥
+= 46373 36
+@% 34584 4185 3
++ 53
+{n : ℕ} (ε : Fin n → Bool) :
+    IsTopologicalGroup ↥
+= 46373 36
++ 15
+) :=
+    inferI
+@% 38822 3705 3
++ 45
+(n : ℕ) (ε : Fin n → Bool) :
+    BorelSpace ↥
+= 46373 36
++ 33
+) :=
+    { measurable_eq := rfl }
+@% 42609 4184 11
++ 44
+ℕ) (ε : Fin n → Bool), LocallyCompactSpace ↥
+= 46373 36
++ 28
+) :=
+    by
+    intro n ε
+  
+= 46230 64
+= 46292 62
+= 46352 103
+= 46453 57
+= 46508 132
+= 46638 26
+= 46662 114
++ 21
+  continuous_const
+  
+@% 46878 4495 13
++ 56
+{n : ℕ} (ε : Fin n → Bool) :
+    MeasureTheory.Measure ↥
+= 46373 36
++ 5
+) :=
+
+= 47093 35
+= 34 31
++ 7
+UJ ε))
+
+= 42431 38
++ 14
+UJ ε).toGroup 
+= 30962 34
+= 51329 35
++ 5
+8 ε)
+
+= 65691 71
+= 51329 42
+@% 53044 2623 13
++ 13
+{n : ℕ} :
+   
+= 53061 46
++ 13
+ℂ) :=
+    fun
+= 154 28
++ 1
+{
+= 10701 28
++ 15
+ |
+        g ∈ 
+= 54776 28
++ 15
+ℂ ∧
+          g
+= 10744 34
++ 5
+d15 ε
+= 10786 34
++ 10
+d15 ε * g}
+@% 55760 5773 38
++ 4
+ℂ ℂ
+
+= 34127 44
++ 2
+ℂ 
+= 55939 28
++ 28
+).toPseudoMetricSpace
+      
+= 56073 48
++ 21
+.toPseudoMetricSpace
+
+= 56467 35
++ 2
+ℂ
+
+= 56613 30
++ 1
+ℂ
+= 82529 35
++ 17
+Field.toField).to
+= 56522 27
++ 9
+).toZero
+
+= 56801 45
++ 1
+ℂ
+= 66266 30
++ 40
+DivisionAddCommMonoid ℂ
+                
+= 56073 48
++ 60
+.toAddCommGroup).toSubtractionMonoid).toNegZeroClass.toZero
+
+= 59037 39
++ 4
+ℂ ℂ
+
+= 56613 30
++ 1
+ℂ
+= 55975 24
++ 48
+.toField).toDivisionSemiring.toMonoid
+          
+= 56073 48
++ 13
+.toAddMonoid
+
+= 60789 33
++ 3
+ℂ ℂ
+= 60837 39
+= 56073 48
++ 16
+
+              (
+= 61429 44
++ 23
+
+                    ℂ)
+= 61374 24
++ 56
+.toNormedSpace).toDistribMulAction).toSMul :=
+    inferI
+@% 61608 1242 93
++ 12
+
+    {n : ℕ}
+= 178825 24
++ 7
+:
+    ↥
+= 46373 36
+= 99 27
++ 19
+ℂ :=
+    fun (g : ↥
+= 46373 36
+= 61808 46
++ 30
+ℂ) Matrix.semiring.toMonoid ↑g
+= 64799 68
++ 1
+ℕ
+= 64870 41
+= 34 31
++ 2
+UJ
+= 64947 37
++ 3
+ℂ ℂ
+= 64999 42
++ 14
+ (RingHom.id ℂ
+= 79769 46
++ 18
+L2 ε)
+            
+= 33941 32
++ 19
+.toTopologicalSpace
+= 66266 45
+= 34 31
++ 20
+L2 ε)
+              
+= 66367 33
+= 79769 46
++ 18
+L2 ε)
+            
+= 33941 32
++ 19
+.toTopologicalSpace
+= 66266 45
+= 34 31
++ 20
+L2 ε)
+              
+= 66367 33
++ 14
+)
+            
+= 68842 28
+= 68842 28
+= 72330 94
++ 6
+@dite
+
+= 72434 94
+= 65054 131
+= 65189 85
+= 65278 88
+= 65370 100
+= 65474 103
+= 65581 112
+= 65697 77
+= 84648 408
+= 66206 69
+= 66279 82
+= 66365 100
+= 65697 71
+= 76401 409
+= 18741 44
++ 8
+L2 n ε)
+
+= 65181 93
+= 65278 88
+= 65370 100
+= 65474 103
+= 65581 112
+= 65697 77
+= 84648 408
+= 66206 69
+= 66279 82
+= 66365 100
+= 65697 71
+= 76401 409
+= 78338 27
+= 68856 84
+= 51959 69
+= 52069 368
+= 52027 44
+= 69453 116
+= 69573 40
+= 83614 211
++ 2
+)
+
+= 77206 81
+= 68840 100
+= 51959 69
+= 52069 368
+= 52027 44
+= 69453 116
+= 69573 40
+= 83614 211
++ 2
+)
+
+= 78267 80
+= 78349 130
+= 51270 91
+= 51991 35
+= 78609 65
+= 78676 155
+= 78833 69
++ 14
+(@Subgroup.mul
+@% 63350 67 7
+= 66884 50
++ 10
+UJ n ε)))
+
+= 79494 25
+= 2350 33
+= 79554 58
+= 79614 33
+= 78349 569
+@@ 63811 536 0
+
+@% 64487 2040 33
+= 35 30
+= 79482 123
++ 9
+)
+      (
+= 91506 32
+= 80980 135
+= 51270 91
+= 68976 42
+= 90534 959
+= 2350 33
+= 82268 62
+= 82332 64
+= 82398 146
+= 69406 47
+= 69019 386
++ 3
+))
+
+= 82388 156
+= 69406 47
+= 69019 386
++ 3
+))
+
+= 69607 48
+= 69661 42
+= 69709 52
+= 83752 84
+= 69617 38
+= 69661 42
+= 69709 52
+= 83752 84
+= 84062 33
+= 84097 52
+= 76985 218
++ 2
+)
+
+= 84379 68
+= 82398 178
+@% 66942 1979 2
+= 68825 38
+= 65604 62
+@% 69436 1236 4
+= 85687 37
+= 84389 58
+= 83006 610
+= 65583 83
+@% 71187 1244 24
+= 85687 37
+= 76228 2111
+= 76217 30
+= 89264 88
+= 65697 71
+= 76401 409
+= 30907 53
+= 78477 64
+= 2351 32
+= 89997 29
+= 76823 454
+= 90494 37
+= 79913 936
++ 15
+hm))
+      fun
+
+= 80952 24
++ 3
+Not
+= 68827 29
+= 80995 120
+= 51270 91
+= 68976 42
+= 90534 959
+= 2350 33
+= 92845 61
++ 12
+@OfNat.ofNat
+@@ 78350 14570 33
+nat_lit 1)
+        (@One.toOfNat1
+@% 98991 11492 1
+= 105249 53
+@% 113352 2473 28
+= 34 31
+= 108274 100
++ 1
+ℕ
+= 108377 62
++ 1
+ℂ
+= 64950 34
++ 3
+ℂ ℂ
+= 64999 42
++ 14
+ (RingHom.id ℂ
+= 79769 46
++ 18
+L2 ε)
+            
+= 33941 32
++ 19
+.toTopologicalSpace
+= 66266 45
+= 34 31
++ 20
+L2 ε)
+              
+= 66367 33
+= 79769 46
++ 18
+L2 ε)
+            
+= 33941 32
++ 19
+.toTopologicalSpace
+= 66266 45
+= 34 31
++ 20
+L2 ε)
+              
+= 66367 33
++ 14
+)
+            
+= 68842 28
+= 68842 27
+@% 115909 7 61
++ 6
+@dite
+
+= 72434 94
+= 65054 131
+= 65189 85
+= 65278 88
+= 65370 100
+= 65474 103
+= 65581 112
+= 65697 77
+= 84648 408
+= 66206 69
+= 66279 82
+= 66365 100
+= 65697 71
+= 76401 409
+= 18741 44
++ 8
+L2 n ε)
+
+= 65181 93
+= 65278 88
+= 65370 100
+= 65474 103
+= 65581 112
+= 65697 77
+= 84648 408
+= 66206 69
+= 66279 82
+= 66365 100
+= 65697 71
+= 76401 409
+= 78338 27
+= 68856 84
+= 51959 69
+= 52069 368
+= 52027 44
+= 69453 116
+= 69573 40
+= 83614 211
++ 2
+)
+
+= 77206 81
+= 68840 100
+= 51959 69
+= 52069 368
+= 52027 44
+= 69453 116
+= 69573 40
+= 83614 211
++ 2
+)
+
+= 78267 80
+= 121834 143
+= 79614 33
+= 122014 144
++ 5
+(fun
+
+= 122167 161
+= 2351 32
++ 10
+rregG n ε
+
+= 122374 82
+= 122458 152
++ 27
+h))
+      fun
+        (h :
+
+= 91528 26
+= 122673 146
++ 12
+@OfNat.ofNat
+@@ 121835 998 33
+nat_lit 1)
+        (@One.toOfNat1
+@% 128904 4097 2
+= 105249 107
+= 65189 1255
+@% 133530 4612 1
+= 68825 1017
+@% 138275 2621 12
++ 13
+{n : ℕ} :
+   
+= 53061 46
++ 13
+ℂ) :=
+    fun
+= 154 28
++ 1
+{
+= 10701 28
++ 15
+ |
+        g ∈ 
+= 54776 28
++ 15
+ℂ ∧
+          g
+= 10744 39
+= 10787 38
++ 4
+* g}
+@% 140964 11168 9
++ 32
+
+    {n : ℕ}
+    {H : Type u_1}
+
+= 141010 33
++ 60
+
+    [inst_1 : InnerProductSpace ℂ H] :
+    (Fin n → Bool) →
+= 780 25
++ 67
+ℂ → H →L[ℂ] H) → Submodule ℂ H → Prop :=
+    fun (ε : Fin n → Bool)
+= 178864 45
++ 30
+S : Submodule ℂ H) ↦
+      ∀ g
+= 178937 43
++ 18
+v ∈ S, (σ g) v ∈ S
+@% 152195 9324 14
++ 32
+
+    {n : ℕ}
+    {H : Type u_1}
+
+= 141010 33
++ 40
+
+    [inst_1 : InnerProductSpace ℂ H] :
+
+= 152410 32
++ 4
+ℂ) →
+= 780 25
++ 27
+ℂ → H →L[ℂ] H) → (Fin n → ℝ
+= 154120 24
+= 154328 33
++ 3
+ℂ))
+= 178864 45
++ 13
+μ : Fin n → ℝ
+= 155848 33
++ 241
+ℝ),
+        (Matrix.diagonal fun (a : Fin n) ↦ Complex.exp (↑(θ a) * Complex.I)) ∈ G →
+          (σ (Matrix.diagonal fun (a : Fin n) ↦ Complex.exp (↑(θ a) * Complex.I))) v =
+            Complex.exp (↑(∑ a : Fin n, μ a * θ a) * Complex.I) • v
+@% 163281 15417 23
++ 32
+
+    {n : ℕ}
+    {H : Type u_1}
+
+= 141010 33
++ 60
+
+    [inst_1 : InnerProductSpace ℂ H] :
+    (Fin n → Bool) →
+= 780 25
++ 81
+ℂ → H →L[ℂ] H) → (Fin n → ℝ) → Submodule ℂ H → Prop :=
+    fun (ε : Fin n → Bool)
+= 178864 45
++ 67
+Λ : Fin n → ℝ) (S : Submodule ℂ H) ↦
+      FiniteDimensional ℂ ↥S ∧
+= 24883 40
++ 40
+IsKStableOn ε σ S ∧
+          (∀ S' ≤ S,
+= 33 32
++ 85
+IsKStableOn ε σ S' → S' = ⊥ ∨ S' = S) ∧
+            (∃ v ∈ S,
+                v ≠ 0 ∧
+= 69268 50
++ 5
+IsWtO
+= 281068 34
++ 119
+d21 ε) σ Λ
+                    v) ∧
+              ∀ (μ : Fin n → ℝ),
+                ∀ v ∈ S,
+                  v ≠ 0 →
+= 66801 52
++ 5
+IsWtO
+= 281068 34
++ 10
+d21 ε) σ μ
+= 1747 25
+= 178624 26
+= 34 31
++ 10
+CDom ε μ Λ
+@% 180471 41 3
++ 1
+ℕ
+= 180474 34
++ 1
+ℝ
+@% 180544 100474 41
++ 3
+ℂ ℂ
+= 64999 42
++ 14
+ (RingHom.id ℂ
+= 78469 44
++ 2
+L2
+= 51266 36
++ 2
+L2
+= 180782 46
+= 34 31
++ 18
+L2 ε)
+            
+= 66367 33
+= 73717 44
+= 34 31
++ 18
+L2 ε)
+            
+= 66367 33
++ 12
+)
+          
+= 68842 28
+= 68842 27
++ 10
+),
+      (
+= 178934 37
++ 22
+Kset ε,
+          ∀ (x
+= 179075 34
++ 22
+L2 ε),
+            A (
+= 42437 32
++ 14
+rreg ε k) x) =
+= 68929 47
++ 45
+rreg ε k) (A x)) →
+        ∀ {S : Submodule ℂ
+= 42436 33
++ 19
+L2 ε)},
+          (
+= 179042 25
++ 2
+ →
+= 77203 44
++ 11
+IsKTypeOf ε
+= 42436 33
++ 4
+rreg
+= 273555 24
+= 34 31
++ 11
+IsKTypeOf ε
+= 42436 33
++ 58
+rreg ε) Λ
+                (Submodule.map A S) :=
+    by
+  
+= 280989 31
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ConjEqNegOfSq.lean d606217aa912e41116bb7b7e5aa75b54b0d72ad1d5a4a870396a7234f5d8948c 72c45701fd1ffc9487bafe841bd266b3d42946ea1445b68a4f2f3a3fadc299d3
 @@ 15 0 86
 import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ConjEqNegOfSqEqNegNat
@@ -69788,6 +71764,808 @@ import Development.AbelianVarietyTheory.Proofs.ModuliProofs.IntOfPrimeMulSq
 
 @@ 195 569 236
  first | exact @_root_.GlobalTheory.RationalIntegralCoordinates.conj_eq_neg | exact _root_.GlobalTheory.RationalIntegralCoordinates.conj_eq_neg | (intros; apply _root_.GlobalTheory.RationalIntegralCoordinates.conj_eq_neg <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ConjInvariantCharacterMem.lean 65375243a7c750d41f775d2eadabb7f33efd4b2425d4c35086e18894c09c20d5 8e3d61932d9e62923723b15bec0ba15c700201e0dbab6f0edff8442e86f2c989
+@% 69 1277 6
+= 2052 31
++ 17
+:
+    (A →+* A) →
+= 352 55
++ 26
+(σ : A →+* A) {m : Type} {
+= 690 37
++ 20
+(M.map ⇑σ).transpose
+@% 2150 1570 3
++ 91
+ A →+* A) (J : Matrix n n A) {a b : GL n A},
+      a ∈
+          {g : GL n A |
+            
+= 3328 72
+= 3402 44
+@% 3812 2174 6
+= 3402 44
++ 11
+
+          
+= 11777 46
++ 99
+↑g) J)
+                ↑g =
+              J} →
+        b ∈
+            {g : GL n A |
+              
+= 3738 74
+= 3402 44
+@% 6082 2234 10
+= 3402 44
++ 13
+
+            
+= 11777 46
++ 97
+↑g) J)
+                  ↑g =
+                J} →
+          @HMul.hMul (GL n A) (GL n A) (GL n A
+= 9789 26
++ 4
+ (GL
+= 3378 24
++ 128
+Group.toDivInvMonoid (GL n A) Units.instGroup).toMulOneClass.toMul)
+              a b ∈
+            {g : GL n A |
+              
+= 3738 74
+= 3402 44
+@% 8412 3520 13
+= 3402 44
++ 13
+
+            
+= 11777 46
++ 61
+↑g) J)
+                  ↑g =
+                J} :=
+    by
+  
+= 11265 34
+= 11297 106
+= 11401 106
+= 11505 113
+= 11616 65
+= 11679 31
+= 11708 77
+= 11783 120
+= 11901 33
+@% 17248 1568 3
++ 89
+ A →+* A) (J : Matrix n n A) {g : GL n A},
+      g ∈
+          {g : GL n A |
+            
+= 3328 72
+= 3402 44
+@% 18908 2140 8
+= 3402 44
++ 11
+
+          
+= 11777 46
++ 73
+↑g) J)
+                ↑g =
+              J} →
+        @Inv.inv (GL n A) 
+= 22573 32
++ 61
+.toInvOneClass.toInv g ∈
+          {g : GL n A |
+            
+= 3328 72
+= 3402 44
+@% 21140 3299 20
+= 3402 44
++ 11
+
+          
+= 11777 46
++ 57
+↑g) J)
+                ↑g =
+              J} :=
+    by
+  
+= 23236 29
+= 23263 106
+= 23367 111
+= 23476 63
+= 23537 99
++ 20
+  Units.mul_inv g
+  
+= 23652 112
+= 23762 72
+= 23832 30
+= 23860 113
+= 23971 95
+= 24064 76
+= 24138 109
+= 24245 73
+= 24316 94
+= 11901 33
+@% 24552 4131 11
++ 19
+
+    {A : Type}
+   
+= 417 25
++ 11
+{n : Type}
+
+= 24627 24
++ 1
+
+
+= 24662 29
++ 75
+:
+    (A →+* A) → Matrix n n A → Subgroup (GL n A) :=
+    fun (σ : A →+* A)
+= 25752 28
++ 57
+{
+        carrier :=
+          {g : GL n A |
+            
+= 3328 72
+= 3402 44
+@% 28775 1637 12
+= 3402 44
++ 11
+
+          
+= 11777 46
++ 65
+↑g) J)
+                ↑g =
+              J},
+        mul_mem' :=
+= 72564 34
+= 30226 31
++ 18
+,
+        one_mem'
+= 112857 36
++ 29
+aux3 σ J,
+        inv_mem' :=
+= 72564 34
+= 30380 31
++ 2
+ }
+@% 30458 2964 12
++ 55
+
+    {F : Type}
+    [inst : Field F]
+    (R : Type)
+   
+= 30505 27
++ 25
+[inst_2 : Algebra F R] :
+
+= 30702 31
+= 31290 36
++ 84
+ Field.toSemifield.toMonoid
+          CommRing.toCommSemiring.toAddMonoid Algebra.to
+= 31623 25
++ 9
+).toSMul
+
+= 31284 42
++ 84
+ Field.toSemifield.toMonoid
+          CommRing.toCommSemiring.toAddMonoid Algebra.to
+= 31623 25
++ 15
+).toSMul :=
+   
+@% 33482 3013 19
++ 55
+
+    {F : Type}
+    [inst : Field F]
+    (R : Type)
+   
+= 30505 27
++ 25
+[inst_2 : Algebra F R] :
+
+= 33726 24
++ 27
+ (@instSMulOfMul F Field.to
+= 33970 28
++ 22
+.toMulOneClass.toMul)
+
+= 31615 37
++ 9
+ Field.to
+= 33970 28
++ 37
+.toSemiring
+          CommRing.toComm
+= 3629 26
++ 24
+lgebra.toModule).toSMul
+
+= 31615 37
++ 9
+ Field.to
+= 33970 28
++ 37
+.toSemiring
+          CommRing.toComm
+= 3629 26
++ 30
+lgebra.toModule).toSMul :=
+   
+@% 36565 11313 51
++ 55
+
+    {F : Type}
+    {E : Type}
+    [inst : Field F]
+   
+= 43053 24
++ 38
+[inst_2 : Algebra F E]
+    (R : Type)
+
+= 36897 25
++ 117
+
+    [inst_4 : Algebra F R] :
+    (E →ₐ[F] E) → TensorProduct F R E →+* TensorProduct F R E :=
+    fun (σ : E →ₐ[F] E
+= 43838 29
++ 53
+ (TensorProduct F R E) (TensorProduct F R E) Field.to
+= 30567 24
++ 9
+
+        
+= 45398 35
+= 45398 34
+= 45999 53
++ 8
+Field.to
+= 30567 24
++ 22
+
+          CommRing.to
+= 171 24
++ 15
+inst_4 Field.to
+= 33970 28
++ 37
+.toSemiring
+          inst_2 Field.to
+= 30567 25
++ 6
+inst_4
+= 11784 34
++ 6
+aux6 R
+= 46442 55
++ 8
+Field.to
+= 30567 24
++ 22
+
+          CommRing.to
+= 171 24
++ 15
+inst_4 Field.to
+= 33970 28
++ 37
+.toSemiring
+          inst_2 Field.to
+= 30567 25
++ 6
+inst_4
+= 11784 34
++ 6
+aux6 R
+= 46887 51
++ 8
+Field.to
+= 30567 24
++ 19
+
+          Field.to
+= 30567 25
++ 26
+(Algebra.id F) CommRing.to
+= 171 24
++ 23
+inst_4
+          inst_4
+= 11784 34
++ 26
+aux7 R)
+          Field.to
+= 33970 28
++ 77
+.toSemiring inst_2 CommRing.toCommSemiring.toSemiring
+          inst_4 inst_4
+= 11784 34
++ 26
+aux7 R)
+          Field.to
+= 33970 28
++ 34
+.toSemiring inst_2 (AlgHom.id F R)
+@% 48628 788 3
++ 55
+
+    {F : Type}
+    [inst : Field F]
+    (R : Type)
+   
+= 30505 27
++ 55
+[inst_2 : Algebra F R] :
+    IsScalarTower F R R :=
+   
+@% 50266 930 3
++ 55
+
+    {F : Type}
+    {E : Type}
+    [inst : Field F]
+   
+= 43053 24
++ 55
+[inst_2 : Algebra F E] :
+    IsScalarTower F E E :=
+   
+@% 51267 5799 7
++ 55
+
+    {F : Type}
+    {E : Type}
+    [inst : Field F]
+   
+= 43053 24
++ 38
+[inst_2 : Algebra F E]
+    (R : Type)
+
+= 36897 25
++ 67
+
+    [inst_4 : Algebra F R] :
+    E →+* TensorProduct F R E :=
+    
+= 56771 34
++ 10
+.toRingHom
+@% 57120 2912 11
++ 55
+
+    {F : Type}
+    {E : Type}
+    [inst : Field F]
+   
+= 43053 24
++ 38
+[inst_2 : Algebra F E]
+    (R : Type)
+
+= 36897 25
++ 42
+
+    [inst_4 : Algebra F R]
+    {M : ℕ} :
+
+= 57733 30
+= 57736 24
+= 123438 27
++ 5
+  fun
+= 59226 40
++ 5
+J.map
+@% 60077 4948 22
++ 31
+ (TensorProduct F R E) Field.to
+= 33970 28
++ 19
+.toNonAssocSemiring
+= 60992 64
++ 8
+Field.to
+= 30567 24
++ 30
+
+              CommRing.toComm
+= 139 29
++ 22
+lgebra.toModule
+      
+= 11777 41
++ 14
+aux9 R)
+      
+= 11777 41
+= 48601 28
++ 25
+R)
+              Field.to
+= 33970 28
++ 43
+.toNonAssocSemiring Algebra.toModule
+      
+= 24239 40
++ 5
+aux11
+= 2006 36
++ 75
+12))
+          E (fun (x : E) ↦ TensorProduct F R E) RingHom.instFunLike
+  
+= 11777 41
++ 7
+inclR R
+@% 65081 8669 14
++ 55
+
+    {F : Type}
+    {E : Type}
+    [inst : Field F]
+   
+= 43053 24
++ 38
+[inst_2 : Algebra F E]
+    (R : Type)
+
+= 36897 25
++ 54
+
+    [inst_4 : Algebra F R] :
+    (E →ₐ[F] E) → {M : ℕ
+= 74739 31
++ 12
+Subgroup (GL
+= 116726 32
++ 33
+:=
+    fun (σ : E →ₐ[F] E) {M : ℕ
+= 59225 41
+= 34 32
+= 127127 45
+= 11776 42
++ 4
+JR R
+@% 73807 1920 10
++ 55
+
+    {F : Type}
+    {E : Type}
+    [inst : Field F]
+   
+= 43053 24
++ 38
+[inst_2 : Algebra F E]
+    (R : Type)
+
+= 36897 26
++ 42
+:
+    [Algebra F R] → (E →ₐ[F] E) → {M : ℕ
+= 74739 47
++ 45
+[inst_4 : Algebra F R] (σ : E →ₐ[F] E) {M : ℕ
+= 75606 43
+= 34 32
++ 6
+HR R σ
+@% 75789 4753 22
++ 55
+
+    {F : Type}
+    {E : Type}
+    [inst : Field F]
+   
+= 43053 24
++ 38
+[inst_2 : Algebra F E]
+    (R : Type)
+
+= 36897 25
++ 30
+
+    [inst_4 : Algebra F R] :
+
+= 76370 26
+= 112818 42
++ 8
+
+    fun
+= 77793 63
++ 50
+ (TensorProduct F R E) (instAddTensorProduct F R E
+= 79316 42
++ 8
+Field.to
+= 30567 24
++ 63
+
+          CommRing.toCommSemiring.toMonoid R E CommRing.toComm
+= 3629 24
++ 19
+
+          Field.to
+= 33970 28
++ 28
+.toAddCommMonoid Semiring.to
+= 31623 25
++ 44
+
+          Algebra.toModule Algebra.toModule
+= 11784 34
++ 6
+aux9 R
+@% 80599 31039 26
++ 55
+
+    {F : Type}
+    {E : Type}
+    [inst : Field F]
+   
+= 43053 24
++ 38
+[inst_2 : Algebra F E]
+    (R : Type)
+
+= 36897 25
++ 60
+
+    [inst_4 : Algebra F R]
+    (σ : E →ₐ[F] E)
+    {M : ℕ}
+
+= 81616 35
++ 2
+:
+
+= 76370 26
++ 4
+ Set
+= 11784 34
++ 27
+HA R σ J) → Prop :=
+    fun
+= 77793 31
++ 10
+(s : Set ↥
+= 11785 33
++ 33
+HR R σ J)) ↦
+      ∃ (t : Set (GL
+= 116726 31
++ 22
+),
+        @IsOpen (GL
+= 116726 31
+= 85251 46
+= 67775 24
++ 21
+ (TensorProduct F R E
+= 86145 61
+= 123941 25
++ 6
+      
+= 11777 41
++ 99
+topTens R))
+              Matrix.semiring.toMonoid)
+            t ∧
+          Subtype.val ⁻¹' t = s
+@% 111762 1141 9
++ 35
+ [inst_2 : Algebra F E] (R : Type)
+
+= 36895 28
++ 47
+[inst_4 : Algebra F R] (σ : E →ₐ[F] E) {M : ℕ}
+
+= 81614 37
+= 112543 37
+= 34 32
++ 31
+d18 R σ J Set.univ :=
+    by
+  
+= 112778 34
+= 112810 95
+@% 113052 1643 17
++ 35
+ [inst_2 : Algebra F E] (R : Type)
+
+= 36895 28
++ 47
+[inst_4 : Algebra F R] (σ : E →ₐ[F] E) {M : ℕ}
+
+= 81614 37
+= 113833 48
+= 34 32
++ 11
+HA R σ J)),
+= 23757 39
++ 13
+d18 R σ J s →
+= 24238 41
++ 16
+d18 R σ J t →
+  
+= 24239 40
++ 30
+d18 R σ J (s ∩ t) :=
+    by
+  
+= 114504 44
+= 112810 95
+= 114639 30
+= 114667 30
+@% 114855 2159 22
++ 35
+ [inst_2 : Algebra F E] (R : Type)
+
+= 36895 28
++ 47
+[inst_4 : Algebra F R] (σ : E →ₐ[F] E) {M : ℕ}
+
+= 81614 37
+= 115636 51
+= 34 32
++ 28
+HA R σ J))),
+      (∀ t ∈ s,
+= 33 33
++ 14
+d18 R σ J t) →
+= 24238 41
++ 29
+d18 R σ J (⋃₀ s) :=
+    by
+  
+= 116548 39
+= 112810 95
+= 116678 86
+= 116762 77
++ 10
+  ext x
+  
+= 116845 49
++ 16
+  constructor
+  
+= 116906 32
++ 22
+  exact ⟨_, hu, hx⟩
+  
+= 116956 27
+= 116981 35
+@% 117128 2686 23
++ 55
+
+    {F : Type}
+    {E : Type}
+    [inst : Field F]
+   
+= 43053 24
++ 38
+[inst_2 : Algebra F E]
+    (R : Type)
+
+= 36897 25
++ 60
+
+    [inst_4 : Algebra F R]
+    (σ : E →ₐ[F] E)
+    {M : ℕ}
+
+= 81616 35
++ 2
+:
+
+= 76370 26
++ 17
+ TopologicalSpace
+= 11784 34
++ 20
+HA R σ J) :=
+    fun
+= 77793 39
++ 8
+{ IsOpen
+= 112857 36
++ 30
+d18 R σ J,
+        isOpen_univ
+= 112857 36
+= 111680 26
++ 27
+R σ J,
+        isOpen_inter
+= 112857 36
++ 43
+blockM_mul_alt R σ J,
+        isOpen_sUnion
+= 112857 36
+= 114770 29
++ 7
+R σ J }
+@% 124478 2758 26
++ 26
+ [inst_2 : Algebra F E]
+  
+= 123613 40
++ 42
+inst_4 : CommRing R] [inst_5 : Algebra F R
+= 125253 37
+= 123703 24
++ 28
+LocallyCompactSpace R]
+     
+= 122146 41
++ 24
+(σ : E →ₐ[F] E) (M : ℕ)
+
+= 81614 36
++ 4
+,
+  
+= 120912 25
+= 34 32
++ 14
+HA R σ J) ∧
+  
+= 120970 31
+= 34 32
++ 29
+HA R σ J) ∧
+          T2Space
+= 11784 34
++ 22
+HA R σ J) :=
+    by
+  
+= 126690 44
+= 126732 97
+= 126827 65
+= 126890 48
++ 64
+  haveI := h1
+    haveI := h2
+    haveI := h3
+    haveI := h4
+  
+= 126992 75
++ 48
+  haveI := g1
+    haveI := g2
+    haveI := g3
+  
+= 127107 131
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ConjugateRootZero.lean 3fe8899c172f8c42c131f2018068f0b974c4fa6b349cb9aedaf3169b710274d0 58b74f2e28b6b4df28d2a84575010d287f1311058f0269b6aca979ab1e3a09ce
 @@ 141 0 97
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ConjugateRootZeroSecond
@@ -69820,7 +72598,334 @@ ConjugateRootZeroSecond.rt0_conj_neg_ne_zero | (intros; apply _root_.
 = 150 27
 + 60
 ConjugateRootZeroSecond.rt0_conj_neg_ne_zero <;> assumption)
-== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ContDiffHerm.lean 0cef059b7434365b3bce3ac279d136ed1af0ea7ef7e24f45a507fc7ba9bc9ca1 ac970fbd0e9c0ed79f2ec58405c5105ee280aa1d3c001eecf0795ef56af7fa46
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ContDiffHerm.lean 0cef059b7434365b3bce3ac279d136ed1af0ea7ef7e24f45a507fc7ba9bc9ca1 cb076f18d4ad6bb6cd96b68fea38a0a1c0dffb2b7914fb8eb18c52b6791a32bb
+@@ 89 806 100
+ℕ → ℕ → Type :=
+    fun (k : ℕ) (r : ℕ) ↦
+      Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ
+@@ 951 18733 327
+(k : ℕ) (r : ℕ) :
+    Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ :=
+    fun (i : Fin (2 * r + k + 1)) (j : Fin (2 * r + k + 1)) ↦
+      if ↑i < r ∧ ↑i + ↑j = 2 * r + k then 1
+      else
+        if ↑j < r ∧ ↑i + ↑j = 2 * r + k then 1
+        else if r ≤ ↑i ∧ ↑i ≤ r + k ∧ i = j then if ↑i = r + k then -1 else 1 else 0
+@% 19742 17756 9
++ 18
+(k : ℕ) (r : ℕ) :
+
+= 89459 36
+= 19794 27
+= 19833 53
++ 24
+Matrix.conjTranspose X *
+= 914 37
++ 5
+k r +
+= 89452 43
++ 23
+Hpk k r * X =
+        0
+@% 38419 1217 15
++ 32
+
+    {n : ℕ}
+    {E : Type u_1}
+
+= 38465 34
++ 26
+:
+    [NormedSpace ℂ E] →
+
+= 38622 29
++ 1
+ℂ
+= 38658 27
++ 1
+ℂ
+= 38692 31
++ 43
+ℂ → E :=
+    fun [inst_1 : NormedSpace ℂ E]
+= 38928 29
++ 1
+ℂ
+= 38964 30
++ 1
+ℂ
+= 39001 34
++ 36
+ℂ) ↦
+      deriv
+        (fun (t : ℝ
+@% 39665 973 4
++ 18
+g *
+              
+= 39974 41
++ 19
+ℂ) Matrix.instRing 
+= 37632 26
+@% 40726 368 5
++ 1
+ℂ
+= 37588 25
++ 1
+ℂ
+= 39707 26
++ 50
+ℂ) instHSMul (↑t)
+                  X)))
+        0
+@@ 41157 1541 152
+{ι : Type u_1} [Fintype ι] :
+    Matrix ι ι ℂ → (ι → ℂ) → (ι → ℂ) → ℂ :=
+    fun (H : Matrix ι ι ℂ) (v : ι → ℂ) (w : ι → ℂ) ↦
+      star w ⬝ᵥ H.mulVec v
+@% 43578 846 3
++ 85
+(k : ℕ) (r : ℕ) :
+    Fin r → Fin (2 * r + k + 1) :=
+    fun (a : Fin r) ↦
+      ⟨↑a,
+= 43038 38
++ 6
+k r a⟩
+@% 44485 2989 19
++ 32
+
+    {n : ℕ}
+    {E : Type u_1}
+
+= 38465 34
++ 26
+:
+    [NormedSpace ℂ E] →
+
+= 44688 47
++ 1
+ℂ
+= 38692 31
++ 18
+ℂ → E) →
+        ℂ
+= 44809 43
++ 1
+ℂ
+= 38692 31
++ 43
+ℂ → E :=
+    fun [inst_1 : NormedSpace ℂ E]
+= 45095 48
++ 1
+ℂ
+= 38692 31
++ 28
+ℂ → E) (u : ℂ) (a : Fin n) (
+= 45219 39
++ 1
+ℂ
+= 39001 34
++ 55
+ℂ) ↦
+      (if a = b then u • f g else 0) + Eop a b f g
+@% 47540 864 21
++ 32
+
+    {n : ℕ}
+    {E : Type u_1}
+
+= 38465 34
++ 42
+:
+    [NormedSpace ℂ E] →
+      {t : ℕ} →
+
+= 44686 49
++ 1
+ℂ
+= 38692 31
++ 9
+ℂ → E) →
+
+= 47875 40
++ 19
+(Fin t → Fin n) → ℂ
+= 38658 27
++ 1
+ℂ
+= 38692 31
++ 50
+ℂ → E :=
+    fun [inst_1 : NormedSpace ℂ E] {t : ℕ
+= 48225 49
++ 1
+ℂ
+= 38692 31
++ 28
+ℂ → E) (a : Fin t → Fin n) (
+= 48336 24
++ 1
+ℂ
+= 38964 30
++ 1
+ℂ
+@% 48465 3133 11
++ 1
+ℂ
+= 37588 25
++ 1
+ℂ
+= 48504 30
++ 72
+ℂ → E) instHSMul
+          (↑↑(Equiv.Perm.sign σ))
+          (List.foldr
+= 51449 47
++ 1
+ℂ
+= 38692 31
++ 1
+ℂ
+= 51541 50
++ 1
+ℂ
+@% 51652 589 4
++ 9
+List.ofFn
+= 51740 33
+= 47 32
++ 27
+Top Eop (u - ↑↑k) (a (σ k))
+@% 58334 2992 23
++ 32
+
+    {n : ℕ}
+    {E : Type u_1}
+
+= 38465 34
++ 26
+:
+    [NormedSpace ℂ E] →
+
+= 38622 29
++ 4
+ℂ →
+
+= 58582 48
++ 1
+ℂ
+= 38692 31
++ 43
+ℂ → E :=
+    fun [inst_1 : NormedSpace ℂ E]
+= 87476 33
++ 12
+a : Fin n) (
+= 45219 39
++ 1
+ℂ
+= 39001 34
++ 5
+ℂ) ↦
+
+= 89457 38
++ 4
+RdV
+
+= 31148 43
++ 57
+hpart1 H (Matrix.single a b 1)) f g +
+        Complex.I •
+= 89452 43
++ 3
+RdV
+= 31145 46
++ 35
+hpart2 H (Matrix.single a b 1)) f g
+@% 62024 7505 13
++ 20
+
+    {E : Type u_1}
+
+= 38465 34
++ 75
+:
+    [NormedSpace ℂ E] →
+      (k r m : ℕ) →
+        m ≤ r →
+          ℂ →
+= 51400 26
++ 50
+(2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ → E) →
+  
+= 38616 24
++ 261
+(2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ → E :=
+    fun [inst_1 : NormedSpace ℂ E] (k : ℕ) (r : ℕ) (m : ℕ) (hm : m ≤ r) (u : ℂ) (f : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ → E) (g : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ) ↦
+      ∑ c
+= 99229 30
++ 28
+,
+        @ite E (StrictMono
+= 68102 69
++ 43
+ (Fin (2 * r + k + 1))
+            Fin.inst
+= 67155 24
++ 31
+Fin.instPartialOrder.toPreorder
+@% 69668 2182 3
++ 25
+Fin.instPartialOrder.toLT
+= 69753 33
++ 48
+ (Fin (2 * r + k + 1)) Fin.instPartialOrder.toLT
+@% 72004 2182 3
++ 25
+Fin.instPartialOrder.toLT
+= 69753 33
++ 48
+ (Fin (2 * r + k + 1)) Fin.instPartialOrder.toLT
+@% 74274 10575 25
++ 42
+ (@LT.lt (Fin m) Fin.instPartialOrder.toLT
+= 76771 26
++ 52
+(fun (a_2 : @LT.lt (Fin m) Fin.instPartialOrder.toLT
+= 74624 36
++ 48
+ (Fin (2 * r + k + 1)) Fin.instPartialOrder.toLT
+= 76724 35
++ 62
+a.decLt a_1) fun (h : @LT.lt (Fin m) Fin.instPartialOrder.toLT
+= 74624 28
++ 73
+(fun (a a_2 : Fin m) ↦ (c a).decLt (c a_2)) a a_1))
+          ((Matrix.of
+= 79589 37
+= 41114 36
+= 80565 62
++ 8
+g.mulVec
+= 31157 34
++ 4
+bvec
+= 82837 28
+= 42718 36
+= 83316 62
++ 28
+Fin.castLE hm a)))).det •
+  
+= 89453 42
+= 83450 24
+= 47 32
+= 98932 47
+= 84382 69
++ 12
+
+          0
 @% 85230 0 7
 + 235
   obtain ⟨σ, hσ⟩ : ∃ σ : Fin (2 * r + k + 1) → Fin (2 * r + k + 1), ∀ i,
@@ -69851,6 +72956,1318 @@ rfl | omega | norm_num
 + 29
 norm_num
   · simp [h, h.symm]
+@% 89113 166 3
++ 1
+ℕ
+= 38754 46
++ 26
+ [inst_1 : NormedSpace ℂ E
+@@ 89401 0 10
+
+         
+@% 89526 504 2
+= 98504 36
++ 3
+RdV
+@% 90123 5439 18
++ 7
+ P f₂ →
+= 90160 54
++ 12
+ f₁ x + f₂ x
+= 90594 64
++ 1
+ℂ
+= 90665 27
++ 2
+ℝ 
+= 39066 44
+= 90773 60
+= 84936 26
+= 63300 25
++ 14
+.normedSpace ℂ
+= 95224 84
++ 3
+ℝ ℂ
+= 95017 37
+= 38561 44
+= 95463 67
++ 4
+ℕ∞ ⊤
+@% 95660 3534 45
+= 90160 54
++ 10
+ φ x • f x
+= 97446 70
++ 2
+ 0
+= 97953 25
++ 18
+ℕ) (hm : m ≤ r) (u
+= 98249 56
+= 98079 26
+= 47 32
++ 31
+AAop k r m hm u f) :=
+    by
+  
+= 98177 58
+= 98233 105
+= 98336 90
+= 98424 81
+= 98503 114
+= 98615 82
+= 98695 78
+= 98771 89
+= 98858 141
++ 21
+  intro v a b f hf
+  
+= 99016 79
+= 99093 27
+= 99118 33
++ 20
+  exact hc v f hf
+  
+= 99167 35
++ 13
+  exact h0
+  
+= 99211 57
+= 99266 146
++ 14
+  intro a b
+  
+= 99422 56
+= 99476 25
+= 99499 82
+= 99579 92
+= 99669 45
++ 16
+  exact hT _ _ _
+= 99421 44
++ 4
+AAop
+= 99496 73
++ 10
+c => ?_
+  
+= 99853 32
+= 99883 31
+= 99912 135
++ 10
+  (hQ _ c)
+= 99166 26
++ 2
+cm
+@@ 99211 885 0
+
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/CovariantDegrees.lean a146021fbd4ff16721f129b01d37da386b5eef06ef8ae0bea8b008629acf26b9 4c70ef9cbe374811b0e00f81f77fba92fa4e485e7a79fa2013f1e702d493eecd
+@% 80 3246 5
++ 13
+
+    {l : ℕ}
+
+= 101 29
++ 160
+
+    {E : Type}
+    {Ω : Type}
+    [inst : Field E]
+    [inst_1 : Field Ω] :
+    [Algebra E Ω] → (Ω →+* PadicAlgCl l) → E →+* PadicAlgCl l :=
+    fun [inst_2 : 
+= 47673 38
++ 30
+↦
+      j.comp (algebraMap E Ω
+@% 4043 9586 18
++ 13
+
+    {l : ℕ}
+
+= 101 29
++ 76
+
+    {E : Type}
+    {Ω : Type}
+    [inst : Field E] :
+    [NumberField E] →
+
+= 4192 35
++ 143
+[Algebra E Ω] → (Ω →+* PadicAlgCl l) → IntermediateField ℚ_[l] (PadicAlgCl l) :=
+    fun [inst_1 : NumberField E] [inst_2 : Field Ω] [inst_3 : 
+= 47673 38
++ 8
+↦
+      
+= 6555 25
++ 71
+ℚ_[l]
+        (Set.range fun (i : Fin (Module.finrank ℚ E)) ↦
+         
+= 64354 48
++ 60
+ j)
+            ((@Module.finBasis ℚ E Rat.semiring Field.to
+= 358 28
++ 49
+.toAddCommMonoid
+                Algebra.toModule
+= 3336 49
++ 18
+
+                (
+= 13502 29
++ 3
+ℚ) 
+= 13582 32
+@@ 13737 921 164
+
+    (F : Type u_1)
+    (Ω : Type u_2)
+    [inst : Field F]
+    [inst_1 : Field Ω] :
+    [Algebra F Ω] → Type u_2 :=
+    fun [inst_2 : Algebra F Ω] ↦
+      Gal(Ω/F)
+@% 14736 1090 6
++ 63
+
+    {F : Type u_1}
+    {Ω : Type u_2}
+    [inst : Field F]
+   
+= 1694 24
++ 57
+[inst_2 : Algebra F Ω] :
+    ValuationSubring Ω → Subgrou
+= 501210 47
++ 51
+G F Ω) :=
+    fun (A : ValuationSubring Ω) ↦
+      
+= 15765 40
+@% 17714 1838 3
++ 59
+
+    (l : ℕ)
+    [Fact (Nat.Prime l)] :
+    Type :=
+    Gal
+= 47195 45
++ 10
+Om l/ℚ_[l]
+@% 19634 10908 62
++ 13
+
+    {l : ℕ}
+
+= 101 30
++ 28
+:
+    @IsScalarTower ℚ ℚ_[l]
+= 47194 46
++ 6
+Om l)
+
+= 20513 39
++ 49
+ℚ ℚ_[l] Rat.monoid
+          (instRingPadic l).to
+= 16787 27
++ 1
+
+
+= 20793 38
++ 93
+ℚ ℚ_[l] Rat.semiring (instRingPadic l).toAddCommMonoid
+            Algebra.toModule)).toSMul
+
+= 20513 39
++ 5
+ℚ_[l]
+= 47194 46
++ 42
+Om l)
+          (instRingPadic l).toMonoid
+= 41271 35
+= 17846 48
++ 19
+)
+                (
+= 951 27
++ 35
+ℚ_[l])).toAddCommGroup.toAddMonoid
+
+= 20793 38
++ 5
+ℚ_[l]
+= 47194 46
++ 46
+Om l)
+            (instRingPadic l).toSemiring
+= 32682 37
+= 17846 48
++ 21
+)
+                  (
+= 951 27
++ 10
+ℚ_[l])).to
+= 3564 28
++ 1
+
+
+= 24957 35
++ 5
+ℚ_[l]
+= 47194 46
++ 42
+Om l)
+              (Padic.normedField l) 
+= 25107 48
++ 16
+
+              (
+= 25755 27
++ 16
+
+               
+= 47194 46
++ 17
+Om l))))).toSMul
+
+= 20513 39
++ 1
+ℚ
+= 47194 46
++ 26
+Om l)
+          Rat.monoid
+= 41271 35
+= 17846 48
++ 19
+)
+                (
+= 951 27
++ 35
+ℚ_[l])).toAddCommGroup.toAddMonoid
+
+= 20793 38
++ 1
+ℚ
+= 47194 46
++ 17
+Om l)
+           
+= 7150 26
+= 21292 24
+= 17846 48
++ 21
+)
+                  (
+= 951 27
++ 10
+ℚ_[l])).to
+= 3564 28
++ 52
+
+            Algebra.toModule)).toSMul :=
+    inferI
+@% 30622 2301 23
++ 1
+ℕ
+= 30625 55
++ 28
+ [inst_1 : CharZero Ω]
+     
+= 47098 25
++ 39
+,
+      @IsScalarTower ℚ Ω (PadicAlgCl 
+= 31436 28
++ 60
+ℚ Ω Rat.commSemiring Field.toSemifield.toSemiring
+          
+= 3844 25
+= 31662 30
++ 22
+PadicAlgCl l) Field.to
+= 248 24
++ 19
+
+          Field.to
+= 358 28
++ 23
+.toSemiring j.toAlgebra
+= 31437 27
++ 14
+ℚ (PadicAlgCl 
+= 21025 30
++ 8
+Field.to
+= 358 28
++ 12
+.toSemiring 
+= 3844 25
++ 37
+) :=
+    by
+    intro l hl Ω _ _ j
+  
+= 32874 51
+@% 33663 13287 62
++ 13
+
+    {l : ℕ}
+
+= 101 29
++ 64
+
+    {Ω : Type}
+    [inst : Field Ω]
+    [inst_1 : CharZero Ω] :
+= 47075 24
++ 30
+→
+      (Ω →+* PadicAlgCl l) →
+= 47128 49
++ 69
+ → Gal(Ω/ℚ) :=
+    fun [inst_2 : @IsAlgClosure ℚ Ω Rat.commRing inst 
+= 3844 25
++ 3
+
+  
+= 47721 48
++ 4
+aux7
+= 47097 82
+= 40871 32
++ 15
+ℚ Rat.instField
+= 47194 46
++ 13
+Om l)
+       
+= 47194 46
++ 7
+Om l) (
+= 951 27
++ 16
+ℚ_[l])
+        (
+= 951 27
++ 7
+ℚ_[l]) 
+= 3844 26
+= 3844 25
++ 11
+
+        (↑
+= 43294 27
++ 7
+ℚ ℚ_[l]
+= 47194 46
++ 17
+Om l)
+           
+= 47194 46
++ 3
+Om 
+= 21025 32
++ 8
+Field.to
+= 13870 26
++ 7
+ield.to
+= 358 28
++ 32
+.toSemiring
+            Field.to
+= 358 28
++ 12
+.toSemiring 
+= 3844 25
++ 14
+
+            (
+= 5251 29
++ 8
+ℚ_[l]) (
+= 5251 29
++ 19
+ℚ_[l])
+            
+= 3844 26
+= 3844 25
++ 9
+
+        
+= 47721 48
+= 19607 27
++ 9
+
+        
+= 47721 48
+= 19607 28
++ 19
+σ))
+        Ω inst 
+= 3844 26
++ 31
+j.toAlgebra j.toAlgebra
+       
+= 47194 46
++ 16
+aux11 j)
+       
+= 47194 46
++ 13
+aux11 j)
+    
+= 47721 48
++ 5
+aux12
+@% 48140 16270 37
++ 13
+
+    {l : ℕ}
+
+= 101 29
++ 84
+
+    {E : Type}
+    {Ω : Type}
+    [inst : Field E]
+    [inst_1 : NumberField E]
+   
+= 5769 24
++ 101
+[inst_3 : Algebra E Ω]
+    [inst_4 : CharZero Ω]
+    [inst_5 : @IsAlgClosure ℚ Ω Rat.commRing inst_2 
+= 3844 25
++ 3
+
+  
+= 47721 48
++ 9
+aux7]
+   
+= 96432 85
++ 9
+:
+    σ ∈
+= 46712 55
+= 58821 38
++ 33
+
+            j).fixingSubgroup →
+
+= 58880 25
+= 47195 53
++ 87
+).toRingEquiv ((algebraMap E Ω) x) =
+          (algebraMap E Ω) x :=
+    fun (hσ : σ ∈
+
+= 58769 90
++ 10
+
+         
+= 96584 25
++ 99
+E) ↦
+      @RingHom.injective Ω (PadicAlgCl l) CommRing.toNonAssocCommRing.toNonAssocRing
+        (
+= 37790 27
++ 10
+) Field.to
+= 358 28
++ 29
+.toNonAssocSemiring
+        (
+= 37359 68
++ 51
+
+            (PadicAlgCl l)).toNontrivial
+        j
+= 387493 47
++ 90
+resQ j σ).toRingEquiv ((algebraMap E Ω) x))
+        ((algebraMap E Ω) x)
+        (Eq.trans
+= 64224 57
++ 33
+((algebraMap E Ω) x))
+          (
+= 64301 41
++ 16
+
+               
+= 96526 50
++ 48
+j) σ).mp
+            hσ (j ((algebraMap E Ω) x))
+= 64354 57
++ 1
+)
+@% 64479 31755 25
++ 13
+
+    {l : ℕ}
+
+= 101 29
++ 84
+
+    {E : Type}
+    {Ω : Type}
+    [inst : Field E]
+    [inst_1 : NumberField E]
+   
+= 5769 24
++ 50
+[inst_3 : Algebra E Ω]
+    [inst_4 : CharZero Ω] :
+= 47075 24
++ 7
+→
+     
+= 47098 26
++ 6
+→
+    
+= 96458 59
++ 15
+→
+          σ ∈
+= 95142 99
++ 47
+
+                  j).fixingSubgroup →
+        
+= 47721 48
++ 65
+G E Ω :=
+    fun [inst_5 : @IsAlgClosure ℚ Ω Rat.commRing inst_2 
+= 3844 25
++ 3
+
+  
+= 47721 48
++ 4
+aux7
+= 47097 83
++ 9
+hσ : σ ∈
+
+= 58769 90
++ 66
+
+          j).fixingSubgroup) ↦
+      AlgEquiv.ofRingEquiv
+       
+= 47194 46
+= 48115 25
+@% 97755 26589 14
++ 13
+
+    {l : ℕ}
+
+= 101 29
++ 84
+
+    {E : Type}
+    {Ω : Type}
+    [inst : Field E]
+    [inst_1 : NumberField E]
+   
+= 5769 24
++ 26
+[inst_3 : Algebra E Ω]
+   
+= 96961 30
++ 4
+(σ :
+= 492418 48
+= 58821 38
++ 10
+
+         
+= 97176 26
++ 5
+↑σ ∈
+
+= 58769 90
++ 46
+
+          j).fixingSubgroup :=
+    σ.property
+@% 124442 639 10
++ 1
+ℕ
+= 1637 68
++ 15
+NumberField E]
+
+= 4192 25
++ 21
+[inst_3 : Algebra E Ω
+= 124754 27
++ 15
+inst.toCommRing
+= 388249 25
+= 15838 48
++ 28
+]
+      [inst_5 : CharZero Ω
+@% 125121 2509 8
++ 24
+ℚ Ω Rat.commRing inst_2 
+= 3844 25
++ 7
+
+      
+= 47721 48
++ 11
+aux7]
+     
+= 96961 25
+= 96990 25
++ 37
+,
+      (∀ (x : Ω), x ∈ A ↔ ‖j x‖ ≤ 1
+@% 127674 18658 11
+= 3996 48
+= 58825 34
++ 45
+
+                  j).fixingSubgroup),
+      
+= 97198 55
++ 18
+(↑σ)
+             
+= 47194 46
+= 97730 26
++ 13
+σ) ∈
+        
+= 47721 48
++ 18
+Dec A :=
+    by
+  
+= 146292 42
+@% 244897 842 6
++ 1
+ℕ
+= 1637 68
++ 15
+NumberField E]
+
+= 4192 25
++ 19
+[inst_3 : Algebra E
+= 96958 27
+@% 245765 27701 13
+= 3996 48
+= 58825 34
++ 42
+
+              j).fixingSubgroup),
+      ↑
+= 271425 28
+= 3996 48
+= 58825 34
++ 36
+
+                  j).fixingSubgroup
+= 483230 62
+= 58821 38
++ 36
+
+                  j).fixingSubgroup
+= 483230 62
+= 58821 38
++ 36
+
+                  j).fixingSubgroup
+@% 273509 8675 10
+= 3996 48
+= 58825 34
++ 53
+
+                    j).fixingSubgroup)
+             
+= 96526 49
+= 781 25
++ 65
+j).fixingSubgroup.toGroup.toMulOneClass.toMul)
+            σ τ) ∈
+= 46712 55
+= 58821 38
++ 43
+
+            j).fixingSubgroup :=
+    by
+  
+= 282153 33
+@% 282287 639 10
++ 1
+ℕ
+= 1637 68
++ 15
+NumberField E]
+
+= 4192 25
++ 21
+[inst_3 : Algebra E Ω
+= 124754 27
++ 15
+inst.toCommRing
+= 388249 25
+= 15838 48
++ 28
+]
+      [inst_5 : CharZero Ω
+@% 282966 2509 8
++ 24
+ℚ Ω Rat.commRing inst_2 
+= 3844 25
++ 7
+
+      
+= 47721 48
++ 11
+aux7]
+     
+= 96961 25
+= 96990 25
++ 37
+,
+      (∀ (x : Ω), x ∈ A ↔ ‖j x‖ ≤ 1
+@% 285521 20733 20
+= 3996 48
+= 58825 34
++ 45
+
+                  j).fixingSubgroup),
+      
+= 97198 54
++ 17
+
+              (↑
+= 304003 34
+= 3996 48
+= 58825 27
+= 781 25
++ 24
+inst_3 j).fixingSubgroup
+= 304760 24
+= 3996 48
+= 58825 27
+= 781 25
++ 24
+inst_3 j).fixingSubgroup
+= 304760 24
+= 3996 48
+= 58825 27
+= 781 25
++ 24
+inst_3 j).fixingSubgroup
+@% 306309 4338 216
+= 3996 48
+= 58825 27
+= 855 27
++ 45
+inst_3 j).fixingSubgroup)
+                   
+= 96526 49
+= 4939 31
++ 45
+j).fixingSubgroup.toGroup.toMulOneClass.toMul
+= 315647 41
+= 34 44
+= 244855 29
++ 15
+σ τ) ∈
+        
+= 47721 48
++ 18
+Dec A :=
+    by
+  
+= 315811 44
+= 315853 169
++ 1
+ℕ
+= 1637 68
++ 15
+NumberField E]
+
+= 4192 25
++ 21
+[inst_3 : Algebra E Ω
+= 454322 44
++ 15
+inst.toCommRing
+= 388249 25
+= 15838 48
++ 28
+]
+      [inst_5 : CharZero Ω
+= 125081 40
++ 24
+ℚ Ω Rat.commRing inst_2 
+= 3844 25
++ 7
+
+      
+= 47721 48
++ 11
+aux7]
+     
+= 96961 25
+= 96990 34
++ 7
+(x : Ω)
+= 97029 25
++ 9
+  (σ τ :
+
+= 492411 55
+= 58821 38
++ 42
+
+              j).fixingSubgroup),
+      ⟨
+= 34 44
++ 21
+resE j
+            (↑
+= 337359 32
+= 3996 48
+= 58825 27
+= 351432 29
++ 20
+ j).fixingSubgroup)
+
+= 403087 64
+= 58821 31
+= 351432 29
++ 20
+ j).fixingSubgroup)
+
+= 403087 64
+= 58821 31
+= 351432 29
++ 18
+ j).fixingSubgroup
+= 339562 51
+= 3996 48
+= 58825 27
+= 781 25
++ 43
+inst_3 j).fixingSubgroup)
+                 
+= 96526 49
+= 920 29
++ 45
+j).fixingSubgroup.toGroup.toMulOneClass.toMul
+= 348717 37
+= 34 44
+= 244855 29
++ 12
+σ τ),
+      
+= 97198 49
++ 49
+ootGL_mem_unitary hj σ τ⟩ =
+        @HMul.hMul (↥
+= 501147 51
++ 14
+)
+          (↥
+= 501147 51
++ 14
+)
+          (↥
+= 501147 51
+= 349280 26
+= 14678 47
++ 16
+ A))
+           
+= 47194 46
++ 47
+Dec A).toGroup.toMulOneClass.toMul)
+          ⟨
+= 34 44
++ 25
+resE j (↑σ)
+             
+= 47194 46
+= 97730 26
++ 12
+σ),
+        
+= 47721 48
+= 124398 31
++ 17
+hj σ⟩
+          ⟨
+= 34 44
++ 25
+resE j (↑τ)
+             
+= 47194 46
+= 97730 26
++ 12
+τ),
+        
+= 47721 48
+= 124398 31
++ 18
+hj τ⟩ :=
+    by
+  
+= 315811 44
+= 244647 62
+= 387382 97
+= 387477 156
+= 97422 62
+= 387691 94
+= 105 34
++ 11
+{E Ω : Type
+= 14779 26
++ 1
+E
+= 13807 24
+= 4161 35
+= 4198 35
+= 64680 28
+= 233 183
+= 4421 24
+= 388204 82
+= 388288 114
+= 65407 55
+= 324 31
+= 920 31
+= 4589 86
+= 388613 107
+= 4329 96
+= 855 27
+= 244229 34
+= 388883 107
+= 66083 109
+= 388615 138
+= 4939 33
+= 4363 62
+= 920 29
+= 244229 32
+= 389405 99
+= 389506 86
+= 389594 91
+= 389687 98
+= 389787 90
+= 389879 118
+= 66923 63
+= 66990 112
+= 389103 306
+= 390492 90
+= 66083 132
+= 390197 317
+= 391043 86
+= 390584 437
+= 68676 61
+= 68741 121
+= 68866 102
+= 68972 111
+= 391801 69
+= 69160 104
+= 69268 67
+= 69339 98
+= 69441 103
+= 69548 110
+= 69662 100
+= 392646 99
+= 391131 410
+= 70341 28
+= 393195 32
+= 64953 346
+= 393583 29
+= 65328 622
+= 394250 32
+= 65982 546
+= 394250 36
+= 66564 880
+= 394840 38
+= 67482 543
+= 395776 62
+= 68087 547
+= 396369 42
+= 68676 92
+= 4939 31
+= 397161 107
+= 68866 1472
+= 398770 35
+= 398807 31
+= 70404 667
+= 399523 28
+= 399553 61
+= 399616 42
+= 399660 36
+= 399698 82
+= 125973 55
+= 4939 31
+= 399870 82
+= 399954 37
+= 399993 59
+= 400054 67
+= 400123 108
+= 400233 53
+= 400288 71
+= 4499 56
+= 306 49
+= 4939 31
+= 36872 73
+= 67067 39
+= 4667 81
+= 4730 93
+= 4805 96
+= 4883 87
+= 8681 102
+= 856 26
+= 401110 73
+= 401185 83
+= 4499 56
+= 306 49
+= 4939 31
+= 36872 73
+= 67067 39
+= 4667 81
+= 4730 93
+= 4805 96
+= 4883 87
+= 8681 102
+= 856 26
+= 402019 40
+= 402061 98
++ 10
+@MonoidHom
+@% 311560 90772 5
+= 244046 100
+= 403206 63
+= 172390 73
+= 4939 31
+= 403377 24
+@@ 403104 132 21
+@Monoid.toMulOneClass
+@% 403401 0 2
+= 4939 31
++ 7
+       
+@@ 404190 20 21
+DivInvMonoid.toMonoid
+@@ 405224 15 14
+Group.toDivInv
+@% 405637 0 2
+= 4939 31
++ 13
+             
+@% 406281 1239 18
+= 407405 57
+= 74615 99
+= 5526 75
+= 5585 74
+= 4939 31
+= 4736 87
+= 4805 96
+= 4883 87
+= 931 87
+= 4939 31
+= 4736 87
+= 4805 96
+= 4883 87
+= 931 87
+= 4939 31
+= 5237 79
+= 4939 31
++ 21
+              (@Padic
+@@ 407763 903 10
+Algebra.id
+@% 408874 997 4
+= 11629 29
+= 5233 83
+= 4939 31
++ 21
+              (@Padic
+@@ 410114 507 10
+Algebra.id
+@% 410829 720 17
+= 11628 30
+= 76691 98
+= 5526 75
+= 5585 74
+= 4939 31
+= 4736 87
+= 4805 96
+= 4883 87
+= 931 87
+= 4939 31
+= 5237 79
+= 4939 31
+= 406734 72
+= 5532 69
+= 5583 76
+= 4939 31
+= 5465 26
+@% 411757 42170 59
+= 11628 30
+= 83211 85
+= 4939 31
+= 405388 249
+= 4939 31
+= 406734 72
+= 5532 69
+= 5583 76
+= 4939 31
+= 5465 67
+= 5512 89
+= 5581 80
+= 4939 31
+= 99170 101
+= 38054 38
+= 412204 131
+= 412337 136
+= 412475 139
+= 412616 140
+= 412758 131
+= 244261 103
+= 308 47
+= 4939 31
+= 36872 73
+= 69500 48
+= 244229 32
+= 13418 62
+= 244565 34
++ 18
+ :=
+    fun {l : ℕ
+= 1637 31
++ 7
+: Type}
+= 16710 26
++ 69
+E] [inst_1 : NumberField E] [inst_2 : Field Ω] [inst_3 : Algebra E Ω]
+= 212758 29
++ 29
+inst.toCommRing inst_2 inst_3
+= 15837 49
++ 72
+] [inst_5 : CharZero Ω] [inst_6 : @IsAlgClosure ℚ Ω Rat.commRing inst_2 
+= 3844 25
++ 3
+
+  
+= 47721 48
++ 4
+aux7
+= 96960 26
+= 96990 34
++ 65
+(x : Ω), x ∈ A ↔ ‖j x‖ ≤ 1) ↦
+      {
+        toFun := fun (σ : ↥
+= 96527 49
++ 32
+j).fixingSubgroup) ↦
+          ⟨
+= 34 44
++ 25
+resE j (↑σ)
+             
+= 47194 46
+= 97730 26
++ 12
+σ),
+        
+= 47721 48
+= 124398 31
++ 23
+hj σ⟩,
+        map_one'
+= 47324 48
++ 45
+blockM_mul_alt hj,
+        map_mul' :=
+      
+= 47721 48
+= 315974 35
++ 4
+hj }
+@% 454010 11022 8
++ 1
+ℕ
+= 1637 68
++ 15
+NumberField E]
+
+= 4192 25
++ 89
+[inst_3 : Algebra E Ω] [inst_4 : IsAlgClosure E Ω] [inst_5 : CharZero Ω]
+      [inst_6 : 
+= 96944 42
+= 96990 25
++ 41
+
+      (hj : ∀ (x : Ω), x ∈ A ↔ ‖j x‖ ≤ 1
+@% 465065 37294 28
+= 3996 48
+= 58825 34
++ 44
+
+              j).fixingSubgroup)
+        (↥
+= 501147 51
++ 2
+) 
+= 465799 36
+= 480939 28
++ 1
+⇑
+= 501212 50
++ 16
+hj) :=
+    by
+  
+= 212252 40
+= 501124 162
+= 501284 43
+= 501325 33
++ 15
+  intro s hs
+  
+= 501369 75
+= 501442 35
+= 501475 114
+= 501587 43
+= 501628 51
+= 501677 87
+= 501762 129
+= 501889 70
+= 501957 40
+= 501995 77
+= 502070 136
+= 502204 117
+= 502319 42
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/DcAevalIntertwineAlt.lean d614a75a3af8a0df309c92611f0fd1cac21016b1938e3c1a04a56b51adaffbb3 380f74d789bd394251c0ee67921ef0d15ecd8e9202af73412f87047b66e6858c
 @@ 15 0 91
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DcAevalIntertwine
@@ -69917,6 +74334,97 @@ j5.df_exists_prime | (intros; apply _root_.
 = 24 28
 + 34
 j5.df_exists_prime <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/EMulSubMulCapelliMatrixPow.lean 7f060104a883922b64e34f46eb20339581009ad333a95456246490b6393576c7 17d73cadd1dc2e958a0493cee83a5345c003f7c9bb952e4ff00ee57d2a038f91
+@@ 1545 27 18
+ℕ} → Fin n × Fin n
+@% 1665 79 8
++ 14
+@DFunLike.coe
+
+= 1683 70
+= 1755 103
+= 2602 689
++ 2
+)
+
+= 726 33
+= 365 676
+= 357 35
+@@ 2575 5172 10
+(@instRing
+@% 8554 76 1
+= 532 43
+@% 9461 5094 9
+= 4180 113
+= 1860 722
+= 733 30
+= 6794 114
+= 1860 704
++ 3
+))
+
+= 7633 51
+= 7686 58
+= 265 27
+@% 15327 0 21
+= 8563 76
+= 1755 103
+= 2602 689
++ 2
+)
+
+= 726 33
+= 365 676
+= 3294 46
+= 1755 820
+= 4180 113
+= 1860 704
+= 532 43
+= 1744 831
+= 4180 113
+= 1860 722
+= 733 30
+= 6794 114
+= 1860 704
++ 3
+))
+
+= 14519 109
+= 365 675
++ 6
+)
+    
+@% 18833 16176 14
++ 42
+ℕ} (a b : Fin n) (k : ℕ) (c d : Fin n),
+  
+= 17989 46
++ 5
+
+    
+= 7631 41
++ 27
+capelliMatrix ^ k) c d -
+  
+= 7631 41
++ 33
+capelliMatrix ^ k) c d *
+        
+= 17989 45
++ 24
+=
+        (if b = c then
+= 300 34
++ 56
+capelliMatrix ^ k) a d else 0) -
+          if d = a then
+= 300 34
++ 64
+capelliMatrix ^ k) c b else 0 :=
+    by
+    intro n a b k c d
+  
+= 34895 116
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/EpEqOneIff.lean b9fe7a78b4c19670e310a582cab2df280b4a3814820488cfc07c7d6cff020281 a54321adf6d44dd7981f75077f8aeef0c8df591a771bfabdfd87ec4dd8fc3461
 @@ 15 0 45
 import Lemmata.GeneralBFactRightSide.Imports
@@ -69935,6 +74443,108 @@ import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ImportsTer
 
 @@ 170 1020 194
  first | exact @_root_.GlobalTheory.IterationConvergence.main | exact _root_.GlobalTheory.IterationConvergence.main | (intros; apply _root_.GlobalTheory.IterationConvergence.main <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/EqZeroOfForallIntegralCoeff.lean 7ea9bbcf2cb0fc7e99808e53a558cab2b11ed8a3e1365beb67fb3aff2f37865c ee8758ecc90f23e395e6f911501ececa2cc98f9e523d3379c9e77f3f3b0189d9
+@% 559 5043 1
+= 560 40
+@% 5736 10891 19
+= 5737 25
++ 12
+↥(@unitary (
+= 22226 25
+= 14937 34
++ 16
+2) ℂ CommRing.to
+= 1988 24
++ 14
+(Fin.fintype 2
+= 4771 36
++ 12
+2)).toMonoid
+= 6525 31
++ 2
+ (
+= 22226 25
+= 15738 45
++ 20
+2) ℂ CommRing.toComm
+= 7094 28
+= 7236 30
++ 3
+2))
+= 6759 41
++ 42
+Matrix.instStarRing)) :=
+    inferInstance
+@% 16680 5115 2
+= 85022 48
++ 10
+
+    by
+  
+@% 22484 7749 25
++ 24
+2) (fun (a b : Fin 2) ↦ 
+= 22643 26
+= 22828 28
++ 64
+2) ℂ Complex.instRCLike.toCommRing Complex.instRCLike.toStarRing
+= 7787 38
++ 2
+ (
+= 22226 25
++ 18
+
+        (fun (x :
+= 22225 27
++ 28
+↦
+          x ∈
+            
+= 102 26
++ 24
+2) (fun (a b : Fin 2) ↦ 
+= 22643 26
+= 29144 32
++ 64
+2) ℂ Complex.instRCLike.toCommRing Complex.instRCLike.toStarRing
+= 5026 44
++ 13
+2) (Fin 2) ℂ
+
+= 5265 45
++ 2
+ℂ
+
+= 5443 52
++ 1
+ℂ
+= 5438 27
++ 25
+Field.toNormedCommRing ℂ
+
+= 73418 28
++ 75
+instRCLike.toNormedField)).toPseudoMetricSpace).toTopologicalSpace)) :=
+   
+@% 30456 109 1
+= 30457 54
+@% 30651 17877 12
+= 14536 43
++ 1
+ 
+= 609 34
+= 5693 37
+= 5630 54
+= 37664 41
++ 19
+4
+      (@Top.top (
+= 37824 68
+= 43154 77
+= 48528 43
++ 3
+U2 
+= 609 27
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ExistsBasisOfPid.lean fb596923b8b70336f39d35dfe9c2acd399582d0b542cb03ad2eb36d4827e7ca6 34523899cacc6e353a2b094f90c306c4e93d07a4c2c2237113d1cc86dbdd9382
 @@ 15 0 93
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SummandLocalization
@@ -70038,12 +74648,209 @@ import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsPowSubOneN
 
 @@ 166 1266 260
  first | exact @_root_.GlobalTheory.PowerNearOneNorm.exists_pow_sub_one_norm_lt_one | exact _root_.GlobalTheory.PowerNearOneNorm.exists_pow_sub_one_norm_lt_one | (intros; apply _root_.GlobalTheory.PowerNearOneNorm.exists_pow_sub_one_norm_lt_one <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ExistsSmulMemBis.lean 4217ce1234b49c00247ea1a80b28d033fbf00d81e4c892e2f1c230b33e396b1d 1336da4357f0d94a7608ead1e60db820d0145461b41911bce9cd44b5b1bfea08
+@% 1669 737 8
+= 1673 30
+= 1707 36
+= 1747 26
++ 74
+ LL] [inst_4 : Algebra Qp LL] [inst_5 : CommRing O] [inst_6 : Algebra O LL
+= 2259 34
++ 10
+ LL] (A : 
+= 2314 31
++ 7
+Qp LL O
+@% 2500 8771 4
++ 137
+ A.V A.acg A.modLL
+          A.modO A.ρ)
+      [IsDomain O] [IsFractionRing O LL] (v : A.V), ∃ (a : O), a ≠ 0 ∧ a • v ∈ LA.T :=
+    by
+  
+= 11125 47
++ 77
+  letI := A.acg
+    letI := A.modLL
+    letI := A.modO
+    haveI := A.towO
+  
+= 11239 34
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ExtIntegral.lean 913b7aa44cd35e7c582bb865fcd43f176f8d87314c60b19e31e5a9bc4ea7f3f3 0e58536cea1e54d2c1257326b239fafff5e21730061fbfe1423ed9dbb8378cd8
 @@ 15 0 82
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormLeOneOfExtension
 
 @@ 404 1338 223
  first | exact @_root_.GlobalTheory.NormExtensionBound.exists_extension | exact _root_.GlobalTheory.NormExtensionBound.exists_extension | (intros; apply _root_.GlobalTheory.NormExtensionBound.exists_extension <;> assumption
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/FgZ1T.lean 3af09ae8b12473c514835a6ca9833f3d7c2f1ee477860d86556f275ce3c5a480 99e14dd14abc21783e581e1295b21dcc509435e695a80fcb1e53f068a1c4528f
+@% 375 23485 13
++ 52
+
+      [inst_3 : CommRing O] [inst_4 : Algebra O LL]
+= 588 26
++ 110
+ [inst_6 : Module LL V]
+      [inst_7 : Module O V] [inst_8 : IsScalarTower O LL V] {ρ : Representation LL G V
+= 3434 37
++ 40
+ [inst_10 : ContinuousAdd V] [inst_11 : 
+= 3724 24
+= 4786 39
++ 72
+ [ContinuousSMul LL V] [IsTopologicalAddGroup V] [T2Space V]
+      (L :
+
+= 10899 47
+= 6057 49
++ 237
+
+          inst_7 ρ)
+      {ϖ : O},
+      (algebraMap O LL) ϖ ≠ 0 →
+        ((nhds 0).HasBasis (fun (x : ℕ) ↦ True) fun (n : ℕ) ↦ (fun (x : V) ↦ ϖ ^ n • x) '' ↑L.T) →
+          IsCompact (Set.range ⇑(algebraMap O LL)) →
+            ∀ (hI
+= 38715 41
++ 35
+StableSub L (Ideal.span {ϖ ^ 1} • ⊤
+@% 23905 17105 53
+= 22 38
++ 16
+quotientCocycles
+= 24032 26
++ 45
+Ideal.span {ϖ ^ 1} • ⊤) hI) →
+               
+= 39927 58
++ 16
+.FG :=
+    by
+  
+= 38267 74
+= 38339 82
+= 38419 39
++ 12
+  intro x
+  
+= 38466 99
++ 16
+  constructor
+  
+= 38577 31
+= 38606 26
+= 38630 28
+= 38656 44
+= 38698 200
++ 12
+  intro c
+  
+= 38906 55
+= 38959 84
+= 39041 102
+= 39141 80
+= 39219 46
++ 15
+  exact this
+  
+= 39276 75
+= 39349 34
+= 39381 68
+= 39447 25
++ 14
+  exact hvy
+  
+= 39482 77
+= 39557 162
+= 39717 34
+= 39749 91
+= 39838 27
++ 8
+  rfl
+  
+= 39869 123
+= 39990 145
++ 17
+  · intro U hU
+  
+= 40148 42
+= 40188 41
+= 40227 85
+= 40310 50
+= 40358 65
++ 17
+  · intro z hz
+  
+= 40436 71
+= 40505 69
+= 40572 83
+= 40653 53
+= 40704 106
+= 40808 37
+= 40843 67
+= 40908 77
++ 31
+  rw [this]
+        exact hy
+  
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/FiniteCohomologyOfTrivialOfCyclic.lean 72dd9bb8744dc8087adddcd854bbeea66885dd3ee4d6a706f616fef474788b4f b4ad4d22d62932ca10879b1aaee38ebf242dfcb7b85f31c169b894d71673e557
+@% 1133 46826 32
++ 50
+IsTopologicalGroup H]
+      (n r : ℕ),
+      (∀ (C
+= 46876 38
++ 8
+inst_3 :
+= 849 36
++ 137
+C]
+          [Finite ↑C] [IsAddCyclic ↑C],
+          (∀ (g : H) (c : ↑C), (C.ρ g) c = c) →
+            (∀ (c : ↑C), n • c = 0) → Finite ↑
+= 47431 33
++ 20
+C r)) →
+        ∀ (A
+= 46876 38
++ 8
+inst_3 :
+= 849 37
++ 119
+]
+          [Finite ↑A],
+          (∀ (g : H) (a : ↑A), (A.ρ g) a = a) →
+            (∀ (a : ↑A), n • a = 0) → Finite ↑
+= 47431 33
++ 17
+A r) :=
+    by
+  
+= 46816 46
+= 46860 99
+= 46957 92
+= 47047 45
+= 47090 99
++ 14
+  intro B _
+  
+= 47199 91
++ 36
+  rintro ⟨y, rfl⟩
+      exact y.2
+  
+= 47320 52
+= 47370 104
+= 47472 26
+= 47496 28
++ 21
+  exact hC C h1 h2
+  
+= 47541 49
+= 47588 47
+= 47633 48
+= 47679 126
+= 47803 102
+= 47903 58
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/FirstStatementA.lean cd37436f92f65e7a609446b2a1e7965827d3c3b3dd76cba86d0831aa41994f85 a3a042e11da7b250ea85c08b3b7cfbd3af977145253dfb5f9c957dd35f54d9c3
 @@ 15 0 84
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FiniteQuotientComap
@@ -70056,12 +74863,160 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzFourierSupe
 
 @@ 176 583 232
  first | exact @_root_.GlobalTheory.one_add_pow_le_two_pow_mul_one_add_pow | exact _root_.GlobalTheory.one_add_pow_le_two_pow_mul_one_add_pow | (intros; apply _root_.GlobalTheory.one_add_pow_le_two_pow_mul_one_add_pow <;> assumption
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/FixPiIff.lean 1376551996d1143b5107e2e26492c88d58576aa77079756765e17a90c485d3b7 dbbf4f819f60caa93c5b0664e063337443d42bdb83311aa70a44b119c3459044
+@% 2005 4117 7
++ 66
+NumberField L] {n q : ℕ}
+      {w : Fin q → UpperTheory.V.W.Plc L}
+= 2085 35
++ 6
+
+     
+= 2120 26
++ 28
+ [inst_4 : Module A M]
+     
+= 1155 24
++ 26
+UpperTheory.V.Hi.GV n w) M
+@% 6167 704079 43
++ 9
+Subgroup
+
+= 6199 66
+= 13474 39
+= 2668 50
++ 1
+L
+= 7210 31
+= 5559 60
++ 1
+L
+= 5186 27
++ 11
+  (w j)).to
+= 9352 43
+= 9276 32
++ 17
+(w j))).integer)
+
+= 13449 40
++ 2
+ (
+= 2668 50
++ 1
+L
+= 7210 31
+= 5559 60
++ 1
+L
+= 5186 27
++ 11
+  (w j)).to
+= 9352 43
+= 9276 32
++ 15
+(w j))).integer
+= 15544 28
+= 59589 129
+= 2668 50
++ 1
+L
+= 6707 29
+= 5559 60
++ 1
+L
+= 6707 29
+= 9276 32
+= 6708 28
+= 5559 54
++ 14
+UniformSpace L
+= 4693 26
++ 5
+w j))
+= 60694 40
++ 1
+(
+= 61652 36
++ 23
+(w j))).toIsLocalRing)ˣ
+@% 710269 19678 5
++ 29
+m ∈ UpperTheory.V.Hi.fixd ρ (
+= 714629 24
++ 17
+n w C) ↔
+        
+= 714699 25
++ 79
+m ∈
+            UpperTheory.V.Hi.fixd (MonoidHom.comp ρ (UpperTheory.V.Pa.atJ n
+@% 730018 2110 18
+= 2668 50
++ 1
+L
+= 6707 24
++ 1
+(
+= 5559 60
++ 1
+L
+= 6707 24
++ 1
+(
+= 9276 32
+= 730413 24
+= 5559 54
++ 41
+UniformSpace L
+                    (w j))
+= 60694 36
++ 1
+(
+= 61652 36
++ 28
+(w j)) n (C j)) :=
+    by
+  
+= 731952 38
+= 731988 142
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/FlatnessPrecompleteProducts.lean 8e659a6d7f89bad95b5c0d0bffd50aed5c8eae686c82fe9440e89f64ade59cc1 1056274b1c784b2159aed72a219fa97ddf78e4dcd436aa02d20629d2bfb27530
 @@ 102 0 104
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ChainLeIInfSupPowSmulTopOfPrecomplete
 
 @@ 390 344 206
  first | exact @_root_.GlobalTheory.mem_ideal_smul_top_pi_fin_iff | exact _root_.GlobalTheory.mem_ideal_smul_top_pi_fin_iff | (intros; apply _root_.GlobalTheory.mem_ideal_smul_top_pi_fin_iff <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/FreeModuleQuotient.lean e80735020f21f5af2ab712441f6e75f9b73912f48d3a982d42e54d7e70dacfbe 2e6e53edafc17e41623e481d9c73e71260bd72e36ef6caa2d21086bf0f5a1a89
+@% 3736 15516 6
++ 1
+ 
+= 145 41
++ 33
+,
+      I ≤ K →
+        ∀ (c : ℕ)
+= 212 27
+= 6073 31
++ 22
+ e (s z • x) = z • e x
+@% 19291 18263 3
++ 83
+HasQuotient.Quotient M (Submodule R M) Submodule.hasQuotient (Ideal.map s K • ⊤) ≃+
+= 6122 25
++ 6
+ S ⧸ K
+@% 37644 169100 4
++ 96
+ (Submodule R M) Submodule.hasQuotient
+                    (Ideal.map s K • ⊤)),
+               
+= 425 27
++ 10
+
+    by
+  
+= 206705 41
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/FrobInPowCong.lean a552b896d6977facf9a175aa3eb5ba02bea5d45cccf6db5467e7ee897b94b654 fa425b0157cb9907b1f2528a3ef2b915348dfaf08d4be6cbb5f6d0246461d205
 @@ 15 0 88
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsTerTail
@@ -70081,6 +75036,145 @@ import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.Imports
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/GaloisBoundSecond.lean 3940842bcb13ffe57b4ce543785194fdbc3dcfc9d5fedd327623512f26f596ad b2383d945adc62ca1e785a5b74ad4d7591c13795045a0b5acc027045b59a7fbd
 @@ 7354 102 0
 
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/GenericMap.lean 7c1cc21226ec29855f49ab77a2d3be4e75c40cff881ec5cb5043661deaa8bd7a 39d59df4f796ac63c9bb2d74974c56bfea05ec6ad35b750234a66cbbcfa2a8a1
+@% 4143 11093 21
+= 312 35
++ 46
+
+    {Ω : Type}
+    [inst : Field Ω]
+    (ξ : 
+= 648 24
++ 31
+CommRingCat.of Ω) ⟶ X)
+    (p :
+= 1327 43
++ 27
+ξ) :
+    ↑(X.presheaf.stalk
+= 11891 29
++ 16
+ (fun (p : ↥X) ↦
+= 266 45
++ 42
+ξ ⤳ p)
+            p)) →+*
+      Ω :=
+    
+= 11337 26
++ 1
+(
+= 12296 34
++ 13
+
+        (X.p
+= 14025 25
+= 27977 39
++ 9
+aux4 ξ p)
+= 3009 31
+= 15098 28
++ 27
+CommRingCat.of Ω)
+         
+= 3589 43
+@% 15303 5335 10
+= 312 35
++ 46
+
+    {Ω : Type}
+    [inst : Field Ω]
+    (ξ : 
+= 648 24
++ 28
+CommRingCat.of Ω) ⟶ X) :
+   
+= 1327 43
++ 29
+ξ → Subring Ω :=
+    fun (p :
+= 1327 43
++ 10
+ξ) ↦
+     
+= 27976 40
++ 17
+genMap ξ p).range
+@% 20702 2817 13
+= 312 35
++ 46
+
+    {Ω : Type}
+    [inst : Field Ω]
+    (ξ : 
+= 648 24
++ 28
+CommRingCat.of Ω) ⟶ X) :
+   
+= 1327 43
+= 21205 24
++ 4
+(p :
+= 1327 43
++ 38
+ξ) (a : Ω) ↦
+      a ≠ 0 ∧
+        a ∈
+= 15259 45
++ 21
+ξ p ∧
+          a⁻¹ ∈
+= 15259 45
++ 3
+ξ p
+@% 23584 1315 10
+= 312 35
++ 46
+
+    {Ω : Type}
+    [inst : Field Ω]
+    (ξ : 
+= 648 24
++ 32
+CommRingCat.of Ω) ⟶ X) :
+    ℕ →
+= 1327 43
++ 32
+ξ → Prop :=
+    fun (p : ℕ) (q :
+= 1327 43
++ 12
+ξ) ↦
+      ¬
+= 24 38
++ 13
+unitAt ξ q ↑p
+@% 27002 1168 15
++ 1
+ 
+= 648 24
++ 33
+CommRingCat.of Ω) ⟶ X}
+      {q :
+= 1327 43
++ 9
+ξ},
+     
+= 24918 45
++ 32
+ξ q →
+        ∀ (n : ℕ), n ≠ 0 →
+= 20657 46
++ 19
+ξ q ↑n :=
+    by
+  
+= 27882 31
+= 27911 120
+= 28029 24
+= 28051 24
+= 28073 69
+= 28140 32
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/HeckeGelfandPair.lean 90971935a16ca2875e4d5ce868874e58f169691022ca246da59053776a428f9d bcc452b3624478ae39b00fd0512c763c17482e2767f2e9e8f53f3453659f17c4
 @@ 15 0 99
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CharacterEigenspaceAddMem
@@ -70109,6 +75203,978 @@ trace_eq_twisted_trace_of_fixed.algebra_smulCommClass_complex | (intros; apply _
 = 34 27
 + 77
 trace_eq_twisted_trace_of_fixed.algebra_smulCommClass_complex <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/HloweqTransfer.lean 6c983a2f49010d6454ffeec4044a041c07dcf36dda0e71c4329b550afa6ffaf4 ab7103364facfbfcc30dd90bd88518cbc679ee781f1f85c83f7235fe459a04fa
+@% 619 1834 7
++ 13
+{n : ℕ} :
+   
+= 85 41
++ 19
+ℂ → Prop :=
+    fun
+= 712 48
++ 12
+ℂ) ↦
+      g
+= 10954 56
+= 11072 38
+@% 2512 8555 27
++ 26
+ℕ} (ε : Fin n → Bool) {g h
+= 45652 30
++ 12
+},
+      g ∈
+= 45737 35
+= 582 37
++ 19
+ε ↑g} →
+        h ∈
+= 45737 35
+= 582 37
++ 18
+ε ↑g} →
+          
+= 823 35
++ 3
+ℂ)ˣ
+= 780 25
++ 3
+ℂ)ˣ
+= 53444 39
++ 3
+ℂ)ˣ
+= 78012 27
+= 45656 27
++ 54
+Units.instGroup.toMulOneClass.toMul) g h ∈
+           
+= 45737 35
+= 582 37
++ 18
+ε ↑g} :=
+    by
+  
+= 10665 24
+= 10687 96
+= 24202 36
+= 10815 109
+= 10922 116
+= 11036 33
+@% 18514 5807 24
++ 21
+ℕ} (ε : Fin n → Bool)
+= 45737 33
++ 12
+},
+      g ∈
+= 45737 35
+= 582 37
++ 24
+ε ↑g} →
+        @Inv.inv
+= 780 25
++ 4
+ℂ)ˣ 
+= 22849 32
++ 3
+.to
+= 22283 30
++ 13
+g ∈
+         
+= 45737 35
+= 582 37
++ 37
+ε ↑g} :=
+    by
+    intro n ε g hg
+  
+= 23742 78
+= 23818 55
+= 23871 87
+= 23956 124
++ 12
+  rw [hg]
+  
+= 24088 116
+= 24202 40
+= 11036 35
+= 24273 50
+@% 24448 5417 14
++ 35
+{n : ℕ} :
+    (Fin n → Bool) → Subg
+= 10356 29
++ 14
+ℂ)ˣ :=
+    fun
+= 154 28
++ 12
+{ carrier :=
+= 45737 35
+= 582 37
++ 26
+ε ↑g},
+        mul_mem' :=
+= 4081 33
++ 28
+aux3 n ε,
+        one_mem' :
+= 11073 33
++ 27
+aux4 ε,
+        inv_mem' :=
+= 4081 33
++ 10
+aux5 n ε }
+@% 29950 3702 7
++ 12
+
+    (n : ℕ)
+= 178017 24
++ 23
+:
+    MeasurableSpace ↥
+= 41632 32
++ 20
+UJ ε) :=
+    borel ↥
+= 41632 32
++ 4
+UJ ε
+@% 33779 4185 3
++ 53
+{n : ℕ} (ε : Fin n → Bool) :
+    IsTopologicalGroup ↥
+= 41632 32
++ 19
+UJ ε) :=
+    inferI
+@% 38017 3781 3
++ 45
+(n : ℕ) (ε : Fin n → Bool) :
+    BorelSpace ↥
+= 41632 32
++ 37
+UJ ε) :=
+    { measurable_eq := rfl }
+@% 41880 4110 9
++ 44
+ℕ) (ε : Fin n → Bool), LocallyCompactSpace ↥
+= 41632 32
++ 32
+UJ ε) :=
+    by
+    intro n ε
+  
+= 45501 64
+= 45563 62
+= 45623 96
+= 45717 62
+= 45777 114
+= 45889 103
+@% 46075 4495 13
++ 56
+{n : ℕ} (ε : Fin n → Bool) :
+    MeasureTheory.Measure ↥
+= 41632 32
++ 9
+UJ ε) :=
+
+= 46290 35
+= 34 31
++ 7
+UJ ε))
+
+= 41626 38
++ 14
+UJ ε).toGroup 
+= 30157 34
+= 50526 35
++ 5
+8 ε)
+
+= 64885 71
+= 50526 42
+@% 52238 2623 13
++ 13
+{n : ℕ} :
+   
+= 52255 46
++ 13
+ℂ) :=
+    fun
+= 154 28
++ 1
+{
+= 733 27
++ 16
+ℂ |
+        g ∈ 
+= 53970 28
++ 15
+ℂ ∧
+          g
+= 10861 34
++ 5
+d15 ε
+= 11072 34
++ 10
+d15 ε * g}
+@% 54954 5773 38
++ 4
+ℂ ℂ
+
+= 33322 44
++ 2
+ℂ 
+= 55133 28
++ 28
+).toPseudoMetricSpace
+      
+= 55267 48
++ 21
+.toPseudoMetricSpace
+
+= 55661 35
++ 2
+ℂ
+
+= 55807 30
++ 1
+ℂ
+= 81723 35
++ 17
+Field.toField).to
+= 55716 27
++ 9
+).toZero
+
+= 55995 45
++ 1
+ℂ
+= 65460 30
++ 40
+DivisionAddCommMonoid ℂ
+                
+= 55267 48
++ 60
+.toAddCommGroup).toSubtractionMonoid).toNegZeroClass.toZero
+
+= 58231 39
++ 4
+ℂ ℂ
+
+= 55807 30
++ 1
+ℂ
+= 55169 24
++ 48
+.toField).toDivisionSemiring.toMonoid
+          
+= 55267 48
++ 13
+.toAddMonoid
+
+= 59983 33
++ 3
+ℂ ℂ
+= 60031 39
+= 55267 48
++ 16
+
+              (
+= 60623 44
++ 23
+
+                    ℂ)
+= 60568 24
++ 56
+.toNormedSpace).toDistribMulAction).toSMul :=
+    inferI
+@% 60802 1242 93
++ 43
+
+    {n : ℕ}
+    {ε : Fin n → Bool} :
+    ↥
+= 41632 32
++ 2
+UJ
+= 60880 29
++ 19
+ℂ :=
+    fun (g : ↥
+= 41632 32
++ 2
+UJ
+= 61000 48
++ 30
+ℂ) Matrix.semiring.toMonoid ↑g
+= 63993 68
++ 1
+ℕ
+= 64064 41
+= 34 31
++ 2
+UJ
+= 64141 37
++ 3
+ℂ ℂ
+= 64193 42
++ 14
+ (RingHom.id ℂ
+= 78963 46
++ 18
+L2 ε)
+            
+= 33136 32
++ 19
+.toTopologicalSpace
+= 65460 45
+= 34 31
++ 20
+L2 ε)
+              
+= 65561 33
+= 78963 46
++ 18
+L2 ε)
+            
+= 33136 32
++ 19
+.toTopologicalSpace
+= 65460 45
+= 34 31
++ 20
+L2 ε)
+              
+= 65561 33
++ 14
+)
+            
+= 68036 28
+= 68036 28
+= 71524 94
++ 6
+@dite
+
+= 71628 94
+= 64248 131
+= 64383 85
+= 64472 88
+= 64564 100
+= 64668 103
+= 64775 112
+= 64891 77
+= 83842 408
+= 65400 69
+= 65473 82
+= 65559 100
+= 64891 71
+= 75595 409
+= 18379 44
++ 8
+L2 n ε)
+
+= 64375 93
+= 64472 88
+= 64564 100
+= 64668 103
+= 64775 112
+= 64891 77
+= 83842 408
+= 65400 69
+= 65473 82
+= 65559 100
+= 64891 71
+= 75595 409
+= 77532 27
+= 68050 84
+= 51153 69
+= 51263 368
+= 51221 44
+= 68647 116
+= 68767 40
+= 82808 211
++ 2
+)
+
+= 76400 81
+= 68034 100
+= 51153 69
+= 51263 368
+= 51221 44
+= 68647 116
+= 68767 40
+= 82808 211
++ 2
+)
+
+= 77461 80
+= 77543 130
+= 50467 91
+= 51185 35
+= 77803 65
+= 77870 155
+= 78027 69
++ 14
+(@Subgroup.mul
+@% 62544 67 7
+= 66078 50
++ 10
+UJ n ε)))
+
+= 78688 25
+= 2350 33
+= 78748 58
+= 78808 33
+= 77543 569
+@@ 63005 536 0
+
+@% 63681 2040 33
+= 35 30
+= 78676 123
++ 9
+)
+      (
+= 90700 32
+= 80174 135
+= 50467 91
+= 68170 42
+= 89728 959
+= 2350 33
+= 81462 62
+= 81526 64
+= 81592 146
+= 68600 47
+= 68213 386
++ 3
+))
+
+= 81582 156
+= 68600 47
+= 68213 386
++ 3
+))
+
+= 68801 48
+= 68855 42
+= 68903 52
+= 82946 84
+= 68811 38
+= 68855 42
+= 68903 52
+= 82946 84
+= 83256 33
+= 83291 52
+= 76179 218
++ 2
+)
+
+= 83573 68
+= 81592 178
+@% 66136 1979 2
+= 68019 38
+= 64798 62
+@% 68630 1236 4
+= 84881 37
+= 83583 58
+= 82200 610
+= 64777 83
+@% 70381 1244 24
+= 84881 37
+= 75422 2111
+= 75411 30
+= 88458 88
+= 64891 71
+= 75595 409
+= 30102 53
+= 77671 64
+= 2351 32
+= 89191 29
+= 76017 454
+= 89688 37
+= 79107 936
++ 15
+hm))
+      fun
+
+= 80146 24
++ 3
+Not
+= 68021 29
+= 80189 120
+= 50467 91
+= 68170 42
+= 89728 959
+= 2350 33
+= 92039 61
++ 12
+@OfNat.ofNat
+@@ 77544 14570 33
+nat_lit 1)
+        (@One.toOfNat1
+@% 98185 11492 1
+= 104443 53
+@% 112546 2473 28
+= 34 31
+= 107468 100
++ 1
+ℕ
+= 107571 62
++ 1
+ℂ
+= 64144 34
++ 3
+ℂ ℂ
+= 64193 42
++ 14
+ (RingHom.id ℂ
+= 78963 46
++ 18
+L2 ε)
+            
+= 33136 32
++ 19
+.toTopologicalSpace
+= 65460 45
+= 34 31
++ 20
+L2 ε)
+              
+= 65561 33
+= 78963 46
++ 18
+L2 ε)
+            
+= 33136 32
++ 19
+.toTopologicalSpace
+= 65460 45
+= 34 31
++ 20
+L2 ε)
+              
+= 65561 33
++ 14
+)
+            
+= 68036 28
+= 68036 27
+@% 115103 7 61
++ 6
+@dite
+
+= 71628 94
+= 64248 131
+= 64383 85
+= 64472 88
+= 64564 100
+= 64668 103
+= 64775 112
+= 64891 77
+= 83842 408
+= 65400 69
+= 65473 82
+= 65559 100
+= 64891 71
+= 75595 409
+= 18379 44
++ 8
+L2 n ε)
+
+= 64375 93
+= 64472 88
+= 64564 100
+= 64668 103
+= 64775 112
+= 64891 77
+= 83842 408
+= 65400 69
+= 65473 82
+= 65559 100
+= 64891 71
+= 75595 409
+= 77532 27
+= 68050 84
+= 51153 69
+= 51263 368
+= 51221 44
+= 68647 116
+= 68767 40
+= 82808 211
++ 2
+)
+
+= 76400 81
+= 68034 100
+= 51153 69
+= 51263 368
+= 51221 44
+= 68647 116
+= 68767 40
+= 82808 211
++ 2
+)
+
+= 77461 80
+= 121028 143
+= 78808 33
+= 121208 144
++ 5
+(fun
+
+= 121361 161
+= 2351 32
++ 10
+rregG n ε
+
+= 121568 82
+= 121652 152
++ 27
+h))
+      fun
+        (h :
+
+= 90722 26
+= 121867 146
++ 12
+@OfNat.ofNat
+@@ 121029 998 33
+nat_lit 1)
+        (@One.toOfNat1
+@% 128098 4097 2
+= 104443 107
+= 64383 1255
+@% 132724 4612 1
+= 68019 1017
+@% 137469 2621 12
++ 13
+{n : ℕ} :
+   
+= 52255 46
++ 13
+ℂ) :=
+    fun
+= 154 28
++ 1
+{
+= 733 27
++ 16
+ℂ |
+        g ∈ 
+= 53970 28
++ 15
+ℂ ∧
+          g
+= 10861 39
+= 11073 38
++ 4
+* g}
+@% 140158 11168 9
++ 32
+
+    {n : ℕ}
+    {H : Type u_1}
+
+= 140204 33
++ 60
+
+    [inst_1 : InnerProductSpace ℂ H] :
+    (Fin n → Bool) →
+= 780 25
++ 48
+ℂ → H →L[ℂ] H) → Submodule ℂ H → Prop :=
+    fun
+= 178021 64
++ 30
+S : Submodule ℂ H) ↦
+      ∀ g
+= 178129 43
++ 18
+v ∈ S, (σ g) v ∈ S
+@% 151389 9324 14
++ 32
+
+    {n : ℕ}
+    {H : Type u_1}
+
+= 140204 33
++ 40
+
+    [inst_1 : InnerProductSpace ℂ H] :
+
+= 151604 32
++ 4
+ℂ) →
+= 780 25
++ 27
+ℂ → H →L[ℂ] H) → (Fin n → ℝ
+= 153314 24
+= 153522 33
++ 2
+ℂ)
+= 178039 46
++ 13
+μ : Fin n → ℝ
+= 155042 33
++ 241
+ℝ),
+        (Matrix.diagonal fun (a : Fin n) ↦ Complex.exp (↑(θ a) * Complex.I)) ∈ G →
+          (σ (Matrix.diagonal fun (a : Fin n) ↦ Complex.exp (↑(θ a) * Complex.I))) v =
+            Complex.exp (↑(∑ a : Fin n, μ a * θ a) * Complex.I) • v
+@% 162475 15417 23
++ 32
+
+    {n : ℕ}
+    {H : Type u_1}
+
+= 140204 33
++ 60
+
+    [inst_1 : InnerProductSpace ℂ H] :
+    (Fin n → Bool) →
+= 780 25
++ 62
+ℂ → H →L[ℂ] H) → (Fin n → ℝ) → Submodule ℂ H → Prop :=
+    fun
+= 178021 80
++ 52
+S : Submodule ℂ H) ↦
+      FiniteDimensional ℂ ↥S ∧
+
+= 51509 39
++ 39
+IsKStableOn ε σ S ∧
+          (∀ S' ≤ S
+= 10716 33
++ 85
+IsKStableOn ε σ S' → S' = ⊥ ∨ S' = S) ∧
+            (∃ v ∈ S,
+                v ≠ 0 ∧
+= 68462 50
++ 6
+IsWtOn
+= 41631 33
++ 119
+d21 ε) σ Λ
+                    v) ∧
+              ∀ (μ : Fin n → ℝ),
+                ∀ v ∈ S,
+                  v ≠ 0 →
+= 65995 52
++ 6
+IsWtOn
+= 41631 33
++ 10
+d21 ε) σ μ
+= 1747 25
+= 177818 26
+= 34 31
++ 10
+CDom ε μ Λ
+@% 179677 41 3
++ 1
+ℕ
+= 179680 34
++ 1
+ℝ
+@% 179750 100474 40
++ 3
+ℂ ℂ
+= 64193 42
++ 14
+ (RingHom.id ℂ
+= 77663 44
++ 2
+L2
+= 50463 36
++ 2
+L2
+= 179988 46
+= 34 31
++ 18
+L2 ε)
+            
+= 65561 33
+= 72911 44
+= 34 31
++ 18
+L2 ε)
+            
+= 65561 33
++ 12
+)
+          
+= 68036 28
+= 68036 27
++ 10
+),
+      (
+= 178126 37
++ 22
+Kset ε,
+          ∀ (x
+= 178263 34
++ 22
+L2 ε),
+            A (
+= 41632 32
++ 14
+rreg ε k) x) =
+= 68123 47
++ 45
+rreg ε k) (A x)) →
+        ∀ {S : Submodule ℂ
+= 41631 33
++ 19
+L2 ε)},
+          (
+= 178234 26
++ 1
+→
+= 76397 44
++ 9
+IsKTypeOf
+= 280272 45
++ 3
+S →
+= 51502 46
++ 9
+IsKTypeOf
+= 280272 44
++ 49
+
+                (Submodule.map A S) :=
+    by
+  
+= 280195 31
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/HolSubMul.lean c4d248506036e6f6be992c9b38d335905e7c00efd8c9407cdf276c6962d4c973 90713bd760e7762806d087ed177fb3bd247ac0a84156dee42f1b8fc6209e0032
+@% 282 744 8
++ 146
+
+    {E : Type}
+    [inst : Field E]
+    [inst_1 : NumberField E]
+    [inst_2 : NumberField.IsCMField E]
+    {r : ℕ}
+    {Comp : Type} :
+    (Comp
+= 36992 43
++ 37
+Data E r) → Type :=
+    fun (X : Comp
+= 36992 43
++ 6
+Data E
+= 857 25
+= 883 46
++ 13
+(X c).Ψ r → ℂ
+@% 1087 1770 11
++ 148
+
+    {E : Type}
+    [inst : Field E]
+    [inst_1 : NumberField E]
+    [inst_2 : NumberField.IsCMField E]
+    {r : ℕ}
+    {Comp : Type}
+    (X : Comp
+= 36992 43
++ 19
+Data E r) :
+    ((c
+= 36984 57
++ 15
+c).Ψ r) →
+     
+= 37053 40
++ 27
+ → Prop :=
+    fun (la : (c
+= 36984 57
++ 10
+c).Ψ r) (P
+= 37051 43
++ 41
+ ↦
+      ∀ (c : Comp), P c ∈ (X c).SS (la
+@% 2918 6171 13
++ 148
+
+    {E : Type}
+    [inst : Field E]
+    [inst_1 : NumberField E]
+    [inst_2 : NumberField.IsCMField E]
+    {r : ℕ}
+    {Comp : Type}
+    (X : Comp
+= 36992 43
++ 19
+Data E r) :
+    ((c
+= 36984 57
++ 29
+c).Ψ r) →
+      Submodule ℂ (
+= 245 38
++ 22
+X) :=
+    fun (la : (c
+= 36984 57
++ 43
+c).Ψ r) ↦
+      Submodule.span ℂ
+        {P
+= 37051 42
++ 12
+ |
+         
+= 37150 46
++ 4
+a P}
+@@ 9188 117 62
+NumberField E] [inst_2 : NumberField.IsCMField E]
+      {r : ℕ
+@% 9433 28143 22
+= 511 47
+= 9500 36
+= 1454 43
++ 25
+(X k).Ψ r}
+          {P Q
+= 37051 42
++ 14
+},
+          P
+= 37103 45
++ 17
+a →
+            Q
+= 37103 45
++ 24
+a' →
+              P * Q
+= 37103 44
++ 23
+(la + la') :=
+    by
+  
+= 36917 47
+= 36962 140
+= 37100 109
++ 17
+  intro l R hR
+  
+= 37222 57
+= 37277 29
+= 37304 62
+= 37364 95
+= 37457 82
+= 37537 41
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ImagOfSq.lean 3383f253e43977bbc2259533ab4340acd4bd85c974ed9afe9081492f86ec76f2 667d6cb154d214f036b0914e38eaaa95749489356d6f40782fd437e086f50df4
 @@ 15 0 78
 import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ImportsExtraSide
@@ -70171,6 +76237,32 @@ import Development.AbelianVarietyTheory.Proofs.ModuliProofs.IntOfPrimeMulSq
 
 @@ 165 652 236
  first | exact @_root_.GlobalTheory.RationalIntegralCoordinates.conj_eq_neg | exact _root_.GlobalTheory.RationalIntegralCoordinates.conj_eq_neg | (intros; apply _root_.GlobalTheory.RationalIntegralCoordinates.conj_eq_neg <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ImportsExtraTer.lean a98dc4e7ee51c97a98f21f4b4896eba839fc95ccae08a1f3860750ddb26a5a57 6c6cbfe251759647ad2881a41278e9b3f3b76757ff394a4ec576db6176cdc63e
+@% 243 5691 11
++ 66
+ Algebra O LL] [IsDomain O] [IsFractionRing O LL] {V : Type}
+     
+= 658 26
++ 121
+ [inst_7 : Module LL V] [inst_8 : Module O V] [IsScalarTower O LL V]
+      {ρ : Representation LL G V}
+      (L :
+       
+= 3499 89
++ 79
+
+          inst_8 ρ)
+      (x : V), ∃ (a : O), a ≠ 0 ∧ a • x ∈ L.T :=
+    by
+  
+= 5657 45
+= 5700 58
++ 16
+  rw [L.span]
+  
+= 5770 30
+= 5798 107
+= 5903 33
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ImportsFurtherMore.lean 044000145f1fb3f1037cf0391d023501bbd7296b2bc2ea4240ccec7255a7e7cc eb13907a353f4be1aa21496555463996f710f506a3bb7d3dfc153068323c26e1
 @@ 15 0 44
 import Lemmata.GeneralBFactLeftTail.Imports
@@ -70229,6 +76321,210 @@ Qj7.seq_ex | (intros; apply _root_.
 = 24 27
 + 26
 Qj7.seq_ex <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ImportsMoreExtra.lean d063920e992c03d349e7ef349d373ebee155cd1d36ba355dc7778401b8e4a2d8 2fa9b4bdacc651e5117fbdb01eb90276f0e7e394da9db7bd7923d4fa4f84e5c0
+@% 12699 24053 55
++ 69
+ (κ : G →* Aˣ) (g h : G),
+      @HSMul.hSMul A (A →ₗ[A] A) (A →ₗ[A] A
+= 3381 25
++ 11
+ (A →ₗ[A] A
+= 4148 45
++ 60
+CommRing.toCommSemiring.toSemiring
+              CommRing.to
+= 258 24
++ 15
+CommRing.toComm
+= 1510 24
++ 30
+
+              CommRing.toComm
+= 1510 25
++ 65
+Semiring.toModule Semiring.toModule
+              (RingHom.id A) 
+= 4919 39
++ 14
+
+             
+= 78 37
++ 131
+))
+          (↑(κ (g * h))) LinearMap.id =
+        @HMul.hMul (A →ₗ[A] A) (A →ₗ[A] A) (A →ₗ[A] A)
+          (@instHMul (A →ₗ[A] A) 
+= 11371 29
++ 6
+.toMul
+= 26045 27
++ 23
+ (A →ₗ[A] A) (A →ₗ[A] A
+= 27557 27
++ 11
+ (A →ₗ[A] A
+= 28342 47
++ 26
+CommRing.toCommSemiring.to
+= 11392 25
++ 11
+CommRing.to
+= 258 24
++ 15
+CommRing.toComm
+= 1510 24
++ 32
+
+                CommRing.toComm
+= 1510 25
++ 67
+Semiring.toModule Semiring.toModule
+                (RingHom.id A) 
+= 4919 39
++ 16
+
+               
+= 78 37
++ 36
+))
+            (↑(κ g)) LinearMap.id
+= 26045 27
++ 23
+ (A →ₗ[A] A) (A →ₗ[A] A
+= 27557 27
++ 11
+ (A →ₗ[A] A
+= 28342 47
++ 26
+CommRing.toCommSemiring.to
+= 11392 25
++ 11
+CommRing.to
+= 258 24
++ 15
+CommRing.toComm
+= 1510 24
++ 32
+
+                CommRing.toComm
+= 1510 25
++ 67
+Semiring.toModule Semiring.toModule
+                (RingHom.id A) 
+= 4919 39
++ 16
+
+               
+= 78 37
++ 50
+))
+            (↑(κ h)) LinearMap.id) :=
+    by
+  
+= 36724 24
++ 8
+  ext
+  
+@% 36826 15224 25
++ 52
+
+    {G : Type}
+    {A : Type}
+    [inst : Group G]
+
+= 36877 26
++ 91
+:
+    (G →* Aˣ) → Representation A G A :=
+    fun (κ : G →* Aˣ) ↦
+      {
+        toFun := 
+= 46440 24
++ 37
+@HSMul.hSMul A (A →ₗ[A] A) (A →ₗ[A] A
+= 27557 27
++ 11
+ (A →ₗ[A] A
+= 28342 47
++ 26
+CommRing.toCommSemiring.to
+= 11392 25
++ 11
+CommRing.to
+= 258 24
++ 15
+CommRing.toComm
+= 1510 24
++ 32
+
+                CommRing.toComm
+= 1510 25
++ 67
+Semiring.toModule Semiring.toModule
+                (RingHom.id A) 
+= 4919 39
++ 16
+
+               
+= 78 37
++ 57
+))
+            (↑(κ g)) LinearMap.id,
+        map_one' :=
+= 559 38
++ 22
+κ,
+        map_mul' :=
+= 12602 38
++ 3
+κ }
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ImportsRestMore.lean c5097ad1be667219cf59765a0eb1c7cc55b312dccc27dec53adeec302c06493a 3c261f682d5e44b95f1e4df4bfd508bdefad2ca8f703879d9d1da07c91436cb1
+@% 983 6935 36
++ 1
+ℂ
+= 990 26
++ 1
+ℂ
+= 1023 79
++ 40
+ℝ), 0 < l ∧ ∀ (x : I → ℂ), l * ‖x‖ ^ 2 ≤
+= 172 39
++ 7
+  by
+  
+= 6632 24
+= 6654 77
+= 6729 65
+= 6792 31
+= 6821 82
+= 6901 60
+= 6959 90
+= 7047 37
+= 7082 55
+= 7135 42
+= 7175 57
+= 7230 30
+= 7258 32
+= 7288 24
++ 21
+  · subst hx; simp
+  
+= 7329 45
+= 7372 51
+= 7421 55
+= 7474 51
+= 7523 76
++ 15
+  field_simp
+  
+= 7610 25
+= 7633 47
+= 7678 99
+= 7775 42
+= 7815 27
+= 7840 31
+= 7869 29
+= 7896 24
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ImportsSide.lean 411aff1e825874bfc42a6f523cca56a96bf6c8afca152533fd15aa62fad38ffe 623130542127c5c843c4f61e8d2e43379e5c8ed6b92ef2c00f0c76239074e436
 @@ 15 0 78
 import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ImportsBis
@@ -70241,18 +76537,559 @@ import Lemmata.GeneralBFactRightVariant.Imports
 
 @@ 237 636 191
  first | exact @_root_.Bl.general_b_fact_right_variant.goal1 | exact _root_.Bl.general_b_fact_right_variant.goal1 | (intros; apply _root_.Bl.general_b_fact_right_variant.goal1 <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/InnerProductFormulaField.lean 6e319835e08f72fd024952cb2d5847eb5f989e105544e791593c27bfef4da50f bc1cbae0f43b1567083cd2dacd20389f90b9e3194bc4b86cc04c117de0adfbd0
+@% 102 152 2
++ 64
+
+    {R : Type u_2}
+    [DecidableEq R]
+    {A : Type u_5} :
+   
+= 160 41
+@@ 322 1143 89
+T a b * T c d - T c d * T a b = (if b = c then T a d else 0) - if d = a then T c b else 0
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/IntegralPolynomialFifth.lean 80b00906f7a926fb199eefc03101f04e0b3c6c1ec31cec474881b4aa2c78afa3 cc8e8cb18482f0e51e146fc31f76c0c502caffe6d59bff22963bbba3c9461299
+@% 100 826 3
++ 16
+
+    {p : ℕ}
+   
+= 118 29
++ 57
+:
+    ℂ_[p] → Prop :=
+    fun (x : ℂ_[p]) ↦
+      ‖x‖ ≤ 1
+@% 3365 383 6
++ 35
+
+    {σ : Type u_1}
+    {p : ℕ}
+   
+= 118 29
++ 48
+:
+    MvPowerSeries σ ℂ_[p] → Prop :=
+    fun (F
+= 27814 26
++ 31
+↦
+      ∀ (n : σ →₀ ℕ),
+       
+= 33 67
+@% 3798 22046 88
++ 11
+ℂ_[p] ℂ_[p]
+= 26267 35
++ 5
+ℂ_[p]
+= 4041 58
++ 12
+PadicAlgCl p
+= 4117 25
+= 588 27
++ 65
+ℚ_[p]) (PadicAlgCl.valued p).toUniformSpace
+                     
+= 935 65
++ 22
+
+                     
+= 1707 65
++ 22
+
+                     
+= 2400 65
++ 5
+)).to
+= 3860 27
+= 26267 35
++ 5
+ℂ_[p]
+= 4041 58
++ 12
+PadicAlgCl p
+= 4117 25
+= 588 27
++ 65
+ℚ_[p]) (PadicAlgCl.valued p).toUniformSpace
+                     
+= 935 65
++ 22
+
+                     
+= 1707 65
++ 22
+
+                     
+= 2400 65
++ 5
+)).to
+= 3860 27
+= 5895 28
++ 5
+ℂ_[p]
+= 507 27
++ 15
+Semifield ℂ_[p]
+= 8695 60
++ 12
+PadicAlgCl p
+= 4277 27
+= 588 27
++ 43
+ℚ_[p]) (PadicAlgCl.valued p).toUniformSpace
+= 4278 25
+= 936 64
+= 4278 25
+= 1708 64
+= 4278 25
+= 2401 64
++ 13
+)).toDivision
+= 5964 27
+= 7111 33
++ 12
+ℂ_[p]) ℂ_[p]
+= 7190 51
++ 5
+ℂ_[p]
+= 507 27
++ 15
+Semifield ℂ_[p]
+= 8695 60
++ 12
+PadicAlgCl p
+= 4277 27
+= 588 27
++ 43
+ℚ_[p]) (PadicAlgCl.valued p).toUniformSpace
+= 4278 25
+= 936 64
+= 4278 25
+= 1708 64
+= 4278 25
+= 2401 64
++ 13
+)).toDivision
+= 7282 24
+= 26266 36
++ 5
+ℂ_[p]
+= 4041 58
++ 12
+PadicAlgCl p
+= 4117 25
+= 588 27
++ 65
+ℚ_[p]) (PadicAlgCl.valued p).toUniformSpace
+                     
+= 935 65
++ 22
+
+                     
+= 1707 65
++ 22
+
+                     
+= 2400 65
++ 13
+)).toDivision
+= 7282 24
++ 15
+
+              
+= 9581 25
++ 17
+Semiring.toModule
+= 14175 31
++ 6
+ℂ_[p])
+= 14241 27
++ 37
+ℂ_[p]) ↦ ℂ_[p]) LinearMap.instFunLike
+= 14176 27
++ 9
+.coeff n)
+@@ 25944 3 1
+ℕ
+@% 26097 1839 6
++ 68
+MvPowerSeries.X i) :=
+    by
+    intro p inst σ i n
+    classical
+  
+= 27763 93
+= 27854 31
++ 14
+  split_ifs
+  
+= 27895 24
++ 21
+  · rw [norm_zero]
+  
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/IntegralQuadraticHalfInt.lean 8c75ead81cc5fa20fe0aece834725c459ab0fc6615ec2cb243ec5fd27dc37cb3 209d62c7aa02728a16c9c380fd1ad571db0b93aae66730555b8b3e3254a58b28
 @@ 15 0 76
 import Development.AbelianVarietyTheory.Proofs.ModuliProofs.IntOfPrimeMulSq
 
 @@ 116 244 224
  first | exact @_root_.GlobalTheory.RationalIntegralCoordinates.rat_int | exact _root_.GlobalTheory.RationalIntegralCoordinates.rat_int | (intros; apply _root_.GlobalTheory.RationalIntegralCoordinates.rat_int <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/InvolutionInvariants.lean 2f2722d1bd305fc3403986fcb6aaaebcf015a1d050c28237e8b327383c4cc6d5 5b40ceaf367b28d4459fd148bb5e51b57d65bd38ed9e88afce9bebf3c36565ef
+@% 653 1868 9
++ 13
+{n : ℕ} :
+   
+= 102 41
++ 19
+ℂ → Prop :=
+    fun
+= 746 48
++ 12
+ℂ) ↦
+      g
+= 11063 73
++ 7
+ =
+    
+= 56075 52
++ 4
+Jm ε
+@% 2597 8596 30
++ 26
+ℕ} (ε : Fin n → Bool) {g h
+= 46097 30
++ 22
+},
+      g ∈
+         
+= 46094 42
++ 2
+  
+= 56075 52
++ 36
+inUJ ε ↑g} →
+        h ∈
+           
+= 46094 42
++ 4
+    
+= 56075 52
++ 23
+inUJ ε ↑g} →
+          
+= 857 35
++ 3
+ℂ)ˣ
+= 814 25
++ 17
+ℂ)ˣ
+             
+= 814 25
++ 3
+ℂ)ˣ
+= 52218 27
+= 46101 27
++ 54
+Units.instGroup.toMulOneClass.toMul) g h ∈
+           
+= 46094 42
++ 4
+    
+= 56075 52
++ 23
+inUJ ε ↑g} :=
+    by
+  
+= 10801 24
+= 10823 79
+= 10900 75
+= 10973 49
+= 11020 144
+= 11162 33
+@% 18674 5809 24
++ 21
+ℕ} (ε : Fin n → Bool)
+= 46094 33
++ 22
+},
+      g ∈
+         
+= 46094 42
++ 2
+  
+= 56075 52
++ 29
+inUJ ε ↑g} →
+        @Inv.inv
+= 814 25
++ 4
+ℂ)ˣ 
+= 23043 32
++ 3
+.to
+= 22477 30
++ 13
+g ∈
+         
+= 46094 42
++ 2
+  
+= 56075 52
++ 42
+inUJ ε ↑g} :=
+    by
+    intro n ε g hg
+  
+= 23936 76
+= 24010 72
+= 24080 55
+= 24133 136
+= 24267 32
+= 24297 131
+= 24426 59
+@% 24635 5485 15
++ 35
+{n : ℕ} :
+    (Fin n → Bool) → Subg
+= 10492 29
++ 14
+ℂ)ˣ :=
+    fun
+= 171 28
++ 30
+{
+        carrier :=
+         
+= 46094 42
++ 2
+  
+= 56075 52
++ 31
+inUJ ε ↑g},
+        mul_mem' :=
+= 4166 50
++ 26
+aux3 n ε,
+        one_mem'
+= 56228 55
++ 24
+4 ε,
+        inv_mem' :=
+= 4166 50
++ 10
+aux5 n ε }
+@% 30222 3753 4
++ 57
+
+    (n : ℕ)
+    (ε : Fin n → Bool) :
+    MeasurableSpace
+= 56520 56
++ 13
+ :=
+    borel
+= 56520 55
+@% 34136 4236 3
++ 51
+{n : ℕ} (ε : Fin n → Bool) :
+    IsTopologicalGroup
+= 56520 56
++ 14
+ :=
+    inferI
+@% 38442 3756 3
++ 43
+(n : ℕ) (ε : Fin n → Bool) :
+    BorelSpace
+= 56520 56
++ 32
+ :=
+    { measurable_eq := rfl }
+@% 42297 4128 11
++ 1
+ℕ
+= 38458 28
++ 19
+LocallyCompactSpace
+= 56520 56
++ 27
+ :=
+    by
+    intro n ε
+  
+= 45952 64
+= 46014 62
+= 46074 62
+= 46134 150
+= 46282 104
+= 46384 43
+@% 46526 4632 15
++ 63
+
+    {n : ℕ}
+    (ε : Fin n → Bool) :
+    MeasureTheory.Measure
+= 56520 56
++ 4
+ :=
+
+= 46776 35
+= 34 48
++ 7
+UJ ε))
+
+= 42085 55
++ 14
+UJ ε).toGroup 
+= 30463 34
+= 51097 52
++ 5
+8 ε)
+
+= 42085 81
++ 1
+
+
+= 42085 55
++ 10
+aux9 n ε)
+
+@% 51349 1732 12
++ 1
+ℕ
+= 51352 28
+= 34 48
++ 14
+UJ ε)),
+      
+= 51621 25
++ 20
+
+          (fun (x :
+= 56520 58
++ 7
+↦ x * g
+= 51767 61
++ 13
+muG ε) =
+    
+= 56075 52
++ 5
+muG ε
+@% 53187 1438 10
++ 1
+ℕ
+= 38458 28
+= 51621 25
++ 20
+
+          (fun (x :
+= 56520 58
++ 5
+↦ x⁻¹
+= 51767 61
++ 13
+muG ε) =
+    
+= 56075 52
++ 5
+muG ε
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/IrrCases.lean f9007c21e0e9b78261c16d325250805e6d920e468047d1354513009a206fd562 033b4c7e849e866bb830a0644eb4dcbb0fdad96ae7f7f9fc4b50236dd0ab62b0
 @@ 15 0 90
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EqBotOrEqTopOfInvariant
 
 @@ 322 251 259
  first | exact @_root_.GlobalTheory.InvariantSupremum.eq_bot_or_eq_top_of_invariant | exact _root_.GlobalTheory.InvariantSupremum.eq_bot_or_eq_top_of_invariant | (intros; apply _root_.GlobalTheory.InvariantSupremum.eq_bot_or_eq_top_of_invariant <;> assumption
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/IrrMap.lean 0815ac2e7bf55c1b11da28134f4dd824be8a635b003eace22c8175ccd93e6986 9a4b008aba421558c3db1a8b5f95792e23880ef83b615809bd24198239915296
+@% 69 5253 5
++ 93
+
+    {R : Type}
+    [inst : CommRing R]
+    {H : Type}
+    [inst_1 : Group H]
+    {n : Type}
+
+= 204 24
++ 1
+
+
+= 243 29
++ 111
+:
+    (H →* Matrix n n R) → Prop :=
+    fun (r : H →* Matrix n n R) ↦
+      Submodule.span R (Set.range ⇑r) = ⊤
+@% 5393 836 4
++ 70
+
+    {O : Type}
+    {M : Type}
+    {ι : Type}
+    [inst : CommRing O]
+
+= 5449 30
++ 79
+:
+    [Module O M] → Module O (ι → M) :=
+    fun [inst_2 : Module O M] ↦
+      
+= 6086 24
+@% 6353 4618 11
++ 56
+
+    {R : Type}
+    {R' : Type}
+    [inst : CommRing R]
+
+= 6408 26
++ 54
+
+    {H : Type}
+    [inst_2 : Group H]
+    {n : Type}
+
+= 6532 24
++ 1
+
+
+= 6573 29
++ 112
+:
+    (R →+* R') → (H →* Matrix n n R) → H →* Matrix n n R' :=
+    fun (f : R →+* R') (r : H →* Matrix n n R) ↦
+
+= 10293 58
++ 37
+ Matrix.nonAssocSemiring
+            
+= 9751 24
++ 17
+f.mapMatrix).comp
+@% 12701 14832 10
++ 39
+ (f : E →+* E') {n : ℕ}
+      (r : Γ →*
+= 11109 26
++ 7
+,
+     
+= 33 37
++ 13
+r →
+        ∀
+= 11181 32
++ 35
+,
+          (∀ (g : Γ), ∀ v ∈ N, ((
+= 6315 39
++ 62
+f r) g).mulVec v ∈ N) →
+            N = ⊥ ∨ N = ⊤ :=
+    by
+  
+= 27498 37
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/IrreducibleInvariant.lean bbd9275588937b633f7382a2eb5b3b1e75a18cab0a133c4a92b5ebe942e4b759 b163c3ab79a3b356f1099d91b29951da5d63aec30ac3ea546293148adcb7e5a0
 @@ 1765 22 29
 have hmin := hirr.2.2
@@ -70328,6 +77165,31 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LeNatCastOfAddOneLe
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/LevEraseLe.lean ccfc2b4d14d4066a18b09387efa510969af609fcdb3cc5dc69b629e70eec7ff4 e55190080f13264ae61c00a367bcd9b3fbfdab8a8e7071c7f2cf64e34076452e
 @@ 5388 34 33
 b1, b2, -⟩ := (hL E n w hw).2.2.2
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/LimitOfFinite.lean 5a12082f6d941a6abbf7993db248c70b8e33ea6a19e452fd527fea09b42ab5d8 aca6715dce35f156d77afa70b6432ed88859829536aaf5aaa3f626e893cf5a05
+@% 2722 4548 7
++ 12
+ Module A M]
+= 147 34
++ 44
+,
+      IsPrecomplete I A →
+        ∀ (f : ℕ
+= 3297 25
++ 1
+ℕ
+= 3325 34
++ 83
+ (Submodule A M) SetLike.instMembership (I ^ m • ⊤)
+                (f m - f (m + 1
+@% 7320 3905 4
++ 1
+ℕ
+= 7323 36
++ 74
+ (Submodule A M) SetLike.instMembership (I ^ m • ⊤) (f m - L) :=
+    by
+  
+= 11195 32
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/LocConstOfKer.lean 177a4461710249b1c8d597585e76bed48ab65db2ee59c3a773816616c3b146b1 aae89f945281920ce254c3cb6a93edb2404437fad5fcbea72eaff7ae54d126f7
 @% 15 0 3
 + 72
@@ -70441,6 +77303,1447 @@ have hIc := (
 = 10054 29
 + 3
 ).2
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/MapPowSub.lean b3ae056ff23ad2ea484db6a4b4a47ba191ea4ca1853c5d9838bc964514949acf 4104c0cb03299ef6898c688a113527b9a4ad572d72aa81fb4322fa5b4f4d3aca
+@% 108 18618 14
++ 14
+ {σ : K →+* ℂ}
+= 373 55
++ 12
+ Module K V]
+= 608 26
++ 123
+ [inst_4 : Module ℂ E] (f : V →ₛₗ[σ] E)
+      (T : Module.End K V) (S : Module.End ℂ E),
+      (∀ (v : V), f (T v) = S (f v
+= 4133 28
++ 76
+ℕ) (v : V), f (((T - a • 1) ^ k) v) = ((S - σ a • 1) ^ k) (f v) :=
+    by
+  
+= 18345 40
+= 18383 109
++ 12
+  intro v
+  
+= 18500 116
++ 21
+  induction k with
+  
+= 18633 66
++ 33
+  | succ n ih =>
+      intro v
+  
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/MemOfClosed.lean 644439f6a09726d3d3c4952b0add3c5d18ee8bb6d40e920bbe89b5685a8b6acf 21f6f17c28b1a815bbf94c96f6e25ef765f1265535f175c62a9cad34a2d0d8bb
+@% 60 2649 9
++ 67
+
+    (K : Type)
+    [inst : Field K]
+    [inst_1 : ValuativeRel K]
+
+= 235 33
++ 6
+
+    [
+= 271 28
++ 23
+] :
+    @IsLocalRing (↥
+= 167160 36
++ 11
+CommRing.to
+= 127941 24
++ 13
+:=
+    inferI
+@% 2787 62885 31
++ 67
+
+    (K : Type)
+    [inst : Field K]
+    [inst_1 : ValuativeRel K]
+
+= 235 33
++ 15
+
+    [inst_3 : 
+= 271 28
++ 16
+]
+    (l : ℕ) :
+
+= 3144 42
++ 6
+[CharP
+= 167133 27
++ 1
+↥
+= 167160 36
++ 29
+l] →
+        Algebra (ZMod l)
+= 167133 27
++ 1
+↥
+= 167160 38
++ 46
+
+    fun [Fact (Nat.Prime l)] [inst_5 : CharP
+
+= 3224 32
++ 3
+ (↥
+= 476728 40
++ 3
+   
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 23
+1 K))
+      l] ↦
+      
+= 60330 47
++ 3
+ (↥
+= 476728 40
++ 5
+     
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 15
+1 K))
+        l
+@% 65741 36409 21
++ 67
+
+    (K : Type)
+    [inst : Field K]
+    [inst_1 : ValuativeRel K]
+
+= 235 33
++ 15
+
+    [inst_3 : 
+= 271 28
++ 16
+]
+    (l : ℕ) :
+
+= 66098 33
++ 6
+[CharP
+= 167133 27
++ 1
+↥
+= 167160 36
++ 17
+l] → ℕ :=
+    fun
+= 3147 31
++ 16
+[inst_5 : CharP
+
+= 3224 32
++ 3
+ (↥
+= 476728 40
++ 3
+   
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 6
+1 K))
+
+@% 102226 8367 11
++ 3
+ (↥
+= 476728 40
++ 5
+     
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 22
+1 K))
+        Field.to
+= 171 28
++ 28
+.toSemiring
+        Field.to
+= 171 28
++ 16
+.toAddCommMonoid
+@% 110666 7104 13
++ 3
+ (↥
+= 476728 40
++ 7
+       
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 24
+1 K))
+          Field.to
+= 34122 25
++ 8
+Field.to
+= 171 28
++ 16
+.toSemiring
+    
+= 476975 39
++ 10
+algRes K l
+@% 117854 248 5
++ 26
+ [inst_1 : ValuativeRel K]
+= 238 30
++ 17
+
+      [inst_3 : 
+= 271 28
++ 9
+] (l : ℕ)
+@% 118157 8461 8
+= 118158 42
++ 3
+ (↥
+= 476728 40
++ 7
+       
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 3
+1 K
+@% 126697 8299 17
++ 3
+ (↥
+= 476728 40
++ 5
+     
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 25
+1 K))
+        CommRing.to
+= 883 32
+= 25299 32
++ 3
+ (↥
+= 476728 40
++ 11
+           
+= 167159 35
++ 22
+.toCommRing
+          
+= 476975 39
++ 44
+aux1
+                  K)).toDivisionRing.to
+= 128039 28
+@% 135069 7190 15
++ 3
+ (↥
+= 476728 40
++ 7
+       
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 24
+1 K))
+          Field.to
+= 34122 25
++ 8
+Field.to
+= 171 28
++ 16
+.toSemiring
+    
+= 476975 39
++ 25
+algRes K l)) :=
+    by
+  
+= 142182 26
+= 142206 55
+@% 142642 248 5
++ 26
+ [inst_1 : ValuativeRel K]
+= 238 30
++ 17
+
+      [inst_3 : 
+= 271 28
++ 9
+] (l : ℕ)
+@% 142945 8461 8
+= 118158 42
++ 3
+ (↥
+= 476728 40
++ 7
+       
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 3
+1 K
+@% 151487 8367 11
++ 3
+ (↥
+= 476728 40
++ 5
+     
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 22
+1 K))
+        Field.to
+= 171 28
++ 28
+.toSemiring
+        Field.to
+= 171 28
++ 16
+.toAddCommMonoid
+@% 159927 7286 16
++ 3
+ (↥
+= 476728 40
++ 7
+       
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 24
+1 K))
+          Field.to
+= 34122 25
++ 8
+Field.to
+= 171 28
++ 16
+.toSemiring
+    
+= 476975 39
++ 25
+algRes K l)) :=
+    by
+  
+= 142182 26
+= 142206 55
+= 167117 98
+@% 167298 84241 41
++ 67
+
+    (K : Type)
+    [inst : Field K]
+    [inst_1 : ValuativeRel K]
+
+= 235 33
++ 15
+
+    [inst_3 : 
+= 271 28
++ 14
+]
+    (l : ℕ)
+
+= 3144 34
++ 21
+:
+    [inst_5 : CharP
+= 167133 27
++ 1
+↥
+= 167160 36
++ 5
+l] →
+
+= 194702 26
+= 65705 37
++ 22
+K l)) (ZMod l)
+       
+= 167133 27
++ 1
+↥
+= 476728 40
++ 12
+    Field.to
+= 171 28
++ 28
+.toSemiring
+        Field.to
+= 171 28
+= 103634 25
+= 110602 27
+= 167133 27
++ 1
+↥
+= 476728 40
++ 14
+      Field.to
+= 34122 25
++ 8
+Field.to
+= 171 28
++ 16
+.toSemiring
+    
+= 476975 39
++ 40
+algRes K l)) :=
+    fun [inst_5 : CharP
+
+= 3224 32
++ 3
+ (↥
+= 476728 40
++ 3
+   
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 6
+1 K))
+
+@% 251616 8367 11
++ 3
+ (↥
+= 476728 40
++ 5
+     
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 22
+1 K))
+        Field.to
+= 171 28
++ 28
+.toSemiring
+        Field.to
+= 171 28
++ 16
+.toAddCommMonoid
+@% 260056 7338 19
++ 3
+ (↥
+= 476728 40
++ 7
+       
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 24
+1 K))
+          Field.to
+= 34122 25
++ 8
+Field.to
+= 171 28
++ 16
+.toSemiring
+    
+= 476975 39
++ 15
+algRes K l))
+  
+= 476975 39
++ 9
+aux4 K l)
+= 477091 37
++ 7
+5 l)
+  
+= 476975 39
++ 8
+aux6 K l
+@% 267477 248 5
++ 26
+ [inst_1 : ValuativeRel K]
+= 238 30
++ 17
+
+      [inst_3 : 
+= 271 28
++ 9
+] (l : ℕ)
+@% 267780 8461 8
+= 118158 42
++ 3
+ (↥
+= 476728 40
++ 7
+       
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 3
+1 K
+@% 276273 39324 28
+= 65705 37
++ 21
+K l)),
+      ∃ (a : ↥
+= 167160 35
++ 2
+,
+
+= 305055 29
++ 3
+ (↥
+= 476728 40
++ 9
+         
+= 167159 35
++ 20
+.toCommRing
+        
+= 476975 39
++ 35
+aux1 K))
+            a =
+          
+= 306408 47
+= 65705 37
++ 3
+K l
+= 306536 52
++ 3
+ (↥
+= 476728 40
++ 11
+           
+= 167159 35
++ 22
+.toCommRing
+          
+= 476975 39
++ 31
+aux1 K))
+              Field.to
+= 171 28
+= 34254 26
++ 8
+Field.to
+= 171 28
++ 16
+.toAddCommMonoid
+@% 315682 18413 43
++ 3
+ (↥
+= 476728 40
++ 13
+             
+= 167159 35
++ 7
+.toComm
+= 55868 24
+= 52906 38
++ 27
+))
+                Field.to
+= 34122 25
++ 8
+Field.to
+= 171 28
+= 34254 28
+= 477092 34
++ 29
+lgRes K l)))
+            (Fin
+= 476767 34
++ 8
+fdim K l
+= 323423 30
+= 65705 37
++ 3
+K l
+= 291553 44
++ 3
+ (↥
+= 476728 40
++ 11
+           
+= 167159 35
++ 22
+.toCommRing
+          
+= 476975 39
++ 6
+aux1 K
+= 324905 48
+= 65705 37
++ 3
+K l
+= 306536 52
++ 3
+ (↥
+= 476728 40
++ 11
+           
+= 167159 35
++ 22
+.toCommRing
+          
+= 476975 39
++ 31
+aux1 K))
+              Field.to
+= 171 28
+= 34254 26
++ 8
+Field.to
+= 171 28
++ 16
+.toAddCommMonoid
+@% 334180 7771 17
++ 3
+ (↥
+= 476728 40
++ 13
+             
+= 167159 35
++ 7
+.toComm
+= 55868 24
+= 52906 38
++ 27
+))
+                Field.to
+= 34122 25
++ 8
+Field.to
+= 171 28
+= 34254 28
+= 477092 34
++ 19
+lgRes K l)))
+      
+= 476975 40
++ 21
+b K l) i :=
+    by
+  
+= 341925 28
+@% 342048 105112 27
++ 67
+
+    (K : Type)
+    [inst : Field K]
+    [inst_1 : ValuativeRel K]
+
+= 235 33
++ 15
+
+    [inst_3 : 
+= 271 28
++ 14
+]
+    (l : ℕ)
+
+= 3144 34
++ 21
+:
+    [inst_5 : CharP
+= 167133 27
++ 1
+↥
+= 167160 36
++ 14
+l] →
+      Fin
+= 476767 34
++ 13
+fdim K l) → ↥
+= 167160 34
++ 28
+ :=
+    fun [inst_5 : CharP
+
+= 3224 32
++ 3
+ (↥
+= 476728 40
++ 3
+   
+= 167159 35
++ 11
+.toCommRing
+= 477091 37
++ 23
+1 K))
+      l] (i : Fin
+= 476767 34
++ 12
+fdim K l)) ↦
+= 476974 40
++ 18
+aux8 K l i).choose
+@% 450198 26960 33
++ 26
+ [inst_1 : ValuativeRel K]
+= 238 30
++ 17
+
+      [inst_3 : 
+= 271 28
++ 9
+] (l : ℕ)
+= 118102 46
++ 39
+ Algebra ℚ_[l] K]
+      [inst_6 : CharP
+= 167133 27
++ 1
+↥
+= 167160 36
++ 41
+l],
+      Continuous ⇑(algebraMap ℚ_[l] K
+= 474426 37
+= 65705 37
++ 11
+K l)) ℚ_[l]
+= 474564 28
+= 65705 37
++ 21
+K l)) ↦
+            ↑
+= 476981 46
++ 19
+
+          Field.to
+= 171 28
++ 30
+.toSemiring
+          Field.to
+= 171 28
++ 46
+.toAddCommMonoid Algebra.toModule :=
+    by
+  
+= 476541 31
+= 142206 55
+= 476623 84
+= 476705 63
+= 476766 86
+= 476850 51
+= 476899 82
+= 476979 97
+= 477074 77
++ 11
+  rw [h]
+  
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/MulMemIntA.lean 08957944f1f0c971a5bf43aedc4fa7f9879825f9768a6db981e4f0841d25671d 6e5b0d226d35539dde63e031ed87612b04ce242d83341ca5e3c16d09670b64b7
+@% 1495 3981 8
++ 75
+
+    (F : Type)
+    [inst : Field F]
+    [inst_1 : NumberField F]
+    (i : 
+= 711 36
+= 263 28
++ 41
+)) :
+    SubringClass (ValuationSubring (
+= 1102 50
++ 13
+F i))
+      (
+= 1102 50
++ 18
+F i) :=
+    inferI
+@% 5576 105762 155
++ 26
+NumberField F]
+      (v : 
+= 711 36
+= 263 28
++ 23
+)) (x : F),
+      @Eq (
+= 5776 37
++ 12
+v)
+        (
+= 45874 33
++ 3
+  (
+= 14100 35
++ 9
+fun (i : 
+= 711 36
+= 263 28
++ 23
+)) ↦
+                  
+= 1102 50
++ 1
+F
+= 14913 24
++ 6
+ (i : 
+= 711 36
+= 263 28
++ 25
+)) ↦
+                  ↑(
+= 1102 49
++ 63
+Integers F i))
+                Filter.cofinite)
+              (
+= 1102 50
++ 3
+F v
+= 232293 78
++ 7
+      (
+= 711 36
+= 263 28
+= 26900 29
++ 6
+ (w : 
+= 711 36
+= 263 28
+= 27139 29
+= 1102 50
++ 1
+F
+= 36510 26
+= 26457 39
++ 9
+fun (i : 
+= 711 36
+= 263 28
+= 27139 29
++ 18
+ValuationSubring (
+= 1102 50
++ 1
+F
+= 20252 28
++ 9
+fun (i : 
+= 711 36
+= 263 28
+= 27139 29
+= 4635 28
+= 10422 25
+= 1102 49
++ 10
+Integers F
+= 10422 25
++ 9
+fun (i : 
+= 711 36
+= 263 28
+= 27139 29
++ 1
+(
+= 2160 60
++ 1
+F
+= 14416 25
++ 30
+      i).toDivisionRing.toRing
+= 10422 25
+= 1459 36
+= 14416 25
++ 6
+F)).to
+= 22352 34
+= 14074 25
+= 2160 60
++ 1
+F
+= 14416 25
++ 20
+v).toDivisionRing.to
+= 22352 34
+= 14074 27
+= 81644 33
++ 3
+  (
+= 18198 37
++ 9
+fun (i : 
+= 711 36
+= 263 28
+= 18598 25
+= 1102 50
++ 1
+F
+= 19033 26
++ 6
+ (i : 
+= 711 36
+= 263 28
+= 18598 25
++ 2
+↑(
+= 1102 49
++ 67
+Integers F i))
+                  Filter.cofinite)
+                (
+= 1102 50
++ 4
+F v)
+= 18179 36
+= 94645 48
+= 711 36
+= 263 28
+= 22588 27
++ 6
+ (w : 
+= 711 36
+= 263 28
+= 22819 27
+= 1102 50
++ 1
+F
+= 36510 24
+= 22150 37
++ 9
+fun (i : 
+= 711 36
+= 263 28
+= 22819 27
++ 18
+ValuationSubring (
+= 1102 50
++ 1
+F
+= 16100 26
++ 9
+fun (i : 
+= 711 36
+= 263 28
+= 22819 27
+= 4635 28
++ 23
+)
+                    (
+= 1102 49
++ 10
+Integers F
+= 22589 26
++ 6
+ (i : 
+= 711 36
+= 263 28
+= 22819 27
++ 1
+(
+= 2160 60
++ 1
+F
+= 14416 25
++ 51
+    i).toDivisionRing.toRing)
+                    (
+= 41546 38
++ 2
+))
+= 86142 37
+= 2160 60
++ 38
+F
+                      v).toDivisionR
+= 86139 40
+= 102718 46
++ 12
+  (fun (w : 
+= 711 36
+= 263 28
+= 18598 25
+= 1102 50
++ 61
+F w)
+                  v))).toFun
+          ((@algebraMap F (
+= 108223 36
++ 10
+) Field.to
+= 108365 24
++ 26
+
+              CommRing.to
+= 399345 38
++ 1
+(
+= 110958 46
+= 263 28
++ 3
+) F
+@% 111366 105544 149
+= 45874 33
++ 3
+  (
+= 14100 35
++ 9
+fun (i : 
+= 711 36
+= 263 28
++ 23
+)) ↦
+                  
+= 1102 50
++ 1
+F
+= 14913 24
++ 6
+ (i : 
+= 711 36
+= 263 28
++ 25
+)) ↦
+                  ↑(
+= 1102 49
++ 63
+Integers F i))
+                Filter.cofinite)
+              (
+= 1102 50
++ 3
+F v
+= 232293 78
++ 7
+      (
+= 711 36
+= 263 28
+= 26900 29
++ 6
+ (w : 
+= 711 36
+= 263 28
+= 27139 29
+= 1102 50
++ 1
+F
+= 36510 26
+= 26457 39
++ 9
+fun (i : 
+= 711 36
+= 263 28
+= 27139 29
++ 18
+ValuationSubring (
+= 1102 50
++ 1
+F
+= 20252 28
++ 9
+fun (i : 
+= 711 36
+= 263 28
+= 27139 29
+= 4635 28
+= 10422 25
+= 1102 49
++ 10
+Integers F
+= 10422 25
++ 9
+fun (i : 
+= 711 36
+= 263 28
+= 27139 29
++ 1
+(
+= 2160 60
++ 1
+F
+= 14416 25
++ 30
+      i).toDivisionRing.toRing
+= 10422 25
+= 1459 36
+= 14416 25
++ 6
+F)).to
+= 22352 34
+= 14074 25
+= 2160 60
++ 1
+F
+= 14416 25
++ 20
+v).toDivisionRing.to
+= 22352 34
+= 14074 27
+= 81644 33
++ 3
+  (
+= 18198 37
++ 9
+fun (i : 
+= 711 36
+= 263 28
+= 18598 25
+= 1102 50
++ 1
+F
+= 19033 26
++ 6
+ (i : 
+= 711 36
+= 263 28
+= 18598 25
++ 2
+↑(
+= 1102 49
++ 67
+Integers F i))
+                  Filter.cofinite)
+                (
+= 1102 50
++ 4
+F v)
+= 18179 36
+= 94645 48
+= 711 36
+= 263 28
+= 22588 27
++ 6
+ (w : 
+= 711 36
+= 263 28
+= 22819 27
+= 1102 50
++ 1
+F
+= 36510 24
+= 22150 37
++ 9
+fun (i : 
+= 711 36
+= 263 28
+= 22819 27
++ 18
+ValuationSubring (
+= 1102 50
++ 1
+F
+= 16100 26
++ 9
+fun (i : 
+= 711 36
+= 263 28
+= 22819 27
+= 4635 28
++ 23
+)
+                    (
+= 1102 49
++ 10
+Integers F
+= 22589 26
++ 6
+ (i : 
+= 711 36
+= 263 28
+= 22819 27
++ 1
+(
+= 2160 60
++ 1
+F
+= 14416 25
++ 51
+    i).toDivisionRing.toRing)
+                    (
+= 41546 38
++ 2
+))
+= 86142 37
+= 2160 60
++ 38
+F
+                      v).toDivisionR
+= 86139 40
+= 102718 46
++ 12
+  (fun (w : 
+= 711 36
+= 263 28
+= 18598 25
+= 1102 50
++ 61
+F w)
+                  v))).toFun
+          ((@algebraMap F (
+= 108223 36
++ 10
+) Field.to
+= 108365 24
++ 26
+
+              CommRing.to
+= 399345 38
++ 1
+(
+= 110958 46
+= 263 28
++ 54
+) F))
+            x)) :=
+    by
+    intro F _ _ v x
+  
+@% 216972 30438 66
++ 75
+
+    (F : Type)
+    [inst : Field F]
+    [inst_1 : NumberField F]
+    (v : 
+= 711 36
+= 263 28
++ 8
+)) :
+   
+= 286222 37
++ 6
+ →ₐ[F]
+= 588 36
++ 47
+F v :=
+    let __src :
+      @RingHom
+        (
+= 5863 28
++ 10
+(fun (i : 
+= 711 36
+= 263 28
++ 17
+)) ↦
+            
+= 1102 50
++ 25
+F i)
+          (fun (i : 
+= 711 36
+= 263 28
++ 19
+)) ↦
+            ↑(
+= 1102 49
++ 51
+Integers F i))
+          Filter.cofinite)
+        (
+= 1102 50
++ 5
+F v)
+
+= 35573 66
++ 1
+(
+= 711 36
+= 263 28
++ 25
+))
+            (fun (w : 
+= 711 36
+= 263 28
++ 19
+)) ↦
+              
+= 1102 50
++ 17
+F w)
+            
+= 9521 28
++ 10
+(fun (i : 
+= 711 36
+= 263 28
++ 37
+)) ↦
+              ValuationSubring (
+= 1102 50
++ 28
+F i))
+            (fun (i : 
+= 711 36
+= 263 28
++ 19
+)) ↦
+              
+= 4635 28
++ 15
+)
+            (
+= 1102 49
++ 34
+Integers F)
+            (fun (i : 
+= 711 36
+= 263 28
++ 20
+)) ↦
+              (
+= 2160 60
++ 61
+F
+                    i).toDivisionRing.toRing)
+            (
+= 41546 38
++ 2
+))
+= 26673 28
++ 1
+(
+= 2160 60
++ 62
+F
+              v).toDivisionRing.toNonAssocSemiring :=
+      
+= 102718 38
++ 10
+(fun (w : 
+= 711 36
+= 263 28
++ 15
+)) ↦
+          
+= 1102 50
++ 54
+F w)
+        v;
+    { toRingHom := __src, commutes' :=
+= 5492 38
++ 5
+F v }
+@% 247467 9519 12
++ 77
+
+    (F : Type)
+    [inst : Field F]
+    [inst_1 : NumberField F] :
+    Set (
+= 108223 36
++ 11
+) :=
+    {a
+= 286220 39
++ 16
+ |
+      ∀ (v : 
+= 711 36
+= 263 28
++ 13
+)),
+        (
+= 47 32
++ 25
+evalV F v) a ∈
+          
+= 1102 49
++ 13
+Integers F v}
+@% 257042 29073 13
++ 84
+
+    (F : Type)
+    (E : Type)
+    [inst : Field F]
+    [inst_1 : NumberField F]
+   
+= 266765 24
++ 59
+[inst_3 : Algebra F E] :
+    AddSubgroup (TensorProduct F (
+= 108223 36
++ 12
+) E) :=
+    
+= 267003 26
++ 22
+{y : TensorProduct F (
+= 108223 36
++ 15
+) E |
+        ∃
+= 286266 44
++ 19
+,
+          ∃ (x : 
+= 263 27
++ 19
+E), y = a ⊗ₜ[F] ↑x}
+@% 286580 118331 24
++ 103
+NumberField F] [inst_2 : Field E] [NumberField E]
+      [inst_4 : Algebra F E] {x y : TensorProduct F (
+= 108223 36
++ 13
+) E},
+      x
+= 286268 39
++ 16
+ F E →
+        y
+= 286268 39
++ 22
+ F E →
+          x * y
+= 286268 39
++ 17
+ F E :=
+    by
+  
+= 404203 34
+= 404235 53
+= 404286 63
+= 404347 25
+= 404370 35
+= 404403 35
+= 404436 42
+= 404476 76
+= 404550 47
++ 8
+  rfl
+  
+= 404601 56
+= 404655 57
+= 404710 73
+= 404781 74
+= 404853 60
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/MultisetSeparation.lean 98718b0c326a82cc6ebf8c703d69390543bf19cb93be72d40d55d9ff2f9c9a25 05f7f144eb101a9cf69f4c2bf60919e6f99fef1e949270665aea446f15bf8320
 @@ 15 0 88
 import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MultisetEqOfProdAddEq
@@ -70486,6 +78789,17 @@ import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsLast
 
 @@ 239 449 289
  first | exact @_root_.GlobalTheory.PowerDifferenceNormInertiaEigenvalues.norm_pow_sub_pow_le | exact _root_.GlobalTheory.PowerDifferenceNormInertiaEigenvalues.norm_pow_sub_pow_le | (intros; apply _root_.GlobalTheory.PowerDifferenceNormInertiaEigenvalues.norm_pow_sub_pow_le <;> assumption
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/PairCases.lean 3da36968691c5250b6d523082907e838a837e06750d22b3b1c4084409dfdb459 e466a504af91df4b7340f7afe61326ec35e54a523d27445399fb80163dda9d2b
+@% 91 1989 5
++ 101
+ℂˣ}, @Eq (Multiset ℂˣ) {a, b} {c, d} → a = c ∧ b = d ∨ a = d ∧ b = c :=
+    by
+    intro a b c d h
+  
+= 1829 63
+= 1890 70
+= 1958 54
+= 2010 72
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/PartialFiltrationCoeff.lean 4376097ca232bb4f0704b183a5d00b515f11b5a605ec17b753323294d6513567 572d0dff5709a35aad592c7f45f337b5d7939c78a51afc35d88bf1fc5d95cc64
 @@ 15 0 94
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.PreservedCoefficient
@@ -70502,6 +78816,777 @@ reservedCoefficient.pres_new_coeff | (intros; apply _root_.
 = 24 28
 + 48
 reservedCoefficient.pres_new_coeff <;> assumptio
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/PhiMul.lean a19c1839d8d9110f816b80b83861b78b41dc846fa1279e50c5cc1d212bf25b5e dcbe85b5642e73c6606c7def0f0fa2eb10e54e349bb5eecb11902fb7710790a7
+@% 211 15238 77
++ 137
+
+      [inst_3 : Field K] [inst_4 : Algebra Qp K₀] [inst_5 : Algebra Qp K] [inst_6 : Algebra K₀ K]
+      [inst_7 : IsScalarTower Qp K₀ K]
+= 1549 78
++ 289
+ Algebra Qp B] [inst_11 : Algebra K₀ B] [inst_12 : IsScalarTower Qp K₀ B]
+      [inst_13 : Algebra Qp BdR] [inst_14 : Algebra K₀ BdR] [inst_15 : Algebra K BdR]
+      [inst_16 : IsScalarTower Qp K BdR] [inst_17 : IsScalarTower K₀ K BdR]
+      [inst_18 : IsScalarTower Qp K₀ BdR]
+      (PD :
+= 21 39
++ 126
+PeriodData G Qp K₀ K B BdR) {E : Type}
+      [inst_19 : Field E] [inst_20 : Algebra Qp E] (x y : TensorProduct Qp E B),
+      
+= 7031 40
++ 8
+Field.to
+= 377 28
++ 32
+.toSemiring
+            Field.to
+= 377 28
++ 25
+.toSemiring (RingHom.id E
+= 7466 33
++ 8
+Field.to
+= 272 25
++ 43
+E B
+              inst_19.toDivisionRing.to
+= 6391 28
++ 30
+
+              CommRing.toComm
+= 5634 25
++ 33
+Algebra.toModule Algebra.toModule
+= 7466 33
++ 8
+Field.to
+= 272 25
++ 43
+E B
+              inst_19.toDivisionRing.to
+= 6391 28
++ 30
+
+              CommRing.toComm
+= 5634 25
++ 47
+Algebra.toModule Algebra.toModule)
+            
+= 9018 28
+= 9018 27
+= 10567 45
++ 8
+Field.to
+= 272 24
++ 23
+
+              Field.to
+= 377 28
++ 55
+.toSemiring E B
+              inst_19.toDivisionRing.to
+= 6391 28
++ 30
+
+              CommRing.toComm
+= 5634 25
++ 65
+Semiring.toModule Algebra.toModule
+              Algebra.toModule
+= 11610 51
++ 8
+Field.to
+= 272 25
++ 26
+E
+                Field.to
+= 377 28
++ 11
+.toSemiring
+= 11838 27
++ 25
+inst_19.toDivisionRing.to
+= 6391 29
++ 70
+Semiring.toModule
+                Algebra.toModule IsScalarTower.right
+= 10565 47
++ 8
+Field.to
+= 272 24
++ 23
+
+              Field.to
+= 377 28
++ 55
+.toSemiring E B
+              inst_19.toDivisionRing.to
+= 6391 28
++ 30
+
+              CommRing.toComm
+= 5634 25
++ 65
+Semiring.toModule Algebra.toModule
+              Algebra.toModule
+= 11610 51
++ 8
+Field.to
+= 272 25
++ 26
+E
+                Field.to
+= 377 28
++ 11
+.toSemiring
+= 11838 27
++ 25
+inst_19.toDivisionRing.to
+= 6391 29
++ 70
+Semiring.toModule
+                Algebra.toModule IsScalarTower.right
+= 14695 33
++ 8
+Field.to
+= 272 25
++ 41
+E B
+            inst_19.toDivisionRing.to
+= 6391 28
++ 28
+
+            CommRing.toComm
+= 5634 25
++ 33
+Algebra.toModule Algebra.toModule
+@% 15519 28993 91
++ 8
+Field.to
+= 272 25
++ 3
+E B
+= 12603 24
++ 20
+19.toDivisionRing.to
+= 6391 28
++ 34
+
+                  CommRing.toComm
+= 5634 25
++ 33
+Algebra.toModule Algebra.toModule
+= 16302 34
++ 8
+Field.to
+= 272 25
++ 43
+E B
+              inst_19.toDivisionRing.to
+= 6391 28
++ 30
+
+              CommRing.toComm
+= 5634 25
++ 68
+Algebra.toModule Algebra.toModule)
+          LinearMap.instFunLike (
+= 74422 44
++ 20
+) (x * y) =
+        
+= 35826 41
++ 9
+ Field.to
+= 377 28
++ 34
+.toSemiring
+              Field.to
+= 377 28
++ 25
+.toSemiring (RingHom.id E
+= 36285 35
++ 8
+Field.to
+= 272 25
++ 45
+E B
+                inst_19.toDivisionRing.to
+= 6391 28
++ 32
+
+                CommRing.toComm
+= 5634 25
++ 33
+Algebra.toModule Algebra.toModule
+= 36285 35
++ 8
+Field.to
+= 272 25
++ 45
+E B
+                inst_19.toDivisionRing.to
+= 6391 28
++ 32
+
+                CommRing.toComm
+= 5634 25
++ 49
+Algebra.toModule Algebra.toModule)
+              
+= 9018 28
+= 9018 27
+= 39450 47
++ 8
+Field.to
+= 272 24
++ 25
+
+                Field.to
+= 377 28
++ 57
+.toSemiring E B
+                inst_19.toDivisionRing.to
+= 6391 28
++ 32
+
+                CommRing.toComm
+= 5634 25
++ 67
+Semiring.toModule Algebra.toModule
+                Algebra.toModule
+= 40515 53
++ 8
+Field.to
+= 272 25
++ 28
+E
+                  Field.to
+= 377 28
++ 11
+.toSemiring
+= 11838 27
++ 27
+  inst_19.toDivisionRing.to
+= 6391 29
++ 72
+Semiring.toModule
+                  Algebra.toModule IsScalarTower.right
+= 39448 49
++ 8
+Field.to
+= 272 24
++ 25
+
+                Field.to
+= 377 28
++ 57
+.toSemiring E B
+                inst_19.toDivisionRing.to
+= 6391 28
++ 32
+
+                CommRing.toComm
+= 5634 25
++ 67
+Semiring.toModule Algebra.toModule
+                Algebra.toModule
+= 40515 53
++ 8
+Field.to
+= 272 25
++ 28
+E
+                  Field.to
+= 377 28
++ 11
+.toSemiring
+= 11838 27
++ 27
+  inst_19.toDivisionRing.to
+= 6391 29
++ 72
+Semiring.toModule
+                  Algebra.toModule IsScalarTower.right
+= 7464 35
++ 8
+Field.to
+= 272 25
++ 43
+E B
+              inst_19.toDivisionRing.to
+= 6391 28
++ 30
+
+              CommRing.toComm
+= 5634 25
++ 33
+Algebra.toModule Algebra.toModule
+@% 44588 19164 90
++ 8
+Field.to
+= 272 25
+= 44650 24
++ 25
+inst_19.toDivisionRing.to
+= 6391 28
++ 36
+
+                    CommRing.toComm
+= 5634 25
++ 33
+Algebra.toModule Algebra.toModule
+= 45387 36
++ 8
+Field.to
+= 272 25
++ 45
+E B
+                inst_19.toDivisionRing.to
+= 6391 28
++ 32
+
+                CommRing.toComm
+= 5634 25
++ 70
+Algebra.toModule Algebra.toModule)
+            LinearMap.instFunLike (
+= 74422 44
++ 16
+) x *
+          
+= 35826 41
++ 9
+ Field.to
+= 377 28
++ 34
+.toSemiring
+              Field.to
+= 377 28
++ 25
+.toSemiring (RingHom.id E
+= 36285 35
++ 8
+Field.to
+= 272 25
++ 45
+E B
+                inst_19.toDivisionRing.to
+= 6391 28
++ 32
+
+                CommRing.toComm
+= 5634 25
++ 33
+Algebra.toModule Algebra.toModule
+= 36285 35
++ 8
+Field.to
+= 272 25
++ 45
+E B
+                inst_19.toDivisionRing.to
+= 6391 28
++ 32
+
+                CommRing.toComm
+= 5634 25
++ 49
+Algebra.toModule Algebra.toModule)
+              
+= 9018 28
+= 9018 27
+= 39450 47
++ 8
+Field.to
+= 272 24
++ 25
+
+                Field.to
+= 377 28
++ 57
+.toSemiring E B
+                inst_19.toDivisionRing.to
+= 6391 28
++ 32
+
+                CommRing.toComm
+= 5634 25
++ 67
+Semiring.toModule Algebra.toModule
+                Algebra.toModule
+= 40515 53
++ 8
+Field.to
+= 272 25
++ 28
+E
+                  Field.to
+= 377 28
++ 11
+.toSemiring
+= 11838 27
++ 27
+  inst_19.toDivisionRing.to
+= 6391 29
++ 72
+Semiring.toModule
+                  Algebra.toModule IsScalarTower.right
+= 39448 49
++ 8
+Field.to
+= 272 24
++ 25
+
+                Field.to
+= 377 28
++ 57
+.toSemiring E B
+                inst_19.toDivisionRing.to
+= 6391 28
++ 32
+
+                CommRing.toComm
+= 5634 25
++ 67
+Semiring.toModule Algebra.toModule
+                Algebra.toModule
+= 40515 53
++ 8
+Field.to
+= 272 25
++ 28
+E
+                  Field.to
+= 377 28
++ 11
+.toSemiring
+= 11838 27
++ 27
+  inst_19.toDivisionRing.to
+= 6391 29
++ 72
+Semiring.toModule
+                  Algebra.toModule IsScalarTower.right
+= 7464 35
++ 8
+Field.to
+= 272 25
++ 43
+E B
+              inst_19.toDivisionRing.to
+= 6391 28
++ 30
+
+              CommRing.toComm
+= 5634 25
++ 33
+Algebra.toModule Algebra.toModule
+@% 63828 10904 27
++ 8
+Field.to
+= 272 25
+= 44650 24
++ 25
+inst_19.toDivisionRing.to
+= 6391 28
++ 36
+
+                    CommRing.toComm
+= 5634 25
++ 33
+Algebra.toModule Algebra.toModule
+= 45387 36
++ 8
+Field.to
+= 272 25
++ 45
+E B
+                inst_19.toDivisionRing.to
+= 6391 28
++ 32
+
+                CommRing.toComm
+= 5634 25
++ 70
+Algebra.toModule Algebra.toModule)
+            LinearMap.instFunLike (
+= 74422 44
++ 16
+) y :=
+    by
+  
+= 74302 77
+= 74377 45
+= 74420 76
+= 74494 63
++ 12
+  intro z
+  
+= 74565 58
+= 74621 40
+= 74659 24
+= 74681 53
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/PlaceRankTwoOne.lean 66e92ae616f7f40f2aebeba027d7a2dad5bcc3ed96c77511388d303eb1474237 c6d9ab7b630f5b0e17881b2262d4af984a090f25c75f78f63ee3b7c02a094cdd
+@% 643 1858 9
++ 13
+{n : ℕ} :
+   
+= 97 41
++ 19
+ℂ → Prop :=
+    fun
+= 736 48
++ 28
+ℂ) ↦
+      g.conjTranspose *
+= 33 47
++ 12
+ε * g =
+    
+= 64039 47
++ 4
+Jm ε
+@% 2572 8603 31
++ 26
+ℕ} (ε : Fin n → Bool) {g h
+= 42869 31
++ 11
+,
+      g ∈
+= 42866 33
++ 2
+ |
+= 594 49
++ 28
+ε ↑g} →
+        h ∈
+        
+= 42863 36
++ 13
+ |
+          
+= 64039 47
++ 23
+inUJ ε ↑g} →
+          
+= 847 35
++ 3
+ℂ)ˣ
+= 804 25
++ 17
+ℂ)ˣ
+             
+= 804 25
++ 3
+ℂ)ˣ
+= 8587 25
+= 804 25
++ 55
+ℂ)ˣ Units.instGroup.toMulOneClass.toMul) g h ∈
+        
+= 42863 36
++ 2
+ |
+= 594 49
++ 18
+ε ↑g} :=
+    by
+  
+= 10761 24
+= 10783 63
+= 10844 63
+= 10905 73
+= 10976 68
+= 11042 85
+= 11125 52
+@% 18713 5653 23
++ 21
+ℕ} (ε : Fin n → Bool)
+= 42866 34
++ 11
+,
+      g ∈
+= 42866 33
++ 2
+ |
+= 594 49
++ 24
+ε ↑g} →
+        @Inv.inv
+= 804 25
++ 4
+ℂ)ˣ 
+= 23072 32
++ 3
+.to
+= 22506 30
++ 10
+g ∈
+      
+= 42863 36
++ 2
+ |
+= 594 49
++ 37
+ε ↑g} :=
+    by
+    intro n ε g hg
+  
+= 10783 63
+= 24026 61
+= 24085 56
+= 24139 98
+= 24235 83
+= 11125 52
+@% 24475 5465 15
++ 35
+{n : ℕ} :
+    (Fin n → Bool) → Subg
+= 10452 29
++ 14
+ℂ)ˣ :=
+    fun
+= 166 28
++ 27
+{
+        carrier :=
+      
+= 42863 36
++ 2
+ |
+= 594 49
++ 26
+ε ↑g},
+        mul_mem' :=
+= 4141 45
++ 29
+aux3 n ε,
+        one_mem' :=
+= 11216 49
++ 22
+ε,
+        inv_mem' :=
+= 4141 45
++ 10
+aux5 n ε }
+@% 30037 3738 7
++ 16
+
+    (n : ℕ)
+   
+= 43355 26
++ 17
+MeasurableSpace ↥
+= 41851 44
++ 20
+UJ ε) :=
+    borel ↥
+= 41851 44
++ 4
+UJ ε
+@% 33926 4221 4
+= 43348 35
++ 18
+TopologicalGroup ↥
+= 41851 44
++ 19
+UJ ε) :=
+    inferI
+@% 38212 3741 5
++ 7
+(n : ℕ)
+= 43355 26
++ 12
+BorelSpace ↥
+= 41851 44
++ 37
+UJ ε) :=
+    { measurable_eq := rfl }
+@% 44586 3767 7
++ 1
+ℕ
+= 38228 28
++ 21
+LocallyCompactSpace ↥
+= 41851 44
++ 32
+UJ ε) :=
+    by
+    intro n ε
+  
+= 48231 64
+= 48293 62
+@% 48463 4591 16
+= 43348 33
++ 23
+MeasureTheory.Measure ↥
+= 41851 44
++ 9
+UJ ε) :=
+
+= 48702 35
+= 24429 46
++ 4
+ε))
+
+= 41845 50
++ 14
+UJ ε).toGroup 
+= 30268 34
+= 52998 47
++ 5
+8 ε)
+
+= 41845 76
++ 1
+
+
+= 41845 50
++ 10
+aux9 n ε)
+
+@% 53653 3342 10
+= 42284 26
++ 8
+ :
+    ↥
+= 41851 44
++ 27
+UJ ε) → ℝ :=
+    fun (g : ↥
+= 41851 44
++ 11
+UJ ε)) ↦
+  
+= 64039 47
++ 2
+hs
+= 53909 45
++ 30
+ℂ) Matrix.semiring.toMonoid ↑g
+@% 57094 1876 9
++ 1
+ℕ
+= 57097 35
++ 41
+ℝ),
+        ∀ (R : ℝ),
+          1 ≤ R →
+
+= 57774 56
++ 29
+muG ε)
+                {g : ↥
+= 41851 44
++ 22
+UJ ε) |
+              
+= 64039 47
++ 65
+hsG g ≤ R ^ 2} ≤
+              ENNReal.ofReal (C * R ^ (2 * n ^ 2
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/PointFinitePower.lean bdf3e20f2c605722ba765068bc3409cd2e02afa9c46f36c26e34cff7d9ca5b11 83b77abcd9e941bb9e5508ef74dae5edab6e6fcaf4e68c601a96402ccb99cdad
 @@ 15 0 97
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FinitelyGeneratedModPow
@@ -70534,17 +79619,823 @@ f13.pow_cong | (intros; apply _root_.
 = 24 28
 + 28
 f13.pow_cong <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/Qminor.lean debb791e23ae8bae9ff8af25ba0b653d4177de7b6474af78c56a9d5568b8dceb a17b08d1a353ab57546c63eb8647c472fccd7ecae0d3b28ff7411d87e18bdcec
+@% 78 124 2
++ 37
+{A : Type u_1} [Ring A] {n : ℕ} :
+   
+= 123 38
+@@ 264 1175 89
+E a b * E c d - E c d * E a b = (if b = c then E a d else 0) - if d = a then E c b else 0
+@% 1500 1359 12
+= 162 31
++ 28
+:
+    [Algebra ℂ A] → {n : ℕ
+= 120 26
++ 1
+ℂ
+= 1680 32
++ 29
+[inst_1 : Algebra ℂ A] {n : ℕ
+= 1840 31
++ 60
+ℂ) (a : Fin n) (b : Fin n) ↦
+      (if a = b then
+          
+= 2077 36
++ 1
+ℂ
+= 1572 27
++ 147
+.toNonAssocSemiring inst.toNonAssocSemiring) ℂ
+            (fun (x : ℂ) ↦ A) RingHom.instFunLike (algebraMap ℂ A) u
+        else 0) +
+        E a b
+@% 2924 424 8
+= 162 31
++ 30
+:
+    [Algebra ℂ A] → {n t : ℕ
+= 3073 62
++ 54
+ℂ → A :=
+    fun [inst_1 : Algebra ℂ A] {n : ℕ} {t : ℕ
+= 3288 29
++ 18
+: Fin t → Fin n) (
+= 3317 24
++ 1
+ℂ
+@% 3392 2177 4
++ 44
+↑↑(Equiv.Perm.sign σ) *
+          (List.ofFn
+= 5063 33
+= 5097 35
++ 33
+E (u - ↑↑k) (a (σ k)) (b k)).prod
+@% 6185 21512 50
++ 66
+ [inst_1 : Module ℂ V] (E : Fin 2 → Fin 2 → Module.End ℂ V),
+     
+= 33 38
++ 200
+ E →
+        ∀ (k : ℂ) (φ : V),
+          (E 0 0) φ + (E 1 1) φ = 0 →
+            (E 0 1) φ - (E 1 0) φ = (Complex.I * k) • φ →
+              (E 0 0) φ - (E 1 1) φ = Complex.I • ((E 0 1) φ + (E 1 0) φ
+= 20188 27
++ 23
+ℂ),
+                  (
+= 28423 39
++ 93
+(u + 1 / 2)) φ =
+                    ((u + (k - 1) / 2) * (u - (k - 1) / 2)) • φ :=
+    by
+  
+= 26203 36
+= 26237 74
+= 26309 76
++ 18
+  intro a b c d
+  
+= 26399 72
+= 26469 65
++ 11
+  rw [h]
+  
+= 26541 25
+= 26564 89
+= 26651 90
+= 26739 90
+= 26827 89
+= 26914 99
+= 27011 83
+= 27092 83
+= 27173 33
+= 27204 40
+= 27242 71
+= 27311 33
+= 27342 68
+= 27408 61
+= 27467 42
+= 27507 92
+= 27597 82
+= 27677 25
+= 27700 44
+= 27742 88
+= 27828 71
+= 27897 100
++ 17
+  (2 * k) • φ)
+  
+= 28010 90
+= 28098 25
+= 27700 44
+= 28163 82
+= 28243 93
+= 28334 70
+= 28402 72
+= 28472 98
++ 12
+  intro v
+  
+= 28578 126
+= 28702 35
+= 28735 57
++ 20
+  module
+    rw [hq]
+@% 27744 1197 1
+= 28851 92
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/QuantumMinorsCasimir.lean 50de1aa83b03b4a4952dc41c9d1306b6aceb8df82406f1d56c826be5efd67bcc 8cad7ee7a13970ecc3c718d6f9b182997c5b566c5c30ab0d6c59f8d0aaf3b693
+@% 93 125 2
++ 50
+
+    {A : Type u_1}
+    [Ring A]
+    {n : ℕ} :
+   
+= 139 38
+@@ 280 1175 89
+E a b * E c d - E c d * E a b = (if b = c then E a d else 0) - if d = a then E c b else 0
+@% 1531 1360 11
++ 68
+
+    {A : Type u_1}
+    [inst : Ring A] :
+    [Algebra ℂ A] → {n : ℕ
+= 136 26
++ 1
+ℂ
+= 1712 32
++ 29
+[inst_1 : Algebra ℂ A] {n : ℕ
+= 1872 31
++ 60
+ℂ) (a : Fin n) (b : Fin n) ↦
+      (if a = b then
+          
+= 2109 36
++ 1
+ℂ
+= 1604 27
++ 147
+.toNonAssocSemiring inst.toNonAssocSemiring) ℂ
+            (fun (x : ℂ) ↦ A) RingHom.instFunLike (algebraMap ℂ A) u
+        else 0) +
+        E a b
+@% 2971 425 7
++ 70
+
+    {A : Type u_1}
+    [inst : Ring A] :
+    [Algebra ℂ A] → {n t : ℕ
+= 3121 62
++ 54
+ℂ → A :=
+    fun [inst_1 : Algebra ℂ A] {n : ℕ} {t : ℕ
+= 3336 29
++ 18
+: Fin t → Fin n) (
+= 3365 24
++ 1
+ℂ
+@% 3440 2193 4
++ 44
+↑↑(Equiv.Perm.sign σ) *
+          (List.ofFn
+= 5111 33
+= 5145 51
++ 33
+E (u - ↑↑k) (a (σ k)) (b k)).prod
+@% 6297 21657 35
++ 66
+ [inst_1 : Module ℂ V] (E : Fin 2 → Fin 2 → Module.End ℂ V),
+     
+= 33 54
++ 200
+ E →
+        ∀ (k : ℂ) (φ : V),
+          (E 0 0) φ + (E 1 1) φ = 0 →
+            (E 0 1) φ - (E 1 0) φ = (Complex.I * k) • φ →
+              (E 0 0) φ - (E 1 1) φ = Complex.I • ((E 0 1) φ + (E 1 0) φ
+= 20316 27
++ 23
+ℂ),
+                  (
+= 26401 55
++ 93
+(u + 1 / 2)) φ =
+                    ((u + (k - 1) / 2) * (u - (k - 1) / 2)) • φ :=
+    by
+  
+= 26347 35
+= 26380 88
+= 26466 100
++ 12
+  intro v
+  
+= 26574 97
+= 26669 72
+= 26739 172
+= 26909 35
+= 26942 57
++ 11
+  module
+  
+= 27006 85
+= 27089 26
+= 27113 26
+= 27137 26
+= 27161 26
+= 27185 26
+= 27209 26
+= 27233 90
+= 27321 104
+= 27423 48
+= 27469 48
+= 27515 48
+= 27561 62
+= 27621 60
++ 12
+  rw [hq]
+  
+= 27689 96
+= 27783 100
+= 27881 75
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/RamificationLowerIndex.lean 706b66090c62b6467b516b1ce258b22e708a065b8e19896474b26a0950f348e7 f32e71e1c51ddb1150ce0de2381895233ea940dfa327ac3ebc250fd549706aeb
 @@ 149 0 80
 import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.Imports
 
 @@ 7101 164 227
  first | exact @_root_.GlobalTheory.AdditiveValuationProduct.addVal_prod | exact _root_.GlobalTheory.AdditiveValuationProduct.addVal_prod | (intros; apply _root_.GlobalTheory.AdditiveValuationProduct.addVal_prod <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/RangeExtension.lean f1eacd18b70494fd96cc8ea03b31184328e6739b1dcfb1658364e896f94201e1 130f5733bdfded81aaaaec5e3eb6d4fa6f8c138a51d8fd62d877e225d7cf510f
+@% 4043 370 4
++ 1
+ 
+= 4282 24
++ 30
+CommRingCat.of Ω) ⟶ X},
+      
+= 4364 40
+@% 4453 1684 9
+= 4454 31
+= 4487 50
++ 34
+ (φ : R →+* Ω)
+              (x : 
+= 4282 24
++ 38
+CommRingCat.of R) ⟶ X),
+              
+= 5650 34
++ 22
+
+                    (
+= 6043 51
++ 6
+φ) x =
+@% 6210 3879 23
++ 28
+CommRingCat.of R))), x z ∈ U
+= 6622 29
+= 6652 36
+= 6697 25
++ 33
+Subtype.val (↥X) (fun (p : ↥X) ↦ 
+= 7437 38
++ 3
+ξ ⤳
+= 7486 31
++ 2
+ ∈
+= 7062 26
+= 7518 36
++ 7
+ φ a ∈ 
+= 8339 38
++ 1
+ξ
+= 7515 28
++ 2
+  
+= 9616 61
++ 1
+ 
+= 7437 38
++ 10
+ξ ⤳ p) q ∈
+= 6413 27
++ 25
+Set.range ⇑x :=
+    by
+  
+= 10039 52
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/RegularUnitPoints.lean 1199f9ca51d7ec0063c34285b1b8637b99d042dde58c0f7c0a85871e74c21553 06c85d7ae0e4aa6a4aa17795a63ee17838eeff6ff3faca206232ec54d2bd6649
+@% 4241 7797 6
+= 326 35
++ 46
+
+    {Ω : Type}
+    [inst : Field Ω]
+    (ξ : 
+= 662 24
++ 31
+CommRingCat.of Ω) ⟶ X)
+    (p :
+= 1348 50
++ 27
+ξ) :
+    ↑(X.presheaf.stalk
+@% 12095 3337 13
+= 273 52
++ 30
+ξ ⤳ p) p)) →+*
+      Ω :=
+    
+= 11484 26
++ 1
+(
+= 12450 34
++ 13
+
+        (X.p
+= 14193 25
+= 26586 46
++ 9
+aux4 ξ p)
+= 3058 31
+= 15287 28
++ 27
+CommRingCat.of Ω)
+         
+= 3652 50
+@% 15506 5384 10
+= 326 35
++ 46
+
+    {Ω : Type}
+    [inst : Field Ω]
+    (ξ : 
+= 662 24
++ 28
+CommRingCat.of Ω) ⟶ X) :
+   
+= 1348 50
++ 29
+ξ → Subring Ω :=
+    fun (p :
+= 1348 50
++ 11
+ξ) ↦
+      
+= 26586 46
++ 17
+genMap ξ p).range
+@% 20961 2845 13
+= 326 35
++ 46
+
+    {Ω : Type}
+    [inst : Field Ω]
+    (ξ : 
+= 662 24
++ 28
+CommRingCat.of Ω) ⟶ X) :
+   
+= 1348 50
+= 21471 24
++ 4
+(p :
+= 1348 50
++ 38
+ξ) (a : Ω) ↦
+      a ≠ 0 ∧
+        a ∈
+= 15455 52
++ 21
+ξ p ∧
+          a⁻¹ ∈
+= 15455 52
++ 3
+ξ p
+@% 23878 1336 10
+= 326 35
++ 46
+
+    {Ω : Type}
+    [inst : Field Ω]
+    (ξ : 
+= 662 24
++ 30
+CommRingCat.of Ω) ⟶ X) :
+    ℕ
+= 26347 48
++ 36
+Cpt ξ → Prop :=
+    fun (p : ℕ) (q :
+= 1348 50
++ 12
+ξ) ↦
+      ¬
+= 24 45
++ 13
+unitAt ξ q ↑p
+@% 25351 1937 32
++ 1
+ 
+= 662 24
++ 33
+CommRingCat.of Ω) ⟶ X}
+      {q :
+= 1348 50
++ 37
+ξ},
+      (∀ (r : ℕ), Nat.Prime r → ¬
+= 24 45
++ 37
+InFibre ξ r q) →
+        ∀ (n : ℕ), n
+= 26343 63
++ 15
+↑n :=
+    by
+  
+= 26291 31
+= 26320 104
++ 12
+  intro m
+  
+= 26432 44
+= 26474 44
++ 29
+  | one =>
+        intro _
+  
+= 26541 37
+= 26576 82
+= 26576 82
++ 34
+| prime p hp =>
+        intro _
+  
+= 26766 28
+= 26792 76
+= 26866 28
+= 26892 27
++ 14
+  intro hab
+  
+= 26929 59
+= 26986 55
+= 27039 38
+= 27075 38
+= 27111 28
+= 27137 45
+= 27180 51
+= 27229 61
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/RepsProd.lean e561f9e473546fb37a8c165c13c0658cd0558685a75b9ef3c660b242fb484557 82dd259bcc44c5b19d283613d00d5502d05dfaf7ac6a8890554ed02f709a7586
 @% 2269 51 2
 + 8
 @_root_.
 = 747 34
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/RootEquality.lean 0aee3aaad6522e1cb7dd5ae8ca58c1ba1dc70012f4cb6ee33bce813a5fe1c14f 1d37a5b23396a5c327f295e839f33d0d18cfd1ad8d689f7523ddc99906f429e2
+@@ 289 921 164
+
+    (F : Type u_1)
+    (Ω : Type u_2)
+    [inst : Field F]
+    [inst_1 : Field Ω] :
+    [Algebra F Ω] → Type u_2 :=
+    fun [inst_2 : Algebra F Ω] ↦
+      Gal(Ω/F)
+@% 1284 1086 8
++ 63
+
+    {F : Type u_1}
+    {Ω : Type u_2}
+    [inst : Field F]
+   
+= 676 24
++ 58
+[inst_2 : Algebra F Ω] :
+    ValuationSubring Ω → Subgroup
+= 155507 42
++ 17
+G F Ω) :=
+    fun
+= 116658 25
++ 9
+ ↦
+      
+= 2309 40
+@% 2454 1081 19
++ 132
+
+    {F : Type u_1}
+    {Ω : Type u_2}
+    [inst : Field F]
+    [inst_1 : Field Ω] :
+    [Algebra F Ω] →
+      ValuationSubring Ω → 
+= 2821 36
+= 2858 28
++ 30
+) → Prop :=
+    fun [inst_2 : 
+= 116646 37
++ 6
+ (v : 
+= 2821 36
+= 2858 28
++ 18
+)) ↦
+      ∀ (x : 
+= 2858 28
++ 22
+),
+        A.valuation
+= 5397 59
++ 29
+ Field.toSemifield.toNonAssoc
+= 13792 27
++ 8
+Field.to
+= 530 28
++ 19
+.toNonAssocSemiring
+= 5782 37
++ 83
+ RingHom.instFunLike (algebraMap F Ω) ↑x) <
+            1 ↔
+          x ∈ v.asIdeal
+@% 3537 10961 8
+= 9206 60
++ 93
+
+    {R : Type}
+    {Γ : Type}
+    {M : Type}
+    [inst : CommRing R]
+    [inst_1 : Group Γ]
+
+= 9353 29
++ 55
+
+    [inst_3 : Module R M] :
+    Representation R Γ M →
+= 9827 40
++ 26
+(ρ : Representation R Γ M)
+= 10347 49
++ 38
+ IsLocallyConstant fun (g : Γ) ↦ (ρ g)
+@% 14658 18350 5
++ 1
+ 
+= 106446 34
++ 4
+Γ M)
+= 15029 52
++ 188
+x ∈ {z : Γ → M | IsLocallyConstant z ∧ ∀ (g h : Γ), z (g * h) = z g + (ρ g) (z h)} →
+        y ∈ {z : Γ → M | IsLocallyConstant z ∧ ∀ (g h : Γ), z (g * h) = z g + (ρ g) (z h)} →
+          
+@% 33097 387 4
+= 34405 105
+= 4112 25
++ 170
+inst_2.toAddCommMonoid)).toAddZeroClass.toAdd)
+              x y ∈
+            {z : Γ → M | IsLocallyConstant z ∧ ∀ (g h : Γ), z (g * h) = z g + (ρ g) (z h)} :=
+    by
+  
+= 33427 59
+@% 54781 8706 14
++ 93
+
+    {R : Type}
+    {Γ : Type}
+    {M : Type}
+    [inst : CommRing R]
+    [inst_1 : Group Γ]
+
+= 9353 29
++ 55
+
+    [inst_3 : Module R M] :
+    Representation R Γ M →
+= 9827 24
++ 57
+Submodule R (Γ → M) :=
+    fun (ρ : Representation R Γ M)
+= 10347 39
++ 113
+{ carrier := {z : Γ → M | IsLocallyConstant z ∧ ∀ (g h : Γ), z (g * h) = z g + (ρ g) (z h)},
+        add_mem' :=
+
+= 150644 51
+= 63243 45
++ 19
+,
+        zero_mem'
+= 155302 44
++ 25
+aux6 ρ,
+        smul_mem'
+= 155302 44
++ 8
+aux7 ρ }
+@% 63562 3143 19
++ 1
+ℕ
+= 63565 58
++ 10
+Subgroup D
+= 63639 24
++ 1
+ℕ
+= 63666 65
++ 10
+Subgroup D
+= 63747 72
++ 22
+ [inst_4 : Module R M]
+= 63993 24
++ 31
+ Representation R D M),
+       
+= 9223 44
++ 1
+ρ
+= 64327 24
++ 97
+ l • m = 0) →
+            (∀ g ∈ J, ρ g = 1) →
+              {z : D → M |
+                    z ∈
+= 54738 44
++ 85
+ρ ∧ ∀ g ∈ J, z g = 0}.Finite ∧
+                {z : D → M |
+                      z ∈
+= 54738 44
++ 58
+ρ ∧ ∀ g ∈ J, z g = 0}.ncard =
+                  Nat.card M
+@% 66707 19179 12
+= 75802 76
++ 63
+
+    {F : Type u_1}
+    {Ω : Type u_2}
+    [inst : Field F]
+   
+= 676 24
++ 53
+[inst_2 : Algebra F Ω] :
+    ValuationSubring Ω → Set
+= 155507 42
++ 17
+G F Ω) :=
+    fun
+= 116658 25
++ 13
+ ↦
+      {σ :
+= 236 42
++ 19
+ F Ω |
+        σ ∈ 
+= 2309 41
++ 71
+A ∧
+          ∀ (x : Ω), A.valuation x ≤ 1 → A.valuation (σ x - x) < 1}
+@% 86009 2782 23
++ 13
+NumberField F
+= 86028 36
++ 1
+ 
+= 116646 38
++ 12
+      {σ τ :
+= 236 42
++ 16
+ F Ω},
+      σ ∈
+= 75819 48
++ 16
+ A →
+        τ ∈
+= 75819 48
++ 22
+ A →
+          σ * τ ∈
+= 75819 48
++ 15
+ A :=
+    by
+  
+= 88616 34
+= 88648 46
+= 88692 25
+= 88715 44
+= 88757 44
++ 14
+  rw [this]
+  
+= 88811 44
+= 88853 25
+= 88876 63
+= 88937 26
+@@ 88840 168 0
+
+@% 100588 974 23
++ 13
+NumberField F
+= 86028 36
++ 1
+ 
+= 116646 38
++ 10
+      {σ :
+= 236 42
++ 16
+ F Ω},
+      σ ∈
+= 75819 48
++ 18
+ A →
+        σ⁻¹ ∈
+= 75819 48
++ 15
+ A :=
+    by
+  
+= 102453 29
+= 102480 28
+= 102506 31
+= 102535 46
+= 102579 57
+= 102634 68
+= 102700 75
++ 12
+  exact h
+  
+= 88853 25
+= 102806 49
++ 20
+  rw [this] at h3
+  
+= 102871 30
+@% 101564 4705 20
+= 102903 72
++ 84
+
+    {F : Type u_1}
+    {Ω : Type u_2}
+    [inst : Field F] :
+    [NumberField F] →
+
+= 103089 35
++ 64
+[inst_3 : Algebra F Ω] →
+          ValuationSubring Ω → Subgroup
+= 155507 42
++ 72
+G F Ω) :=
+    fun [inst_1 : NumberField F] [inst_2 : Field Ω] [inst_3 : 
+= 116646 37
++ 18
+ ↦
+      { carrier
+= 155302 44
++ 30
+Inertia A,
+        mul_mem' :=
+= 64242 42
+= 106032 37
++ 18
+,
+        one_mem'
+= 155302 44
++ 29
+aux12 A,
+        inv_mem' :=
+
+= 150644 51
+= 106207 45
++ 1
+
+
+= 84911 24
++ 5
+3 A }
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/Rt0ConjNegNeZero.lean 961ea988c242c607818d4bc16f9578348a0ad15298e7b06288001ef911db7af0 6d60d0144c197b3c45442898bb368559047fec429c55f983d48138f998ef6c26
 @@ 141 0 97
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ConjugateRootZeroSecond
@@ -70583,11 +80474,66 @@ import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ImportsTer
  first | exact @_root_.GlobalTheory.IterationConvergence.iter | exact _root_.GlobalTheory.IterationConvergence.iter | (intros; apply _root_.GlobalTheory.IterationConvergence.iter <;> assumption)
 @@ 1435 639 194
  first | exact @_root_.GlobalTheory.IterationConvergence.main | exact _root_.GlobalTheory.IterationConvergence.main | (intros; apply _root_.GlobalTheory.IterationConvergence.main <;> assumption)
-== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/SelectionLemmas.lean 403c7963e5064fe2d3bc0cbcd26d67dbd394c8c66f5e74298842d4f4b955b27b 28f86fbeb689e417f52ab04286b67299209947cd8221442a1eff4ee03e847445
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/SelectionLemmas.lean 403c7963e5064fe2d3bc0cbcd26d67dbd394c8c66f5e74298842d4f4b955b27b 3fd5f119dc21c03625d609e1879de7494ce3f8bd4ac965b5646c73732cc063d7
 @% 1241 27 2
 + 8
 @_root_.
 = 24 47
+@% 35405 16611 24
++ 85
+
+    {R : Type u_1}
+    {K : Type u_2}
+    {V : Type u_3}
+    [inst : CommRing R]
+   
+= 1414 24
++ 49
+[inst_2 : StarRing K]
+    [inst_3 : Algebra R K]
+
+= 17473 34
++ 201
+[inst_5 : Module K V]
+    [inst_6 : Module R V] :
+    [IsScalarTower R K V] → (V →ₗ⋆[K] V →ₗ[K] K) → Submodule R V → Submodule R V :=
+    fun [inst_7 : IsScalarTower R K V] (h : @LinearMap K K Field.to
+= 1549 28
++ 26
+.toSemiring
+      Field.to
+= 1549 28
++ 71
+.toSemiring (starRingEnd K) V (V →ₗ[K] K)
+      inst_4.toAddCommMonoid 
+= 13264 24
++ 7
+inst_5
+
+= 14533 34
++ 9
+ Field.to
+= 1549 28
++ 28
+.toSemiring
+        Field.to
+= 1549 28
++ 51
+.toSemiring inst_4.toAddCommMonoid
+        Field.to
+= 1549 28
++ 73
+.toAddCommMonoid inst_5 Semiring.toModule (RingHom.id K)
+        Field.to
+= 1549 28
++ 37
+.toSemiring Semiring.toModule
+       
+= 23 48
++ 30
+)) (L : Submodule R V) ↦
+     
+= 6963 49
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/SetIntegralDifferentiability.lean 1163ec57152eb4ffbf1d8bbf49419355f8ee90461e9f71800c2788cceba552d5 46143712dcebaa2d3ff797d423ef7b89cf8eae80f39096dece3c83bbefefb4b0
 @@ 15 0 91
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HasFDerivAtSetIntegral
@@ -70599,6 +80545,71 @@ import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HasFDerivAtS
 
 @@ 3550 93 0
 
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/SmoothOnGroupSum.lean 8634c16f6e80f24472a15230e62494a222f7e7260daa4ca552d86369cb6a97a4 805dc944a0102f2cf4d7a5149473a0c1298a64db2988d1398c7271d166bde2f1
+@% 621 1836 9
++ 13
+{n : ℕ} :
+   
+= 86 41
++ 19
+ℂ → Prop :=
+    fun
+= 714 48
++ 28
+ℂ) ↦
+      g.conjTranspose *
+= 33 36
++ 15
+ε * g =
+       
+= 33 36
++ 1
+ε
+@% 2519 2885 25
++ 13
+{n : ℕ} :
+   
+= 2536 42
++ 24
+ℂ → ℂ) → Prop :=
+    fun
+= 2624 48
++ 5
+ℂ → ℂ
+= 2689 41
++ 11
+ℂ),
+       
+= 583 38
+= 2788 52
++ 1
+ℂ
+= 2847 31
++ 84
+ℂ → ℂ),
+            IsOpen U ∧
+              g₀ ∈ U ∧
+                @ContDiffOn ℝ 
+= 3759 45
+= 783 24
++ 23
+ℂ)
+                    
+= 3909 26
++ 20
+Matrix.normedSpace ℂ
+= 4705 86
++ 3
+ℝ ℂ
+= 4492 39
+= 4340 44
+= 4950 69
++ 38
+ℕ∞ ⊤) F U ∧
+                  ∀ g ∈ U,
+= 583 38
++ 15
+ε g → f g = F g
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/SquareNormBound.lean a9b46dd01c80ece101421797a8aac0d95ffc4383df69a81c44728fa704620ebc a83998304dedf90b8f020d507a48e4d6033504ab513a23c1437861b973bc2b98
 @@ 15 0 90
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsRestExtra
@@ -70615,12 +80626,632 @@ Yhb3.main | (intros; apply _root_.
 = 24 27
 + 25
 Yhb3.main <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/SquareOfApproximation.lean 06b3d746c397786d98c5d05576ede97fd64bcfccb687ae2b4b079b8e69613f51 3b06b426a94b78af7d8f681b4c4261c20a9c6edbe6bd2aec71f423e76ed51a01
+@% 9685 5737 5
++ 202
+
+    (F : Type)
+    (E : Type)
+    [inst : Field F]
+    [NumberField F]
+    [inst_2 : Field E]
+    [NumberField E]
+    [inst_4 : Algebra F E] :
+    (E →ₐ[F] E) → Prop :=
+    fun (σ : E →ₐ[F] E) ↦
+      
+= 11116 28
++ 10
+∧
+        
+= 11165 31
++ 81
+∧
+          Module.finrank F E = 2 ∧ ∀ (τ : E →+* ℂ) (x : E), τ (σ x) = star (τ x
+@% 15486 2186 9
++ 95
+
+    {F : Type}
+    {E : Type}
+    [inst : Field F]
+    [inst_1 : Field E] :
+    RingHomClass (
+= 15585 29
++ 4
+→+* 
+= 15622 28
++ 9
+)
+      (
+= 15585 28
++ 3
+) (
+= 15622 28
++ 15
+) :=
+    inferI
+@% 17755 8300 53
++ 96
+
+    {F : Type}
+    {E : Type}
+    [inst : Field F]
+    [inst_1 : Field E] :
+    [Algebra F E] →
+= 109 36
++ 1
+(
+= 15585 28
++ 47
+) → Prop :=
+    fun [inst_2 : Algebra F E] (w :
+= 109 36
++ 1
+(
+= 15585 28
++ 17
+)) ↦
+      ∃ (P :
+= 109 36
++ 1
+(
+= 15622 28
++ 15
+)) (Q :
+       
+= 109 36
++ 1
+(
+= 15622 28
++ 44
+)),
+        P ≠ Q ∧
+          @Ideal.comap (
+= 15585 28
++ 3
+) (
+= 15622 28
++ 19
+)
+                (
+= 15585 29
++ 4
+→+* 
+= 15622 28
++ 29
+)
+                CommRing.to
+= 15750 24
++ 15
+CommRing.toComm
+= 34780 36
++ 49
+RingHom.instFunLike
+                (algebraMap (
+= 15585 28
++ 3
+) (
+= 15622 28
++ 18
+))
+               
+= 15432 55
++ 64
+P.asIdeal =
+              w.asIdeal ∧
+            @Ideal.comap (
+= 15585 28
++ 3
+) (
+= 15622 28
++ 19
+)
+                (
+= 15585 29
++ 4
+→+* 
+= 15622 28
++ 29
+)
+                CommRing.to
+= 15750 24
++ 15
+CommRing.toComm
+= 34780 36
++ 49
+RingHom.instFunLike
+                (algebraMap (
+= 15585 28
++ 3
+) (
+= 15622 28
++ 18
+))
+               
+= 15432 55
++ 35
+Q.asIdeal =
+              w.asIdeal
+@% 27077 15868 23
++ 110
+NumberField F] [inst_2 : Field E]
+      [inst_3 : NumberField E] [inst_4 : Algebra F E] {σ : E →ₐ[F] E},
+     
+= 9628 58
++ 3
+F E
+= 27774 28
+= 15585 28
++ 92
+},
+          @Ne F (↑d) 0 →
+            σ θ = -θ →
+              θ * θ = (algebraMap F E) ↑d
+= 31004 30
++ 65
+ ∃ (u : F) (w : F), x = u • 1 + w • θ) →
+                  ∀ {v :
+= 109 36
++ 1
+(
+= 15585 28
+= 32937 104
+= 13942 25
+= 33042 26
++ 7
+IsSquar
+= 34322 26
++ 16
+((algebraMap F (
+= 33080 54
++ 1
+v
+= 31450 29
++ 16
+↑d) :=
+    by
+  
+= 42862 50
+= 42910 37
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/StandardLattice.lean 93a987e70aef8739871f53b1c069f0112fc1a281b68691a8e65a8c73850b50e4 224cde74654b24ca7cc904a5b34c7bee7a40ccfac7beb6b611e383969c60def1
+@% 690 1271 14
++ 13
+
+    (l : ℕ)
+
+= 711 29
++ 52
+
+    (K : Type)
+    [inst : Field K] :
+    Submonoid
+= 35457 32
++ 7
+:=
+    
+= 1344 28
+= 35458 30
++ 1
+
+
+= 1812 25
++ 1
+ℤ
+= 408 67
++ 8
+
+       
+= 425 45
++ 5
+aux2 
+@% 2497 2450 11
++ 13
+
+    (l : ℕ)
+
+= 711 29
++ 57
+
+    (K : Type)
+    [inst : Field K] :
+    IsLocalization
+= 36023 52
++ 21
+
+      (@Localization
+= 35457 32
++ 11
+CommRing.to
+= 2892 25
++ 8
+
+       
+= 36023 52
++ 8
+) :=
+   
+@% 5046 366 7
++ 1
+ℕ
+= 5049 57
++ 27
+NumberField K]
+      (y : ↥
+= 36024 51
++ 27
+),
+      @IsUnit K Field.to
+= 5350 28
++ 25
+.toGroupWithZero.toMonoid
+@% 5457 3540 16
+= 818 28
++ 19
+) K CommRing.toComm
+= 5509 27
++ 60
+
+            Field.toSemifield.toNonAssocSemiring)
+         
+= 35457 33
++ 6
+fun (x
+= 35398 33
++ 34
+↦ K)
+          RingHom.instFunLike
+= 35445 44
++ 19
+K) ↑y) :=
+    by
+  
+= 8836 26
+= 8860 32
+= 8890 29
++ 15
+  rintro rfl
+  
+= 8930 34
+= 8962 37
+@% 9082 3772 23
++ 13
+
+    (l : ℕ)
+
+= 711 29
++ 60
+
+    (K : Type)
+    [inst : Field K] :
+    [NumberField K] →
+= 1996 47
++ 44
+l K →+* K :=
+    fun [inst_1 : NumberField K
+= 10419 32
+= 818 28
++ 33
+) CommRing.toCommSemiring
+       
+= 36023 52
++ 8
+
+       
+= 35488 53
+= 3177 32
++ 9
+
+        
+= 3823 28
++ 10
+K Field.to
+= 5888 24
++ 8
+
+       
+= 425 45
++ 12
+aux5 l K)
+  
+= 35440 49
++ 10
+K)
+       
+= 425 45
++ 8
+aux6 l K
+@% 12940 1854 7
++ 13
+
+    (l : ℕ)
+
+= 711 29
++ 68
+
+    (K : Type)
+    [inst : Field K] :
+    [NumberField K] → Algebra
+= 35488 53
++ 45
+K :=
+    fun [inst_1 : NumberField K] ↦
+     
+= 425 45
++ 20
+rlToK l K).toAlgebra
+@% 14958 3440 12
++ 13
+
+    (l : ℕ)
+
+= 711 29
++ 61
+
+    (K : Type)
+    [inst : Field K] :
+    [NumberField K] →
+
+= 15105 27
+= 15140 38
++ 21
+[Module K V] → Module
+= 35834 62
++ 39
+fun [inst_1 : NumberField K] (V : Type)
+= 15139 27
++ 58
+[inst_3 : Module K V] ↦
+      Module.compHom V (algebraMap
+= 35488 53
++ 1
+K
+@% 18465 5065 23
++ 13
+
+    (l : ℕ)
+
+= 711 29
++ 81
+
+    (K : Type)
+    [inst : Field K]
+    [inst_1 : NumberField K]
+    {V : Type}
+
+= 16449 34
++ 42
+[inst_3 : Module K V]
+    [inst_4 : Module
+= 35457 32
++ 18
+V] :
+    Submodule
+= 35457 32
++ 20
+V →
+      @Submodule
+= 35834 55
+= 9434 28
++ 31
+
+        inst_2.toAddCommMonoid
+= 425 45
++ 41
+rlModule l K V) :=
+    fun (L : Submodule
+= 35457 32
++ 1
+V
+= 21932 27
+= 1997 46
++ 15
+l K) V
+        
+= 9434 29
++ 30
+inst_2.toAddCommMonoid
+       
+= 425 45
++ 18
+rlModule l K V) ↑L
+@% 23608 12915 37
++ 1
+ℕ
+= 10334 66
++ 31
+NumberField K]
+      {V : Type}
+= 15139 27
++ 44
+[inst_3 : Module K V]
+      [inst_4 : Module
+= 35457 32
++ 10
+V]
+      [
+= 35790 45
++ 25
+K V]
+      {L : Submodule
+= 35457 32
++ 21
+V} {x : V},
+      x ∈
+= 18418 48
++ 21
+l K L ↔
+        ∃ s ∈
+= 644 47
++ 27
+l K, s • x ∈ L :=
+    by
+  
+= 35252 62
+= 35312 70
+= 35380 66
+= 35444 122
++ 14
+  intro r v
+  
+= 35576 99
+= 35673 62
+= 35733 49
+= 35780 116
+= 35894 42
+= 35934 58
+= 35990 108
++ 16
+  constructor
+  
+= 36110 31
+= 36139 26
+= 36163 74
++ 13
+  exact hy
+  
+= 36246 27
+= 36271 38
+= 36307 29
+= 36334 127
+= 36459 66
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/StarSqrtNeg.lean ab7fd47e32d4af2a8d0a2a5c693f2dd0f1e87cfb9409c2f677ab8b896acc1f42 83c6933069ee1e30a3cb0de71bee5cbdf00794e63b55554b013ea72dad64d836
 @@ 258 0 86
 import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ConjEqNegOfSqEqNegNat
 
 @@ 440 376 254
  first | exact @_root_.GlobalTheory.ConjNegSquareNat.conj_eq_neg_of_sq_eq_neg_nat | exact _root_.GlobalTheory.ConjNegSquareNat.conj_eq_neg_of_sq_eq_neg_nat | (intros; apply _root_.GlobalTheory.ConjNegSquareNat.conj_eq_neg_of_sq_eq_neg_nat <;> assumption)
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/StrictlyUpperRank.lean dfe1e4661ccf120a1fbf3a5286ffc03507a140d97bb0181f608ddbdf771bed69 d000506bc34a86ad4ed51959fd6b0017c6d79210032f97a10616f795f633a6dc
+@% 103 997 4
++ 59
+
+    {𝕜 : Type u_1}
+    [RCLike 𝕜]
+    {n : Type u_2} :
+   
+= 156 50
+= 254 64
++ 18
+ j ≤ i → X i j = 0
+@% 1831 2645 28
++ 6
+
+     
+= 1831 27
+= 1859 59
++ 72
+X →
+        ∀ (k : ℕ) (i j : n),
+          (X ^ k) i j ≠ 0 →
+           
+= 4040 56
++ 21
+i + k ≤
+             
+= 4099 60
++ 10
+
+    by
+  
+= 3520 27
++ 53
+  induction k with
+    | zero =>
+      intro i j h
+  
+= 3592 33
++ 18
+  by_contra hne
+  
+= 3639 68
++ 70
+  subst hij
+      exact le_rfl
+    | succ k ih =>
+      intro i j h
+  
+= 3767 45
+= 3810 66
+= 3874 49
+= 3921 31
++ 18
+  by_contra hle
+  
+= 3966 65
+= 4029 140
+= 4167 70
+= 4235 34
+= 4267 48
+= 4313 77
+= 4388 27
+= 4413 52
++ 15
+  simp at hm
+  
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/TmASmSum.lean aaa3d2dab270de0772a7282c7152afb4963d452b7690f43049ff5e0185975ed6 8d63082796acd86b6f781fda60478c3fd1c007eeee904e6114348923de8f1d0c
+@% 621 1836 9
++ 13
+{n : ℕ} :
+   
+= 86 41
++ 19
+ℂ → Prop :=
+    fun
+= 714 48
++ 28
+ℂ) ↦
+      g.conjTranspose *
+= 33 36
++ 15
+ε * g =
+       
+= 33 36
++ 1
+ε
+@% 2519 2885 25
++ 13
+{n : ℕ} :
+   
+= 2536 42
++ 24
+ℂ → ℂ) → Prop :=
+    fun
+= 2624 48
++ 5
+ℂ → ℂ
+= 2689 41
++ 11
+ℂ),
+       
+= 583 38
+= 2788 52
++ 1
+ℂ
+= 2847 31
++ 84
+ℂ → ℂ),
+            IsOpen U ∧
+              g₀ ∈ U ∧
+                @ContDiffOn ℝ 
+= 3759 45
+= 783 24
++ 22
+ℂ)
+                   
+= 5990 26
++ 21
+ Matrix.normedSpace ℂ
+= 4705 86
++ 3
+ℝ ℂ
+= 4492 39
+= 4340 44
+= 4950 69
++ 38
+ℕ∞ ⊤) F U ∧
+                  ∀ g ∈ U,
+= 583 38
++ 15
+ε g → f g = F g
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/TraceMixedEmbedding.lean 226e1c01b65f52aabcb372adcaed5fbbfa30b3e314759f2102e9e1adb1b0f85e 268dab57aea8b43f652f733153604eabd82b40ede0ced99703e0c0eaf26219f5
 @@ 15 0 103
 import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SumEmbeddingsEqRealAddComplex
@@ -70640,6 +81271,596 @@ DYhb7.main <;> assumption)
 == src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/UnitaryRootEmbedding.lean d7176ac933dff3c48b40d85cf45fce7c242f970f9a6aa8637214a29b13ff107b a61ec466ce8489432b67f441fbae34d0c616bce73fd00db15c8eeb96792a099a
 @@ 35447 3 0
 
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/UnopSMul.lean 7a4d4d56b35750d4b75ef73239ef3c962f43ce6ed38b6897f5f5d1d0d6ef6774 51e16da9b6157568f7af4c4941d7daa6748db6c44f92503bcd30d1d76851c8ef
+@% 600 9080 15
++ 119
+
+    (A : Type)
+    (E : Type)
+    (S : Type)
+    [inst : CommRing A]
+    [inst_1 : Ring E]
+    [inst_2 : Algebra A E]
+
+= 786 25
++ 120
+
+    [inst_4 : Algebra A S] :
+    TensorProduct A S Eᵐᵒᵖ →ₗ[S] TensorProduct A S E :=
+    LinearMap.baseChange S
+      ↑
+= 8299 25
++ 61
+Eᵐᵒᵖ CommRing.toCommSemiring.toSemiring
+          CommRing.to
+= 128 24
++ 23
+inst_1.toAddCommMonoid 
+= 1547 29
++ 29
+
+          Algebra.toModule (
+= 1832 24
++ 41
+) (RingHom.id A) (RingHom.id A)
+         
+= 23 37
+= 24 35
++ 12
+
+          (
+= 9408 27
+@% 9791 46433 11
++ 35
+ [inst_2 : Algebra A E] (S : Type)
+
+= 784 28
++ 62
+[inst_4 : Algebra A S] (x y : TensorProduct A S Eᵐᵒᵖ),
+      (
+= 23129 42
++ 21
+) (x * y) =
+        (
+= 23129 42
++ 17
+) y *
+          (
+= 23129 42
++ 16
+) x :=
+    by
+  
+= 56025 30
++ 13
+  induction x
+@% 56292 81 6
+= 56130 65
++ 18
+  | tmul s e =>
+  
+= 56209 58
++ 19
+  | zero => simp
+  
+= 56282 77
++ 18
+  | tmul t f =>
+  
+== src/Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/ZeroContDiffOnSupported.lean 536c5bcf12e79f7d245f399bb8bd088c3f6c70a9c10e681b933e8b8d7d7a34b0 6953f0f176d5b54f5b80f34692f7ee71d9be0b79ce39514c6724763646674b6d
+@% 413 2436 7
++ 75
+
+    {E : Type}
+    [inst : Field E]
+    [inst_1 : NumberField E] :
+    ℕ →
+= 46 35
++ 32
+E → Type :=
+    fun (n : ℕ) (w :
+= 46 35
++ 23
+E) ↦
+      GL (Fin n) (
+= 735 50
++ 3
+E w
+@% 3382 2649 9
++ 67
+
+    (k : Type)
+    [inst : Field k]
+    [inst_1 : ValuativeRel k]
+
+= 3557 33
++ 6
+
+    [
+= 3593 28
++ 24
+] :
+    @IsLocalRing (↥(
+= 4104 24
++ 22
+).integer) CommRing.to
+= 6935 24
++ 13
+:=
+    inferI
+@% 6093 549 3
++ 12
+{α : Type} {
+= 6190 25
++ 97
+:
+    (a : α) × m a ≃ n → n → α :=
+    fun (e : (a : α) × m a ≃ n) (i : n) ↦
+      (e.symm i).fst
+@% 6779 6814 33
++ 1
+
+
+= 21841 27
+= 6807 30
++ 68
+(a : α) × m a ≃ n) {x y : GL n R},
+      x ∈
+          {g : GL n R |
+= 7756 42
++ 1
+ 
+= 8029 31
++ 37
+.toSemilatticeInf.toLT
+              
+= 8132 26
++ 12
+.toZero (↑g)
+= 27605 33
++ 47
+blk e)} →
+        y ∈
+            {g : GL n R |
+= 9313 44
++ 1
+ 
+= 8029 31
++ 39
+.toSemilatticeInf.toLT
+                
+= 8132 26
++ 12
+.toZero (↑g)
+= 27605 33
++ 56
+blk e)} →
+          @HMul.hMul (GL n R) (GL n R) (GL n R
+= 165844 28
++ 2
+GL
+= 8261 24
++ 113
+Group.toDivInvMonoid (GL n R) Units.instGroup).toMulOneClass.toMul)
+              x y ∈
+            {g : GL n R |
+= 9313 44
++ 1
+ 
+= 8029 31
++ 39
+.toSemilatticeInf.toLT
+                
+= 8132 26
++ 12
+.toZero (↑g)
+= 27605 33
++ 20
+blk e)} :=
+    by
+  
+= 13557 38
+@% 16995 4598 26
++ 1
+
+
+= 21841 27
+= 6807 30
++ 66
+(a : α) × m a ≃ n) {x : GL n R},
+      x ∈
+          {g : GL n R |
+= 7756 42
++ 1
+ 
+= 8029 31
++ 37
+.toSemilatticeInf.toLT
+              
+= 8132 26
++ 12
+.toZero (↑g)
+= 27605 33
++ 36
+blk e)} →
+        @Inv.inv (GL n R) 
+= 20772 32
++ 48
+.toInvOneClass.toInv x ∈
+          {g : GL n R |
+= 7756 42
++ 1
+ 
+= 8029 31
++ 37
+.toSemilatticeInf.toLT
+              
+= 8132 26
++ 12
+.toZero (↑g)
+= 27605 33
++ 20
+blk e)} :=
+    by
+  
+= 21435 33
+= 21466 78
+= 21542 30
+= 21570 25
+@% 21705 4834 24
++ 91
+
+    (R : Type)
+    [inst : CommRing R]
+    {α : Type}
+    {n : Type}
+    {m : α → Type} :
+
+= 21811 28
++ 22
+[inst_2 : Fintype n] →
+= 21885 27
++ 49
+ (a : α) × m a ≃ n → Subgroup (GL n R) :=
+    fun
+= 6754 46
+= 6806 31
++ 71
+(a : α) × m a ≃ n) ↦
+      {
+        carrier :=
+          {g : GL n R |
+= 7756 42
++ 1
+ 
+= 8029 31
++ 37
+.toSemilatticeInf.toLT
+              
+= 8132 26
++ 12
+.toZero (↑g)
+= 27605 33
++ 28
+blk e)},
+        mul_mem' :=
+= 490 33
+= 26328 40
++ 18
+,
+        one_mem'
+= 77517 35
++ 29
+aux7 R e,
+        inv_mem' :=
+= 490 33
+= 26498 40
++ 2
+ }
+@% 26806 799 8
++ 55
+
+    (R : Type)
+    [inst : CommRing R]
+    (n : Type)
+
+= 26881 24
++ 1
+
+
+= 26916 29
++ 52
+:
+    [LinearOrder n] → Subgroup (GL n R) :=
+    fun
+= 27481 34
+= 47 31
++ 7
+parab R
+@% 27705 10112 20
++ 67
+
+    (k : Type)
+    [inst : Field k]
+    [inst_1 : ValuativeRel k]
+
+= 3557 34
++ 7
+:
+    [
+= 3593 28
++ 4
+] →
+
+= 26856 27
++ 22
+[inst_4 : Fintype n] →
+= 28098 27
++ 58
+ [LinearOrder n] → Subgroup (GL n k) :=
+    fun [inst_3 : 
+= 3593 28
++ 12
+] (n : Type)
+= 29023 80
++ 22
+Subgroup.map
+        (
+= 691 25
++ 31
+.map
+          (@algebraMap (↥(
+= 4104 24
++ 10
+).integer)
+= 37671 48
+= 2956 37
++ 11
+inst.toRing
+@% 37907 30351 34
++ 68
+ inst.toDivisionRing.toSemiring inst_1) inst.toRing
+                
+= 3923 65
++ 18
+
+                (
+= 4104 24
++ 19
+))
+              k 
+= 6963 24
++ 19
+Subring.instSetLike
+= 27605 33
++ 32
+aux3 k))
+            CommRing.to
+= 29738 37
+= 4104 24
++ 1
+)
+= 38737 36
++ 12
+))
+        (
+= 39271 26
+= 691 25
++ 4
+.map
+= 64161 34
++ 4
+ (↥(
+= 4104 24
++ 26
+).integer)
+              (
+= 4104 24
++ 20
+).integer.toCommRing
+= 27605 33
++ 19
+aux4 k)))
+         
+= 27605 33
+= 65536 44
++ 4
+ (↥(
+= 4104 24
++ 26
+).integer)
+              (
+= 4104 24
++ 20
+).integer.toCommRing
+= 27605 33
++ 22
+aux4 k))
+            n
+@% 68332 6737 9
++ 51
+
+    {F : Type}
+    [inst : Field F]
+    [inst_1 : 
+= 75198 24
+= 218 36
+= 255 27
++ 24
+F)) :
+    ValuativeRel (
+= 735 50
++ 12
+F p) :=
+    
+= 71108 24
++ 9
+ Valued.v
+@% 78985 2487 25
++ 26
+NumberField F]
+      (p : 
+= 218 36
+= 255 27
++ 1
+F
+= 79155 37
++ 2
+ (
+= 735 50
++ 14
+F p)
+        (
+= 2449 60
++ 12
+F p)
+       
+= 27605 33
++ 21
+complRel p)
+        (
+= 2449 54
++ 67
+UniformSpace F p).toTopologicalSpace :=
+    by
+    intro F _ _ p
+  
+= 80852 54
+= 80904 102
+= 81004 39
++ 10
+  exact
+  
+= 81049 39
+= 81086 52
+= 81136 98
+= 81232 81
+= 81311 28
+= 81337 56
+= 81391 83
+@% 81552 5863 22
++ 86
+
+    {E : Type}
+    [inst : Field E]
+    [inst_1 : NumberField E]
+    (n : ℕ)
+    (w :
+= 46 35
++ 17
+E) :
+    Subgroup
+= 27605 33
++ 12
+GLw n w) :=
+
+= 85579 43
++ 2
+ (
+= 735 50
++ 12
+E w)
+      (
+= 2449 60
++ 10
+E w)
+     
+= 27605 33
++ 19
+complRel w)
+      (
+= 2449 54
++ 17
+UniformSpace E w)
+= 80022 26
+= 27606 32
+= 78913 26
+= 87341 26
++ 1
+
+
+= 1092 29
++ 19
+Fin.instLinearOrder
+@% 87470 33099 15
++ 86
+
+    {E : Type}
+    [inst : Field E]
+    [inst_1 : NumberField E]
+    (n : ℕ)
+    (w :
+= 46 35
++ 5
+E) :
+
+= 78548 35
++ 9
+GLw n w →
+= 378 36
++ 23
+n w → ℂ :=
+    fun (t :
+= 378 36
++ 9
+n w) (y :
+= 378 36
++ 34
+n w) ↦
+      @ite ℂ
+        (∃ x ∈
+= 27666 34
++ 23
+GL n w,
+          ∃ z ∈
+= 27666 34
++ 21
+GL n w, y = x * t * z
+@% 120617 33557 5
++ 3
+x ∈
+= 27666 34
++ 25
+GL n w,
+            ∃ z ∈
+= 27666 34
++ 35
+GL n w, y = x * t * z))
+        1 0
+@% 154272 15752 19
++ 59
+NumberField E] [NumberField.IsCMField E] {m : ℕ}
+      {w :
+= 46 35
++ 11
+E} (t k g :
+= 378 36
++ 15
+m w),
+      k ∈
+= 27666 34
++ 11
+GL m w →
+  
+= 78546 37
++ 25
+dcos m w t (g * k) =
+    
+= 78546 37
++ 25
+dcos m w t g :=
+    by
+  
+= 169654 31
+= 169683 47
+= 169728 93
++ 21
+  ⟨?_, ?_⟩ rfl rfl
+  
+= 169838 33
+= 169869 81
+= 169948 49
+= 169838 31
 == src/Development/AutomorphicArithmetic/LocalEmbeddings/BotLocal.lean b0e360c864795a225536341838a1265c700c38ebbb2abe8d18e2b6adf1434a86 5bdfb21b0b0f19cd910c93bfbba9e5fbc278067732e514b052ab7d8fda6c194f
 @% 4376 139 4
 = 4382 35
@@ -125726,6 +136947,53 @@ ShapeFromFacts
 
 @@ 362 917 143
  first | exact @_root_.PI.WFJM.Shape.pos_iff | exact _root_.PI.WFJM.Shape.pos_iff | (intros; apply _root_.PI.WFJM.Shape.pos_iff <;> assumption)
+== src/Lemmata/ClearingDenominators/UmonLeUzmon.lean 79daadce2a4e11c2512c3e4fd3487d07c11bcf4f399b9cf983649ef48b7fe4ba 985709e6aa7e1a82bb2fc4662f60339a5610ca9e7733989071a5c178502903da
+@% 5243 9863 23
++ 10
+  ∀ {n : ℕ
+= 5253 33
++ 59
+ O] [inst_1 : IsDomain O] [IsDiscreteValuationRing O]
+     
+= 5450 38
++ 20
+ V] [inst_4 : Module
+= 14805 32
++ 56
+V]
+      [inst_5 : Module O V] [inst_6 : IsScalarTower O
+= 14805 32
++ 10
+V]
+      {
+= 3488 36
+= 14806 31
++ 41
+V} {lam : Fin n → ℤ}
+      {v : V},
+     
+= 3491 25
++ 164
+IsIrrHW E lam v →
+        ∀ (y : V),
+          ∃ (o : O),
+            o ≠ 0 ∧
+              @Membership.mem V (Submodule O V) SetLike.instMembership
+               
+= 14805 26
++ 31
+Delta E v) (o • y) :=
+    by
+  
+= 14735 42
+= 14775 124
++ 17
+  rw [h.2.2.2]
+  
+= 14912 30
+= 14940 83
+= 15021 26
+= 15045 63
 == src/Lemmata/CurryModusPonens/CurryMp.lean 8972cf7ce9a5e6e1dcf1335f7759045256dcc54650cd6232dac1fabd8808632c ea37160d8570f04c97b3aa1939a6eafdac1fb6cba1654edcf5ea68e17fed7b30
 @@ 766 41 37
 fun i => Set.univ.pi fun j => s (i, j
@@ -125755,6 +137023,66 @@ JExistsNatSmulMemL
 
 @@ 1712 510 245
  first | exact @_root_.Formalism.MainNotions.LatticeGluingRadicals.c_lat_multL | exact _root_.Formalism.MainNotions.LatticeGluingRadicals.c_lat_multL | (intros; apply _root_.Formalism.MainNotions.LatticeGluingRadicals.c_lat_multL <;> assumption)
+== src/Lemmata/GeneralBFactLeftAltForm/MQ.lean 8a09884304a13b323b7859838bad8a38c142676f70b89e4ec75b3caf378af309 7b7ba0b4d3df26a3708dfee4aca76f593c2e1e276f0d7b42baca4ed09bdfdabf
+@% 3401 10989 36
+= 3399 31
++ 113
+ O] [inst_1 : IsDomain O] [IsDiscreteValuationRing O] {W : Type}
+      [inst_3 : AddCommGroup W] [inst_4 : Module
+= 14127 32
++ 56
+W]
+      [inst_5 : Module O W] [inst_6 : IsScalarTower O
+= 14127 32
++ 59
+W]
+      (M : Submodule O W) (y : W),
+      @Membership.mem
+= 11455 24
+= 14127 32
++ 22
+W
+            Field.to
+= 9026 29
++ 74
+toSemiring inst_3.toAddCommMonoid inst_4)
+          SetLike.instMembership
+= 14127 26
++ 59
+MQ M) y →
+        ∃ (a : O), a ≠ 0 ∧ a • y ∈ M :=
+    by
+  
+= 13312 35
+= 13345 42
+= 13385 53
+= 13436 69
+= 13503 74
+= 13575 29
+= 13602 32
+= 13632 32
+= 13662 44
++ 18
+  rw [smul_add]
+  
+= 13720 31
+= 13749 56
+= 13803 44
+= 13845 25
+= 13868 32
+= 13898 72
+= 13968 77
+= 14043 63
+= 14104 97
+= 14199 133
++ 12
+  congr 1
+  
+= 14340 32
++ 24
+  ring
+      rw [key]
+  
 == src/Lemmata/GeneralBFactLeftBis/Imports.lean b04bcbf7fa5382434c4d3c45af0105048f71e2965e1608928a8d423a7fc15690 58383eb3a6f930d4936331a9e4628b64f03bb800ef41a431af8a416e40488ef0
 @@ 15 0 89
 import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsSmulMemOfSpanEqTop
@@ -125767,6 +137095,174 @@ import Lemmata.MiscLemmasD.Imports
 
 @@ 612 1059 158
  first | exact @_root_.Bl.SecondBlockLemmaE.goal1 | exact _root_.Bl.SecondBlockLemmaE.goal1 | (intros; apply _root_.Bl.SecondBlockLemmaE.goal1 <;> assumption)
+== src/Lemmata/GeneralBFactLeftVersion/Imports.lean 87fb30661641971e4366bd4191b1bbf4b0f5f97a97274a30baa74f6ffa0402d4 b4d90a5d5a03b9274213c84275beeae30ab21a4cc6605de7ee3df5f41dcf3ab9
+@% 3400 11043 37
+= 3398 31
++ 80
+ O] [inst_1 : IsDomain O] {V : Type} [inst_2 : AddCommGroup V]
+      [inst_3 : M
+= 13431 38
++ 55
+] [inst_4 : Module O V]
+      [inst_5 : IsScalarTower O
+= 13436 33
++ 45
+] (M : Submodule O V),
+      @Eq
+          (@
+= 13427 42
++ 21
+
+            Field.to
+= 8953 29
++ 51
+toSemiring inst_2.toAddCommMonoid inst_3)
+         
+= 13355 26
++ 70
+MQ M) ⊤ →
+        ∀ (x : V), ∃ (a : O), a ≠ 0 ∧ a • x ∈ M :=
+    by
+  
+= 13294 33
+= 13325 84
+= 13407 89
++ 33
+  rw [← hM] at h
+      exact h
+  
+= 13523 53
+= 13574 69
+= 13641 74
+= 13713 29
+= 13740 32
+= 13770 32
+= 13800 44
++ 18
+  rw [smul_add]
+  
+= 13858 31
+= 13887 34
+= 13919 29
+= 13946 24
+= 13968 27
+= 13993 25
+= 14016 32
+= 14046 82
+= 14126 61
+= 14185 44
+= 14227 103
+= 14328 85
+= 14411 34
+== src/Lemmata/GeneralBFactRightTerForm/Imports.lean 39e4e31d989082eb8ebc20554186a13e88cbd205275c3ceb118ce7deede61c42 6a9c6cb1fc18affb1c20ffb17da9aee28d30546a6b5db54b544b76c8a7d2232f
+@% 78 17101 38
+= 76 28
++ 101
+ L] [inst_1 : NumberField L] (x : L) (c : ℤ),
+      x ^ 2 = ↑(4 * (2 * c) + 1) →
+        ∀ (P : Ideal
+= 17298 31
++ 68
+) [hP : P.IsPrime]
+          [@Ideal.LiesOver ℤ Int.instCommSemiring
+= 17298 31
++ 15
+
+              
+= 1363 24
++ 29
+toSemiring (Ring.toIntAlgebra
+= 17298 31
++ 116
+)
+              P (Ideal.span {2})],
+          ∀
+            σ ∈
+              @MulAction.stabilizer Gal(L/ℚ) (Ideal
+= 17298 31
++ 31
+) AlgEquiv.aut
+                
+= 11849 32
++ 47
+toMulAction P,
+            σ x = x :=
+    by
+  
+= 16608 35
+= 16641 41
+= 16680 36
+= 16714 55
++ 26
+  · exact h
+    exfalso
+  
+= 16789 70
+= 16857 51
+= 16906 78
++ 16
+  · monicity!
+  
+= 16996 106
+= 17100 28
+= 17126 61
+= 17185 31
+= 17214 64
+= 17276 81
+= 17355 61
+= 17414 79
+= 17491 30
++ 19
+  simpa using h0
+  
+= 17536 78
+= 17612 43
+= 17653 75
+= 17726 91
+= 17815 68
+@% 17216 1847 27
+= 17916 40
++ 15
+  rw [hprod]
+  
+= 17967 33
+= 17998 106
++ 14
+  = P := hσ
+  
+= 18114 54
+= 18166 40
+= 18204 84
++ 34
+  rw [hσP] at h3
+      exact h3
+  
+= 18316 37
+= 17612 43
+= 18392 67
+= 18457 58
+= 18513 74
++ 9
+  ring
+  
+= 18592 61
+= 18651 45
+= 18694 30
++ 19
+  rw [hσy] at h4
+  
+= 18739 81
++ 11
+  rw [e]
+  
+= 18827 32
+= 18857 30
+= 18885 43
+= 18926 90
++ 11
+  rw [e]
+  
+= 19023 42
 == src/Lemmata/GeneralBFactSecond/Imports.lean f74606220662b716939fd12a73e010d3562e591131883adddc56bf40c313252a a5e2fbdc9c657e196b33a94733ed12a3965fa82ebc921714bfc8db64dd4b9e31
 @@ 15 0 89
 import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsSmulMemOfSpanEqTop
@@ -125815,6 +137311,63 @@ import Lemmata.GeneralBFactThirdTail.Imports
 = 26 28
 + 23
 '.goal1 <;> assumption)
+== src/Lemmata/GeneralBFactThirdVersion/Imports.lean f063a9f5a698e7413475732ef520af5eb80728569da81e2ee563b43f9af2af2c b552d51942a3dd1181b0dbbf1b3ecfd6d85b36cf15d6affded770c9798a09aab
+@% 77 9131 41
+= 75 28
++ 18
+ E] [NumberField E
+= 135 35
++ 48
+ V]
+      [inst_3 : Module E V] [inst_4 : Module
+= 7803 32
++ 32
+V]
+      [inst_5 : IsScalarTower
+= 7803 34
++ 23
+V]
+      (Λ : Submodule
+= 7803 32
++ 126
+V),
+      Submodule.IsLattice E Λ →
+        ∀ (v : V), ∃ (m : ℕ), m ≠ 0 ∧ @HSMul.hSMul E V V instHSMul (↑m) v ∈ Λ :=
+    by
+  
+= 7667 33
+= 7698 81
+= 7777 72
++ 12
+  intro c
+  
+= 7857 108
+= 7963 80
+= 8041 48
+= 8087 79
+= 8164 56
+= 8218 31
+= 8247 60
+= 8305 25
+= 8328 45
+= 8371 48
+= 8417 38
+= 8453 33
+= 8484 53
+= 8535 41
+= 8574 47
+= 8619 26
+= 8643 33
+= 8674 41
+= 8713 48
+= 8759 75
+= 8832 95
+= 8925 24
+= 8947 36
+= 8981 53
+= 9032 76
+= 9106 31
+= 9135 75
 == src/Lemmata/IntegerMulIntegral/IntMulIntegral.lean f91633c26c34b412e392d64f1dd15fa581eb09d99297b84d5f56ecd892bf21db a00891b581b71f0136c0a77eabd6248bbaa59c7f852b4e3fa3a796b7e64b5d98
 @@ 15 0 84
 import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FiniteQuotientComap

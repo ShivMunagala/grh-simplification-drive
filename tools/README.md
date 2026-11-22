@@ -79,6 +79,9 @@ executes anything from a compiled file; it maps the file and walks the data, als
   still checks interfaces and dials here. Such a module is refused if it mentions a statement that changed
   here after that machine was last brought up to date (`stale.py` keeps the list; `record.py` adds to it,
   `remote/sync_there.py` empties it), unless it was compiled with the changed module in place.
+- `compact.py` — reprints declarations that are written with every argument explicit: `find` lists them, `print`
+  asks Lean (`compact/GrhCompact.lean`) for a shorter text that reads back as the same statement and value, and
+  writes edits for the usual batch.
 - `try_change.py` — what a worker runs on one edited file before handing it in: compile, equivalence
   check, sizes and time before and after, and `PRECHECK: pass` or `fail`.
 - `alias_wrappers.py` — find theorems that only restate another theorem and cite it, and rewrite them

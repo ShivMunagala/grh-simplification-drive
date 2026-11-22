@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.3M, written-out proof size 2.68B, time change -3.95K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 175.8M, written-out proof size 2.68B, time change -3.97K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 176,252,414 | −7,995,796 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,682,395,289 | −106,909,010 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,954.9 | −3,954.9 |
+| Source size (tokens) | 184,248,210 | 175,770,081 | −8,478,129 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,682,394,619 | −106,909,680 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,974.5 | −3,974.5 |
 
-Cone: 1,255,860 declarations in 146,191 files. Recorded changes: 42. Latest row: fourth list: last file (a bundle of four bypassed) (2026-11-22 18:19 UTC).
+Cone: 1,255,860 declarations in 146,191 files. Recorded changes: 43. Latest row: 252 declarations written with every argument explicit reprinted in ordinary form (50 files) (2026-11-22 19:39 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -60,6 +60,7 @@ Cone: 1,255,860 declarations in 146,191 files. Recorded changes: 42. Latest row:
 | 2026-11-22 | What the five theorems actually ask of each intermediate statement, measured on the compiled proof (`tools/demand.py`): parts of conjunctions, fields of records, arguments, local steps and whole declarations that nothing needed reads come to 1.07% of the written-out size. The proof uses almost everything it proves ([results](campaign/unneeded-parts/RESULTS.md)) | done |
 | | Removing those unneeded parts, largest first ([brief](campaign/unneeded-parts/BRIEF.md), [results](campaign/unneeded-parts/RESULTS.md)). Eight changes so far take 3,051 declarations out of what the five theorems need (−7.7 million nodes, −451,000 tokens): seven of eight statements about period unfoldings; the main theorem of the raw theta lift, which was built only to be passed to a theorem that ignored it; theorems that prove lists of statements of which a few are read (46 so far: users cite the part they read); eight statements trimmed to what their users read | in progress |
 | 2026-11-22 | Local steps whose result nothing uses (`have h : P := proof`, and `h` is never read): the same measurement names them, and 6,343 are deleted in 2,099 files, each deletion kept only if its file still compiles to the same statements and is smaller. Written-out size −1.6 million nodes, source −126,000 tokens. This round took the 3,000 files that hold most of them; about 18,000 files with a few each remain | first round done |
+| 2026-11-22 | Declarations written with every argument explicit (machine-printed terms, about fifty files, 0.37% of the source): 252 reprinted in ordinary form by `tools/compact.py`, each kept only if Lean reads it back at the same place as the same statement and, for a definition, the same value. Source −482,000 tokens; written-out size unchanged. Another project had reported the pattern for four of these files; no text was taken from it ([notes](campaign/proof-shrink/RESULTS.md)) | done |
 
 ## Fixed
 

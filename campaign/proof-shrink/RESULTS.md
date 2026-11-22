@@ -320,6 +320,49 @@ What was new compared with `sigSpan_copy`:
 - Components that are tied by a relation and not by an equation become extra variables with the relation
   as a hypothesis; components that are proofs need no equation at all.
 
+## Declarations written with every argument explicit, 2026-11-22
+
+About fifty files, almost all in one folder (`Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities`),
+hold machine-printed terms: statements and proofs in which every implicit argument and every instance is spelled
+out. A term of a few thousand nodes then takes tens of thousands of tokens (the extreme case: 63,189 tokens for a
+proof of 1,390 nodes). In the cone these were 303 declarations with 655,680 tokens, 0.37% of the source for 0.02% of
+the written-out size.
+
+The explicit form is there for a reason: some instances cannot be found again by Lean on its own, and printing a
+term in the ordinary way does not always give text that reads back as the same term. So the reprinting is a search
+(`tools/compact.py`, with the Lean command in `tools/compact/GrhCompact.lean`):
+
+- A term is printed in ordinary form. If the text does not read back, at that place in the file, as exactly the same
+  term, its parts are treated the same way and the application at the top is printed with all its arguments.
+- For large terms reading the whole text back at every level costs too much. There the question "can this
+  application be written in ordinary form?" is asked with its explicit arguments replaced by variables of the same
+  types; if the declaration as a whole then fails its final check, the large applications are printed in full.
+- Binders that the statement and the value share are written once, in front of the colon. This also keeps the
+  names of instance binders, which Lean's printer drops from a `fun` whose body does not mention them.
+- The whole declaration is then elaborated under a temporary name, in the file's own scope, and must give the same
+  statement (binder names and kinds, universe parameters) and, for a definition, the same value. If only the new
+  statement or only the new value passes, the other part stays as written.
+
+| | Declarations | Tokens |
+|---|---:|---:|
+| Found (header of the form `name :`, at least 150 tokens, one `@` per 25 tokens or more) | 303 | 655,680 |
+| A new text passed its check and is shorter | 274 | 599,988 → 67,042 |
+| Kept by the batch (file compiles to the same interface, written-out size not larger) | 252 in 50 files | |
+| Judged (change 43) | | −482,333; written-out size −670 nodes; time 121.9 s → 102.3 s |
+
+Not used: 24 declarations where no new text passed, four where it was not shorter, one file with no passing variant.
+
+What went wrong on the way, for whoever extends this:
+
+- One failed reading-back can cost a minute: Lean searches for an instance for as long as it is allowed. The
+  search has to be cut off early (a few seconds' worth); a part that would have needed longer just stays explicit.
+- Comparing the new declaration with the old one has to happen before the temporary declaration is discarded:
+  the helper lemmas Lean makes for proofs inside a definition disappear with it.
+- A `let` or `fun` variable must be printed with its type, or reading back depends on Lean guessing it.
+
+The pattern was first reported, for four of these files, in the repository
+github.com/ChristianKudeba/alpoge-rh-verification. That repository grants no licence; nothing was taken from it.
+
 ## Bulk sweeps, 2026-11-22
 
 The hand-made waves work on the largest proofs. Those are not where most of the size is:
