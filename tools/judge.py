@@ -370,6 +370,40 @@ def main():
                     breaking_ids[old[nm]['id']] = nm
                     breaking_owner[old[nm]['id']] = m
         todo = []
+        # A declaration that left one judged module and appears, unchanged, in another judged module that
+        # the first one imports has only moved: every file that could see it before still can.
+        added_in = {}
+        for m2, res2 in ifaces.items():
+            for nm in res2['added']:
+                added_in[nm] = m2
+        for m2, res2 in ifaces.items():
+            if bulk is not None and (m2 + '@new') in bulk:
+                direct = set(bulk[m2 + '@new'].get('imports') or ())
+            else:
+                direct = set(imports_of(m2))
+            moved = []
+            for nm in res2['removed']:
+                y = added_in.get(nm)
+                if not y or y == m2 or y not in direct:
+                    continue
+                o, n = olds[m2][nm], news[y][nm]
+                same = (o['kind'] == n['kind'] and o['thash'] == n['thash'] and o['tsize'] == n['tsize']
+                        and o.get('st') == n.get('st') and o.get('lp') == n.get('lp')
+                        and (o['kind'] == 'thm' or (o['vhash'] == n['vhash'] and o['vsize'] == n['vsize']
+                                                    and o.get('sv') == n.get('sv'))))
+                if same:
+                    moved.append(nm)
+            if moved:
+                res2['moved'] = moved
+                res2['removed'] = [x for x in res2['removed'] if x not in moved]
+                res2['breaking'] = [x for x in res2['breaking'] if x not in moved]
+                res2['compatible'] = not (res2['breaking'] or res2.get('ext_changed') or res2.get('ns_removed')
+                                          or res2.get('imports_added') or res2.get('imports_removed'))
+                for nm in moved:
+                    breaking_ids.pop(olds[m2][nm]['id'], None)
+                    breaking_owner.pop(olds[m2][nm]['id'], None)
+                report['notes'].append(f'{len(moved)} declaration(s) moved from {m2} to a module it imports: '
+                                       + ', '.join(moved[:5]))
         # declarations of deleted modules are gone too
         if rounds == 1 and removed:
             pairs = [(m, C.current_olean(m)) for m in removed if os.path.exists(C.current_olean(m))]

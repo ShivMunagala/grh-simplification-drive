@@ -18,16 +18,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.6M, written-out proof size 2.77B, time change -2.30K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.6M, written-out proof size 2.76B, time change -2.39K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 176,619,737 | −6,498,502 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,765,704,515 | −23,599,784 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,303.3 | −2,303.3 |
+| Source size (tokens) | 183,118,239 | 176,619,667 | −6,498,572 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,762,844,502 | −26,459,797 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,394.9 | −2,394.9 |
 
-Cone: 1,264,792 declarations in 146,536 files. Recorded changes: 10. Latest row: wave 4: five matrix lemmas and four mixed proofs (2026-11-22 04:35 UTC).
+Cone: 1,264,794 declarations in 146,536 files. Recorded changes: 11. Latest row: chain follow-up (wEx_of); ac_le; mom_num; exists_nonempty_nMore_upL (2026-11-22 04:53 UTC).
 <!-- dials:end -->
 
 ## Milestones

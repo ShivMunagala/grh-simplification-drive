@@ -84,6 +84,72 @@ def time_accepted(a, out, after, load, compile_module):
     shutil.rmtree(oldsrc, ignore_errors=True)
 
 
+def time_paired(a, out, after, load, compile_module):
+    """Time the accepted and the edited version of the same files back to back, so both see the same load."""
+    import random, shutil, subprocess
+    state = C.accepted_state()
+    commit = state['proof_commit'] if state else C.UPSTREAM_TAG
+    path = os.path.join(out, 'paired.jsonl')
+    done = load(path)
+    with open(a.modules) as fh:
+        modules = [l.strip() for l in fh if l.strip()]
+    pool_ = sorted(m for m in modules if after.get(m, {}).get('ok') and after[m].get('compatible'))
+    random.Random(a.seed).shuffle(pool_)
+    sample = pool_[:a.paired]
+    todo = [m for m in sample if m not in done]
+    print(f'{len(sample)} modules to time both ways, {len(done)} already done, {a.jobs} at a time', flush=True)
+    oldsrc = os.path.join(out, 'paired_oldsrc')
+    lock = threading.Lock()
+    t0 = time.time()
+    n = [0]
+
+    def work(m):
+        rel = 'src/' + m.replace('.', '/') + '.lean'
+        rec = {'module': m}
+        try:
+            text = subprocess.run(['git', '-C', C.PROOF, 'show', f'{commit}:{rel}'], stdout=subprocess.PIPE,
+                                  check=True).stdout
+            src = C.module_path(m, oldsrc)
+            os.makedirs(os.path.dirname(src), exist_ok=True)
+            with open(src, 'wb') as fh:
+                fh.write(text)
+            order = ['old', 'new'] if hash(m) % 2 else ['new', 'old']     # half the pairs in each order
+            for which in order:
+                if which == 'old':
+                    r = compile_module(m, os.path.join(out, 'paired_old'), src=oldsrc, overlays=[], mem_gb=a.mem_gb,
+                                       timeout=a.timeout, quiet=True)
+                else:
+                    r = compile_module(m, os.path.join(out, 'paired_new'), overlays=[], mem_gb=a.mem_gb,
+                                       timeout=a.timeout, quiet=True)
+                rec[which] = r.get('time_s') if r['ok'] else None
+                rec[which + '_wall'] = r.get('wall_s')
+            for d in ('paired_old', 'paired_new'):
+                for ext in ('.olean', '.ilean'):
+                    try:
+                        os.remove(C.module_path(m, os.path.join(out, d), ext))
+                    except OSError:
+                        pass
+        except Exception as e:                           # noqa: keep going
+            rec['error'] = f'exception: {e}'
+        with lock:
+            with open(path, 'a') as fh:
+                fh.write(json.dumps(rec) + '\n')
+            done[m] = rec
+            n[0] += 1
+            if n[0] % 100 == 0:
+                print(f'{n[0]}/{len(todo)} pairs, {time.time() - t0:.0f}s', flush=True)
+
+    with ThreadPoolExecutor(max_workers=a.jobs) as pool:
+        list(pool.map(work, todo))
+    times = {m: {'before': done[m]['old'], 'after': done[m]['new']} for m in sample
+             if done.get(m, {}).get('old') is not None and done[m].get('new') is not None}
+    json.dump(times, open(os.path.join(out, 'times.json'), 'w'))
+    tb, ta = sum(t['before'] for t in times.values()), sum(t['after'] for t in times.values())
+    print(f'finished: {len(times)} modules timed both ways back to back; total {tb:.0f}s -> {ta:.0f}s; '
+          f'{time.time() - t0:.0f}s', flush=True)
+    shutil.rmtree(oldsrc, ignore_errors=True)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--modules', required=True)
@@ -95,6 +161,10 @@ def main():
                     help='compile the accepted version of each module instead of the edited one, only to time it '
                          'under the same load: results go to <out>/before.jsonl, and <out>/times.json then holds '
                          'the time before and after for every module that has both')
+    ap.add_argument('--paired', type=int, default=0,
+                    help='time this many randomly chosen good modules both ways, accepted and edited version back to '
+                         'back in the same job, and write <out>/times.json from those pairs. Use this, not '
+                         '--accepted, whenever the machine was not equally busy during the batch')
     ap.add_argument('--sample', type=int, default=0,
                     help='with --accepted: time only this many modules, chosen at random among those that compiled')
     ap.add_argument('--seed', type=int, default=1)
@@ -123,6 +193,9 @@ def main():
         return d
 
     done = load(results_path)
+    if a.paired:
+        time_paired(a, out, done, load, compile_module)
+        return
     if a.accepted:
         time_accepted(a, out, done, load, compile_module)
         return

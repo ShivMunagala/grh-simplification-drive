@@ -104,9 +104,9 @@ Four workers, checks on the rented machine.
 | `…FwBase.coreBaseFrames_eq_modelFrames_enlargedCoefficientBase` | 183,461 → 130,175 | −925 | recorded |
 | `hc_count` | 218,057 → 90,234 plus two helpers of 4,191 and 5,299 | +75 | recorded |
 | `GlobalTheory.RootSumDual.rootSum_dual_edges` | 195,752 → 130,309 | −9 | recorded |
-| `GlobalTheory.LayerMove.exists_nonempty_nMore_upL` | 477,164 → 357,527 | +57 | passes pre-check; being judged |
+| `GlobalTheory.LayerMove.exists_nonempty_nMore_upL` | 477,164 → 357,527 | +57 | recorded |
 | `UpperTheory.cusp_sections_over_coefficient_extension` | 299,398, unchanged | unchanged | no gain: the nine field substitutions are needed for the closing step; restored |
-| `PositivityTheory.Rg.BcB.F.F0.wEx_of` | 808,132, unchanged | unchanged | not done: its file does not import the shared statement; needs `ex6_spec` moved to a file both import |
+| `PositivityTheory.Rg.BcB.F.F0.wEx_of` | 808,132 → 22,687 | +199 over three files | recorded: `ex6_spec` moved to a file this one imports, used through a small companion `ex6_imp` |
 
 The shared statement was judged on its own: source +1,203 tokens, written-out size −3,922,255 nodes. The nine
 files of the matrix lemmas and the four mixed proofs together: source −898 tokens, written-out size −1,084,105 nodes, time 129.9 s → 75.1 s.
@@ -132,6 +132,35 @@ Techniques added by this wave:
 - **Checker behaviour:** `simp only [D]` on a definition from another file creates the equation lemma
   `D.eq_1` in the current file, which other compiled files may refer to; `unfold D` does not. Keep whichever
   the original proof used, or the equivalence check will refuse the change.
+
+## Wave 5, 2026-11-22
+
+Four workers on the proofs whose expansion is most out of proportion to their source.
+
+| Theorem | Written-out size | Source tokens (file) | Outcome |
+|---|---|---|---|
+| `Formalism.L2.SG.Pf.CarrierXAll.ac_le` | 1,407,238 → 11,849 | −288 | recorded |
+| `GlobalTheory.MomNum.mom_num` | 574,846 → 14,082 | −38 | recorded |
+| `…EtaleIntegralityFacts.Lim.ampLimit` | 2,167,843 → 18,471 | +84 for all three | being judged |
+| `…EtaleIntegralityFacts.Lim.diff_key` | 1,526,913 → 14,934 | (same file) | being judged |
+| `…EtaleIntegralityFacts.Lim.diff_bound` | 408,773 → 2,695 | (same file) | being judged |
+| `GlobalTheory.ArcOfPoint.exists_arcIn_of_unif` | 500,408 → 92,251 | +12 | being judged |
+| `PositivityTheory.RgHe.A.Pf.bigProjP_of` | 457,279 → 60,796 | +32 | being judged |
+| `lev_twArgs`, `bor1`, `case1`, `case2` | | | worker still running |
+
+What these had in common: **an arithmetic tactic multiplying out a power.** `ring`, `linarith` and `nlinarith`
+expand any power of a sum they can see, and they see through names introduced by `set`. One power of degree 19
+cost over a million nodes.
+
+- Keep the base as one symbol: `generalize 2 * r + k + 1 = n` at the natural-number level before casting, or
+  `generalize x ^ (67 * (n + 1) ^ 2) = A` before `ring`. Do not `push_cast` the cast of a sum that is raised
+  to a power.
+- After `set x := e with hx`, add `clear_value x` when `e` contains a power, so that later `ring`/`linarith`
+  calls treat `x` as a plain variable. Prove the few facts that need the value once, with `rw [hx]`.
+  `set … with hx` also leaves `hx` in context for every `linarith`; `generalize` does not.
+- A large structure value built inline in `refine ⟨{ … }, ?_⟩` is written out once for every later goal that
+  mentions it. Bind it once: `refine let a : T := { … }; ⟨a, ?_⟩`.
+- To find the heavy step in a long proof: scratch copies of the theorem cut after each block, one run.
 
 ## What the size was made of
 
