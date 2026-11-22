@@ -181,9 +181,10 @@ def table_blocks(path):
         yield cur, buf
 
 
-def users_of(ids, exclude_modules, overlay_mods, overlay_removed, used=None):
+def users_of(ids, exclude_modules, overlay_mods, overlay_removed, used=None, per_user=None):
     """Which declarations of the accepted state (by module) mention any of the given ids?
-    If `used` is a set, the ids that are mentioned are added to it."""
+    If `used` is a set, the ids that are mentioned are added to it; if `per_user` is a dictionary, it
+    receives, for each module, the ids its declarations mention."""
     want = {str(i).encode() for i in ids}
     users = collections.defaultdict(list)
     sources = [(os.path.join(C.DATA_BASE, 'consts.tsv.zst'), exclude_modules | overlay_mods | overlay_removed)]
@@ -203,8 +204,12 @@ def users_of(ids, exclude_modules, overlay_mods, overlay_removed, used=None):
                     continue
                 if (f[7] and not want.isdisjoint(f[7].split(b' '))) or (f[8] and not want.isdisjoint(f[8].split(b' '))):
                     users[cur].append(f[9].decode('utf-8', 'replace'))
-                    if used is not None:
-                        used.update(int(x) for x in (want & (set(f[7].split(b' ')) | set(f[8].split(b' ')))))
+                    if used is not None or per_user is not None:
+                        hit = {int(x) for x in (want & (set(f[7].split(b' ')) | set(f[8].split(b' '))))}
+                        if used is not None:
+                            used.update(hit)
+                        if per_user is not None:
+                            per_user.setdefault(cur, set()).update(hit)
     return users
 
 
@@ -495,13 +500,28 @@ def main():
                 with_used.add((user, owner))
             return same
 
+        carried = set()
         if breaking_ids:
             left_out = report.setdefault('left_out', [])
             while True:
                 used = set()
-                users = users_of(breaking_ids.keys(), set(compiled) | set(removed), overlay_mods, overlay_removed, used)
+                per_user = {}
+                users = users_of(breaking_ids.keys(), set(compiled) | set(removed), overlay_mods, overlay_removed, used,
+                                 per_user)
                 users = {m: v for m, v in users.items() if m not in handled_users}
                 if bulk is not None:
+                    # A module whose source did not change can still use a statement that did. If it was
+                    # compiled on the other machine with every changed module it uses in place (the hashes
+                    # in with.json are those of the files judged here), its compiled file is judged with the
+                    # rest: it is recompiled, not edited.
+                    carried = {m2 for m2 in users
+                               if per_user.get(m2) and os.path.exists(C.module_path(m2, pre_new, '.olean'))
+                               and all(built_with(m2, breaking_owner.get(d)) for d in per_user[m2])}
+                    if carried:
+                        users = {m: v for m, v in users.items() if m not in carried}
+                        used = set()
+                        for m2 in users:
+                            used |= per_user.get(m2, set())
                     # Modules compiled elsewhere were each compiled against the accepted state, not against
                     # each other: one of them may still mention what another one changed or removed.
                     # The exception is a module that was compiled there with the changed module in place
@@ -549,13 +569,27 @@ def main():
             report['changed_or_removed'] = sorted(breaking_ids.values())[:200]
             report['users_of_changed'] = {m: v[:5] for m, v in list(users.items())[:50]}
             report['users_of_changed_count'] = len(users)
+            if carried:
+                pairs = []
+                for m2 in sorted(carried):
+                    if os.path.exists(C.current_olean(m2)):
+                        pairs.append((m2 + '@old', C.current_olean(m2)))
+                    pairs.append((m2 + '@new', C.module_path(m2, pre_new, '.olean')))
+                bulk.update(C.parse_consts(C.moddump(pairs)))
+                report.setdefault('recompiled_unchanged_source', []).extend(sorted(carried))
+                report['notes'].append(
+                    f'{len(carried)} module(s) whose source did not change use a changed statement; they were compiled '
+                    'on the other machine with the changed module in place, and their compiled files are judged too')
             if users and a.propagate and len(users) <= a.max_propagate:
-                todo = order_by_imports(sorted(users))
+                todo = order_by_imports(sorted(set(users) | carried))
                 handled_users |= set(todo)
                 print(f'  {len(todo)} modules use what changed; recompiling them')
             elif users:
                 report['incomplete'] = (f'{len(users)} modules use declarations that changed or disappeared; '
                                         f'they must be recompiled (use --propagate, or a larger machine)')
+            elif carried:
+                todo = order_by_imports(sorted(carried))
+                handled_users |= set(todo)
             breaking_ids = {} if todo else breaking_ids
 
     # What the recompiled modules register with Lean. A changed count of attributes, instances and

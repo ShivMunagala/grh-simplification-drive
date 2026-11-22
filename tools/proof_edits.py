@@ -941,6 +941,99 @@ def gen_projections(out, min_parts, min_nodes, tag='projections', skip=()):
         f'{len({e["module"] for e in edits}):,} files written to {out}')
 
 
+# A local step whose result nothing uses. The demand analysis (tools/demand.py) finds them in the compiled
+# proof: `have h : P := proof` where no later step mentions `h`, also not through a tactic that searches the
+# context. It gives the names; here the statements that introduce those names are found in the source and
+# deleted, one edit each. An edit is kept only if the file still compiles to the same statements and gets
+# smaller, so a name that is in fact needed (or was found in the wrong place) costs nothing.
+STEP_RE = re.compile(r"^(?P<lead>[ \t]*)(?:have|haveI|let|letI|set)[ \t]+(?P<name>[^\s:(\[{⟨]+)")
+ANON_RE = re.compile(r"^(?P<lead>[ \t]*)(?:have|haveI)[ \t]*:")
+
+
+def gen_unused_steps(out, table, max_modules):
+    """Edits that delete local steps whose result is not used. `table`: lines `module, declaration, nodes,
+    names` as written by the demand report; the modules with most unused nodes are taken first."""
+    t0 = time.time()
+
+    def say(msg):
+        print(f'{msg}  [{time.time() - t0:.0f}s]', flush=True)
+
+    want = collections.defaultdict(dict)                  # module -> declaration -> (nodes, names)
+    weight = collections.Counter()
+    with open(table, encoding='utf-8') as fh:
+        for line in fh:
+            f = line.rstrip('\n').split('\t')
+            if len(f) < 4:
+                continue
+            want[f[0]][f[1]] = (int(f[2]), set(f[3].split(' ')))
+            weight[f[0]] += int(f[2])
+    mods = [m for m, _ in weight.most_common(max_modules)]
+    say(f'{len(weight):,} modules in the table; taking the {len(mods):,} with most ({sum(weight[m] for m in mods):,} nodes)')
+    overlay_consts = os.path.join(C.DATA_OVERLAY, 'consts.tsv')
+    g = CONE.load_graph(C.DATA_BASE, overlay_consts if os.path.exists(overlay_consts) else None, (), say)
+    ranges = CD.load_ranges(g.patched)
+    edits, stats = [], collections.Counter()
+    for lo in range(0, len(mods), 2000):
+        text = texts_at(accepted_commit(), mods[lo:lo + 2000])
+        for m in mods[lo:lo + 2000]:
+            src = text.get(m)
+            if src is None:
+                continue
+            lines = src.split('\n')
+            starts = [0]
+            for l in lines:
+                starts.append(starts[-1] + len(l) + 1)
+            for decl, (nodes, names) in want[m].items():
+                r = ranges.get((m, decl))
+                if r is None:
+                    stats['declarations without a source range'] += 1
+                    continue
+                sp = split_decl(src, lines, r)
+                if sp is None:
+                    stats['declarations whose statement end was not found'] += 1
+                    continue
+                a, body_start, b = sp
+                first = src.count('\n', 0, body_start)
+                last = src.count('\n', 0, b)
+                for ln in range(first + 1, last + 1):
+                    line = lines[ln]
+                    if starts[ln] < body_start or ';' in line or '--' in line:
+                        continue
+                    mm = STEP_RE.match(line)
+                    if mm and mm.group('name') in names:
+                        pass
+                    elif 'this' in names and ANON_RE.match(line):
+                        mm = ANON_RE.match(line)
+                    else:
+                        continue
+                    indent = len(mm.group('lead'))
+                    end = ln + 1                              # the statement: this line and what is indented under it
+                    while end <= last and (not lines[end].strip() or len(lines[end]) - len(lines[end].lstrip(' \t')) > indent):
+                        end += 1
+                    while end > ln + 1 and not lines[end - 1].strip():
+                        end -= 1
+                    nxt = next((l for l in lines[end:last + 1] if l.strip()), None)
+                    if nxt is None or len(nxt) - len(nxt.lstrip(' \t')) != indent or nxt.lstrip().startswith(('·', '|', ')', ']', '}', '⟩')):
+                        stats['steps that are the last of their block, or not followed by a step at the same depth'] += 1
+                        continue
+                    old = src[starts[ln]:starts[end]]
+                    if starts[end] > b:
+                        continue
+                    stats['steps'] += 1
+                    edits.append({'module': m, 'theorem': decl, 'first_line': ln, 'first_col': 0,
+                                  'start': starts[ln], 'end': starts[end],
+                                  'old_sha': hashlib.sha256(old.encode('utf-8')).hexdigest(),
+                                  'body': '', 'tag': 'unused-step', 'size': nodes, 'tokens': CONE.count_tokens(old)})
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
+    with open(out, 'w', encoding='utf-8') as fh:
+        for e in edits:
+            fh.write(json.dumps(e, ensure_ascii=False) + '\n')
+    for k, v in stats.items():
+        print(f'  {k}: {v:,}')
+    say(f'{len(edits):,} edits in {len({e["module"] for e in edits}):,} files, {sum(e["tokens"] for e in edits):,} tokens in the '
+        f'statements to delete; written to {out}')
+
+
 def load_edits(path):
     per = collections.defaultdict(list)
     with open(path, encoding='utf-8') as fh:
@@ -1172,6 +1265,10 @@ def main():
         pj.add_argument('--min-nodes', type=int, default=20000)
         pj.add_argument('--min-saved', type=int, default=MIN_SAVED, help='levels of case split a rewrite must save')
         pj.add_argument('--skip', default=None, help='file naming modules to leave out, one per line')
+    us = sub.add_parser('unused-steps')
+    us.add_argument('--out', required=True)
+    us.add_argument('--table', required=True, help='module, declaration, nodes, names of unused local steps')
+    us.add_argument('--max-modules', type=int, default=3000)
     v = sub.add_parser('variants')
     v.add_argument('--edits', required=True); v.add_argument('--work', required=True)
     v.add_argument('--single-from', default=None); v.add_argument('--modules', default=None)
@@ -1192,6 +1289,8 @@ def main():
         gen(args.cmd, args.out, args.form, args.min_proof_tokens)
     elif args.cmd == 'shorten':
         gen_shorten(args.out, args.candidates)
+    elif args.cmd == 'unused-steps':
+        gen_unused_steps(args.out, args.table, args.max_modules)
     elif args.cmd in REWRITES:
         globals()['MIN_SAVED'] = args.min_saved
         skip = set()

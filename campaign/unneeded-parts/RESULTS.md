@@ -69,8 +69,16 @@ with such an argument, 1.02 million unused local steps.
 |---|---|---|
 | 33 | `GlobalTheory.Unf.unfoldings_of_chain` proves eight statements about period unfoldings as a tuple of eight citations. Its only user read the sixth and now cites that lemma directly | 152 declarations, −577,102 nodes, −27,474 tokens |
 | 34 | `GlobalTheory.DownLift.Sat.saturated` had three hypotheses that its proof introduced as `_` and never used. Its only user built one of them from `GlobalTheory.RawLift.rawLift_main`, the main theorem of the raw theta lift (injectivity upward, positivity of the inner product, spanning by parts, surjectivity of theta), and used that theorem for nothing else. The hypotheses are gone from the statement and the step from the user | 861 declarations, −2,587,854 nodes, −159,625 tokens |
-
 | 35 | Eight theorems that prove lists of statements (lengths of kernels and cokernels, bounds along ramified coefficient chains, lifting of points, facts about a host field, hypotheses on parameters): their users cite the lemma for the part they read. No statement changed | 672 declarations, −1,014,148 nodes, −61,839 tokens |
+| 37 | Second list, 13 files. `UpperTheory.V.Af.cuspSpectrumGL` (a tuple of three; both users read the third) and `CrystallineSemistableComparison.cstSmooth_of_etSide` (its users read the first part; that part's proof is split off into two lemmas) are bypassed. Two statements are trimmed: `UpperTheory.V.Loc.isType_and_isLocallyCrystalline_rz` stated two facts and all four uses read the second; `PositivityTheory.PlacePermOperatorBicommutantSpan.ei_inv` likewise. Two proofs lose a step whose result was never mentioned again | 361 declarations, −931,745 nodes, −42,279 tokens |
+| 38 | Third list (GlobalTheory), 22 files. Seven bundles bypassed (de Rham comparison, semicontinuity for a finite projective complex, Galois characters from Artin, and four others). For three more the needed part had no lemma of its own; one is split off next to the bundle (`stokes_dbar`, `rPointT_holds` and `genPointT_holds`, `recognition_of_uRecDvr`). `GlobalTheory.JetRoad.jetRoad` is trimmed from 14 conjuncts to the 9 its five users read | 319 declarations, −1,204,484 nodes, −58,102 tokens |
+
+Together: 2,365 declarations, −6,315,333 nodes, −349,319 tokens.
+
+Two points of the second list were not real (see below). In change 37 one file no longer makes two equation lemmas
+of definitions, because nothing in it unfolds those definitions any more; the judge used to count such marks and now
+compares them by name. In change 38 one user of the trimmed statement needed no change in its source; the judge now
+also takes the compiled file of such a module, when it was compiled with the trimmed module in place.
 
 ## What the measurement got wrong
 

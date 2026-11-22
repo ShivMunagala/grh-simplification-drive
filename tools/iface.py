@@ -37,6 +37,12 @@ AUX = re.compile(r"(\._proof_\d+(?:_\d+)*|\.proof_\d+(?:_\d+)*|\.match_\d+(?:_\d
                  r"\._aux_\w+|\.omega_nat|\.hcongr_\d+|\._eq_\d+|\.sizeOf_spec|\.injEq|\.inj|\.noConfusion\w*|"
                  r"\._nativeDecide\w*|\._cstage\d+|\._boxed|\._redArg|\._spec_\d+)($|\.)")
 
+# The two marks that let `dsimp` use a theorem proved by `rfl`, and the names of the lemmas Lean makes on
+# the way (they are compared by name where the dump gives the names, see compare_modules).
+DEFEQ_MARKS = ('Lean.backwardDefeqAttr', 'Lean.defeqAttr')
+HELPER = re.compile(r"(\.eq_\d+|\.eq_def|\.eq_unfold|\._simp_\d+(?:_\d+)*|\._abel_\d+(?:_\d+)*|\._ring_\d+(?:_\d+)*|"
+                    r"\._proof_\d+(?:_\d+)*|\.proof_\d+(?:_\d+)*|\.match_\d+(?:_\d+)*|\.congr_simp|\._auxLemma\.\d+)$")
+
 # Extensions whose entries cannot change how another module elaborates: source positions,
 # documentation, linter messages, bookkeeping about which imports were used, and the per-declaration
 # axiom cache. Everything else must have the same number of entries before and after.
@@ -148,10 +154,21 @@ def compare_modules(old_mod, new_mod):
         res['compatible'] = False
     if res['strict']:
         oe, ne = old_mod['ext'], new_mod['ext']
+        ot, nt = old_mod.get('tags'), new_mod.get('tags')
         for k in sorted(set(oe) | set(ne)):
             if k in EXT_IGNORED or k.endswith(EXT_IGNORED_SUFFIX):
                 continue
             if oe.get(k, 0) != ne.get(k, 0):
+                if k in DEFEQ_MARKS and (ot is not None or nt is not None):
+                    # (a side without any mark has no record of names at all)
+                    # The mark is what lets `dsimp` use a theorem proved by `rfl`. What other files can
+                    # see is which named theorems carry it. Helper lemmas (the equations of a definition,
+                    # lemmas made by simp) come and go with the proofs that need them.
+                    real_old = {n for n in (ot or {}).get(k, ()) if not HELPER.search(n)}
+                    real_new = {n for n in (nt or {}).get(k, ()) if not HELPER.search(n)}
+                    if real_old == real_new:
+                        res.setdefault('helper_marks', {})[k] = [oe.get(k, 0), ne.get(k, 0)]
+                        continue
                 res['ext_changed'][k] = [oe.get(k, 0), ne.get(k, 0)]
         ons, nns = set(old_mod.get('namespaces') or ()), set(new_mod.get('namespaces') or ())
         res['ns_added'] = sorted(nns - ons - {ROOT_ENTRY})

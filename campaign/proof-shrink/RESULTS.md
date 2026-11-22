@@ -292,6 +292,34 @@ What stopped the rest:
   apart; a shared eliminator does not typecheck there because the two records are equal only after every
   definition is unfolded.
 
+## Wave 8, 2026-11-22
+
+One proof, the largest declaration in the cone.
+
+| Theorem | Written-out size | Source | Compile time | Outcome |
+|---|---|---|---|---|
+| `GlobalTheory.HeightCounting.SideCopy.LamCopy.lam_copy` | 5,538,772 → 29,829 | +1,240 tokens (4,443 nodes per token) | 108.0 s → 2.7 s | recorded |
+
+It moves a statement from one family datum to a copy of it, and ran the macro `copy_cases`: two records
+of about 150 fields taken apart, dozens of equations substituted one by one, each restating the whole
+goal. The new proof follows `sigSpan_copy`: state the property once in terms of the 29 components it
+really mentions, prove it for any components equal to those of the first datum (the substitutions happen
+there, with nothing large in scope), and apply that to the components of the copy. `copy_cases` has no
+users left.
+
+What was new compared with `sigSpan_copy`:
+
+- **Bind the generic statement with a local `let`.** Each substitution then restates only the name applied
+  to the components. With the statement left in the goal the proof was 79,141 nodes, with the `let` 30,924.
+- **State the conclusion as a continuation** (`∀ G, (∀ w c chi, A → … → E → G) → G`) and not as an
+  existential with a conjunction: nothing has to be taken apart on one side and rebuilt on the other
+  (43,367 → 34,934).
+- **`And.imp_right (Exists.imp fun v => And.imp_left …)`** under binders in place of anonymous
+  constructors (34,934 → 30,924).
+- **Make the components implicit arguments of the local lemma**: the equality proofs determine them.
+- Components that are tied by a relation and not by an equation become extra variables with the relation
+  as a hypothesis; components that are proofs need no equation at all.
+
 ## Bulk sweeps, 2026-11-22
 
 The hand-made waves work on the largest proofs. Those are not where most of the size is:

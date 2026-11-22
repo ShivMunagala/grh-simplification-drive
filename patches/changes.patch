@@ -2696,6 +2696,9 @@ have hdvd := (KA.stab_dvd j hm a L hL).2
 == src/Development/AbelianVarietyTheory/Definitions/GlobalTwisting/ValidForConstructedPointClassesEventuallyWorking.lean 066219abb0caabf50a11fbe9f320ac8d5aa723adec2165a295b1323beb310910 d81481e9620fd1c31a58b287dd67be4b3a5fcf203012f520a6107e1af818a4b6
 @@ 1527 348 71
  by intros; apply _root_.GlobalTheory.EX.fc_large_of_sup <;> assumption
+== src/Development/AbelianVarietyTheory/Definitions/Jets/SurjectiveAppTopSqCube.lean 4531f007fa2ba99dbdb27aeaef51644fecc26baada68e151e99b167c8b20d318 36e44bb5aa83cdb1098c536706ddf7cfd2105cb8b13374bc81db1121b4eb1e0a
+@@ 3265 6 0
+
 == src/Development/AbelianVarietyTheory/Definitions/LatticeFrames/ExistsIsComOfOf.lean 5b1656bc9160ecf32dba199b54000372957922965e62b796d49cee1a930350f2 34bbdcc017d48a9631b554bc95d4bb538428d71ef04c685048356ef5726445e4
 @@ 2414 184 80
  intros; apply _root_.GlobalTheory.FinPl.OffTest.comb_single_zero <;> assumption
@@ -17110,6 +17113,9 @@ Proofs.DivisorProofs.ConeSeqExact
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IInfIzumiSmallValueIdealMapLeSpan.lean 51613dab25a49f6ea2b4f6445df5d50db8ec7340676324059dc6cbd642dac93c 098911cf43cde262c024a94c1edf1e32696440daa01e9328630b327bc6241bde
 @@ 1358 203 57
 @_root_.GlobalTheory.CompletionEmbed.algebraMap_injective
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IInfThRuleLeNuLocOf.lean f0726b62279a1308b0327081cd298401d2d7c0852079e811cca1e66ed29e63c0 2a15ced00cde9e583b8d960178a8e6eecedb65dd47359b0864574df6bef9ebdf
+@@ 6676 34 21
+PowGerm.rPointT_holds
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IdealAlongMonomialFamilyEqSpanMonomial.lean 4fed87e61e3993fe5880887fd24b14dc0b19e9e362b46c679885e14ebe5e2ca9 e4320e28f5f93e1a4ca0ac1a52dfb9e50c6d7e5293361a9c3fc7cc59d422602b
 @% 1862 915 3
 + 22
@@ -17402,6 +17408,19 @@ have hwt :=
 = 12241 59
 + 7
 2.2.2.2
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IntegralDelDbarZero.lean bb93839a59ec6dd1829df33c877851ff5c8b13fa62f843993500f22d42333735 302bef4e828d0f088db3d86a6ded56e1716a412e61632e198045a6a28356a83e
+@% 2424 0 7
++ 19
+theorem stokes_dbar
+= 2438 206
+= 2671 333
++ 4
+rw [
+= 3017 24
+= 3366 124
+= 3492 139
+@@ 3358 271 28
+exact stokes_dbar M n A η hη
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IntegralEqClassSumOfHom.lean cc1868d6a176360dbd7f61d0fdc8f57214ac6f29b7b583d52853265683398032 09a182cd4b7d6c98b62fb35dad63c4e8520ef3e5ddfdfe003da241660d8d3409
 @% 11466 62 3
 + 22
@@ -17437,13 +17456,17 @@ CuspFormEvaluations.ConnectionLinearInSection
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IntegralPointModelOverDvr.lean b5dd906c4465000396d1dcce9194b113a10ca4b996da57df903eae5edc78b165 d28ea3e56adda84afa4bbccebdf8e4e11fdb7a01ad635f0f25d9d7e620fc6975
 @@ 3614 28 74
  intros; apply _root_.GlobalTheory.exists_sabMap_of_base_eq <;> assumption
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IntegralRealPolyEqOfDbarCohomologous.lean 3712ffc7ec8721c16e004fa19b13e64e4d989dcadd6e9f05c76c681845d11df3 a52cf1390a0838549f83e2fc96c0f2399609794dfe8f45cddfc60528159b7e82
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IntegralRealPolyEqOfDbarCohomologous.lean 3712ffc7ec8721c16e004fa19b13e64e4d989dcadd6e9f05c76c681845d11df3 bc143a08a58354a1f9b3726b2ecef6a09d4c93a0bb35275292dd464750366e2d
 @% 1580 58 3
 + 12
 have hc := (
 = 1607 31
 + 5
 ).2.1
+@% 2979 51 2
+= 2980 36
++ 16
+_dbar M n A u hu
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IntegralSquaredThetaTermsTorusCoordinates.lean 71b9795f762b10e5c8324a4b3f5f449ea5b92ff884d9d0d1965cf48ad4a75ae6 af44401ebb4b303b1acc958ab239448815b9d0c5ff0bd682e9f31ce53c2189de
 @@ 2394 447 79
  intros; apply _root_.GlobalTheory.TorsionTranslate.exists_scale <;> assumption
@@ -23138,6 +23161,9 @@ hAdd, -, hQ⟩ := (
 = 2277 82
 + 5
 ).2.2
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TorsionTowerRecognition.lean 3d6cf964b77d5318065733f66034fec1b1e9e0912ec55f4fdd1baf8329912dba f30efc94161b41e742722328e3812c90bc4c13fe311f2c9898ebecc138d768b3
+@@ 11044 5 10
+of_uRecDvr
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TorusEmbeddingClosedAllFibres.lean 8ce172a331840492cac4043ed1f7040e4ac16b9fcc7ecd84682b42313be69e57 8f9151547a74558530094d75ddd0ff1b5c95a8335348dafd5459a6a7677eb32e
 @@ 1763 417 82
  intros; apply _root_.GlobalTheory.isPullback_overPullback_map_left <;> assumption
@@ -29810,6 +29836,17 @@ import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.CubeFramesMoveT
 = 1129 45
 + 27
 exists_chart <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/FormalGroupCharts/RosIdSt.lean 3ee83b9e70e135f93d41091c26fc2feb42dd235d496721e63686669ef3a4e68b c620454914f082cb7299bad105983e339277d24faf5725c1710737a8291eaedd
+@% 2204 76 1
+= 2234 26
+@@ 2491 69 0
+
+@@ 2624 55 0
+
+@@ 2785 12 0
+
+@@ 2855 96 0
+
 == src/Development/AbelianVarietyTheory/Proofs/FormalGroupCharts/RosatiGenOneMulStar.lean ee85fcdba3aaccb8dc6e1c40e17892bb6f74a56c2c1b516333920c7286eb7156 6562c29eaa01fd489b26ce64cd7880528edc8efe96ba503d6737df714cf46121
 @@ 218 0 87
 import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.RosatiCubicalAdditive
@@ -36723,6 +36760,9 @@ cmp, h1, h2⟩ := h.2.2
 == src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/HeckeChoiceFlatScalarConjTwist.lean 26c78bd1bd91e05df170dcf38d6c9c4d15fb3506746508824a113596ab186023 91f0bbfc8e29e70b511cd9074392b5d93d9908b8e5f435105db6d8f55e351162
 @@ 2518 3 0
 
+== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/HeckeOperatorPreservesSupLatticeRealSide.lean f4a3f69ce926e2a5ebac511b745f68a04afae9b83e1b0939ef39873a32fc9023 1ce3c19d76c8b02acdbb03b9e57eda15209648251b55fa5f7999d25c2f6d5453
+@@ 3935 23 42
+exists_ccIs_equivAt_serOf_oneMapRow_ofFive
 == src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/HeckeQuotientFrameChangeOfTriangularFrameChange.lean adf78c839f657631497b82082a002069ca09c470728c367d7ce1973771f4fa25 7e2b905ee494fbf15f9ca368409f9556d864be727770d7df4d6a352468b308d6
 @@ 3179 78 74
  intros; apply _root_.GlobalTheory.Frames.SecCalc.scal_mul' <;> assumption
@@ -36781,6 +36821,9 @@ g3
 = 3844 119
 + 11
 hD hN hX hY
+== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/HeckeTransformCuspFormsReadsCosetSum.lean 7494149067723b3b9e8b2b0d216d8a365b6e0b6b754aa95d51a4487b16e9a288 5508b7050db162ba15cc31713fd15f8a811733c6de8be2cb9b95c7e23a3e19d7
+@@ 3665 23 42
+exists_ccIs_equivAt_serOf_oneMapRow_ofFive
 == src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/HeightsoundQdPlacesUniformConst.lean 73bb8da17ef4bcffce1bbea78c4e9d4a8c0db936488ae1024537dcf922e72482 332acd146515bf03f10b7f139da23e877cef55e486dc01980555cc8850836c23
 @@ 8065 6 0
 
@@ -38912,6 +38955,9 @@ have hfE := (
 = 2091 69
 + 3
 ).1
+== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/StrictnessOfTied.lean ed35913e76dd74890d6b68d5a94125d037f37c41eb832bb5c6beab61580afeaa 378cb14a93859476290757f715187dbf05d33cf23778bac5e40d0b5980fc3d9d
+@@ 1898 60 50
+fun K _ LL _ => GlobalTheory.DRFil.strictAt T K LL
 == src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/SubOneBijectiveQuotientOfTopNilpotent.lean 0b3256d135e2b5b4fe326730c39aca4e2425996ac556b5fca038aac693eb0817 a15fb1844b051d95c773190a16742a6bb7f12f37a034d2ea40470a74cf1dac80
 @@ 3509 3 0
 
@@ -40665,6 +40711,17 @@ have h := (
 = 2894 49
 + 7
 ).2.2.1
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsEquivLift.lean 49ad36f45d2fb0c255ec88c887bb5d2af9cf4bb5536ca792e7f71b43f40d4124 680ea809e6b769f2ee247457059ca1506497eba88d263a146b15f67927232e10
+@% 6824 96 5
++ 43
+hcc₀⟩ := GlobalTheory.AdTh.CcEx.exists_ccIs
+= 7015 79
++ 67
+
+  obtain ⟨u, -, hser⟩ := GlobalTheory.RealGeo.exists_serOf_of_ccIs
+= 6877 43
++ 9
+ cc₀ hcc₀
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsExtendedAdelicDataWithIntertwinersOverEnla.lean f24cd6d20e4135d810d3967e8b466bb0f9742d1d538bf0fc2ad508d69effa228 56fafa09055d0c1af0dbb7decfe3d30c9359e30edf6d21b605d534ffbc22e449
 @@ 3475 129 107
 rI, -⟩ := h.2.2.2.2.2.2.2.2.2.2.2.2
@@ -41158,9 +41215,11 @@ have hq := (
 = 9874 25
 + 3
 ).2
-== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsTwistRingsCharactersClassGroups.lean 85793e372465e35de9ac216f6edef57588b2ff43e4f99bdd4ab0e054900e5276 595a80b8e675030266416fb4e3c291cd53d8651751882101ee341de2370a630b
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsTwistRingsCharactersClassGroups.lean 85793e372465e35de9ac216f6edef57588b2ff43e4f99bdd4ab0e054900e5276 1356b4ec871ced2f0300f8a389528741311c9ba129392ca172549010854a0309
 @@ 2853 403 96
  intros; apply _root_.Formalism.BasicNotions.Examples₂.PlacesToy.exists_prime_mem <;> assumption
+@@ 14748 125 69
+Tw := hostHeckeFrame_twist_galois_characters C hcc ha hE D.nd.g_split
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsTypeDimensionAndLocalIntegralsDegreeOne.lean 30559c95e7a45101a5798419ad3150c0c09dd4ea3e777d330b37537adf0ae977 b68313181fed1247f42af64f76a2b0b7bb6a7803cc364ac2114b16baa5f5fde0
 @@ 12276 157 88
  intros; apply _root_.Formalism.MainNotions.Gaps.SizeBoundsAlt.gc_det_mem <;> assumption
@@ -41640,6 +41699,24 @@ import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsIntSmulLe
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/InertNeighboursLiftsDoubleCosetTranslates.lean 4f96d2978938e8a0d4029498f6f2028f7011c8ba84b7eead5d09aa353563f48c 9fc73d7b1cfd43ff9458e496e4e388e58cb730832cf1f506fe8e16002ac6a9dc
 @@ 15860 74 68
  intros; apply _root_.Formalism.L2.Col.rlc_decoOf_val <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/InnerThetaRatEqLam.lean 2b028512d206f935d27450c6aba4514d8bf2d050d394daef434ad7439f39ea3c ac2928a35932231a07acfdbda00b962a3fe13f4037a71dcd4b9535ef7b21368e
+@% 16067 157 7
++ 7
+have hθ
+= 16083 33
+= 14354 135
+= 16167 47
++ 1
+(
+= 16087 27
+= 14247 51
+@% 25568 12 1
+= 14354 96
+@% 26758 30 3
+= 16087 27
+= 6384 51
++ 18
+ _ hΘ (fun x => hT
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IntegralFormsReferenceTupleExtensionSpan.lean 64e355485277549002f72337d0d762d23d710da592b018cbb5dd74288adb45b1 156a4efcd213e3b5ee242e8aef19612af8933cf7e52527edad6653ddc5fb0466
 @% 1745 0 2
 = 1265 68
@@ -41866,6 +41943,104 @@ theorem and19_last {p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12 p13 p14 p15 p16 p17 p
 
 @@ 18939 38 35
 have h1 := (key s (-a) (by ring)).1
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/LamCopy.lean c39ff6f3cb330ef9e75f9180a2caaedf56540b78f95b3a8d64baeb27c4308831 b3a13ed1010049500730c2e3041f89164dec775d1792c0a4440812c80efa8953
+@% 1340 1085 29
++ 5
+hf ⟨Z
+= 1376 26
++ 19
+let Ψ := fun R (H :
+= 599 28
++ 53
+ R) (Tau : Type) (eT : Tau ≃ R.Psi) (hc : Tau →
+     
+= 599 25
++ 567
+CParam R) (Om : Type) (iOm : Field Om) (aOm : Algebra H.E Om) (pl :
+      Formalism.GaloisCohomology.Places H.E Om) (T : Type) (l : T → ℕ) (O0 : T → Type) (c0 : ∀ i, CommRing (O0 i))
+      (O : T → Type) (cO : ∀ i, CommRing (O i)) (aO : ∀ i, Algebra (O0 i) (O i)) (S0 : T → Finset
+      (HeightOneSpectrum (𝓞 H.E))) (Lam : T → Type) (jL : ∀ i, Lam i → ℕ) (sL : ∀ i, Lam i → Bool) (s2 : ∀ i,
+      Lam i → ℤ) (Xv : ∀ i, Lam i → HeightOneSpectrum (𝓞 H.E) → O i) (RCG : T → Finset (HeightOneSpectrum (𝓞 H.E)) →
+      Type) (gR : ∀ i Q, CommGroup (RCG i Q)) (art : ∀ i Q,
+= 293 28
++ 1080
+.G H.E Om →* RCG i Q)
+      (th : ∀ i Q, Lam i → RCG i Q → FractionRing (O i)) (m : Fin R.m → Formalism.L2.Host.HChar H.E) (d d' :
+      Formalism.L2.Host.HChar H.E) => ∀ (d0 : ∀ i, IsDomain (O0 i)) (dO : ∀ i, IsDomain (O i)) (Oi : ∀ i,
+      Function.Injective (algebraMap (O0 i) (O i))) (NZ : T → Prop) (k : ∀ i, D'.LL0 → FractionRing (O0 i)),
+      (∀ i i', HEq i i' → (D.ntw.NonzeroIndexPlace i ↔ NZ i')) → (∀ i i', HEq i i' → ∀ x, HEq (D.ntw.emb0 i (e x))
+      (k i' x)) → ∀ G : Prop, (∀ w0 (c : Fin R.m → R.Psi → ℤ) (chi : Fin R.m → Formalism.L2.Host.HChar H.E),
+      Z.q0 = sInf {p : ℕ | p.Prime ∧ p % (sInf {p : ℕ | p.Prime ∧ ¬ p ∣ H.QS * H.q * H.d * (H.pde - 1) *
+      (H.pde' - 1) * Ideal.absNorm H.ccK} * (H.QS * H.q * H.d)) = 1 ∧ ¬ p ∣ Ideal.absNorm H.ccK} →
+      GlobalTheory.LamTie.PlacesOk H Z.q0 w0 → (∀ a, GlobalTheory.LamTie.IsAuxiliaryHeckeCharacter H w0 (c a)
+      (chi a)) → (∀ j a g, (Formalism.MainNotions.BlochKatoReduction.Gen.NFun R : ℚ) + 1 < (hc (eT.symm g)).e j + c a g) →
+      (∀ a, GlobalTheory.LamTie.TeichTriv H (chi a)) → (∀ i, NZ i → (∀ P,
+= 2348 26
++ 970
+below P).asIdeal ∣
+      GlobalTheory.LamTie.cond0 H w0 → P ∈ S0 i) ∧ ∃ v : ℂ →+* AlgebraicClosure (FractionRing (O i)), (∀ x :
+      D'.LL0, v (D'.what₂.embLL x) = ((algebraMap (FractionRing (O i)) (AlgebraicClosure (FractionRing (O i)))).comp
+      (IsFractionRing.lift (g := (algebraMap (O i) (FractionRing (O i))).comp (algebraMap (O0 i) (O i)))
+      ((IsFractionRing.injective (O i) (FractionRing (O i))).comp (Oi i)))) (k i x)) ∧ (let W := (fun (u : ℂ →+* AlgebraicClosure
+      (FractionRing (O i))) lam (j a : Fin R.m) (s : ℕ) => let χ := m j * (if l i = H.pde then d' else d) * (chi a)⁻¹;
+      (j.1 + 1 = jL i lam ∧ (s2 i lam = 2 * (s : ℤ) ∧ 1 ≤ (s : ℤ) ∧ (s : ℤ) ≤
+      (Formalism.MainNotions.BlochKatoReduction.Gen.NFun R : ℤ) + 1) ∧ ∀ P, P ∉ S0 i → algebraMap (O i)
+      (AlgebraicClosure (FractionRing (O i))) (Xv i lam P) * u ((Formalism.L2.Host.HChar.val χ P : ℂˣ) : ℂ) = 1) ∧
+      ∃ y : AlgebraicClosure (FractionRing (O i)), y ≠ 0 ∧ ∀ Q, ((∀ P ∈ Q,
+= 599 24
++ 57
+IsSplitPl H P) ∧
+      Disjoint Q (S0 i) ∧ ∀ P ∈ Q, ∀ P',
+= 599 24
++ 101
+IsConjPl H P P' → P' ∈ Q) →
+      let cq := GlobalTheory.CMVal.condQ (GlobalTheory.LamTie.cond0 H w0)
+= 2348 26
++ 177
+belowSet Q);
+      Finite (GlobalTheory.CMVal.PicO cq) ∧ ∃ (r : GlobalTheory.CMVal.PicO cq →* RCG i Q) (t :
+      GlobalTheory.CMVal.PicO cq → ℂ), (∀ P, P ∉ S0 i → P ∉ Q → ∀ σ :
+= 293 28
++ 16
+.G H.E Om,
+     
+= 293 28
++ 18
+.IsFrob (pl.1 P) (
+= 294 27
++ 102
+.normV P) σ → r
+      (QuotientGroup.mk (GlobalTheory.CMVal.unifAt P)) = (art i Q σ)⁻¹) ∧ (∀ q,
+      
+= 2350 24
++ 1519
+IsClassTerm (GlobalTheory.LamTie.phi H) s (fun g => (⌊(hc (eT.symm g)).e j⌋ + c a g - s).toNat) cq χ q.out
+      (t q)) ∧ ∀ δ, algebraMap (FractionRing (O i)) (AlgebraicClosure (FractionRing (O i))) (th i Q lam δ) = y * u
+      (∑ᶠ q ∈ {q | r q⁻¹ = δ}, t q)); (∀ lam, ∃ j a s, W (if sL i lam then v else v.comp (starRingEnd ℂ)) lam j a s) ∧
+      ∀ j a (s : ℕ) b, 1 ≤ s → s ≤ Formalism.MainNotions.BlochKatoReduction.Gen.NFun R + 1 → ∃ lam, sL i lam = b ∧
+      W (if b then v else v.comp (starRingEnd ℂ)) lam j a s)) → G) → G
+  have key : ∀ {R H Tau eT hc Om iOm aOm pl T l O0 c0 O cO aO S0 Lam jL sL s2 Xv RCG gR art th m d d'}, D.R = R →
+      HEq D.host H → D.what₂.Tau = Tau → HEq D.eTau eT → HEq D.hc hc → HEq D.nd.Om Om → HEq D.nd.instOm iOm →
+      HEq D.nd.algOm aOm → HEq D.nd.plOm pl → HEq D.ntw.Tw T → HEq D.ntw.l l → HEq D.ntw.O0 O0 → HEq D.ntw.crO0 c0 →
+      HEq D.ntw.O O → HEq D.ntw.crO cO → HEq D.ntw.algO aO → HEq D.ntw.S0 S0 → HEq D.ntw.abelian₂ Lam → HEq D.ntw.jL jL →
+      HEq D.ntw.sideL sL → HEq D.ntw.s2 s2 → HEq D.ntw.Xv Xv → HEq D.ntw.RCG RCG → HEq D.ntw.grpRCG gR → HEq D.ntw.art art →
+      HEq D.ntw.th th → HEq Z.C.mu0 m → HEq Z.C.del d → HEq Z.C.del' d' → Ψ R H Tau eT hc Om iOm aOm pl T l O0 c0 O cO aO S0 Lam jL sL s2 Xv RCG gR art th m d d' := by
+    intros; subst_vars
+    exact fun _ _ _ NZ k hn hg G kk => kk Z.w0 Z.c Z.chi hq hOk.places hOk.aux hOk.big hT fun i hi => (hF i
+        ((hn i i .rfl).2 hi)).imp_right (Exists.imp fun v => And.imp_left fun t1 x => (congrArg v
+       
+= 1506 24
+= 2282 27
+= 2340 40
++ 654
+D.ntw i)
+        (eq_of_heq (hg i i .rfl x)))))
+  exact key h.cp.gal.R h.cp.gal.host h.cp.Tau h.cp.eTau h.cp.hc h.cp.gal.Om h.cp.gal.instOm h.cp.gal.algOm
+      h.cp.gal.plOm h.cp.set.Tw h.cp.set.l h.cp.set.O0 h.cp.set.crO0 h.cp.set.O h.cp.set.crO h.cp.set.algO
+      h.cp.set.S0 h.cp.set.abelian₂ h.jL h.cp.set.sideL h.s2 h.Xv h.cp.set.RCG h.cp.set.grpRCG h.cp.set.art
+      h.cp.set.th hf.mu0 hf.del hf.del' D'.ntw.twistBaseCoefficientRing_isDomain D'.ntw.domO D'.ntw.O_inj
+      D'.ntw.NonzeroIndexPlace (fun i x => D'.ntw.emb0 i x) h.cp.inW1 h.cp.emb0 _ fun w0 c chi p0 p1 p2 p3 p4 p5 =>
+      ⟨⟨cf', Z.q0, w0, c, chi⟩, ⟨p1, p2, p3⟩, p4, rfl, p0, p5⟩
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/LatticeIffIntegralWeylCoordinates.lean 0fa1a1c16439a7bde477b0cc5f58bb5c801a64851c5974e2ff40ee954135a4f0 9f8136320de6a87e1499de9ef6308429866330273470bb4a31b95d54af9f3ba5
 @@ 2522 587 118
  intros; apply _root_.Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.S0.rational_span_map_surjective <;> assumption
@@ -43331,6 +43506,9 @@ Proofs.JetHarmonics.LowKSubSingleSqrtCkvLe
 == src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/CardOrthogonalIdempotentsLeNcardPrimesOver.lean 70aaba15aee1c4b325d5b0f7ba5995911a2a452c51e38d9562e62c0780b0b249 a5385dd5e9a2abd82192586e0cd8ca5c4d47a01a5f43ea54eb3530a7daf488b4
 @@ 991 18 13
 have h := h.2
+== src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/ChartFromPointDatumOfLaws.lean 2b4ab1820e9296ab4a7f714db96930844acd2db59c10419439382696cf71fe86 ba90a7c7b23073b1acd38d474ec93b989a582bdc336331d5ae6c5c6afbbf1516
+@@ 9314 6 0
+
 == src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/ChartHatCoeffBounds.lean 9a74fc5ad943ae046619ab9e02f080ee6d96a0cd3aafcd10a880778dcf890844 096fa219866e9ca1a5a7ab1408dcefa544b7acb645d239adc03a98a04b628761
 @% 10422 58 3
 + 14
@@ -43514,14 +43692,14 @@ have hα := (
 <;> assumption
 @@ 5623 124 72
  intros; apply _root_.GlobalTheory.MomOne.UW.analyticAt_y <;> assumption
-== src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/DepthBoundFromCharactersPointDatum.lean 6d3c06ebd74a079f583531c8cc86086694452187f7d18b6ee5bf89e22698dcf6 5af37b1d502f9b295dec2bebfcab1e465dfe3576dc3f2dc7004de63cad4b9dba
+== src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/DepthBoundFromCharactersPointDatum.lean 6d3c06ebd74a079f583531c8cc86086694452187f7d18b6ee5bf89e22698dcf6 275ce781d9f4e09c1393d55190cd92b7bb14d687915bcd27d54da058e6ca594a
 @% 5807 70 3
 + 3
 hz0
 = 5844 36
-+ 78
-obtain ⟨jS, jX, hz1⟩ := hz0.2.2.2.2.2
-  have jB := hz1.2.2.2.2
++ 68
+obtain ⟨jS, jX, hz1⟩ := hz0.2.2
+  have jB := hz1.2.2
   clear hz1 hz0
 == src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/DepthTableGoodPrimeLeaf.lean 41e10df2e106190fda0b3d3ed94f7a865fa2239dfd2f9dcd98f8988acc77a84f b1f6a0be9a1094416e49f2de31028a242a14df4cc9a596bc081eac1902297384
 @@ 941 80 78
@@ -43871,6 +44049,12 @@ have hRk := hR'.2.1
 = 5415 38
 + 30
 GBasic.Hpk_herm <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/IInfThetaGeneratorsLeLocalDepthPrimeToLevel.lean f09b992ccd188b2fbd8814c6562531301a07229b9c96c28d164f191d80d9faf9 d8bb6d88a1f532466b32d4b985c1b5218c05dfedb4476ab3aaa4e34517a75f44
+@@ 5976 34 21
+PowGerm.rPointT_holds
+== src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/IntegralChartColumnsToTupleHarmonicValues.lean 9df783add6cd24ad511335134ef9f4aa7890890569cce8b682b5707455c7629c 861ed57e960d7df9125ad7fef9f6f7dbc48af8e41a4da787a46ca8ca916e54e0
+@@ 4005 10 0
+
 == src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/IntegralWeierstrassChartXyUnitSeries.lean 9806316072a7f2e2a8c7dd4e33567d0e50ea8d3f93a9104d435dbea799a12cc9 58938752ccf0ebc42e3e7e197c22eeac3c86aee34220143a119d5780c3e0b0aa
 @% 7151 79 3
 + 24
@@ -44164,6 +44348,54 @@ GBasic.Hpk_herm <;> assumption
 @@ 5590 35 38
 ⟨hz, hn, -⟩, hR, hp, -⟩ := h.2
   clear
+== src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/PointStatementsOnCopiesHold.lean 1da60f77bbd00e021baae6641418d94843b9c87d772e018d7645b04e885b98e4 1b96eb15b419ede1894f4b7abc746f12ce12660beb612a7b440682bcdacc5c22
+@% 1888 0 27
++ 37
+theorem rPointT_holds : RPointT :=
+  
+= 2160 33
+= 2055 26
++ 2
+.1
+= 2054 27
++ 4
+.2.1
+= 2054 27
++ 10
+.2.2.1
+   
+= 2054 27
++ 8
+.2.2.2.1
+= 2054 27
++ 8
+.2.2.2.2
+= 2094 57
++ 40
+
+theorem genPointT_holds : GenPointT :=
+
+= 2214 38
+= 2055 26
++ 2
+.1
+= 2054 27
++ 4
+.2.1
+= 2054 27
++ 10
+.2.2.1
+   
+= 2054 27
++ 8
+.2.2.2.1
+= 2054 27
++ 8
+.2.2.2.2
+= 2094 57
++ 1
+
+
 == src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/PointwiseBoundCapelliEigenfunction.lean 46ca9f29127a9f0d3047ae94fb011ded984331b65ab9365ac20bc6269638be80 a956147d09e466115ba0a69046e893b75a657ce8a5ae78f917697eb4979c6bc6
 @@ 3396 19 18
 l, hl', -⟩ := hc.2
@@ -44333,6 +44565,9 @@ mu R hR).2.2.2
 @@ 4552 21 30
 h1, hmul, -⟩ := hF.2.2
   clear
+== src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/ThetaGeneratorsLeastValueOverLevelPrime.lean 85148c93774e2ca72144dcb2e4c7017b014f44e7a68262441939ed75c3d844a1 140e011712e79a4c6107f826a8f47fa705c59edb832e0fd8c44630334a3d46a0
+@@ 17924 36 23
+PowGerm.genPointT_holds
 == src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/ThetaLawsUnitPeriod.lean 9f114c13f3be9bda6987651664c4b7871f934f9f23efb2782278e53c89ce3041 846d057af12cc29ec4113d63ab1302dffd38f1e07ef6e2b2d3f108ba056f1628
 @% 2387 61 3
 + 20
@@ -44439,6 +44674,64 @@ by intros; apply _root_.GlobalTheory.HatNF.PtBBasic.nv_nonneg <;> assumption
 = 10682 38
 + 7
 ).2.2.2
+== src/Development/AbelianVarietyTheory/Proofs/ModuliProofs/AdmissibleBaseOfCompleteDvr.lean 19311fe9447cec58819d3d2a848c3df7ce5fe9b79d8edf60a6d9e8ae9d65b8ec 2281f3cde1552f0214c60b9087085a51e93fdb3bb083a7b4f7aafeb0194f0cc7
+@% 19535 0 45
++ 66
+theorem recognition_of_uRecDvr : URecDvrSt → RecognitionSt := by
+ 
+= 20065 84
+= 9700 65
++ 13
+haveI := hV.1
+= 11958 38
+= 20273 35
+= 20310 86
+= 20398 99
+= 20499 72
+= 20573 83
+= 20658 160
++ 14
+hI n hn ho h1
+
+= 20836 163
++ 19
+ν₀' hI' n hn ho h1
+
+= 21022 50
+= 21074 51
+= 21127 34
+= 21163 31
+= 21196 103
+= 21301 103
+= 21406 28
+= 21436 130
+= 21568 69
+= 21639 27
++ 11
+rintro rfl
+
+= 21681 123
+= 21806 40
+= 21848 32
+= 21882 64
+= 21948 87
+= 22037 65
+= 22104 98
+= 22204 34
+= 22240 36
+= 22278 37
+= 22317 39
+= 22358 44
+= 22404 120
+= 22526 119
+= 22647 108
+= 22757 28
+= 22787 58
+= 22278 35
+= 22884 40
+= 22926 62
+@@ 20066 2920 28
+exact recognition_of_uRecDvr
 == src/Development/AbelianVarietyTheory/Proofs/ModuliProofs/AlgebraMapSurjectiveOfUnramifiedOfUniquePoint.lean 1548bd494cd41800375db40b252c2294f0285a3a19a6ae0f4ccf2d289337ba5b 5ab32326a4fea3848b8dfd17a3ec358b3559ddaf57b355406ab18872574d7337
 @% 3067 1163 4
 + 14
@@ -56862,11 +57155,16 @@ hΨ, hs0⟩ := (
 + 8
 have hfr
 = 1603 37
-== src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/CrystallineOrdinaryIdeals/QcontDual.lean 44036cebb55c23d4937d73c26b98e7a5a016595b2a8724e4fc37d7442684e3c2 2b27308acbde8725bb1e02d75b96add867673c99c03e54cbd730c686059dd744
+== src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/CrystallineOrdinaryIdeals/OrdinaryLocusIdealLeKerOfIsBasePoint.lean b139dbaaa912d98db5fb2efc64ad261161869a43c77b581c1249923b126c4f1e 84befb3ccdc2b6bb270126456e9b92750b8780105c701ece0a5db65c9c73ab45
+@% 4213 42 1
+= 4214 38
+== src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/CrystallineOrdinaryIdeals/QcontDual.lean 44036cebb55c23d4937d73c26b98e7a5a016595b2a8724e4fc37d7442684e3c2 2ba46f81b3de2bc01d21fad9a8105577980bcda04d4119fedfc5adf58427866d
 @@ 1447 73 85
  intros; apply _root_.GlobalTheory.OrdLoc.OrdinaryEmbeddings.push_base <;> assumption
 @@ 1782 83 87
  by intros; apply _root_.GlobalTheory.OrdLoc.SmoothPushforward.push_cont <;> assumption
+@% 4711 42 1
+= 4712 38
 == src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/CrystallineOrdinaryIdeals/SaturatedOrdIdealPointsIsLCrystalline.lean 30f7ede2f8ea63dc6e62aef99e5b054e24940eb10240512032d2bf2d5b21f5c7 f362a34754b301c38b8d313cb1f86725550ff4d2515a0cd68261bfdaeec60546
 @% 1455 78 3
 + 14
@@ -56874,6 +57172,11 @@ have hemb := (
 = 1484 49
 + 7
 ).2.2.1
+== src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/CrystallineOrdinaryIdeals/SaturatedOrdinaryIdealTangentFinrankEqTwelve.lean 2e605d1005c98b22cb5d7a49db13df6ddea6f975ca70d6abaf74bd35a5774708 1fd6ee6f2ee03a88c4373ff6b75334683f80aac9058f05b47c385afef56e638e
+@% 8224 42 1
+= 8225 38
+@% 14237 42 1
+= 8225 38
 == src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/CrystallineOrdinaryIdeals/SaturatingElementUnramifiedTwistEqPowMulUnit.lean e9db1a104b6acdd84917922de9645fae28ca16f9061d7bf85c566e1fb68199df d81c1930e2764e6582ca3cea8c5a80dec97536067461734456a765eadc4e326f
 @% 4164 77 3
 + 13
@@ -58641,6 +58944,9 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CardFiberEqOfSumEq
 == src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/TTypeVLoc.lean 2fe9611510a98c41ff0b5c150027d70753cd0b224fdc81412bdf3dc26371ff57 b9bfbce011bef3af95f2e42f3a8640cbea231f8a0a4b3331d414349c1ad3b845
 @@ 1826 969 87
  intros; apply _root_.UpperTheory.Reformulated.B.Qf50.multiset_eq_of_sum <;> assumption
+== src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/TemperedProductOfSquareIntegrable.lean 66abeb3daad4607158e6d636f538467d6d75625037074f6c46f38201efbb352c 8a42874fed0d1a9238dd867583e53c1deef28e82055a9e20b47fd8df48dc400f
+@@ 24216 21 129
+KernelIndexFullLattice.partC UpperTheory.V.KernelIndexFullLattice.splitEq_holds UpperTheory.V.KernelIndexFullLattice.brCusp_holds
 == src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/TwistInvarianceAutomorphic.lean 916404ee07ada117ca3d5f3bb3b29eca6837d3bfaeaa5be894aa853e6b95ee2b fe739aa01101a250b5b179bcab20175fd54a55b31e041ff0a353bc4c1c4e17c3
 @@ 5657 313 85
  intros; apply _root_.GlobalTheory.TripleLocal.frobConj_natCast_notMem <;> assumption
@@ -58903,6 +59209,18 @@ by intros; apply _root_.GlobalTheory.MemLoc.FrobLaws.norm_gal <;> assumption
 == src/Development/AutomorphicArithmetic/AutomorphicVarieties/PadicHodgeTheory/IsCrystallineTriangularIffMemFiniteCocyclesOfCha.lean f35f36dd88aa128ec1bd0d99320d847d59dbf076c87bfa471b80ebc1ec325dcd 20ada024c6acc3f82bed61cf32d0696bb738bd01cfc6d17723efe538ad8830ae
 @@ 3975 26 23
 have hz' := (coc hρ').2
+== src/Development/AutomorphicArithmetic/AutomorphicVarieties/PadicHodgeTheory/IsTypeAndIsLocallyCrystallineRz.lean 557fcc8cbcd8a7a4a4a3fa704d1f3dadd2607a664afb1071352e1f9ec6c6923c 47af85c3e7b341510cdb6f2952c36862d2d5fff31d87057d57152aee6825105b
+@@ 6454 20 0
+
+@@ 7276 252 0
+
+@@ 7585 57 0
+
+@% 8737 1846 3
++ 7
+exact ⟨
+= 8796 35
+= 8835 45
 == src/Development/AutomorphicArithmetic/AutomorphicVarieties/PadicHodgeTheory/LatticeCochainsFinGenOfFinLevel.lean dda6da3a77bcf88da61bcd91d697867f5b612b138787227a63e9137d0c038cb8 22a676c21a1cb17a002a26f2133fca254bbe7adf1b995fd880fddc42abe1c642
 @@ 5606 3 0
 
@@ -60315,6 +60633,36 @@ glue
 == src/Development/AutomorphicArithmetic/CommutativeAlgebra/EtaleCohomology/MapUSharp.lean 6b2abf80af1b390b8f1eecfb43414a5708d633bd46a14b2ed452d6c5601f9eee 4c7838120e7be7692f08dfa9d363963e9d30088231d93217c9adb1e32d73062b
 @@ 13836 153 84
  intros; apply _root_.GlobalTheory.CompanionTheory.PAlgNat.mapU_sharp <;> assumption
+== src/Development/AutomorphicArithmetic/CommutativeAlgebra/EtaleCohomology/SmoothModelCrystalline.lean f841cee342225f1bec07958d2c9b2184b492482faa0919ac4602355bbb25598d 18291e68aae328cfec5ab55f6318471814a29d471689f42dd0741084a7a75fb0
+@% 752 125 19
+= 694 32
++ 31
+smoothModelCrystalline_of_seamS
+= 751 34
++ 17
+seamS_of_chapters
+= 693 33
++ 5
+glueL
+= 693 33
++ 5
+glueE
+= 693 33
++ 5
+glueB
+= 693 33
++ 6
+factsC
+= 693 33
++ 5
+resEx
+= 751 35
++ 10
+hapters_of
+= 693 33
++ 10
+Pb.pSeam))
+= 802 72
 == src/Development/AutomorphicArithmetic/CommutativeAlgebra/EtaleCohomologyExcisionAxiomHolds.lean 5de824a9e1cf92c6bb19e41461f1a51c7d6a9f53e87c0c4660ea0da02e815888 c2b1fe33584645c1067045e453cc2b75c93f72b14167c5b3891f107a69eccc74
 @% 2453 95 3
 + 9
@@ -62473,6 +62821,37 @@ have hE2 := (
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/CrystallineTowers/BcCover.lean 11c313a39b1a16d07358c8ebd59186052cf996dce8620ac41d170cb1223f0857 c56c72c570710a6e5e43991b0ddf31e3c6cde8f8b58ba4d45a8bab5b5fd1290f
 @@ 5843 26 23
 have ha := (id C.spl).1
+== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/CrystallineTowers/Closed.lean aaa579c79173d25139305fde926653cec98247bd0b93dcd20a811a4224677f11 8362f91b33d545c832707cabc85e1af0aba9ab167606e21b9669142e724d531d
+@% 575 11 19
++ 1
+(
+= 389 32
++ 33
+smoothModelCrystalline_of_seamS (
+= 389 32
++ 17
+seamS_of_chapters
+= 388 33
++ 5
+glueL
+= 388 33
++ 5
+glueE
+= 388 33
++ 5
+glueB
+= 388 33
++ 6
+factsC
+= 388 33
++ 7
+resEx (
+= 389 32
++ 11
+chapters_of
+= 388 33
++ 22
+Pb.pSeam)) HT.etSideS)
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/CrystallineTowers/CrysStep.lean f399c52d01432ad23721a8824ebe15f27b0652f14f55f869ec86a5b58d3af3fc 1a2a837fabfebf8516e4109829fc7f17b5a89f1e71a76f11200123389b14dcc9
 @% 1751 85 3
 + 3
@@ -66183,6 +66562,9 @@ have hT := hX.2.2.2.2.2.2.2.2.2.2.2.1
 == src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EvPSizeRows.lean 7f9022cd8a59743acff03be7d05fc8f7ac05a96812318eb0e728806d9f83a155 ce97c7641d8239f12a0ab2b764dd68da9d529fbe6d611ddd944f3359f077f87d
 @@ 1829 3 0
 
+== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean 246b74eeb03dae250c45b46c155b3590cb53c2bac86f5e35f4b74338db487068 afccb40607e506b0900dd2ead25e2e1bbd52aadafa6f3ff8d22d397827bd07b4
+@@ 30382 21 129
+KernelIndexFullLattice.partC UpperTheory.V.KernelIndexFullLattice.splitEq_holds UpperTheory.V.KernelIndexFullLattice.brCusp_holds
 == src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExOfClaims.lean 89a2290bb1a6ba184738e1874332d58e1971059c21bb733c844c3b89ac8ead1a 9b1aa2250ab697f928603faed4540fe68dfa030d4d7873b4813a06db2c7ceb37
 @@ 3911 21 29
 Λ, hΛ⟩ := hFd.2.2.2.2
@@ -66290,6 +66672,11 @@ hn, ht, -⟩ := (
 == src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/FamilyChars.lean 3e199454b32b4560998dc07b73aa11f15812f099af8586ab12aaaec689d795b4 299c613f89520fd6cee702ddd00fec06d77c79b2f2e26e051888d9da2b3d3ff9
 @@ 2985 212 45
 @_root_.GlobalTheory.TupChars.charUnramAt_eta
+== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/FiniteTriplesSatisfyCondition.lean cf354308de36b9d2be737c373254bab8c4853c8d8e37d8c840d22b32a4e12c02 92481947a34a43db9c7b9450d0dcf6b36333079e29005de7e66e247ba62a2734
+@% 2767 72 2
+= 2768 27
++ 42
+IsGaloisTripleOfExpansion.allGood G.triple
 == src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/FlatExistsAtCore.lean 5aac6ecdcf3deaae882131d5c28235161ea73be43ec8843a5f8d18f3545da5dd 0ecc5edda89bf4ad45a8f7412ce7a1caa485ba3d1efbfb4f29e80910dab13245
 @% 1774 119 3
 + 13
@@ -66297,6 +66684,16 @@ have hDC := (
 = 1799 94
 + 3
 ).1
+== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/GaloisInputs.lean 725797f6c8f825349fd8fdb8b35a31ed939cfa4d24fdd4fe7d4fb34520955e76 179e508bc98788c91240f9f8c6546c12a076f202ee918c880d491916aafc89c5
+@@ 2764 80 0
+
+@% 3050 14 4
+= 2777 27
++ 42
+IsGaloisTripleOfExpansion.allGood G.triple
+= 3079 26
++ 49
+Triple.IsGaloisTripleOfExpansion.sig_all G.triple
 == src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/GaloisRepDefinedOverCoefficientField.lean 0087b4d0147a17e0d2ba2d238bd192d99949f475a1274b8b78ca002e3ef88893 f1783015f9f4ab39d7eb0d3a91a4a8de81aab7ec7087c657c040155cddd75505
 @@ 2366 31 28
 have hX := (hF' hKP T w Z).1
@@ -82892,6 +83289,42 @@ have hint := (
 == src/Development/WeilBound/CoreStatements/PadicHodgeComparison/EtaleCohomologyComparison/AcrisKummerUnits/TwistAcrisZeroPreservesFiltration.lean 599f4f6190f784ab116740d3192352f1db9f05cc5d07e77f3b807e5ed53d81ab 33ff6abccaa6c42101d6b83be86a00388abc2c0ea26fc373f8ae6a3c0a3e073c
 @@ 1687 28 109
 by intros; apply _root_.GlobalTheory.CompanionTheory.PerfFil.GradedFiltration.mkAcr_surjective <;> assumption
+== src/Development/WeilBound/CoreStatements/PadicHodgeComparison/EtaleCohomologyComparison/BocksteinBaseChange/CstSmoothOfEtSide.lean a9a735796dd735ec54a60d2a9c3b67f7ff7e889cd2607ce8de362e270d702462 3aacaf06bbc0ff21d4dbb06d07db02bafda750e9ae21041e097e429cf19fe046
+@% 1025 0 17
++ 25
+theorem seamS_of_chapters
+= 1052 83
++ 43
+ : Chapters) : SeamS := by
+  intro l _ K _
+
+= 1225 44
+= 1271 67
++ 42
+obtain ⟨r⟩ := hX l K
+  obtain ⟨F⟩ := h4 r
+
+= 1386 108
++ 14
+rw [← e] at F
+
+= 1512 37
+= 1551 27
++ 101
+
+theorem smoothModelCrystalline_of_seamS (hS : SeamS) (hI : EtSideS) : SmoothModelCrystalline := by
+ 
+= 1603 31
+= 1636 49
+= 1687 64
+= 1753 103
+= 1858 71
++ 1
+
+
+@@ 1192 736 93
+= seamS_of_chapters gL gE gB hC hX h
+  refine ⟨smoothModelCrystalline_of_seamS hS hI, ?_, ?_⟩
 == src/Development/WeilBound/CoreStatements/PadicHodgeComparison/EtaleCohomologyComparison/BocksteinBaseChange/SmoothGaloisGeometry/ConnectedSpacePullbackOfIsIntegral.lean ba73312e3a56ff2184bfb0174bc0433904883f4659cd0076e04e5e43ee536832 792c3cdd7609b37f272c49a354566039b7c3d7f5dd08ae31f9dc25c0e849736f
 @@ 1381 3 0
 
@@ -83980,6 +84413,18 @@ e, he⟩
  intros; apply _root_.GlobalTheory.LogDR.ChartStalk.dlog_zpow <;> assumption
 @@ 5406 25 69
  intros; apply _root_.GlobalTheory.LogDR.StabD.dK_unit <;> assumption
+== src/Development/WeilBound/CoreStatements/PublishedTheorems/NadelVanishingPairs/NadelVanishingLemmas/CohomologyVanishingSpecializes.lean 28aa88d7d4e7f6a8338f5f6db34ece211a34da8a0c916530224ac0f0fc1962b2 e3baf3d7a182ed99b73fc2a0af9e353c968e607a77debe28b0ce1ef2c97703e9
+@@ 7504 3 1
+-
+@% 7862 142 5
++ 5
+V := 
+= 9421 27
++ 46
+GlobalTheory.finite_homology_extendScalars K q
+= 2821 26
++ 69
+have hus := GlobalTheory.upperSemicontinuous_finrank_homology_fiber K
 == src/Development/WeilBound/CoreStatements/PublishedTheorems/NadelVanishingPairs/NadelVanishingLemmas/ExistsCartierWithMultiplicities.lean 96570a7ddbc1b37b77078743c389cfdc7c61c5e82a96cb9915183cbd02b761e2 acea47d7ac6aef687dd61251c87150233763d63ab5a1a3ca355585029797d795
 @% 3382 118 3
 + 14
@@ -84260,9 +84705,32 @@ have hact := (
 = 5926 107
 + 5
 ).2.2
+== src/Development/WeilBound/CoreStatements/ThetaDilations/BoundedA.lean e544870623de2e1079453a986c726122643a102ff80dd6b59912d2e66ac9020a 80a99e3a211eba79e51a208fd30f61597cdbac5f9c7182ddb4705731918982a7
+@% 4326 70 1
+= 4327 64
 == src/Development/WeilBound/CoreStatements/ThetaDilations/EulerMove.lean ec81a34732650bf3a41f9c5e427ac8436b84ec06973fb60b1600cf1bce22b60b bb09a8ce125f282532542fd645f00c4fef6bd077775d2178fc5c41798b6fd598
 @@ 3176 7 1
 -
+== src/Development/WeilBound/CoreStatements/ThetaDilations/FstarDil.lean 7152cd45c1cb153691cdfa14904c4a034a1b4e8f9edd91de107960a67125a717 80cfb321ea7a1df90dffc64683b873a5b3767b76f340d88eaab07c2ec1150532
+@% 3778 489 3
+= 3904 124
+= 4198 46
++ 25
+_ B ρ _ hQ _ φ _ τ _ a ha
+@% 4374 2672 9
+= 5135 71
++ 23
+congr 1
+  · simp [opD]
+
+= 4907 39
+= 5276 111
+= 5389 28
+= 5419 56
+= 5477 114
+= 5593 45
++ 3
+rfl
 == src/Development/WeilBound/CoreStatements/ThetaDilations/OrbitAdelic.lean 9b29bde5ae927188e2fb4aa2e682f975edf0b900baaa64e548b26ba6d1e306ce 10230bef94d8db147f0134ab20dde6b1d64a074811a1403ada8d98a59d3b769c
 @% 991 30 3
 + 24
@@ -86532,6 +87000,9 @@ have hx := (hN (x : T).1 (x : T).2
 == src/Development/WeilBound/RepresentationTheoryGL/ResidualSpectrum/SliceTensors/PExpFin.lean e312c1299c4c11cb79a50db8bdc4312cb83abb6e0565a93bb9421a1bb469ded4 2a8181e6d7088c663690f19e4ca5fffff641b387658d705c60aca328287f2741
 @@ 11356 32 27
 have hDct := (hD E N).2.2.2
+== src/Development/WeilBound/RepresentationTheoryGL/ResidualSpectrum/SliceTensors/PInfAsc.lean 09d9cda8a851e1ad3b39397c4f54daabf6ec31b4d8cbe4f790a6621ae4b35fd5 3d09c47a55a9db0c6525a2df6bdb06157ee601483254f9a9402cd1e3e2221af6
+@@ 1447 164 0
+
 == src/Development/WeilBound/RepresentationTheoryGL/ResidualSpectrum/SliceTensors/PLocDual.lean a726e9ad017ad0fc59de7de70de28bc07b576ae8326ece1363cc50733fef6c3e 6b9423c3dd7dccab1a4bce085675c222c14c68084f0c90c63ead67394339bce0
 @@ 1578 211 82
  by intros; apply _root_.GlobalTheory.ThetaLiftGL.compactOpen_basis <;> assumption
@@ -88296,6 +88767,11 @@ by intros; apply _root_.GlobalTheory.UnitarySwap.mem_int <;> assumption
  intros; apply _root_.GlobalTheory.LGrp.ordL_eq <;> assumption
 @@ 725 249 69
  intros; apply _root_.Formalism.UG.P.fIwasawa_ordL_mul <;> assumption
+== src/Development/WeilBound/ThetaLifts/SphericalLattices/SphericalClosure/CloseSph.lean 388ed49b7854787ba11153c6fbdf7094da29e3f940fa9c61773342cb72707d1e f37788a28932fbb86355c70dcc7c73e7beddb5758df7cb0cd912858b2e053cec
+@@ 8894 112 0
+
+@@ 17501 345 0
+
 == src/Development/WeilBound/ThetaLifts/SphericalLattices/ThetaKillsCuspFormsSpherical.lean 85028dda1dd3021e948d8e6091edbf03b6d5f7c5ec8b5ea70e81988428413b9d b8686a99d9b82d0e838182f082c0a6b2fdbee1f5ec20a067527003364ba8dcd2
 @@ 3723 3 0
 

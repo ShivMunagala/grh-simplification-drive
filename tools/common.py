@@ -172,6 +172,10 @@ def parse_consts(lines):
             mods[cur]['ext'] = ext
         elif tag == b'N' and cur is not None:
             mods[cur]['namespaces'] = f[2].decode().split(',') if len(f) > 2 and f[2] else []
+        elif tag == b'G' and cur is not None and len(f) >= 3:
+            # the declarations that carry a defeq mark, by name
+            mods[cur].setdefault('tags', {})[f[2].decode()] = \
+                set(f[3].decode('utf-8', 'replace').split(',')) if len(f) > 3 and f[3] else set()
         elif tag == b'R' and cur is not None and len(f) >= 7:
             # source range Lean stored for a declaration: (first line, column, last line, column)
             mods[cur].setdefault('ranges', {})[b'\t'.join(f[6:]).decode('utf-8', 'replace')] = \

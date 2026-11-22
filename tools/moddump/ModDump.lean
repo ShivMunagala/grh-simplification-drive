@@ -10,6 +10,7 @@ Output (stdout): tab-separated records
   A  <module>  <extension>=<number of entries>,...                                       (with `--strict`)
   N  <module>  <namespace>,...           namespaces the module registers                 (with `--strict`)
   R  <id>  <first line>  <column>  <last line>  <column>  <name>   source range        (with `--strict`)
+  G  <module>  <extension>  <name>,...   the declarations that carry a defeq mark    (with `--strict`)
   B  <id>  <argument name>:<kind>,...    leading arguments of the statement              (with `--binders`)
 With `--nsonly` only `M`, `A`, `N` and `E` are printed, which is fast: nothing is traversed.
   X  <module>  <error>                  (the module could not be read)
@@ -208,6 +209,16 @@ unsafe def namespaceRecord (modName : String) (mod : ModuleData) (out : IO.FS.St
       let names := es.map fun e => toString (unsafeCast e : Name)
       out.putStrLn s!"N\t{modName}\t{",".intercalate names.toList}"
 
+/-- `G` records: which declarations carry the marks that let `dsimp` use a theorem proved by `rfl`.
+Both are tag attributes, so their entries are names. The count alone (in the `A` record) cannot tell a
+real theorem that lost its mark from a helper lemma that is no longer made. -/
+unsafe def defeqRecords (modName : String) (mod : ModuleData) (out : IO.FS.Stream) : IO Unit := do
+  for (n, es) in mod.entries do
+    let s := toString n
+    if s == "Lean.backwardDefeqAttr" || s == "Lean.defeqAttr" then
+      let names := es.map fun e => toString (unsafeCast e : Name)
+      out.putStrLn s!"G\t{modName}\t{s}\t{",".intercalate names.toList}"
+
 unsafe def processOne (mode : SizeMode) (strict binders nsOnly : Bool) (modName : String) (path : System.FilePath)
     (out : IO.FS.Stream) : IO Unit := do
   let (mod, region) ← readModuleData path
@@ -240,6 +251,7 @@ unsafe def processOne (mode : SizeMode) (strict binders nsOnly : Bool) (modName 
   if strict then
     extensionRecord modName mod out
     namespaceRecord modName mod out
+    defeqRecords modName mod out
     rangeRecords mod out
   out.putStrLn s!"E\t{modName}"
   out.flush
