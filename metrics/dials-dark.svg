@@ -1,64 +1,67 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 524" width="760" height="524" role="img" font-family="system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif">
-<title>Dials over time. Latest: Source size 183.1M; Written-out proof size 2.78B; Time change -180.7</title>
+<title>Dials over time. Latest: Source size 183.1M; Written-out proof size 2.77B; Time change -334.8</title>
 <rect x="0.5" y="0.5" width="759" height="523" rx="8" fill="#1a1a19" stroke="rgba(255,255,255,0.10)"/>
 <text x="70" y="30" font-size="13" fill="#f0efec" font-weight="600">Source size<tspan font-weight="400" fill="#898781" dx="6">tokens</tspan></text>
-<text x="736" y="30" font-size="12" text-anchor="end" fill="#e66767"><tspan font-size="14" font-weight="600" fill="#f0efec">183.1M</tspan><tspan dx="8">▲ 1.16K since baseline</tspan></text>
+<text x="736" y="30" font-size="12" text-anchor="end" fill="#e66767"><tspan font-size="14" font-weight="600" fill="#f0efec">183.1M</tspan><tspan dx="8">▲ 2.03K since baseline</tspan></text>
 <line x1="70" y1="150.0" x2="736" y2="150.0" stroke="#2c2c2a" stroke-width="1"/>
 <text x="62" y="154.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">183.118M</text>
 <line x1="70" y1="99.0" x2="736" y2="99.0" stroke="#2c2c2a" stroke-width="1"/>
-<text x="62" y="103.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">183.119M</text>
+<text x="62" y="103.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">183.120M</text>
 <line x1="70" y1="48.0" x2="736" y2="48.0" stroke="#2c2c2a" stroke-width="1"/>
-<text x="62" y="52.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">183.120M</text>
+<text x="62" y="52.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">183.122M</text>
 <line x1="70" y1="150" x2="736" y2="150" stroke="#383835" stroke-width="1"/>
-<path d="M70.0,137.8 L130.2,137.8 L130.2,137.9 L160.8,137.9 L160.8,138.1 L253.7,138.1 L253.7,138.7 L277.1,138.7 L277.1,149.4 L736.0,149.4 L736.0,78.5" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-<circle cx="70.0" cy="137.8" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="130.2" cy="137.9" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="160.8" cy="138.1" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="253.7" cy="138.7" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="277.1" cy="149.4" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="736.0" cy="78.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<path d="M70.0,143.9 L123.3,143.9 L123.3,144.0 L150.4,144.0 L150.4,144.1 L232.7,144.1 L232.7,144.4 L253.5,144.4 L253.5,149.7 L659.9,149.7 L659.9,114.3 L736.0,114.3 L736.0,92.1" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="70.0" cy="143.9" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="123.3" cy="144.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="150.4" cy="144.1" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="232.7" cy="144.4" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="253.5" cy="149.7" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="659.9" cy="114.3" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="736.0" cy="92.1" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
 <text x="70" y="198" font-size="13" fill="#f0efec" font-weight="600">Written-out proof size<tspan font-weight="400" fill="#898781" dx="6">term nodes</tspan></text>
-<text x="736" y="198" font-size="12" text-anchor="end" fill="#0ca30c"><tspan font-size="14" font-weight="600" fill="#f0efec">2.78B</tspan><tspan dx="8">▼ 8.83M (0.32%) since baseline</tspan></text>
+<text x="736" y="198" font-size="12" text-anchor="end" fill="#0ca30c"><tspan font-size="14" font-weight="600" fill="#f0efec">2.77B</tspan><tspan dx="8">▼ 17.2M (0.62%) since baseline</tspan></text>
 <line x1="70" y1="318.0" x2="736" y2="318.0" stroke="#2c2c2a" stroke-width="1"/>
-<text x="62" y="322.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.780B</text>
+<text x="62" y="322.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.77B</text>
 <line x1="70" y1="267.0" x2="736" y2="267.0" stroke="#2c2c2a" stroke-width="1"/>
-<text x="62" y="271.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.785B</text>
+<text x="62" y="271.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.78B</text>
 <line x1="70" y1="216.0" x2="736" y2="216.0" stroke="#2c2c2a" stroke-width="1"/>
-<text x="62" y="220.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.790B</text>
+<text x="62" y="220.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">2.79B</text>
 <line x1="70" y1="318" x2="736" y2="318" stroke="#383835" stroke-width="1"/>
-<path d="M70.0,223.1 L130.2,223.1 L130.2,223.1 L160.8,223.1 L160.8,223.1 L253.7,223.1 L253.7,224.5 L277.1,224.5 L277.1,246.2 L736.0,246.2 L736.0,313.2" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-<circle cx="70.0" cy="223.1" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="130.2" cy="223.1" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="160.8" cy="223.1" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="253.7" cy="224.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="277.1" cy="246.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="736.0" cy="313.2" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<path d="M70.0,219.5 L123.3,219.5 L123.3,219.5 L150.4,219.5 L150.4,219.5 L232.7,219.5 L232.7,220.3 L253.5,220.3 L253.5,231.1 L659.9,231.1 L659.9,264.6 L736.0,264.6 L736.0,307.5" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="70.0" cy="219.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="123.3" cy="219.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="150.4" cy="219.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="232.7" cy="220.3" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="253.5" cy="231.1" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="659.9" cy="264.6" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="736.0" cy="307.5" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
 <text x="70" y="366" font-size="13" fill="#f0efec" font-weight="600">Time change<tspan font-weight="400" fill="#898781" dx="6">CPU seconds on recompiled files, running total</tspan></text>
-<text x="736" y="366" font-size="12" text-anchor="end" fill="#0ca30c"><tspan font-size="14" font-weight="600" fill="#f0efec">−180.7</tspan><tspan dx="8">▼ 180.7 since baseline</tspan></text>
+<text x="736" y="366" font-size="12" text-anchor="end" fill="#0ca30c"><tspan font-size="14" font-weight="600" fill="#f0efec">−334.8</tspan><tspan dx="8">▼ 334.8 since baseline</tspan></text>
 <line x1="70" y1="486.0" x2="736" y2="486.0" stroke="#2c2c2a" stroke-width="1"/>
-<text x="62" y="490.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">-200</text>
+<text x="62" y="490.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">-400</text>
 <line x1="70" y1="452.0" x2="736" y2="452.0" stroke="#2c2c2a" stroke-width="1"/>
-<text x="62" y="456.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">-100</text>
+<text x="62" y="456.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">-200</text>
 <line x1="70" y1="418.0" x2="736" y2="418.0" stroke="#2c2c2a" stroke-width="1"/>
 <text x="62" y="422.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">0</text>
 <line x1="70" y1="384.0" x2="736" y2="384.0" stroke="#2c2c2a" stroke-width="1"/>
-<text x="62" y="388.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">100</text>
+<text x="62" y="388.0" font-size="11" text-anchor="end" fill="#898781" style="font-variant-numeric: tabular-nums">200</text>
 <line x1="70" y1="486" x2="736" y2="486" stroke="#383835" stroke-width="1"/>
-<path d="M70.0,418.0 L130.2,418.0 L130.2,418.0 L160.8,418.0 L160.8,418.0 L253.7,418.0 L253.7,417.9 L277.1,417.9 L277.1,420.6 L736.0,420.6 L736.0,479.4" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M70.0,418.0 L123.3,418.0 L123.3,418.0 L150.4,418.0 L150.4,418.0 L232.7,418.0 L232.7,417.9 L253.5,417.9 L253.5,419.3 L659.9,419.3 L659.9,448.7 L736.0,448.7 L736.0,474.9" fill="none" stroke="#3987e5" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
 <circle cx="70.0" cy="418.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="130.2" cy="418.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="160.8" cy="418.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="253.7" cy="417.9" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="277.1" cy="420.6" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
-<circle cx="736.0" cy="479.4" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="123.3" cy="418.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="150.4" cy="418.0" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="232.7" cy="417.9" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="253.5" cy="419.3" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="659.9" cy="448.7" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
+<circle cx="736.0" cy="474.9" r="4" fill="#3987e5" stroke="#1a1a19" stroke-width="2"/>
 <line x1="70.0" y1="486" x2="70.0" y2="490" stroke="#383835" stroke-width="1"/>
 <text x="70.0" y="504" font-size="11" text-anchor="start" fill="#898781">21 Nov 19:14</text>
 <line x1="236.5" y1="486" x2="236.5" y2="490" stroke="#383835" stroke-width="1"/>
-<text x="236.5" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 20:59</text>
+<text x="236.5" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 21:12</text>
 <line x1="403.0" y1="486" x2="403.0" y2="490" stroke="#383835" stroke-width="1"/>
-<text x="403.0" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 22:44</text>
+<text x="403.0" y="504" font-size="11" text-anchor="middle" fill="#898781">21 Nov 23:11</text>
 <line x1="569.5" y1="486" x2="569.5" y2="490" stroke="#383835" stroke-width="1"/>
-<text x="569.5" y="504" font-size="11" text-anchor="middle" fill="#898781">22 Nov 00:29</text>
+<text x="569.5" y="504" font-size="11" text-anchor="middle" fill="#898781">22 Nov 01:10</text>
 <line x1="736.0" y1="486" x2="736.0" y2="490" stroke="#383835" stroke-width="1"/>
-<text x="736.0" y="504" font-size="11" text-anchor="end" fill="#898781">22 Nov 02:14</text>
+<text x="736.0" y="504" font-size="11" text-anchor="end" fill="#898781">22 Nov 03:08</text>
 </svg>

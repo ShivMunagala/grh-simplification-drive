@@ -5,3 +5,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-21T21:10:10Z,4038a8f9d,fewer case-split branches in PG_conjTranspose and PG_mul_PG,183118221,2789164165,0.3,1265167,146536
 2026-11-21T21:24:58Z,6b5727bf8,prove same_basic without taking the structures apart,183118012,2787043943,-7.5,1265167,146536
 2026-11-22T02:14:29Z,4b701e8a3,sigSpan_copy and nine IsClassSystem transfer proofs without taking the structures apart,183119401,2780473858,-180.7,1265168,146536
+2026-11-22T03:08:43Z,ea4955b25,wave 2: six heavy transfer proofs without taking the structures apart,183120272,2772068048,-334.8,1265169,146536

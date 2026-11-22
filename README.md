@@ -18,16 +18,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 183.1M, written-out proof size 2.78B, time change -180.7" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 183.1M, written-out proof size 2.77B, time change -334.8" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 183,119,401 | +1,162 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,780,473,858 | −8,830,441 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -180.7 | −180.7 |
+| Source size (tokens) | 183,118,239 | 183,120,272 | +2,033 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,772,068,048 | −17,236,251 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -334.8 | −334.8 |
 
-Cone: 1,265,168 declarations in 146,536 files. Recorded changes: 5. Latest row: sigSpan_copy and nine IsClassSystem transfer proofs without taking the structures apart (2026-11-22 02:14 UTC).
+Cone: 1,265,169 declarations in 146,536 files. Recorded changes: 6. Latest row: wave 2: six heavy transfer proofs without taking the structures apart (2026-11-22 03:08 UTC).
 <!-- dials:end -->
 
 ## Milestones
