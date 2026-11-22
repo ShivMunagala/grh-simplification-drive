@@ -18,16 +18,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.6M, written-out proof size 2.76B, time change -2.39K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.6M, written-out proof size 2.76B, time change -2.68K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 176,619,667 | −6,498,572 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,762,844,502 | −26,459,797 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,394.9 | −2,394.9 |
+| Source size (tokens) | 183,118,239 | 176,619,795 | −6,498,444 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,757,972,433 | −31,331,866 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,678.3 | −2,678.3 |
 
-Cone: 1,264,794 declarations in 146,536 files. Recorded changes: 11. Latest row: chain follow-up (wEx_of); ac_le; mom_num; exists_nonempty_nMore_upL (2026-11-22 04:53 UTC).
+Cone: 1,264,794 declarations in 146,536 files. Recorded changes: 12. Latest row: wave 5: powers kept as symbols (ampLimit; diff_key; diff_bound; bigProjP_of); exists_arcIn_of_unif (2026-11-22 05:06 UTC).
 <!-- dials:end -->
 
 ## Milestones

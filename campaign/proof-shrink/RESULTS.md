@@ -141,12 +141,14 @@ Four workers on the proofs whose expansion is most out of proportion to their so
 |---|---|---|---|
 | `Formalism.L2.SG.Pf.CarrierXAll.ac_le` | 1,407,238 → 11,849 | −288 | recorded |
 | `GlobalTheory.MomNum.mom_num` | 574,846 → 14,082 | −38 | recorded |
-| `…EtaleIntegralityFacts.Lim.ampLimit` | 2,167,843 → 18,471 | +84 for all three | being judged |
-| `…EtaleIntegralityFacts.Lim.diff_key` | 1,526,913 → 14,934 | (same file) | being judged |
-| `…EtaleIntegralityFacts.Lim.diff_bound` | 408,773 → 2,695 | (same file) | being judged |
-| `GlobalTheory.ArcOfPoint.exists_arcIn_of_unif` | 500,408 → 92,251 | +12 | being judged |
-| `PositivityTheory.RgHe.A.Pf.bigProjP_of` | 457,279 → 60,796 | +32 | being judged |
-| `lev_twArgs`, `bor1`, `case1`, `case2` | | | worker still running |
+| `…EtaleIntegralityFacts.Lim.ampLimit` | 2,167,843 → 18,471 | +84 for all three | recorded |
+| `…EtaleIntegralityFacts.Lim.diff_key` | 1,526,913 → 14,934 | (same file) | recorded |
+| `…EtaleIntegralityFacts.Lim.diff_bound` | 408,773 → 2,695 | (same file) | recorded |
+| `GlobalTheory.ArcOfPoint.exists_arcIn_of_unif` | 500,408 → 92,251 | +12 | recorded |
+| `PositivityTheory.RgHe.A.Pf.bigProjP_of` | 457,279 → 60,796 | +32 | recorded |
+| `GlobalTheory.TopVal.TwSet.lev_twArgs` | 855,125 → 417,638 | −41 | being judged |
+| `UpperTheory.V.Ws.X1.bor1` | 167,440 → 22,274 | +41 | being judged |
+| `case1`, `case2` in `MixFlagExists` | 160,707 → 110,330 and 162,790 → 110,358 | +24 | being judged |
 
 What these had in common: **an arithmetic tactic multiplying out a power.** `ring`, `linarith` and `nlinarith`
 expand any power of a sum they can see, and they see through names introduced by `set`. One power of degree 19
@@ -161,6 +163,11 @@ cost over a million nodes.
 - A large structure value built inline in `refine ⟨{ … }, ?_⟩` is written out once for every later goal that
   mentions it. Bind it once: `refine let a : T := { … }; ⟨a, ?_⟩`.
 - To find the heavy step in a long proof: scratch copies of the theorem cut after each block, one run.
+- `fin_cases` is expensive written out. Splitting `Fin n` on the natural-number value with
+  `rintro ⟨_ | _ | _ | i, hi⟩` and closing with `rfl`, `omega` or `absurd h (by simp)` was about three times
+  smaller on a 4×4 matrix.
+- A structure with an equation among its fields: `have pack := a.pack; generalize a.x = x at pack ⊢; cases x;
+  cases pack` instead of `cases a`, so the other fields are never restated.
 
 ## What the size was made of
 
