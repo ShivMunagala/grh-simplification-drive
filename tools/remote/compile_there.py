@@ -60,6 +60,18 @@ def main():
             subprocess.run(rsync + [f'{host}:{rpath}/build/try/{m}/new/{rel}{ext}', dst], check=True,
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         json.dump(times, open(times_path, 'w'), indent=1)
+        # Which pending changes this file was compiled with, by the hash of their compiled form there.
+        # The judge uses it: a file that uses a changed statement counts as compiled against the change
+        # only if the changed file it is judged with is the very one that was in place here.
+        with_path = os.path.join(out, 'with.json')
+        info = C.load_json(with_path, {}) or {}
+        info.pop(m, None)
+        for w in [x for x in a.with_.split(',') if x]:
+            q = subprocess.run(ssh + [f"sha256sum {rpath}/build/try/{w}/new/{w.replace('.', '/')}.olean"],
+                               stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+            if q.returncode == 0 and q.stdout.strip():
+                info.setdefault(m, {})[w] = q.stdout.decode().split()[0]
+        json.dump(info, open(with_path, 'w'), indent=1)
     sys.exit(0 if ok_all else 1)
 
 

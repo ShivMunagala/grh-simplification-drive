@@ -33857,7 +33857,7 @@ import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsNatMulMem
 
 @@ 241 699 251
  first | exact @_root_.GlobalTheory.NatMulMemUnitaryExistence.exists_nat_mul_mem | exact _root_.GlobalTheory.NatMulMemUnitaryExistence.exists_nat_mul_mem | (intros; apply _root_.GlobalTheory.NatMulMemUnitaryExistence.exists_nat_mul_mem <;> assumption)
-== src/Development/AbelianVarietyTheory/Proofs/HeightProofs/ExistsPageRunRecord.lean 9a2df7208a8e3f6368e9749e70f0086555e07a2a5549387ba4ecb29e3442186d 2128b6fad4e713adddb99d0ce27047d8681f199cb3d5f95ef7d607eb4f8baba5
+== src/Development/AbelianVarietyTheory/Proofs/HeightProofs/ExistsPageRunRecord.lean 9a2df7208a8e3f6368e9749e70f0086555e07a2a5549387ba4ecb29e3442186d 36a24d31c1bfa2b2771bf5b58685926fb2855d7cc4a6e7efe736b5ca77ad174a
 @% 17531 60 3
 + 15
 hL, hF, -⟩ := (
@@ -33870,16 +33870,19 @@ hL, hF, -⟩ := (
 = 17551 41
 + 4
 ).2.
-@% 23251 122 5
+@% 23251 122 3
 + 11
 c3, -⟩ := (
 = 23273 33
-+ 27
++ 5
 ).2.2
-  obtain ⟨d4, -⟩ := (
-= 23339 34
-+ 7
-).2.2.2
+@@ 23507 2 2
+?_
+@% 24552 0 2
+= 24552 32
++ 38
+]; exact hR.h32.trans hR.toBs.sb_le_b
+
 == src/Development/AbelianVarietyTheory/Proofs/HeightProofs/ExistsPsiTieOfValues.lean c3414ce892f68ca4cacd5ea54b94da499d3b05168722aa15fa8522f51350125c 0c8c265073f3a5e64509241cba84631809e4708460b2af8e980e3c201cf6eabf
 @% 9813 39 2
 = 9816 39
@@ -35323,6 +35326,9 @@ import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsLimitS
 
 @@ 587 637 233
  first | exact @_root_.GlobalTheory.LimitSeriesPowSmul.exists_limit_series | exact _root_.GlobalTheory.LimitSeriesPowSmul.exists_limit_series | (intros; apply _root_.GlobalTheory.LimitSeriesPowSmul.exists_limit_series <;> assumption)
+== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/ExistsAdjointComp.lean b558a71388444bc5db9294ff711cfcb82b97d328fa1eb2e79765dc223aa6cf56 a1be010a555c4f69d265090fece466af81111e1730b0bd13705dd0e8c38ce7bd
+@% 22429 176 1
+= 22513 86
 == src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/ExistsAlgebraicIntegerPointOfFiniteExtension.lean 4de4d2ccd03046bd721dcd1396a812d6b70261cdb32d163a103e758ef0707e9b 04bd443fcafedf173979ecbf46eacebf8722d5b43f0d4f993e338c6b328632b4
 @% 416 0 2
 = 15 40
@@ -37615,6 +37621,11 @@ have hef := (
 == src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/LiftBlochKatoCocycleIffOrthogonalLattice.lean 961c2cb0c82e48b2443cbb0ec89e5d41401c260d61c2ce96b8f33fb638c9387c 458fd25f7a85e6b40276f8056923db189c4897b62fabaec9027bcb339dc731ca
 @@ 8818 26 20
 have hfr := hG.1.2.2
+== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/LiftRowsInjectiveAndTypePropertiesOfNonvanishing.lean 527114ee52b7894e70b316a77543ae6f3ee9f5c4d60659f208f1d9444be9b7af ab97ba3d1faec27ae9d5ec2ba6615b5826261ce68c89752ec0cc94929f0a61d6
+@@ 2890 215 0
+
+@@ 4835 42 0
+
 == src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/LiftVectorEqUnitMulDilatedFlatDatum.lean 41bc62cd295530237a61f3cf9f02c66c20f41383baf03bf47944a2d80efaf541 593560b66d367581563d3d3b635745157348c6f6dd2909bc5c972122f707059e
 @@ 2405 250 61
  intros; apply _root_.Formalism.L2.Theta.cA_cA <;> assumption
@@ -96473,7 +96484,9 @@ have hNl := hN.1
 == src/Formalism/LocalRingCardinality/HostCls.lean e4ecf1988b1c90ef926e4d676cc503acbd6ac20c2f6f41f711b4d5475ae8526c f7acdf0d98e56a5a6a5b37145e33bb8c7819cdfbdbe12d05ad1fac1a428aab93
 @@ 1254 83 64
  intros; apply _root_.Formalism.HC.HostRaw.q_ne_d <;> assumption
-== src/Formalism/LocalRingCardinality/RankBoundMonotoneInDimension.lean f80fc042708c423ffa4b90ff5365be9ba7603158a41e4c55b363fd0a798a6b1f 25a73516ab296527601f23944f9735be23218137c38fc0b1bab146b9c728e870
+== src/Formalism/LocalRingCardinality/RankBoundMonotoneInDimension.lean f80fc042708c423ffa4b90ff5365be9ba7603158a41e4c55b363fd0a798a6b1f a8574edaf3c135ca04d4b11014afd4babb172ac43589c483625493549247746c
+@@ 13879 20 9
+hostGroup
 @% 13976 67 3
 + 25
  by intros; apply _root_.
@@ -108766,6 +108779,13 @@ lE_add <;> assumption
 @@ 4679 18 24
 have hm2 := hm.2
   clear
+== src/Formalism/SharpRestriction/LevelLetterCocycles/ExistsPosConstLagrangeCondition.lean c372fe95958f62e8e2bd860f07bcdc7fb9b17f4ffa39e1f57cb2f28ca63268dd 2e1bea91be5c5b6a3b0f62187f3d6dcb916d0c398aca42d7103dbe037e200e50
+@% 11675 196 3
++ 18
+column_chain_bound
+= 11726 92
++ 25
+submodule_generator_count
 == src/Formalism/SharpRestriction/LevelLetterCocycles/ExportBoundOfAdmissible.lean bdfc98f88029b0046557d06ae9223905e3c4b4048114a676072820d150905534 cf396212a439949a19856c1576bbf32b59de9476dc2ad0652a5dc294d685ce49
 @% 24191 2531 5
 + 14
@@ -108856,7 +108876,7 @@ level_tools_of_admitted' <;> assumption
 = 398 35
 + 29
 .wmap_map_smul <;> assumption
-== src/Formalism/SharpRestriction/LevelLetterCocycles/FrobeniusPowUniformizerFactorisation.lean c84680cb4c42b019e693abb7f6803ef546419c67967e329c68f972a6cf59bff6 057b6e76c284ffd8be2f9448a3364544d150afe205aa5d86987f71d87fdc00cb
+== src/Formalism/SharpRestriction/LevelLetterCocycles/FrobeniusPowUniformizerFactorisation.lean c84680cb4c42b019e693abb7f6803ef546419c67967e329c68f972a6cf59bff6 72676d0c2e03e0ef87c09724e9f3a8cd53c85bd61fa2ba01cebdd654e06f28ec
 @@ 11338 15 25
 hs1, hl2⟩ := hA.2
   clear
@@ -108947,6 +108967,14 @@ hs1, hl2⟩ := hA.2
 = 849 35
 + 28
 .gammaA_comm <;> assumption)
+@@ 85106 33 21
+size_bound_first_case
+@@ 87237 33 22
+size_bound_second_case
+@@ 99115 15 19
+_to_subgroup_exists
+@% 142862 20 1
+= 123677 26
 @% 149306 469 7
 + 23
  first | exact @_root_.
@@ -109291,6 +109319,9 @@ lone_Fil_anti <;> assumption
 == src/Formalism/SharpRestriction/LevelLetterCocycles/LemGA0ConvVanish.lean 0187cf33e6c7e0202cd84ab263f753783d3aea2548be0f484f97c1e2a6a97f6e 2c0cad394b2516554646fbd3010181c85629143034ee68e93d0a41b8c6e2c8c4
 @@ 6699 27 24
 have hmod := (h9K hfr).2
+== src/Formalism/SharpRestriction/LevelLetterCocycles/LengthCokerLe.lean bdd68a8ede25bb322e72010c59effdc3658ea26522182adea0a572501faebbac 28fc18f6b5a9809aad55a6dc8ccd04637caa1d6bf0ac688e4cac2419f6b90b93
+@@ 2927 26 26
+determinant_length_formula
 == src/Formalism/SharpRestriction/LevelLetterCocycles/LengthRestrictNat.lean 09f4853acad526720d40cd728f80bf85d878aac6dfa9cb1b3064a32bddc6d3c2 05e0966acbd99d4f3486731b37db4cf216e1fd49cf256977e3ae1d547386fda0
 @% 915 67 3
 + 12
@@ -109313,10 +109344,20 @@ have hA := (
 = 221 35
 + 28
 LevR.lev_letE <;> assumption
-== src/Formalism/SharpRestriction/LevelLetterCocycles/LevelClauseOfOpenTool.lean 68afac5101ea295417349b24f0222d680c31294589672838abdeeb4521e8710b b62bdc3c1ebf2fb7ea1df168d5e053b76c6ae841fa4d6c4a1163103361c5ea6f
+== src/Formalism/SharpRestriction/LevelLetterCocycles/LevelClauseOfOpenTool.lean 68afac5101ea295417349b24f0222d680c31294589672838abdeeb4521e8710b 950ea13e7384b7997b8a7180b263348b29d113db4abf9a3babf096a228e9a5b4
+@@ 616 38 20
+valuation_inequality
+@@ 1311 46 19
+ideal_power_sum_mem
+@@ 3698 42 20
+power_binomial_bound
+@@ 12652 46 19
+ideal_power_sum_mem
 @@ 21254 14 25
 hs, hp2⟩ := hCA.2
   clear
+@@ 27550 60 68
+ZetaNonvanishing.ZetaNonvanishingCriteria.linearFactorPowMemSpanXPow
 == src/Formalism/SharpRestriction/LevelLetterCocycles/LevelKernelDetection/DetectPt.lean d5bf23847b5c1042ebfc9836652671361afe71b51cfd43ef05acf36156a792a9 837b8753e1e28bb42ffb9556722fd8caa9ffa9893fd1c6f78eba60209dcdd834
 @@ 925 35 32
 have hrk := (finrank_grQ F hF).2
@@ -110308,6 +110349,13 @@ AdmissibleParameterJoins.SfromGLt
 = 1592 30
 + 14
 <;> assumption
+== src/Formalism/SharpRestriction/RamificationFrobenius/TotientGaloisClasses/NonemptyFieldAxiomsCyclicPow.lean bf171e8d0eff1464a6c9a44ad08115ce5728ff73700c00f6799b92521800296a 2566acaadc90ce78085267776e413fa781b45adf95a7d9c771f51ea0bb5c7bb7
+@@ 3076 34 4
+frob
+@@ 4075 42 11
+hostInertia
+@@ 5355 34 4
+frob
 == src/Formalism/SharpRestriction/ValuationFrobeniusEpsilon/LeastPrimeTwists/QuotientShiftIrreducible/NoetherianQuotientCalc/RuleCong.lean 81266c26c8e71332f8f684bc60304b71037a4558121acb23393528072562bdc3 21d4dd899ec061716bba100317e31f879115e8ba6bac72a5e425464200cef3f7
 @% 151 0 2
 = 0 130

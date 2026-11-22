@@ -35,6 +35,7 @@ Two modes.
         P <id> <demand per leading argument>      what a theorem's proof asks of its arguments (for the next sweep)
         V <id> <kind> <statement nodes> <body nodes> <body nodes not needed> <components not needed>
           <haves not needed> <arguments not needed> <name>      declarations where something is not needed
+        H <id> <name:nodes ...>                   the local steps of that declaration whose result is not used
         G <id> <name>                             analysis given up (too many steps): everything in it counts as needed
         E <module>
         L <modules in the level>                  after each level
@@ -325,8 +326,18 @@ structure St where
   comps : Nat := 0
   haves : Nat := 0
   args : Nat := 0
+  /-- names of the local steps whose result is not used, with the size of what they bind (the first forty) -/
+  dropped : Array (String × Nat) := #[]
 
 abbrev M := StateT St IO
+
+/-- A local step whose result nothing uses: count it and remember its name. -/
+def deadHave (n : Name) (v : Expr) : M Unit := do
+  let k ← v.numObjs
+  modify fun s => { s with haves := s.haves + 1,
+                           -- (the name is copied: it lives in the module's file, which is released later)
+                           dropped := if s.dropped.size < 40
+                             then s.dropped.push (String.mk (toString n.eraseMacroScopes).toList, k) else s.dropped }
 
 def ask (h : UInt64) (d : Dem) : M Unit :=
   modify fun s => { s with asks := s.asks.insert h ((s.asks.getD h .bot).join d) }
@@ -382,10 +393,10 @@ unsafe def ana (e : Expr) (d : Dem) : M Eff := do
         let et ← ana t .top
         let eb ← ana b .top
         pure (et.join eb.pop.2)
-      | .letE _ t v b _ => do
+      | .letE n t v b _ => do
         let (dx, eb) := (← ana b d).pop
         if dx.isBot then
-          modify fun s => { s with haves := s.haves + 1 }
+          deadHave n v
           pure eb
         else
           let et ← ana t .top
@@ -468,13 +479,13 @@ unsafe def anaApp (e : Expr) (d : Dem) : M Eff := do
       return eff
     ask h .top
     top 0 as.size {}
-  | .lam _ t b _ =>
+  | .lam n t b _ =>
     -- `(fun x => b) v`: how a `have` made by a tactic is stored
     modify fun s => { s with live := s.live.insert (ptrAddrUnsafe f) }
     let (dx, eb) := (← ana b (if as.size == 1 then d else .top)).pop
     let mut eff := eb
     if dx.isBot then
-      modify fun s => { s with haves := s.haves + 1 }
+      deadHave n as[0]!
     else
       eff := eff.join (← ana t .top)
       eff := eff.join (← ana as[0]! dx)
@@ -521,7 +532,7 @@ unsafe def sweepDecl (ci : ConstantInfo) : M Unit := do
       return
   let vSize ← v.numObjs
   modify fun s => { s with memo := {}, live := {}, steps := 0, budget := 20 * (tSize + vSize) + 100000,
-                           comps := 0, haves := 0, args := 0 }
+                           comps := 0, haves := 0, args := 0, dropped := #[] }
   try
     -- A statement is needed whole, as it is written: everything it mentions is asked for in full,
     -- also a proof that sits inside it under a projection.
@@ -540,12 +551,14 @@ unsafe def sweepDecl (ci : ConstantInfo) : M Unit := do
     if s.comps + s.haves + s.args > 0 then
       let (dead, _) := Id.run ((notNeeded s.live v).run {})
       emit s!"V\t{h}\t{kindOf ci}\t{tSize}\t{vSize}\t{dead}\t{s.comps}\t{s.haves}\t{s.args}\t{ci.name}"
+      if !s.dropped.isEmpty then
+        emit s!"H\t{h}\t{" ".intercalate (s.dropped.toList.map fun (n, k) => s!"{n}:{k}")}"
   catch _ =>
     -- given up: the state is as it was before the attempt; ask for everything the declaration mentions
     askAll ci.type
     askAll v
     emit s!"G\t{h}\t{ci.name}"
-  modify fun s => { s with memo := {}, live := {} }
+  modify fun s => { s with memo := {}, live := {}, dropped := #[] }
 
 /-- Declarations of a module, each after everything in the module that uses it. -/
 def usersFirst (mod : ModuleData) : Array ConstantInfo := Id.run do

@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.8M, written-out proof size 2.70B, time change -3.81K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.6M, written-out proof size 2.69B, time change -3.80K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 176,799,735 | −7,448,475 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,696,656,150 | −92,648,149 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,808.3 | −3,808.3 |
+| Source size (tokens) | 184,248,210 | 176,578,271 | −7,669,939 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,693,054,148 | −96,250,151 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,803.2 | −3,803.2 |
 
-Cone: 1,258,898 declarations in 146,496 files. Recorded changes: 33. Latest row: iter_chain cites the one unfolding it uses; seven unfolding statements no longer needed (152 declarations leave the cone) (2026-11-22 14:07 UTC).
+Cone: 1,257,365 declarations in 146,313 files. Recorded changes: 35. Latest row: eight theorems proving lists of statements bypassed: users cite the parts they read (672 declarations leave the cone) (2026-11-22 15:39 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -56,8 +56,8 @@ Cone: 1,258,898 declarations in 146,496 files. Recorded changes: 33. Latest row:
 | | Sweep of repetitions: the same argument written out in many proofs | next |
 | 2026-11-22 | Plain-language map of the argument, first version: the chain at the top, the four lines of argument under it and what each costs, known theorems proved inside (8.4% in all), six places where a shorter route might exist ([map](campaign/argument-map/MAP.md)). Everything above is about how the proof is written; this is the first step on the mathematics | done |
 | 2026-11-22 | All four large candidates for a shorter route tested by reading every statement and every use: the covolume bound (13.6%), the Galois representations (6.1%), the vanishing statement VWin (8.2%) and the staging of the family construction. None can be replaced or narrowed; the reasons are in the map | done |
-| 2026-11-22 | What the five theorems actually ask of each intermediate statement, measured on the compiled proof (`tools/demand.py`): parts of conjunctions, fields of records, local steps and whole declarations that nothing needed reads come to 0.84% of the written-out size (first sweep). The proof uses almost everything it proves | done |
-| | Removing those unneeded parts, largest first: theorems that prove a list of statements of which only some are read ([brief](campaign/unneeded-parts/BRIEF.md)). First one recorded: of eight statements about period unfoldings only one is used; citing it directly takes the other seven and 152 declarations out of what the five theorems need (−577,102 nodes) | in progress |
+| 2026-11-22 | What the five theorems actually ask of each intermediate statement, measured on the compiled proof (`tools/demand.py`): parts of conjunctions, fields of records, arguments, local steps and whole declarations that nothing needed reads come to 1.07% of the written-out size. The proof uses almost everything it proves ([results](campaign/unneeded-parts/RESULTS.md)) | done |
+| | Removing those unneeded parts, largest first ([brief](campaign/unneeded-parts/BRIEF.md), [results](campaign/unneeded-parts/RESULTS.md)). Three changes so far take 1,685 declarations out of what the five theorems need (−4.2 million nodes): seven of eight statements about period unfoldings; the main theorem of the raw theta lift, which was built only to be passed to a theorem that ignored it; and eight theorems that prove lists of statements of which a few are read | in progress |
 
 ## Fixed
 

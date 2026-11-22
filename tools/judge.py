@@ -479,6 +479,22 @@ def main():
                 for m, info in C.parse_consts(C.moddump(pairs[i:i + 2000])).items():
                     for nm, rec in info['decls'].items():
                         breaking_ids[rec['id']] = nm
+        with_info = (C.load_json(os.path.join(a.precompiled, 'with.json'), {}) or {}) if a.precompiled else {}
+        with_used = set()
+
+        def built_with(user, owner):
+            want = (with_info.get(user) or {}).get(owner)
+            if not want or owner not in compiled:
+                return False
+            try:
+                with open(C.module_path(owner, os.path.join(a.precompiled, 'new'), '.olean'), 'rb') as fh:
+                    same = sha(fh.read()) == want
+            except OSError:
+                return False
+            if same:
+                with_used.add((user, owner))
+            return same
+
         if breaking_ids:
             left_out = report.setdefault('left_out', [])
             while True:
@@ -488,12 +504,16 @@ def main():
                 if bulk is not None:
                     # Modules compiled elsewhere were each compiled against the accepted state, not against
                     # each other: one of them may still mention what another one changed or removed.
+                    # The exception is a module that was compiled there with the changed module in place
+                    # (tools/remote/compile_there.py --with): it is recorded with the hash of that compiled
+                    # file, and counts if that is the very file judged here.
                     for m2, decls in news.items():
                         hit = []
                         for nm, rec in decls.items():
                             # (a module's own regenerated helpers keep their names: not a foreign use)
                             ids = [d for d in rec['tdeps'] + rec['vdeps']
-                                   if d in breaking_ids and breaking_owner.get(d) != m2]
+                                   if d in breaking_ids and breaking_owner.get(d) != m2
+                                   and not built_with(m2, breaking_owner.get(d))]
                             if ids:
                                 hit.append(nm)
                                 used.update(ids)
@@ -523,6 +543,9 @@ def main():
                                        'change removes or alters; their files must be restored before committing')
                 time_after = sum(pre_times[m]['after'] for m in compiled if m in pre_times)
                 time_before = sum(pre_times[m]['before'] for m in compiled if m in pre_times)
+            if with_used:
+                report['notes'].append(f'{len({u for u, _ in with_used})} module(s) that use a changed statement were '
+                                       'compiled on the other machine with the changed module in place')
             report['changed_or_removed'] = sorted(breaking_ids.values())[:200]
             report['users_of_changed'] = {m: v[:5] for m, v in list(users.items())[:50]}
             report['users_of_changed_count'] = len(users)
