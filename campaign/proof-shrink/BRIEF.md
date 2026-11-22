@@ -11,7 +11,8 @@ worked.
 
 Three numbers are measured for the file that contains the theorem:
 
-1. **Source tokens**: length of the source text. A name of any length is one token, comments are free.
+1. **Source tokens**: length of the source text. A name is one token however long it is, every numeric
+   projection step after it is one more (`h.2.2.1` is four tokens), and comments are free.
 2. **Written-out size**: size of the fully expanded proof Lean produces and checks. A short tactic
    can expand into something enormous (bulk case splits on large structures, `nlinarith`, `ring`,
    `simp` with big lemma sets), so a shorter source is not automatically a smaller proof.

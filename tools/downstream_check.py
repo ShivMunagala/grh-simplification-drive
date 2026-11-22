@@ -16,14 +16,20 @@ plain recompile is reproducible on this machine at all (it should be).
 
 Needs room for many compiles at once; meant for a rented machine (GRH_NO_SANDBOX=1 there).
 """
-import argparse, json, os, random, sys, threading, time
+import argparse, json, os, random, re, sys, threading, time
 from concurrent.futures import ThreadPoolExecutor
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as C
+import iface as IFACE
 import nscheck as NS
 
 FIELDS = ('kind', 'tsize', 'vsize', 'thash', 'vhash', 'st', 'sv', 'lp')
+STATEMENT = ('kind', 'tsize', 'thash', 'st', 'lp')
+# Lemmas Lean makes on the way and stores in the file that first needs them: the equations of a definition,
+# and the helper lemmas of simp, abel and ring. When a file gets to see a module that already holds one,
+# it uses that one and does not make its own, and the numbers of its other helpers shift.
+HELPER = re.compile(r"\.(eq_\d+|eq_def|eq_unfold|_simp_\d+(?:_\d+)*|_abel_\d+(?:_\d+)*|_ring_\d+(?:_\d+)*|_proof_\d+(?:_\d+)*)$")
 
 
 def main():
@@ -100,18 +106,26 @@ def main():
             else:
                 parsed = C.parse_consts(C.moddump([(m + '@old', ref), (m + '@new', r['olean'])]))
                 o, n = parsed[m + '@old'], parsed[m + '@new']
-                diff = []
+                diff, real = [], []
                 for name in sorted(set(o['decls']) | set(n['decls'])):
                     x, y = o['decls'].get(name), n['decls'].get(name)
                     if x is None or y is None:
                         diff.append(f'{name}: only in the {"new" if x is None else "accepted"} version')
+                        if not HELPER.search(name):
+                            real.append(diff[-1])
                     else:
                         d = [k for k in FIELDS if x.get(k) != y.get(k)]
                         if d:
                             diff.append(f'{name}: {",".join(d)}')
+                            # a helper may change as a whole; of anything else only the proof of a theorem
+                            if not HELPER.search(name) and (x.get('kind') != 'thm' or any(k in STATEMENT for k in d)):
+                                real.append(diff[-1])
                 ext = {k: [o['ext'].get(k, 0), n['ext'].get(k, 0)] for k in set(o['ext'] or {}) | set(n['ext'] or {})
                        if (o['ext'] or {}).get(k, 0) != (n['ext'] or {}).get(k, 0)}
+                real_ext = sorted(k for k in ext if not (k in IFACE.PLAIN_REGISTERS or k in IFACE.EXT_IGNORED
+                                                        or k.endswith(IFACE.EXT_IGNORED_SUFFIX)))
                 rec.update({'declarations': len(o['decls']), 'different': diff[:10], 'different_count': len(diff),
+                            'real': real[:10], 'real_count': len(real), 'real_registers': real_ext,
                             'registers_differently': ext,
                             'namespaces_differ': sorted(set(o['namespaces'] or ()) ^ set(n['namespaces'] or ()))})
                 for ext_ in ('.olean', '.ilean'):
@@ -133,10 +147,13 @@ def main():
     same = [r for r in results if r.get('ok') and not r['different_count'] and not r['registers_differently']
             and not r['namespaces_differ']]
     other = [r for r in results if r.get('ok') and r not in same]
+    helpers = [r for r in other if not r['real_count'] and not r['real_registers'] and not r['namespaces_differ']]
+    other = [r for r in other if r not in helpers]
     print(f'identical to the accepted compiled form: {len(same)} of {len(results)}; '
+          f'same statements, only helper lemmas and their bookkeeping differ: {len(helpers)}; '
           f'different: {len(other)}; did not compile: {len(failed)}; {time.time() - t0:.0f}s')
     for r in other[:10]:
-        print('  different:', r['module'], r['different'][:3], r['registers_differently'], r['namespaces_differ'])
+        print('  different:', r['module'], r['real'][:3], r['real_registers'], r['namespaces_differ'])
     for r in failed[:10]:
         print('  did not compile:', r['module'], r.get('error', '')[-300:].replace('\n', ' | '))
     sys.exit(0 if not other and not failed else 2)

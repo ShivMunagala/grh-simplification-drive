@@ -248,19 +248,28 @@ unsafe def tablesOne (modName : String) (path : System.FilePath) (out : IO.FS.St
 
 /-! ### Mode 2: the sweep -/
 
-/-- What analysing a term asks of the bound variables around it: (variable, demand), sorted by variable
-(de Bruijn index as seen at the term), without empty demands. It depends only on the term and on the
-demand, not on where the term occurs, so it is computed once per shared subterm. -/
-abbrev Eff := Array (Nat × Dem)
+/-- What analysing a term asks of the bound variables around it. It depends only on the term and on
+the demand, not on where the term occurs, so it is computed once per shared subterm.
+
+Almost every variable that is used is used whole, so those are kept as a set of bits (bit `i` for the
+variable with de Bruijn index `i` as seen at the term); the few that are asked for only in part are
+listed with their demand, sorted by variable. -/
+structure Eff where
+  tops : Nat := 0
+  parts : Array (Nat × Dem) := #[]
+  deriving Inhabited
 
 namespace Eff
 
-def join (a b : Eff) : Eff := Id.run do
+def var (i : Nat) (d : Dem) : Eff :=
+  if d.isTop then { tops := 1 <<< i } else { parts := #[(i, d)] }
+
+def joinParts (a b : Array (Nat × Dem)) : Array (Nat × Dem) := Id.run do
   if a.isEmpty then
     return b
   if b.isEmpty then
     return a
-  let mut out : Eff := Array.mkEmpty (a.size + b.size)
+  let mut out : Array (Nat × Dem) := Array.mkEmpty (a.size + b.size)
   let mut i := 0
   let mut j := 0
   while i < a.size || j < b.size do
@@ -285,11 +294,19 @@ def join (a b : Eff) : Eff := Id.run do
         j := j + 1
   return out
 
+def join (a b : Eff) : Eff :=
+  { tops := a.tops ||| b.tops, parts := joinParts a.parts b.parts }
+
 /-- Leaving a binder: what was asked of its variable, and the effect on the variables outside. -/
 def pop (a : Eff) : Dem × Eff :=
-  if a.isEmpty then (.bot, a)
-  else if (a[0]!).1 == 0 then ((a[0]!).2, (a.extract 1 a.size).map fun (i, d) => (i - 1, d))
-  else (.bot, a.map fun (i, d) => (i - 1, d))
+  let d0 : Dem :=
+    if a.tops.testBit 0 then .top
+    else if a.parts.isEmpty then .bot
+    else if (a.parts[0]!).1 == 0 then (a.parts[0]!).2 else .bot
+  let rest : Array (Nat × Dem) :=
+    if a.parts.isEmpty then #[]
+    else (a.parts.filter fun (i, _) => i != 0).map fun (i, d) => (i - 1, d)
+  (d0, { tops := a.tops >>> 1, parts := rest })
 
 end Eff
 
@@ -321,33 +338,39 @@ mutual
 
 unsafe def ana (e : Expr) (d : Dem) : M Eff := do
   if d.isBot then
-    return #[]
+    return {}
   match e with
   | .bvar i =>
     modify fun s => { s with live := s.live.insert (ptrAddrUnsafe e) }
-    return #[(i, d)]
+    return Eff.var i d
   | .const c _ =>
     modify fun s => { s with live := s.live.insert (ptrAddrUnsafe e) }
     match (← get).t.nlam.get? c.hash with
     | some n => ask c.hash (if n == 0 then d else .top)
     | none => ask c.hash .top
-    return #[]
+    return {}
   | .sort _ | .lit _ | .fvar _ | .mvar _ =>
     modify fun s => { s with live := s.live.insert (ptrAddrUnsafe e) }
-    return #[]
+    return {}
   | _ =>
-    let s ← get
     let key := (ptrAddrUnsafe e, d.hash)
-    if let some r := s.memo.get? key then
+    if let some r := (← get).memo.get? key then
       return r
-    -- an application `f a b c` is stored as nested nodes; all of them belong to the visit
-    let mut live := s.live.insert (ptrAddrUnsafe e)
-    let mut x := e
-    while x.isApp do
-      x := x.appFn!
-      live := live.insert (ptrAddrUnsafe x)
-    set { s with live := live, steps := s.steps + 1 }
-    if s.steps > s.budget then
+    -- An application `f a b c` is stored as nested nodes; all of them belong to the visit.
+    -- The set is taken out of the state before it is changed, so that it is changed in place:
+    -- while the state still holds it, every insertion would copy it.
+    modify fun s =>
+      let live0 := s.live
+      let s := { s with live := {} }
+      let live := Id.run do
+        let mut live := live0.insert (ptrAddrUnsafe e)
+        let mut x := e
+        while x.isApp do
+          x := x.appFn!
+          live := live.insert (ptrAddrUnsafe x)
+        return live
+      { s with live := live, steps := s.steps + 1 }
+    if (← get).steps > (← get).budget then
       throw (IO.userError "budget")
     let r ← match e with
       | .app .. => anaApp e d
@@ -372,7 +395,7 @@ unsafe def ana (e : Expr) (d : Dem) : M Eff := do
       | .proj sname i b => do
         let nf := (← get).t.nfields.getD sname.hash 0
         ana b (Dem.only nf i d)
-      | _ => pure #[]
+      | _ => pure {}
     modify fun s => { s with memo := s.memo.insert key r }
     return r
 
@@ -387,7 +410,7 @@ unsafe def anaMinor (m : Expr) (k : Nat) (d : Dem) : M (Array Dem × Eff) := do
     let (rest, eb) ← anaMinor b (k - 1) d
     let (dx, eb) := eb.pop
     -- the type of a variable that is not used is not needed either
-    let et ← if dx.isBot then pure #[] else ana t .top
+    let et ← if dx.isBot then pure {} else ana t .top
     return (#[dx] ++ rest, eb.join et)
   | _ =>
     -- not written as a function of the fields: it is applied to all of them
@@ -409,13 +432,13 @@ unsafe def anaApp (e : Expr) (d : Dem) : M Eff := do
     if let some (ty, idx, np) := t.proj.get? h then
       if as.size > np then
         ask h .top
-        let mut eff ← top 0 np #[]
+        let mut eff ← top 0 np {}
         eff := eff.join (← ana as[np]! (Dem.only (t.nfields.getD ty 0) idx (if as.size == np + 1 then d else .top)))
         return (← top (np + 1) as.size eff)
     if let some (np, nf) := t.ctor.get? h then
       if as.size == np + nf then
         ask h .top
-        let mut eff ← top 0 np #[]
+        let mut eff ← top 0 np {}
         let ds := d.parts nf
         for j in [0:nf] do
           if (ds[j]!).isBot then
@@ -426,7 +449,7 @@ unsafe def anaApp (e : Expr) (d : Dem) : M Eff := do
     if let some (np, nf, kind) := t.elim.get? h then
       if as.size ≥ np + 3 then
         ask h .top
-        let mut eff ← top 0 (np + 1) #[]
+        let mut eff ← top 0 (np + 1) {}
         let (major, minor) := if kind == 0 then (as[np + 2]!, as[np + 1]!) else (as[np + 1]!, as[np + 2]!)
         let (ds, em) ← anaMinor minor nf (if as.size == np + 3 then d else .top)
         eff := eff.join em
@@ -435,7 +458,7 @@ unsafe def anaApp (e : Expr) (d : Dem) : M Eff := do
     if let some n := t.nlam.get? h then
       ask h (if as.size == n then d else .top)
       let ps := t.param.getD h #[]
-      let mut eff : Eff := #[]
+      let mut eff : Eff := {}
       for i in [0:as.size] do
         let di := if i < n then ps.getD i .top else .top
         if di.isBot then
@@ -444,7 +467,7 @@ unsafe def anaApp (e : Expr) (d : Dem) : M Eff := do
           eff := eff.join (← ana as[i]! di)
       return eff
     ask h .top
-    top 0 as.size #[]
+    top 0 as.size {}
   | .lam _ t b _ =>
     -- `(fun x => b) v`: how a `have` made by a tactic is stored
     modify fun s => { s with live := s.live.insert (ptrAddrUnsafe f) }
@@ -497,10 +520,12 @@ unsafe def sweepDecl (ci : ConstantInfo) : M Unit := do
       askAll ci.type
       return
   let vSize ← v.numObjs
-  modify fun s => { s with memo := {}, live := {}, steps := 0, budget := 60 * (tSize + vSize) + 100000,
+  modify fun s => { s with memo := {}, live := {}, steps := 0, budget := 20 * (tSize + vSize) + 100000,
                            comps := 0, haves := 0, args := 0 }
   try
-    let _ ← ana ci.type .top
+    -- A statement is needed whole, as it is written: everything it mentions is asked for in full,
+    -- also a proof that sits inside it under a projection.
+    askAll ci.type
     match ci with
     | .thmInfo _ =>
       let n := (← get).t.nlam.getD h 0

@@ -323,6 +323,28 @@ step were replaced by a free proof; a real replacement costs something too.
   and the definitions of the extension stages.
 - **Risk.** Medium. Partly a proof-engineering question, but a redesign at this level changes the
   statements, so it is mathematical work on the interface.
+- **Tested 2026-11-22: not feasible as proposed.** The description above merged two different things.
+  - At the top level the proof already does what is proposed. Every parameter depends on one number
+    that is obtained first; each named stage only adds a condition (a subfamily), and properties are
+    inherited through one generic lemma. All of it weighs 24,234 nodes (0.001%).
+  - The costly moves are inside the proof that members exist, and there the order is forced. A member
+    is built in two passes: an untwisted one, then a twisted one over a larger coefficient field. The
+    twist (auxiliary primes, an exponent, a character) is chosen from the Hecke forms of the first-pass
+    member, and the new field must contain roots of unity fixed by that choice; so the data of the
+    first pass has to be carried over to the second.
+  - Measured by the shape of the statement (the conclusion repeats a hypothesis for a related object),
+    transport is 1.9% of the cone now (3.1% at the baseline: the earlier proof-shrinking already took
+    42% of its gains from this family), half of it in 70 theorems.
+  - Why there are so many copies: types are indexed by a record of about 150 fields that includes the
+    coefficient field, so enlarging the field gives a new type for the same object; two runs of a
+    construction are related only by records of equations (up to 75 of them); and the hypothesis list
+    speaks of arbitrary bundles tied to the constructed data by such records (`TwArgs`, with its
+    equation between two 12-tuples).
+  - What is left here is smaller: restating `TwArgs` so that its tuple is a definition and not a field
+    with an equation (about 0.2%); the largest proofs of the family that have not been rewritten yet
+    (`lam_copy`, 5.5 million nodes, is the largest declaration in the cone); and one open variant, a
+    single coefficient field for both passes, which needs the numbers of the second pass to be bounded
+    before the first (ceiling about 1.1%).
 
 ### Candidate 3. The Galois representations, in full generality — 6.1%
 

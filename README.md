@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 177.2M, written-out proof size 2.70B, time change -3.52K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.8M, written-out proof size 2.70B, time change -3.81K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 177,229,518 | −7,018,692 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,704,415,133 | −84,889,166 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,515.3 | −3,515.3 |
+| Source size (tokens) | 184,248,210 | 176,827,209 | −7,421,001 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,697,233,252 | −92,071,047 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,808.3 | −3,808.3 |
 
-Cone: 1,260,827 declarations in 146,531 files. Recorded changes: 31. Latest row: dsimp +instances only at hypotheses where it makes the proof smaller (45 lines; 20 files) (2026-11-22 13:02 UTC).
+Cone: 1,259,050 declarations in 146,508 files. Recorded changes: 32. Latest row: duplicate proofs cite a copy through one added import (3243 theorems; 2502 files) (2026-11-22 13:59 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -49,13 +49,15 @@ Cone: 1,260,827 declarations in 146,531 files. Recorded changes: 31. Latest row:
 | 2026-11-22 | Patterns that drop parts of a conjunction read the kept parts by projection instead of matching every part. 9,519 lines in 7,351 files, −18.7 million nodes, source down ([notes](campaign/proof-shrink/RESULTS.md)) | done |
 | 2026-11-22 | Source dial made stricter: every projection step is a token (before, `h.2.2.1` counted as one). Baseline and history recounted; all 30 recorded changes still pass | done |
 | 2026-11-22 | Patch file stores nothing of the archive: pieces a rewrite kept or moved are given as positions. Earlier versions, which repeated such pieces, removed from this repository's history | done |
-| | Repetition sweep, part 2: a duplicate in a file that cannot see a copy cites it through one added import (4,447 cases meet the conditions; 3,279 compile to something smaller; being checked). Duplicates that would need a shared new file come after | in progress |
+| 2026-11-22 | Repetition sweep, part 2: 3,243 duplicate proofs in 2,502 files cite a copy through one added import. Written-out size −7.2 million nodes, source −402,000 tokens. Before judging, every file that could read a name differently because of the new imports (4,071 of the 101,394 that see something new) was compiled again; two citations whose import made another file stop compiling were taken out | done |
+| | Duplicates that would need a shared new file | not started |
 | | Heavy definitions built from chains of `choose` | next |
 | 2026-11-22 | Wave 7 on the heaviest proofs: 17 more rewritten. Proofs over 100,000 nodes are now only 2.8% of the whole, so returns from this kind of work are falling | done |
 | | Sweep of repetitions: the same argument written out in many proofs | next |
 | 2026-11-22 | Plain-language map of the argument, first version: the chain at the top, the four lines of argument under it and what each costs, known theorems proved inside (8.4% in all), six places where a shorter route might exist ([map](campaign/argument-map/MAP.md)). Everything above is about how the proof is written; this is the first step on the mathematics | done |
-| 2026-11-22 | The three largest candidates for a shorter route tested by reading every statement and every use: the covolume bound (13.6%), the Galois representations (6.1%) and the vanishing statement VWin (8.2%). None can be replaced or narrowed; the reasons are in the map | done |
-| | What the five theorems actually ask of each intermediate statement: parts of conjunctions, fields of records, arguments and local steps that nothing needed reads (`tools/demand.py`) | measuring |
+| 2026-11-22 | All four large candidates for a shorter route tested by reading every statement and every use: the covolume bound (13.6%), the Galois representations (6.1%), the vanishing statement VWin (8.2%) and the staging of the family construction. None can be replaced or narrowed; the reasons are in the map | done |
+| 2026-11-22 | What the five theorems actually ask of each intermediate statement, measured on the compiled proof (`tools/demand.py`): parts of conjunctions, fields of records, local steps and whole declarations that nothing needed reads come to 0.84% of the written-out size (first sweep). The proof uses almost everything it proves | done |
+| | Removing those unneeded parts, largest first: theorems that prove a list of statements of which only some are read ([brief](campaign/unneeded-parts/BRIEF.md)) | in progress |
 
 ## Fixed
 
@@ -122,9 +124,18 @@ Two such changes are allowed outright (decided 2026-11-22), and the judge checks
   on it). What is left is names: a name in some other file could now resolve to a declaration of a newly
   visible file. So before such a change is judged, every file that gets to see more than before is
   searched for an identifier that could do that (`tools/import_visibility.py`), and each file where one
-  is found is recompiled against the changed state and has to come out identical to its accepted
-  compiled form (`tools/downstream_check.py --modules`). A random sample of the files that import a
-  changed file is recompiled the same way.
+  is found is recompiled against the changed state (`tools/downstream_check.py --modules`). It has to
+  compile and to come out with the same declarations and statements. One kind of difference is expected
+  and allowed: Lean stores the lemmas it makes on the way (the equations of a definition, the helper
+  lemmas of `simp`, `abel` and `ring`) in the file that first needs them, and a file that now sees a
+  module which already holds one uses that and does not make its own. A random sample of the files that
+  import a changed file is recompiled the same way.
+
+  The check is not a formality. In the first batch (2,512 files gaining an import) 101,394 files got to
+  see something new and 4,071 of them were flagged. Two no longer compiled: a short name in them now
+  also matched a copy of the same lemma in a newly visible file. The two citations that caused it were
+  taken out. Of the rest, 4,050 came out identical and 21 differed only in helper lemmas. A random
+  sample of 300 was identical throughout, so a sample alone would not have found the two.
 
 Reported to steer the work, not enforced: which declarations most of the cone hangs on
 (`tools/ablation.py`), what each known theorem costs on its own, and how often each definition is used.
