@@ -11,9 +11,11 @@ Compiles the file as it is now in proof/ against the accepted state, then report
   * for each declaration whose proof or body changed: written-out size before and after
     (including the auxiliary declarations the compiler generates for it).
 
-The last line is `PRECHECK: pass` if the edit is valid, changes no interface, raises neither size,
-does not slow the file down beyond tolerance, and lowers at least one size. That is what the judge
-will require; the judge itself then recomputes the dials over the whole cone.
+The last line is `PRECHECK: pass` if the edit is valid, changes no existing interface, does not slow
+the file down beyond tolerance, lowers at least one size and raises neither. One trade is allowed:
+source tokens may rise if the written-out size falls by at least 1,000 nodes per token added. New
+helper declarations are allowed and are listed. That is what the judge will require; the judge
+itself then recomputes the dials over the whole cone.
 
 Takes a minute or more per run: one compile of the file (two the first time, to time the old version).
 """
@@ -24,7 +26,7 @@ import common as C
 import cone as CONE
 import iface as IFACE
 from compile_one import compile_module
-from judge import git, to_path, sha, TIME_CACHE, TIME_TOLERANCE, TIME_SLACK_S
+from judge import git, to_path, sha, TIME_CACHE, TIME_TOLERANCE, TIME_SLACK_S, EXCHANGE_NODES_PER_TOKEN
 
 
 def group_sizes(decls):
@@ -65,7 +67,7 @@ def main():
     with open(C.module_path(m), encoding='utf-8') as fh:
         new_text = fh.read()
     cache = C.load_json(TIME_CACHE, {}) or {}
-    key = f'{m}:{sha(old_text)}'
+    key = f'w:{m}:{sha(old_text)}'
     if key not in cache:
         p = C.module_path(m, oldsrc)
         os.makedirs(os.path.dirname(p), exist_ok=True)
@@ -74,10 +76,10 @@ def main():
         ro = compile_module(m, old_dir, src=oldsrc, mem_gb=a.mem_gb, timeout=a.timeout, quiet=True)
         if ro['ok']:
             cache = C.load_json(TIME_CACHE, {}) or {}
-            cache[key] = ro['cpu_s']
+            cache[key] = ro['time_s']
             os.makedirs(os.path.dirname(TIME_CACHE), exist_ok=True)
             json.dump(cache, open(TIME_CACHE, 'w'), indent=0)
-    t_old, t_new = cache.get(key), r['cpu_s']
+    t_old, t_new = cache.get(key), r['time_s']
 
     res, old, new = IFACE.check_module(m, new_dir)
     g_old, g_new = group_sizes(old), group_sizes(new)
@@ -87,12 +89,15 @@ def main():
     reasons = []
     if not res['compatible']:
         reasons.append('interface changed: ' + ', '.join(res['breaking'][:5]))
-    if res['added']:
-        named_added = [n for n in res['added'] if not IFACE.AUX.search(n)]
-        if named_added:
-            reasons.append('new declarations added: ' + ', '.join(named_added[:5]))
+    named_added = [n for n in res['added'] if not IFACE.AUX.search(n)]
     if k_new > k_old:
-        reasons.append(f'source tokens went up ({k_old} -> {k_new})')
+        # the one agreed trade: tokens may rise if the written-out size falls enough per token added
+        if w_old - w_new >= EXCHANGE_NODES_PER_TOKEN * (k_new - k_old):
+            print(f'trade: +{k_new - k_old} tokens for -{w_old - w_new} nodes '
+                  f'({(w_old - w_new) // (k_new - k_old)} per token; at least {EXCHANGE_NODES_PER_TOKEN} required)')
+        else:
+            reasons.append(f'source tokens went up ({k_old} -> {k_new}) without saving at least '
+                           f'{EXCHANGE_NODES_PER_TOKEN} written-out nodes per token added')
     if w_new > w_old:
         reasons.append(f'written-out size went up ({w_old} -> {w_new})')
     if t_old is not None and t_new > t_old * (1 + TIME_TOLERANCE) + TIME_SLACK_S:
@@ -105,6 +110,8 @@ def main():
     print(f'file: source tokens {k_old} -> {k_new} ({k_new - k_old:+d}); written-out {w_old} -> {w_new} '
           f'({w_new - w_old:+d}); compile time {t_old if t_old is not None else "?"}s -> {t_new}s; '
           f'peak memory {r["max_rss_mb"]} MB')
+    if named_added:
+        print('new declarations: ' + ', '.join(named_added[:10]))
     changed = sorted(set(n for n in g_old if g_old.get(n) != g_new.get(n)) | set(n for n in g_new if n not in g_old))
     for n in changed[:30]:
         print(f'  {n}: written-out {g_old.get(n, 0)} -> {g_new.get(n, 0)}')

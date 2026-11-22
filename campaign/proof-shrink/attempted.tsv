@@ -1,0 +1,9 @@
+theorem	module	outcome	note
+GlobalTheory.TwistChoice.same_basic	Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TwistDataAgreeAcrossCoefficients	recorded	no destructuring; generalize projections, subst in small context
+ReciprocityTheory.ChartRestriction.DS.Mult1.PG_mul_PG	ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.JSchurGA	recorded	eq_comm in simp only before split_ifs
+ReciprocityTheory.ChartRestriction.DS.Mult1.PG_conjTranspose	ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.JSchurGA	recorded	eq_comm in simp only before split_ifs
+GlobalTheory.HeightCounting.SideCopy.sigSpan_copy	Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RingSpecNormalisedCharacterEq	accepted by owner	local abstract `have` + 14 substs instead of copy_cases; +616 tokens for -4.58M nodes
+PositivityTheory.Rg.BcB.F.F0.wEx_of	Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.HyperbolicEntryBounds.AllLeavesMono	no gain	size comes from choose_spec chains in definitions
+GlobalTheory.TwistChoice.fullRk_basisOf_transfer	Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TwistDataAgreeAcrossCoefficients	unfinished	same method as same_basic; generalize failed "not type correct" after G0g unfolding; needs more runs
+GlobalTheory.TwistChoice.goodTw_transfer	Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TwistDataAgreeAcrossCoefficients	not attempted	goal uses most fields of the structures
+GlobalTheory.HeightCounting.SideCopy.LamCopy.lam_copy	Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LamCopy	not attempted	uses copy_cases plus further case splits

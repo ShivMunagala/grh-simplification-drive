@@ -39,6 +39,9 @@ NEW_SYNTAX = re.compile(r'^\+(?!\+\+).*\b(macro|macro_rules|syntax|notation|infi
 IMPORT = re.compile(r"^\s*(?:public\s+|private\s+|meta\s+)*import\s+(?:all\s+)?([^\s]+)", re.M)
 TIME_TOLERANCE = 0.05          # relative
 TIME_SLACK_S = 2.0             # absolute, on top
+# The one agreed trade between dials: source size may rise if the written-out size falls by at
+# least this many nodes for every token added. (The cone averages about 15 nodes per token.)
+EXCHANGE_NODES_PER_TOKEN = 1000
 TIME_CACHE = os.path.join(C.ROOT, 'data', 'time_cache.json')
 
 
@@ -251,19 +254,19 @@ def main():
         for m in todo:
             r = compile_module(m, new_dir, overlays=[new_dir], threads=a.threads, mem_gb=a.mem_gb, quiet=True)
             compiled[m] = r
-            print(f"  compiled {m}: ok={r['ok']} cpu={r.get('cpu_s')}s rss={r.get('max_rss_mb')}MB", flush=True)
+            print(f"  compiled {m}: ok={r['ok']} time={r.get('time_s')}s rss={r.get('max_rss_mb')}MB", flush=True)
             if not r['ok']:
                 report['problems'].append(f"{m} does not compile: {r.get('messages_tail', r.get('error', ''))[-600:]}")
                 continue
             if r.get('mentions_sorry'):
                 report['problems'].append(f'{m}: compiler output mentions sorry')
-            time_after += r['cpu_s']
+            time_after += r['time_s']
             old_olean = C.current_olean(m)
             if os.path.exists(old_olean) and not a.no_time:
                 # time the accepted version of the same file on this machine (cached per file content)
                 try:
                     old_text = git('show', f'{base}:{to_path(m)}')
-                    key = f'{m}:{sha(old_text)}'
+                    key = f'w:{m}:{sha(old_text)}'
                     if key not in time_cache:
                         p = C.module_path(m, oldsrc)
                         os.makedirs(os.path.dirname(p), exist_ok=True)
@@ -271,7 +274,7 @@ def main():
                             fh.write(old_text)
                         ro = compile_module(m, old_dir, src=oldsrc, threads=a.threads, mem_gb=a.mem_gb, quiet=True)
                         if ro['ok']:
-                            time_cache[key] = ro['cpu_s']
+                            time_cache[key] = ro['time_s']
                             os.makedirs(os.path.dirname(TIME_CACHE), exist_ok=True)
                             json.dump(time_cache, open(TIME_CACHE, 'w'), indent=0)
                         else:
@@ -306,7 +309,7 @@ def main():
                                         f'they must be recompiled (use --propagate, or a larger machine)')
             breaking_ids = {} if todo else breaking_ids
 
-    report['compiled'] = {m: {k: r.get(k) for k in ('ok', 'cpu_s', 'wall_s', 'max_rss_mb')} for m, r in compiled.items()}
+    report['compiled'] = {m: {k: r.get(k) for k in ('ok', 'time_s', 'cpu_s', 'wall_s', 'max_rss_mb')} for m, r in compiled.items()}
     report['interface'] = {m: {k: (v if not isinstance(v, list) else v[:20]) for k, v in r.items()} for m, r in ifaces.items()}
 
     # tables for the new state: overlay rows of untouched modules + rows of what was just compiled
@@ -367,7 +370,7 @@ def main():
             dials[key] = {'before': b, 'after': n, 'change': n - b}
         dials['time_cpu_s'] = {'before': round(time_before, 1), 'after': round(time_after, 1),
                                'change': round(time_after - time_before, 1),
-                               'note': 'recompiled files only, same machine'}
+                               'note': 'recompiled files only; elaboration and checking, imports excluded'}
         dials['cone_declarations'] = {'before': None, 'after': summary['cone']['declarations']}
         report['dials'] = dials
 
@@ -412,7 +415,16 @@ def main():
         report['incomplete'] = 'no baseline summary to compare with (run tools/cone.py and copy summary.json to baseline/)'
     else:
         d = report['dials']
-        up = [k for k in ('source_tokens', 'written_out_size') if d[k]['change'] > 0]
+        tok, wri = d['source_tokens']['change'], d['written_out_size']['change']
+        up = []
+        if tok > 0:
+            if wri <= -EXCHANGE_NODES_PER_TOKEN * tok:
+                report['exchange'] = (f'source +{tok} tokens allowed: written-out size fell by {-wri} nodes, '
+                                      f'{-wri // tok} per token added (at least {EXCHANGE_NODES_PER_TOKEN} required)')
+            else:
+                up.append('source_tokens')
+        if wri > 0:
+            up.append('written_out_size')
         tb, ta = d['time_cpu_s']['before'], d['time_cpu_s']['after']
         if not a.no_time and ta > tb * (1 + TIME_TOLERANCE) + TIME_SLACK_S:
             up.append('time')
@@ -428,6 +440,8 @@ def main():
         else:
             verdict = 'accept'
             report['progress'] = down
+            if report.get('exchange'):
+                report['notes'].append(report['exchange'])
     report['verdict'] = verdict
     report['seconds'] = round(time.time() - t0)
     json.dump(report, open(os.path.join(work, 'verdict.json'), 'w'), indent=1)
@@ -444,6 +458,8 @@ def main():
         print('  review:', r)
     if report.get('progress'):
         print('  went down:', ', '.join(report['progress']))
+    if report.get('exchange') and verdict == 'accept':
+        print('  trade:', report['exchange'])
     print(f"  details: {os.path.join(work, 'verdict.json')}")
     sys.exit({'accept': 0, 'review': 3, 'incomplete': 4, 'invalid': 1}[verdict])
 

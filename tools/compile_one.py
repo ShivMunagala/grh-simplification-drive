@@ -11,13 +11,32 @@ The archive's source is untrusted and compiling it runs code, so the compiler ru
 with no network and a read-only filesystem, and under a memory cap so that a file that is too big
 for this machine fails cleanly instead of making it swap.
 """
-import argparse, fcntl, json, os, sys, time
+import argparse, fcntl, json, os, re, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as C
 
 
 SECOND_SLOT_MIN_FREE_GB = 6.5
+PROFILE_LINE = re.compile(r'^\t(.+?) ([0-9.]+)(ms|s)$', re.M)
+NOT_WORK = {'import', 'initialization'}
+
+
+def work_seconds(log_text):
+    """Time Lean spent elaborating and checking the file, from its own cumulative timing report.
+
+    Loading the imports is left out: on a machine short of memory it dominates and swings widely,
+    and it says nothing about the file being compiled. Returns None if the report is missing."""
+    k = log_text.rfind('cumulative profiling times:')
+    if k < 0:
+        return None
+    total, seen = 0.0, False
+    for name, value, unit in PROFILE_LINE.findall(log_text[k:]):
+        if name.strip() in NOT_WORK:
+            continue
+        total += float(value) * (0.001 if unit == 'ms' else 1.0)
+        seen = True
+    return total if seen else None
 
 
 def mem_available_gb():
@@ -89,6 +108,8 @@ def compile_module(module, out, src=C.SRC, overlays=(), threads=1, mem_gb=8.0, t
     if os.path.exists(stats):
         os.remove(stats)
     tools = os.path.dirname(os.path.abspath(__file__))
+    # Lean's own per-phase timing, printed once at the end; the threshold keeps per-declaration lines out
+    opts += ['-Dprofiler=true', '-Dprofiler.threshold=1000000000']
     cmd = ['/usr/bin/python3', '-I', os.path.join(tools, 'timed_exec.py'), stats, '--',
            C.LEAN, f'-j{threads}', f'--setup={setup}', '-o', olean, '-i', ilean] + opts + [source]
     ro = [C.TOOLCHAIN, C.PACKAGES, C.COMPILED, src, tools] + overlays
@@ -105,9 +126,15 @@ def compile_module(module, out, src=C.SRC, overlays=(), threads=1, mem_gb=8.0, t
             messages = lf.read()
     except OSError:
         pass
+    work = work_seconds(messages)
+    time_s = work if work is not None else cpu
+    k = messages.find('cumulative profiling times:')
+    if k >= 0:
+        messages = messages[:k]                 # keep the timing block out of error reports
     has_error = ': error' in messages
     has_sorry = "declaration uses 'sorry'" in messages or 'sorry' in messages and 'warning' in messages
-    res = {'module': module, 'ok': ok and not has_error, 'rc': rc, 'cpu_s': round(cpu, 2), 'wall_s': round(wall, 2),
+    res = {'module': module, 'ok': ok and not has_error, 'rc': rc, 'time_s': round(time_s, 2),
+           'cpu_s': round(cpu, 2), 'wall_s': round(wall, 2),
            'max_rss_mb': round(rss), 'olean': olean if ok else None, 'ilean': ilean if ok else None,
            'log': log, 'has_error': has_error, 'mentions_sorry': bool(has_sorry),
            'messages_tail': messages[-1500:] if (not ok or has_error) else ''}

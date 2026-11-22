@@ -47,15 +47,21 @@ Three dials:
 
 1. **Source size** of the cone, in tokens. A name of any length is one token; comments are not counted.
 2. **Written-out proof size** of the cone: the size of the fully expanded proofs that Lean checks.
-3. **Time** to build and check, compared on the files a change recompiles.
+3. **Time** to build and check, compared on the files a change recompiles. Measured as the time Lean spends
+   elaborating and checking those files, not counting the loading of what they import.
 
 A valid change is accepted if no dial goes up, and it is progress if one goes down. The two sizes are exact.
-Time is noisy, so a change that raises it is reviewed by a person. Any other change that trades one dial for
-another needs a written reason and a human decision.
+Time is noisier, so it has a tolerance, and a change that raises it beyond that is reviewed by a person.
+
+One trade between dials is allowed without review: **source size may rise if the written-out size falls by
+at least 1,000 nodes for every token added.** The cone averages about 15 nodes per token, so this only admits
+changes that are far better than the going rate. Any other change that trades one dial for another needs a
+written reason and a human decision.
 
 Two fences:
 
-- A size cap on any single theorem or definition that is added or changed (`baseline/caps.json`, provisional).
+- A size cap on any single theorem or definition that is added, or that is changed and grows
+  (`baseline/caps.json`, provisional). New helper lemmas are welcome as long as they stay under it.
 - No new macros or notation.
 
 Reported to steer the work, not enforced: which declarations most of the cone hangs on
