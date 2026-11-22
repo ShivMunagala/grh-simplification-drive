@@ -18,16 +18,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.1M, written-out proof size 2.72B, time change -2.86K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.1M, written-out proof size 2.72B, time change -2.83K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 176,113,724 | −7,004,515 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,723,260,092 | −66,044,207 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,855.6 | −2,855.6 |
+| Source size (tokens) | 183,118,239 | 176,106,784 | −7,011,455 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,720,318,671 | −68,985,628 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,830.5 | −2,830.5 |
 
-Cone: 1,260,827 declarations in 146,526 files. Recorded changes: 24. Latest row: citations of a copy written in their short form (9676 theorems; 6127 files) (2026-11-22 10:05 UTC).
+Cone: 1,260,830 declarations in 146,531 files. Recorded changes: 25. Latest row: dropped parts of patterns skipped by projection; broad round (5288 lines; 3945 files) (2026-11-22 10:14 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -42,7 +42,7 @@ Cone: 1,260,827 declarations in 146,526 files. Recorded changes: 24. Latest row:
 | 2026-11-22 | Repetition sweep, part 1: 10,064 duplicate proofs now cite a copy their file already imports (two passes), each citation in its shortest form. Written-out size −0.5%, source −0.2% | done |
 | 2026-11-22 | Heaviest proofs, waves 2 to 6: 50 proofs rewritten by hand, each kind of cause written up with its fix ([notes](campaign/proof-shrink/RESULTS.md)) | done |
 | | One shared lemma for 24 proofs that take the same record apart: 16 rewritten, 12.5 million nodes down to 0.6 million; not recorded | waits for the owner: the lemma needs one Lean tag the equivalence check sends to review |
-| 2026-11-22 | Patterns that drop parts of a conjunction read the kept parts by projection instead of matching every part. So far 4,060 lines in 3,281 files, −14.9 million nodes, source down. More batches are being compiled | in progress |
+| 2026-11-22 | Patterns that drop parts of a conjunction read the kept parts by projection instead of matching every part. 9,348 lines in 7,226 files, −17.9 million nodes, source down ([notes](campaign/proof-shrink/RESULTS.md)). A last pass is being compiled | nearly done |
 | | Repetition sweep, part 2: duplicates in files that cannot see each other share one proof | needs a rule for added imports |
 | | Heavy definitions built from chains of `choose` | next |
 | | More waves on the heaviest proofs | ongoing |

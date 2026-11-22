@@ -236,6 +236,50 @@ What did not work, and why:
 
 For every proof here the statement alone was under 25,000 nodes: the size was in the steps.
 
+## Bulk sweeps, 2026-11-22
+
+The hand-made waves work on the largest proofs. Those are not where most of the size is:
+
+| Proofs with a written-out proof of | Proofs | Share of the cone |
+|---|---:|---:|
+| 300,000 nodes or more | 40 | 1.2% |
+| 100,000 to 300,000 | 325 | 1.6% |
+| 30,000 to 100,000 | 6,288 | 10.3% |
+| 10,000 to 30,000 | 38,909 | 22.8% |
+| 3,000 to 10,000 | 121,366 | 23.8% |
+| 1,000 to 3,000 | 179,925 | 11.7% |
+| under 1,000 | 348,798 | 4.7% |
+
+(The rest is statements, 14%, and auxiliary declarations and definitions.) So what the waves found is now
+applied by generator wherever it fits (`tools/proof_edits.py`). A least-squares fit of proof size against
+how often each tactic is used, over 353,132 proofs, says where to look: `obtain` goes with about 1,270
+nodes per use (455,454 uses), `subst` 4,130 (32,822), `cases` 5,100 (7,925), `fin_cases` 2,300 (10,279),
+`omega` 660 (102,648); every other source token goes with about 19. Each `obtain` restates the goal once
+per level of its pattern.
+
+How a sweep runs: an edit is one line. A file's edits are compiled all together; where that fails, one at
+a time, and then the ones that passed alone together. A file is kept only if it compiles to the same
+interface, its written-out size does not grow, and one of its two sizes falls, with source counted the
+strict way (every projection step a token; if it grows, at least 1,000 nodes per token added).
+
+| Sweep | Files compiled | Files kept | Written-out size | Source tokens |
+|---|---:|---:|---:|---:|
+| Dropped parts of a pattern skipped by projection (`obtain ⟨-, -, h, -⟩ := H` → `obtain ⟨h, -⟩ := H.2.2`), three rounds down to proofs of 1,000 nodes and patterns of two parts | 10,166 | 6,966 | −14,598,000 | −25,900 |
+| Kept parts between dropped ones read by their own projections (costs source on the strict count) | 3,113 | 260 | −3,250,000 | −600 on the dial, +540 strict |
+| `clear_value x` after `set x := e with h` where `e` contains a power | 441 | 12 | −93,026 | +32 |
+| Citations of a copy written in the one form their proof uses | 6,130 | 6,127 | 0 | −104,029 |
+| Deleting `show T` / `change T` lines that only restate the goal (pilot) | 300 | 54 | −4,026 | −1,033 |
+
+- The projection rewrite keeps named parts in a pattern, because a name may be the witness of an existence
+  statement, which has no projections. Only a single name that looks like a hypothesis is read as `.1`.
+- A hypothesis that `obtain` consumed is cleared after the rewrite, so later steps see the same context.
+- One file was left out because a theorem in it grew past the per-declaration cap although its file got
+  smaller: the file-level test does not see that; the judge does.
+- `clear_value` only pays where an arithmetic tactic multiplies out a power; applied to every `set … with`
+  it gained nothing.
+- The cone has 81,658 `show`/`change`/bare `dsimp only` lines carrying 1.57 million source tokens, but only
+  about one in ten can go: most are needed by the step after them. Not run at scale.
+
 ## What the size was made of
 
 - **Taking large structures apart.** `cases` on structures with dozens of fields followed by dozens of
