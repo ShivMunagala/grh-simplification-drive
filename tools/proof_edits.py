@@ -356,9 +356,10 @@ def gen_shorten(out, candidates):
 # ------------------------------------------------------------------ variants
 # ------------------------------------------------------------------ projections instead of taking apart
 # `obtain ⟨-, -, h, -, …⟩ := H` on a long conjunction is written out as one nested case split per part,
-# and every level restates what is left of the conjunction. Reading the parts that are used by
-# projection (`have h := H.2.2.1`) writes each part once. These edits replace one such line each; the
-# proof is otherwise untouched, and each edit has to compile and pass the equivalence check.
+# and every level restates what is left of the conjunction, dropped parts included. Skipping the dropped
+# parts by projection (`obtain ⟨h, -⟩ := H.2.2`) leaves only the levels that are used. These edits replace
+# one such line each; the proof is otherwise untouched, and each edit has to compile and pass the
+# equivalence check.
 SITE_RE = re.compile(r'^(?P<lead>[ \t]*(?:·[ \t]*)?)(?P<kw>obtain|obt|have)[ \t]+'
                      r'⟨(?P<pat>[^⟨⟩()|@:\n]*)⟩[ \t]*:=[ \t]*(?P<t>\S[^\n]*?)[ \t]*$')
 RCASES_RE = re.compile(r'^(?P<lead>[ \t]*(?:·[ \t]*)?)(?P<kw>rcases)[ \t]+(?P<t>\S[^\n]*?)[ \t]+with[ \t]+'
@@ -367,12 +368,20 @@ IDENT_RE = re.compile(r"^[^\W\d][\w'!?]*$")
 ATOM_RE = re.compile(r'^[^\s()\[\]{}⟨⟩@]+$')
 PLAIN_RE = re.compile(r"^[^\W\d][\w']*$")
 OPEN, CLOSE = '([{⟨', ')]}⟩'
-MIN_REST = 4                       # parts from the first dropped one on, below which a line is left alone
+SPLIT = 6                          # dropped parts in a row, inside a pattern, from which a new line pays
+MIN_SAVED = 3                      # pattern entries a rewrite must save for a line to be touched
 
 
 def projection_lines(line, next_indent, before, after, fresh, min_parts):
     """The replacement for one tactic line that takes a flat tuple apart, or None if the line is not
-    one we can rewrite safely. before/after: the declaration's text before and after the line."""
+    one we can rewrite safely. before/after: the declaration's text before and after the line.
+
+    Dropped parts are not matched one by one. A run of them is skipped by projection (`H.2.2.2`) where a
+    term to project from is at hand: at the start of the pattern, or after a long run in the middle, where
+    the pattern is ended with a name for what is left and a new line goes on from there. Dropped parts at
+    the end of the pattern become one `-`, which matches all that is left. Named parts stay in a pattern,
+    so witnesses of an existence statement among them are still handled. The result is never longer in
+    tokens than the line it replaces, even counting every projection step as a token."""
     if '--' in line or ';' in line:
         return None
     m = SITE_RE.match(line) or RCASES_RE.match(line)
@@ -383,18 +392,11 @@ def projection_lines(line, next_indent, before, after, fresh, min_parts):
     k = len(parts)
     if k < min_parts or next_indent > len(lead):         # too short to matter, or the term continues below
         return None
-    for p in parts:
-        if p not in ('-', '_') and (p == 'rfl' or not IDENT_RE.match(p)):
+    drop = [p in ('-', '_') for p in parts]
+    for p, d in zip(parts, drop):
+        if not d and (p == 'rfl' or not IDENT_RE.match(p)):
             return None
-    # Parts named at the front may be witnesses of an existence statement, which has no projections: they
-    # stay in the pattern. What follows the first dropped part is read by projection.
-    front = 0
-    while front < k and parts[front] not in ('-', '_'):
-        front += 1
-    rest = parts[front:]
-    r = len(rest)
-    names = [(i, p) for i, p in enumerate(rest) if p not in ('-', '_')]
-    if r < MIN_REST:                                      # nothing dropped, or too little to matter
+    if not any(drop) or all(drop):
         return None
     depth = 0
     for ch in term:
@@ -403,77 +405,61 @@ def projection_lines(line, next_indent, before, after, fresh, min_parts):
             return None
     if depth or term.split()[-1] in ('by', 'fun', '=>', ':=', 'with', 'at', 'from', '<|', '$', 'do'):
         return None
+    atom = bool(ATOM_RE.match(term))
+    last_named = max(i for i in range(k) if not drop[i])
 
-    def proj(i):
-        return '.2' * i + ('.1' if i < r - 1 else '')
+    # statements: (term to take apart, pattern entries); the first one keeps the line's keyword
+    stmts, gone = [], []
+    cur, pat, i = (term if atom else f'({term})'), [], 0
+    plain_first = True                                   # the first statement still takes `term` itself apart
+    while i < k:
+        if not drop[i]:
+            pat.append(parts[i])
+            i += 1
+            continue
+        j = i
+        while j < k and drop[j]:
+            j += 1
+        run = j - i
+        if i > last_named:                               # nothing named follows: one dash matches the rest
+            pat.append('-')
+            break
+        if not pat:                                      # at the start of a statement: skip by projection
+            cur += '.2' * run
+            if not stmts:
+                plain_first = False
+        elif run >= SPLIT:                               # a long run in the middle: go on from a name
+            name = fresh()
+            stmts.append((cur, pat + [name]))
+            gone.insert(0, name)
+            cur, pat = name + '.2' * run, []
+        else:
+            pat += parts[i:j]
+        i = j
+    if pat:
+        stmts.append((cur, pat))
+    if k - sum(len(p) for _, p in stmts) < MIN_SAVED:    # too few levels saved to matter
+        return None
 
-    out, gone = [], []
-    if front:
-        # keep the front of the pattern; one name (or a dash, if nothing else is used) stands for the rest
-        base = fresh() if names else '-'
-        pat = '⟨' + ', '.join(parts[:front] + [base]) + '⟩'
-        out.append(f'rcases {term} with {pat}' if kw == 'rcases' else f'{kw} {pat} := {term}')
-        if names:
-            gone.append(base)
-    else:
-        if not names:
-            return None
-        atom = bool(ATOM_RE.match(term))
-        base = term
-        word = re.compile(r'(?<![\w.\'])' + re.escape(term) + r'(?![\w\'])')
-        # `obtain` and `rcases` consume a hypothesis they take apart; so do we
-        if (kw in ('obtain', 'rcases') and PLAIN_RE.match(term) and term not in [n for _, n in names]
-                and word.search(before) and not word.search(after)):
-            gone.append(term)
-        if not atom:
-            if len(names) == 1:
-                base = f'({term})'
-            else:
-                base = fresh()
-                out.append(f'have {base} := {term}')
-                gone.insert(0, base)
-    if names and not all(n[:1] in 'hH' for _, n in names):
-        # Some name after the first dropped part does not look like a hypothesis: it may be the witness of
-        # an existence statement inside the conjunction. Dropped parts are skipped by projection, and each
-        # run of named parts is taken out by a short `obtain`, which handles witnesses.
-        cur, i = base, 0
-        while True:
-            d = 0
-            while i < r and rest[i] in ('-', '_'):
-                i, d = i + 1, d + 1
-            if i == r:
-                break
-            j = i
-            while j < r and rest[j] not in ('-', '_'):
-                j += 1
-            run, tail = rest[i:j], cur + '.2' * d
-            if j == r:                                    # the run ends the pattern
-                out.append(f'have {run[0]} := {tail}' if len(run) == 1 else f'obtain ⟨{", ".join(run)}⟩ := {tail}')
-                break
-            if all(p in ('-', '_') for p in rest[j:]):    # only dropped parts follow
-                out.append(f'have {run[0]} := {tail}.1' if len(run) == 1 and run[0][:1] in 'hH'
-                           else f'obtain ⟨{", ".join(run)}, -⟩ := {tail}')
-                break
-            nxt = fresh()
-            out.append(f'obtain ⟨{", ".join(run)}, {nxt}⟩ := {tail}')
-            gone.insert(0, nxt)
-            cur, i = nxt, j
-    elif len(names) == 1:
-        (i, n), = names
-        out.append(f'have {n} := {base}{proj(i)}')
-    elif names:
-        # Each `have` sits one binder deeper than the last, and a term under a different number of binders is
-        # a different term: one `have` per part would write the conjunction out once per part. So the parts
-        # wanted are gathered in one term first, where the projections share everything, and named from that.
-        items = [base + proj(i) for i, _ in names]
-        gathered = items[-1]
-        for it in reversed(items[:-1]):
-            gathered = f'And.intro {it} ({gathered})' if ' ' in gathered else f'And.intro {it} {gathered}'
-        both = fresh()
-        out.append(f'have {both} := {gathered}')
-        last = len(names) - 1
-        out += [f'have {n} := {both}' + '.2' * j + ('.1' if j < last else '') for j, (_, n) in enumerate(names)]
-        gone.insert(0, both)
+    def write(first, cur, pat):
+        if len(pat) == 1:
+            return f'have {pat[0]} := {cur}'
+        if len(pat) == 2 and pat[1] == '-' and pat[0][:1] in 'hH':
+            return f'have {pat[0]} := {cur}.1'
+        body = '⟨' + ', '.join(pat) + '⟩'
+        if not first:
+            return f'obtain {body} := {cur}'
+        if plain_first:
+            cur = term                                   # the whole term, as in the original line
+        return f'rcases {cur} with {body}' if kw == 'rcases' else f'{kw} {body} := {cur}'
+
+    out = [write(n == 0, c, p) for n, (c, p) in enumerate(stmts)]
+    word = re.compile(r'(?<![\w.\'])' + re.escape(term) + r'(?![\w\'])')
+    # `obtain` and `rcases` consume a hypothesis they take apart. Where we now project out of it instead,
+    # clear it, so that the context stays what it was.
+    if (not plain_first and kw in ('obtain', 'rcases') and PLAIN_RE.match(term) and term not in parts
+            and word.search(before) and not word.search(after)):
+        gone.append(term)
     if gone:
         out.append('clear ' + ' '.join(gone))
     pad = ' ' * len(lead)
@@ -671,6 +657,21 @@ def variants(edits_path, work, single_from, modules_file=None):
           + (f'; {n_unplaced} files skipped: they differ from the files the edits were made for' if n_unplaced else ''))
 
 
+EXCHANGE = 1000                    # nodes of written-out size that one added source token must buy (the judge's rate)
+
+
+def strict_tokens(text):
+    """Source tokens with every numeric projection step counted. The dial counts a dotted name as one
+    token whatever its length, so `h.2.2.1` is one token there and four here. Edits that turn patterns
+    into projection chains are held to this stricter count, so that they do not lean on that convention."""
+    n = 0
+    for t in CONE.TOKEN.findall(CONE.strip_comments(text)):
+        n += 1
+        if '.' in t and t[0] not in '"0123456789':
+            n += sum(1 for part in t.split('.')[1:] if part.isdigit())
+    return n
+
+
 def choose(edits_path, work):
     per = load_edits(edits_path)
     res = load_results(os.path.join(work, 'results.jsonl'))
@@ -680,6 +681,7 @@ def choose(edits_path, work):
     chosen, stats = [], collections.Counter()
     times = {}
     sources = []                                          # (module, variant, sha256 of the source that was compiled)
+    accepted = texts_at(accepted_commit(), sorted(per))
     for m, es in sorted(per.items()):
         options = []                                      # (written-out of the module, variant, edits)
         r = res.get(('all', m))
@@ -696,15 +698,28 @@ def choose(edits_path, work):
         if not options:
             stats['files with no passing variant' if tried else 'files not compiled'] += 1
             continue
-        w, vid, used = min(options, key=lambda o: o[0])
-        r = res[(vid, m)]
-        if r.get('old_written_out') is not None and w >= r['old_written_out']:
-            stats['files where nothing got smaller'] += 1
+        # Each file stands on its own: its written-out size must fall, and if its source grows (counting
+        # every projection step) the fall must be at least EXCHANGE nodes per token added.
+        before = strict_tokens(accepted[m]) if m in accepted else None
+        paying = []
+        for w, vid, used in options:
+            old = res[(vid, m)].get('old_written_out')
+            if old is None or before is None or w >= old:
+                continue
+            with open(C.module_path(m, os.path.join(work, 'v', vid)), encoding='utf-8') as fh:
+                added = strict_tokens(fh.read()) - before
+            if added <= 0 or old - w >= EXCHANGE * added:
+                paying.append((w, vid, used, added))
+        if not paying:
+            stats['files where nothing got smaller, or the gain does not pay for the added source'] += 1
             continue
+        w, vid, used, added = min(paying, key=lambda o: o[0])
+        r = res[(vid, m)]
         stats['files kept'] += 1
         stats['edits kept'] += len(used)
         stats['written-out before'] += r.get('old_written_out') or 0
         stats['written-out after'] += w
+        stats['source tokens added, counting every projection step'] += added
         with open(C.module_path(m, os.path.join(work, 'v', vid)), 'rb') as fh:
             sources.append((m, vid, hashlib.sha256(fh.read()).hexdigest()))
         for e in used:
