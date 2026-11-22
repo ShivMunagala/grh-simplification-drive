@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 177.2M, written-out proof size 2.71B, time change -3.50K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 177.2M, written-out proof size 2.70B, time change -3.52K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 177,229,428 | −7,018,782 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,705,323,909 | −83,980,390 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,502.8 | −3,502.8 |
+| Source size (tokens) | 184,248,210 | 177,229,518 | −7,018,692 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,704,415,133 | −84,889,166 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,515.3 | −3,515.3 |
 
-Cone: 1,260,827 declarations in 146,531 files. Recorded changes: 30. Latest row: wave 7: six more heavy proofs (instance arguments reduced before substitutions; a lemma used once instead of projected) (2026-11-22 11:36 UTC).
+Cone: 1,260,827 declarations in 146,531 files. Recorded changes: 31. Latest row: dsimp +instances only at hypotheses where it makes the proof smaller (45 lines; 20 files) (2026-11-22 13:02 UTC).
 <!-- dials:end -->
 
 ## Milestones

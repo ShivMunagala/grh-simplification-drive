@@ -1634,6 +1634,9 @@ hM, -, hMb, -⟩ := h.2
 + 12
 .2.2
   clear
+== src/Development/AbelianVarietyTheory/Counterexamples/LevelGroupExamples/CarriedGeneratorUnique.lean 02273ea5680eadc1c501103dbf94bb3c6a78a26f9d00ad1656755ebdb3bc89f5 ea9d7eab671fb8fa9b80a045e37d003f0b8b03a205f275077bfff8301750de33
+@@ 4136 0 11
++instances 
 == src/Development/AbelianVarietyTheory/Counterexamples/MetricPositivity/PosSemidefOfIsMetric.lean e1637c14a8b88925df47015b1e7b7f85b469afaa9f13cf56ea2f105f24f764f2 20683b0e58d5dd545c156b65b45d7ada1f8c0f12ca957a6fe16b6f7f125ab061
 @% 2175 88 3
 + 16
@@ -1683,7 +1686,11 @@ u, U, z, ζ, hz0⟩ := h.2.2
 == src/Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/ExistsMuIsRamified.lean eca9275a2517770fd17a3e9b586b3cc27e0fcb778587f6005cb11d12b0dcbdd0 36ff5fde360d7459f2167a83219666fb52a97f3f6bff52ecf72e2aaee34b8143
 @@ 1655 35 30
 have hb := (hx4 s he y4).2.2.1
-== src/Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/ExistsSameData.lean e8f4b31e059e8079d1760e13599010079ecf0b6e7c9412f6845d4e036d1f2d5c dc9c779a504229207fe27a252af547f143bea4a68cbed03a235c6f3aab6e32bf
+== src/Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/ExistsSameData.lean e8f4b31e059e8079d1760e13599010079ecf0b6e7c9412f6845d4e036d1f2d5c 9a3ffb92a31893124c1c60fafa4831eb625deea34d581a996e3719ec2e04841e
+@@ 38694 0 11
++instances 
+@@ 40564 0 11
++instances 
 @@ 43623 456 221
 +instances only at *
   subst hcc hTw hl hO0 hcrO0 halgO0 htopO0 hO hcrO halgO hOk hcrOk halgOk hzk hpD hdelta hchi1 hSig hfinSig hjS hside
@@ -1699,9 +1706,10 @@ obtain ⟨⟨⟨a1, a2, a3, -, -, -, -, -⟩, -, -
 + 41
 -, -, -, -, -, -,
     -, -, -, -⟩ := id h
-@% 48521 175 9
-+ 6
- a2 a3
+@% 48501 195 9
++ 37
++instances only at *
+  subst a1 a2 a3
 = 48548 66
 + 21
 .instTau
@@ -1736,6 +1744,10 @@ h.thU h.
 = 49257 50
 + 2
 h.
+@@ 53924 0 11
++instances 
+@@ 55133 0 11
++instances 
 == src/Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/FinTypRepCast.lean 77ce40731c416e3ba7a396f5f60fa098badc7671e0c3eb466bda07fb124f8bfc ec76cb6fa01feed9dfcc9510eb460bc1f1f55b29b21b03c9bd46852495f72ef8
 @% 8179 138 3
 + 12
@@ -4129,6 +4141,9 @@ have heval := (
 == src/Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/ExistsIsLatticeFrameBcEq.lean 8d75a7ee807ba2d113a7aae5c455379912a4501393c4301023b5fceeeee22d70 7280456b3b578cee16b38735a2ff29e3a9feafba9f72aaa3cb8cd4a8f74d3873
 @@ 3940 3 0
 
+== src/Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/ExistsKerTie.lean f357c94228990d45c2c959a996d36c8c7e85a0d3a414a10e0984e329cc5a25d8 c0f22d2fa6316eaa64c936cf522c83fc43f76e72d1d328528c0e15767ee826b3
+@@ 2130 0 11
++instances 
 == src/Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/ExistsLatticeStabilizerTwistAndLevelAway.lean dfb43b658dd4bcbf30b3ad051f44ec2cc264bcf0a1357dd5b8bc4767b0678d27 a962f726260e0ccffed61a820db09adc43d900e24adf01b7633fed580510ea34
 @% 5337 105 3
 + 16
@@ -10407,6 +10422,11 @@ have h0' := ((memW y j₀').1 hy.2)
 DVR.res_res' <;> assumption
 @@ 1131 307 75
  intros; apply _root_.GlobalTheory.LBTrans.units_eq_of_local <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsLineBundlePowerIsoReindexedCharts.lean 3bfa386d29c33fce6f5c618efd1b42275b0132d0020e703a32c6ec455145d3ae 2080bf5ca4e6ed81689b13fb64e444b4828271e9188b251731e2a9dd7b774cee
+@@ 3108 0 11
++instances 
+@@ 3526 0 11
++instances 
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsLinearCombinationTangentVectorsAffineOpen.lean bf4bd82faa45a0dc70cdf782c81e344c9ceb8a11a359939b8fbfd479667f1450 9578f40931f773a9a8a43a9052aa5e6d55a698a05613f49d79ac5f1835bb3a96
 @@ 1098 64 70
 by intros; apply _root_.GlobalTheory.TanMod.spMap_comp' <;> assumption
@@ -15153,6 +15173,9 @@ have hS := h.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.1
  intros; apply _root_.GlobalTheory.HeckePoint.unitOn_pow <;> assumption
 @@ 1040 33 71
  intros; apply _root_.GlobalTheory.HeckePoint.unitOn_one <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/OnTorusComp.lean f0bd4fd21c12967587a154c0b66c49b7df328f2ac555c4f9e3a1c998468707ae a5f0daf7da5a7d6c1f2bcb73a28290a1167dd6aed6317414dc2898b041c7647e
+@@ 7213 0 11
++instances 
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/OneMapOfOneOfSerOf.lean 39d33ae732d484d6df283636b78bad4fbaa10073216c4fc6c85eac237fb1344d f78ae769fa5857956bd4f1c69edb30b8c8b35997e134009d4bcd423b77576a1e
 @@ 2731 3 0
 
@@ -24666,6 +24689,11 @@ have hWt := (
 + 14
 .2.2.2
   clear
+== src/Development/AbelianVarietyTheory/Proofs/GenericRegularity/ValuesEqOfCommonPoint.lean 385496b3a49c0b529448afe1052e78fffc90f1699b153b131025c077742ed076 b39f789f04e0ee07821aa93068a94faa05f84ae2bb487a7dfb9de8da04ebfb75
+@@ 6116 0 11
++instances 
+@@ 7610 0 11
++instances 
 == src/Development/AbelianVarietyTheory/Proofs/GlobalInterpolation/AdelicFourierSeriesOfSummableCoefficients.lean 45dda108527fbee202c84ea13fbabff5d0a98d2e9248e2942dd9a91f1fb679c2 fca716b315b260df46bbf659058883338e11fbb566658aa151920d0ea8ede1bd
 @@ 1486 17 71
  intros; apply _root_.GlobalTheory.SWQ.FZero.Bd_rat_zero <;> assumption
@@ -27735,8 +27763,8 @@ cmp, h1, h2⟩ := h.2.2
 @@ 6666 17 26
 hsp, hP⟩ := hk.2.2
   clear
-== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/HeckeTieMoveOfPin.lean 66ef3b66eab715be16a927799ea616be4caae3b0b08cd6edd5e8c3726eb67923 ed48328079ae06eb045e45dab10dc99a3d57237bdb14613b4e539df6888071d9
-@% 2055 702 13
+== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/HeckeTieMoveOfPin.lean 66ef3b66eab715be16a927799ea616be4caae3b0b08cd6edd5e8c3726eb67923 323971f3b3eb2995ea49ad6db537b7b0c0663dba0ab6e23fd64fc624d76a460b
+@% 2055 2147 24
 + 245
 D₁, N₁, X₁, Y₁, hD, hN, hX, hY, g1, g2, g3, g4⟩ : ∃ (D₁ : D7) (N₁ : NData D₁.R D₁.host D₁.what₂)
       (X₁ : NTw D₁.R D₁.host D₁.what₂ D₁.LL0 N₁) (Y₁ : NExp D₁.R D₁.host D₁.what₂ D₁.LL0 N₁ X₁),
@@ -27754,32 +27782,33 @@ D₁, N₁, X₁, Y₁, hD, hN, hX, hY, g1, g2, g3, g4⟩ : ∃ (D₁ : D7) (N�
         HEq D.sp D₁.sp :=
     ⟨_, _, _, _, rfl, .rfl, .rfl, .rfl, h1, h2, h3, hsp⟩
 = 2044 61
-+ 13
++ 123
 g1
   cases D₁
-= 2666 26
-+ 62
-g4
+  dsimp +instances only at a1 a2 a3 g4
   subst a1 a2 a3 g4
-  dsimp only at N₁ X₁ Y₁ hN hX hY g2 g3
+  dsimp +instances only at N₁ X₁ Y₁ hN hX hY g2 g3
 = 2773 33
-+ 8
++ 27
 cases N₁
-@% 2815 74 4
+  dsimp +instances
+= 2765 50
 = 2777 29
 + 8
 cases X₁
 = 2107 388
-+ 2
++ 21
 g2
-@% 3261 563 4
+  dsimp +instances
+= 2897 364
 = 2909 343
 + 8
 cases Y₁
 = 2497 147
-+ 2
++ 21
 g3
-@% 3966 236 2
+  dsimp +instances
+= 3832 134
 = 3844 119
 + 11
 hD hN hX hY
@@ -29812,8 +29841,21 @@ hnd, hz0⟩ := (
 == src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/TupMemLatT.lean 4be70ff0c13f789de64a0f6dd46f724355ae5512ce7f99a00de12621db643294 cbd60cbb1acfa603f078b67354126762939137e9f3885f08f94325566fd3894f
 @@ 2532 122 67
  intros; apply _root_.GlobalTheory.UnramValue.norm_l <;> assumption
-== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/TwistDataAgreeAcrossCoefficients.lean a9720ff5c95936dc6b8f6d7c07871615437947454bcd512d0525d6ed83b910ab bf1cbc55b9a01e50bd6a2d81488b6945d36a80bbdc6abb086a074978e9dfa930
-@@ 7502 0 1570
+== src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/TwistDataAgreeAcrossCoefficients.lean a9720ff5c95936dc6b8f6d7c07871615437947454bcd512d0525d6ed83b910ab 40b62e6aa2f893c5efa62d88606b827374e84a33d33bc50f102ca412f71de89e
+@@ 4068 0 11
++instances 
+@@ 4741 0 11
++instances 
+@@ 4817 0 11
++instances 
+@@ 4949 0 11
++instances 
+@@ 5884 0 11
++instances 
+@@ 7479 0 11
++instances 
+@@ 7501 0 1570
+
 theorem fullRk_key (j : ℕ) (b : Bool) (Ψ : ∀ (R : Ranks) (H : Host R) (P : Fin 2 → Type) (T : Type) (O : T → Type)
     (_ : ∀ i, CommRing (O i)) (_ : ∀ i, IsDomain (O i)) (F : T → ℕ → Bool → Type)
     (_ : ∀ i j b, AddCommGroup (F i j b)) (_ : ∀ i j b, Module (FractionRing (O i)) (F i j b))
@@ -29832,7 +29874,6 @@ theorem fullRk_key (j : ℕ) (b : Bool) (Ψ : ∀ (R : Ranks) (H : Host R) (P : 
   fun hR hH hP hT hO hc hF ha hK hM hA hU hp hE hD ht h0 hi hS w => by
     subst hR hH hP hT hO hc hF ha hK hM hA hU hp hE hD ht h0 hi hS
     exact w
-
 
 @@ 8681 2247 1135
 have k := fullRk_key j b (fun R H P _ O _ _ F _ _ _ _ ac U ps eA _ th D0 i S =>
@@ -29873,6 +29914,8 @@ h1, h2⟩ := (
 = 18138 28
 + 7
 ).2.2.2
+@@ 18308 0 11
++instances 
 == src/Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/TwistedFormSupLatticeFullGroupStableOfEqRational.lean 8f1274b0f72a1c82bf55f5c14e6bc353a0e59f1a68000eecf642d65ad674154c ad3d45dbc9bf7f45c148d847b4057bd3a4c3f30f1442aa8398df4979a32221be
 @@ 7762 25 22
 have h := (hTW y hy).1
@@ -30663,17 +30706,17 @@ have hEEc := hz0.2.2.1
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/EnlargedBaseCoefficientSpacesIsometricMaps.lean 3f9039897f00fc8df24b276601e72bfa01e102771934ad64e2a820b1c0f00dd7 d0a0d4c7fe8e1a72c6a491861b587454de73c148624dedb97dce87b14b8facea
 @@ 15215 6 0
 
-== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/EnlargedBaseLb2Extension.lean faf9ad083ad25276aaa768f1cee5a681585f9c94e4741b180d65152fb9c5d46b 071ef0d31ba715664c26e3fc922b12abd9f71419a1d4cf7d8360c64a8a18376e
-@% 3830 1021 8
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/EnlargedBaseLb2Extension.lean faf9ad083ad25276aaa768f1cee5a681585f9c94e4741b180d65152fb9c5d46b 5770ed9f056919d197dfe54d9bb99d10e3f7ab1e0a0be6250d46b8b30ddc4d88
+@% 3830 1021 7
 + 35
 D₁, hD⟩ : ∃ D₁, D' = D₁ := ⟨_, rfl⟩
 = 3819 62
-+ 43
++ 82
 D ▸ h.gal
   have b1 := hD ▸ h.sp
   cases D₁
-= 4387 29
-= 5019 38
+  dsimp +instances only at a1 a2 a3 b1
+= 5018 39
 + 53
 a1 a2 a3 b1
   have b2 := hD ▸ h.Tau
@@ -30682,9 +30725,17 @@ a1 a2 a3 b1
 + 33
 D ▸ h.eTau
   have b5 := hD ▸ h.hc
-@@ 4934 27 6
+@% 4904 57 3
++ 10
++instances
+= 4903 31
++ 6
  b3 b4
-@@ 5060 49 21
+@% 5011 98 3
++ 10
++instances
+= 5010 50
++ 21
  ninstOm nalgOm nplOm
 @% 5157 952 7
 + 60
@@ -30692,9 +30743,10 @@ have c1 := hD ▸ hj
   have c2 := hD ▸ hs
   have c3 := hD ▸ hX
 = 3885 389
-+ 9
++ 28
 D ▸ h.set
-= 5154 361
+  dsimp +instances
+= 5162 353
 + 15
 c1 c2 c3
   subs
@@ -31089,6 +31141,9 @@ hi, hK, -⟩ := (
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsIntLinearFormCuttingSubcell.lean 02693d6b91fd7a27b9d74afe7aa1dd6e3b725a75d11163aa8d2d22e1d72674ef 5b2f24ac730da4638df80557640c757d47b379327575e6b1008c750b5f97ef09
 @@ 2328 3 0
 
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsIntegerExponentSectionOfChartRegular.lean 74e5d3aa8c36c986cb7903b663e42367636d64e12ae94e404845ff32484563b1 a9a3593cb01cb725e487791c7b8cde384eff792ec157e97a611c0aa695715449
+@@ 3043 0 11
++instances 
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsIntertwinerOfSameHarishChandraParamUnitary.lean 65005c2779920c5f54457e8c77fee2d63e720b7872c2898fa3702eb54d5ba40a 41ca88080a447379aff172a2b5a0ac8fd28a9690c66a1160133d4910e30678b7
 @% 3981 38 2
 = 3987 35
@@ -31821,12 +31876,14 @@ have h1 := (key s (-a) (by ring)).1
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/LatticeIffIntegralWeylCoordinates.lean 0fa1a1c16439a7bde477b0cc5f58bb5c801a64851c5974e2ff40ee954135a4f0 9f8136320de6a87e1499de9ef6308429866330273470bb4a31b95d54af9f3ba5
 @@ 2522 587 118
  intros; apply _root_.Formalism.L2.GlobalTheoryTheory.LocalLatticeBases.S0.rational_span_map_surjective <;> assumption
-== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/LawsJEnl.lean be968ec8a90c0526ebcec906488e152130652744988a2d75c1c6f6433d17f43d ac024dba00ee0278d716aec2b0bdb67f6a10e94a9443971a95158556a354463f
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/LawsJEnl.lean be968ec8a90c0526ebcec906488e152130652744988a2d75c1c6f6433d17f43d fb5b602a994f7ab711218c2cd48a91a15b93dc1d7b9c9eee67bd3d4d0f91a8fd
 @@ 3867 74 45
 clear hι ι hmu hRS R' tr Xg halg alg' hX' Wt'
+@@ 3970 0 11
++instances 
 @% 4086 766 3
-+ 16
-dsimp only at hH
++ 27
+dsimp +instances only at hH
 = 3864 80
 + 10
 subst_vars
@@ -32088,6 +32145,11 @@ by intros; apply _root_.Formalism.REAL.f1alg_isUnit_J <;> assumption
 @@ 15096 17 23
 have hv := hf.2
   clear
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NormalisedDataCoefficientMapInjective.lean c115c1df7feb45d1e201d89c9069b2928cf14325af7aaae4e9f26c198c2bb7b6 68f0e339394816db89619b964b60d6bb51e6ff206672a89dd73c2123dfd202a5
+@@ 7011 0 11
++instances 
+@@ 7460 0 11
++instances 
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NotDvdDiscrIffRamificationIdx.lean e659824ca28f331c7e363a8e59e46109c1d552011f231c36b2245ea215972bb7 6af60becb7e35fbb4ae1fa2becc27b4b1e1809902f4e2198061a13335ed92b9f
 @@ 4391 355 75
  intros; apply _root_.GlobalTheory.NT.Model.heckeIdeal_prime <;> assumption
@@ -32462,6 +32524,11 @@ hu, hθ, -⟩ := (
 = 3305 62
 + 5
 ).2.2
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/RowCompatibilitiesTransportReplacedStages.lean 4f8365ddbea1662f05bf030e977e721b98b90cd82f71d429ba33baf0581a963a 0c0f59088ff75321487dd5b444723405cd83b2e8f68216c83e15e43251d3ba0b
+@@ 3301 0 11
++instances 
+@@ 3840 0 11
++instances 
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/RowReadingsSameRowsIdentifyDefiniteForms.lean adeee176a4bde2d902ab8248f5a2b1693ed44ddfab386e346448d289a1a4bea9 9e4b4cd0f0a1098c13d8ec62e7e090d1878afb410f07138e3ddeb565a5e469cb
 @@ 5254 102 0
 
@@ -32714,6 +32781,9 @@ have hfac :=
 = 12886 25
 + 41
 stepBefore_cl_nonempty_tup <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/TrueColumnKernelDataCompatibleStepCharts.lean 9c2b82e819ae3880526fc419537a76db3ee4a257237c66ab9f06fdcb5a203d51 e7b451ffebd18cdee8ac0d6d0a3e06114d02c3e1f2d2019fcf2862d9cec238ca
+@@ 12550 0 11
++instances 
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/TupTiedOfMuIs.lean dc3b84a39aebab52f5b62428e29ddb86a1178d985a39a278ea3f5a1d64369557 7cfba83046257592811793e9f1450a0a0daf4e4f4f890f3dd43be7222837c83d
 @@ 845 88 71
  intros; apply _root_.Formalism.L2.Host.HChar.resFin_mul <;> assumption
@@ -35959,9 +36029,15 @@ have hg' := (
 == src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/SplitPlaceIdempotentMulEqSelfOfSupported.lean b9acd5b3774aecaafd98fb3bec0a7fb1826f5fc7f403f922878c950183562f12 0ba15c50b34d405d436cec3e685390412e3162c3a29a98178f06ae1ed33e3ebf
 @@ 2992 686 76
  intros; apply _root_.GlobalTheory.DualPairCompare.parts_zero <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/StandardKernelDataWithStandardBaseLevels.lean c6031c422b96436a372570bc242943eb1ae5cf96390cca81d46613d63483faaa ed321c9bff8367b46d64569c512d0351c18f0644ed32587c9c8ceb662c79c493
+@@ 1893 0 11
++instances 
 == src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/StdHNatsmulRight.lean 73a902789bd2fd8c5420363054accdb5acb669de7946a3de76cf1fe1fd12900f 17db4c3d215f206c5e70e19c02d62d11f6f64dbe2b8dd5ad52e93eb3832a03ae
 @@ 1260 201 64
  intros; apply _root_.Formalism.L2.Herm.star_conj <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/StdKerStdRdMark.lean a2e16466672b105f4b190a9eb1e285f2aaeb2f968a9df253b36a2c474c538098 fae61a41ec4c8abccefc3c124ecb0f6aaef91ea89198c4f937e2bf09acecdad8
+@@ 2348 0 11
++instances 
 == src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/StepZeroLatticeTupleMoveByRationalIsometry.lean f2eca92ddc26b68041cb659f6b5c8c4b4f37722fc5e1c451902eb28c971635af 91950636f28e43496d3577837362c1ff476797cf9ad0188aab9fcaf627cbb24a
 @% 9775 65 3
 + 14
@@ -40604,7 +40680,7 @@ have hnot := (
 = 3718 78
 + 3
 ).2
-== src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/TrJetOfTrFlip.lean 59037cbd1571e576db0f4305c49fd449ed0c252500351ff2a10b57b34d7e6ff0 b39c98dea680a315cb1730595d2862340d8994d858281d03454e649f8a6a886d
+== src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/TrJetOfTrFlip.lean 59037cbd1571e576db0f4305c49fd449ed0c252500351ff2a10b57b34d7e6ff0 83d7929e31a305ab50a28977294c858daab20fc9db2e1b990d1d688df84039de
 @% 17926 213 7
 + 66
 obtain rfl : E' = ⟨E.P, E.ov, E.Vt, E.Vr, E.Λt, E.Λr, E.βt, E.βr, 
@@ -40613,16 +40689,22 @@ obtain rfl : E' = ⟨E.P, E.ov, E.Vt, E.Vr, E.Λt, E.Λr, E.βt, E.βr,
 E.ht,
       
 = 16118 28
-+ 107
++ 118
 E.hr, E.dat, E.pr, E.J, E.modulus, E.emb⟩ := by
     clear H ha hb a' b'
     cases E'
-    dsimp only at *
+    dsimp +instances only at *
   
 = 15929 126
 + 19
   cases h13
     rfl
+@@ 19236 0 11
++instances 
+@@ 19590 0 11
++instances 
+@@ 20041 0 11
++instances 
 == src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/TraceZeroIntegersIndexInUniformizerMultiples.lean a09173f4764df69e22391b733fa4bcfd01c0a6ac93a9ae957162087a12b2e673 0ea0888899c50df5e7436092c2130bea86ae9536f747a50272aa789b6c05680f
 @@ 526 25 28
 hϖ, h4, -⟩ := hU.2.2
@@ -50711,7 +50793,9 @@ g
 = 10509 93
 + 1
 g
-== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExistsRowsKCColPins.lean bccae3c0fa6ea6ae31232298c73a3883724b536671a04b98aec5c126542804bc a50d1c8d56e72396b20eae716896c78c9c1ea7d4ceae8107104a5600252f4466
+== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExistsRowsKCColPins.lean bccae3c0fa6ea6ae31232298c73a3883724b536671a04b98aec5c126542804bc a07779e716aa0142158603abf13bbfe5b289b5961240e7dc834fb85702f3b0fb
+@@ 7487 0 11
++instances 
 @% 12871 256 4
 + 57
  by
@@ -51025,6 +51109,9 @@ hz0⟩ := hK
 @@ 4335 26 29
 have hb := hF.2.2.2.1
   clear
+== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/RealInExists.lean 6d4bf9e16b9160060731f6a6c284058407be74d632ca1dabd2a07e802be30dd7 ff0eae01325fb49e847d61813e21f4e346b9de7ff3cbeaa964acf1e85127b921
+@@ 4070 0 11
++instances 
 == src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/RealPins3RealTOf.lean a687d9ce3a8726f2b0d7b8a03036c965a6a83197347533d84583cbd1cf793e6c 2835b44fbc6e6cec41fb631625239362aeab25ab40d81e052adbc328140b2835
 @@ 2451 201 17
 exact a.pack_elim
@@ -53113,6 +53200,9 @@ hB, -, hg⟩ :=
 + 16
 .2.2.2.2
   clear
+== src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/FunctorId.lean 78ff1897ccb0feb0f2543359ff2042eaa4090e5be6900abf89b062bd094cdb29 d41e65f1dfedce0a78b8b537d6ba67e115f59992498c69170057b3743e6aec56
+@@ 1132 0 11
++instances 
 == src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/FundamentalDomainIntegralCentralInvariance.lean 918cfb3587208a56fdc3ca74530b6871be237c1bc8511d0ed2c43997f36d7a02 8a2bce48caee48f73ac4dadc5068055c2f165bd80eff22808560a763e0e7df79
 @@ 13233 18 0
 

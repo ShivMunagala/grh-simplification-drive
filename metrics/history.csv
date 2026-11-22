@@ -30,3 +30,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-22T11:15:10Z,eafeb73c9,wave 7: three enlarged-base proofs read their conjunctions by projection; jMt_rowsSame,177229969,2718033527,-2852.3,1260824,146531
 2026-11-22T11:25:40Z,27523d9d7,one eliminator for the packing equation of TwArgs; used by 16 proofs,177229379,2706052215,-3483.6,1260827,146531
 2026-11-22T11:36:14Z,4c3d77a34,wave 7: six more heavy proofs (instance arguments reduced before substitutions; a lemma used once instead of projected),177229428,2705323909,-3502.8,1260827,146531
+2026-11-22T13:02:33Z,e8b58d432,dsimp +instances only at hypotheses where it makes the proof smaller (45 lines; 20 files),177229518,2704415133,-3515.3,1260827,146531

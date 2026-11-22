@@ -208,6 +208,34 @@ def report(path, top):
     print(f'\nlargest declarations nothing asks for, top {top}:')
     for i in left[:top]:
         print(f'  {g.tsize[i] + g.vsize[i]:>13,}  {g.kinds[i]}  {g.names[i]}')
+    # Where to cut: a declaration that stays mentions one that leaves, in a part nothing needs. Removing
+    # that mention (weakening the statement or deleting the unneeded step) frees everything that is
+    # reached only through it. For each such entry point: what it reaches among the declarations that leave.
+    ve, vo = g.v_edges, g.v_off
+    gone_set = set(left)
+    entry = collections.defaultdict(set)
+    for i in stay:
+        for j in ve[vo[i]:vo[i + 1]]:
+            if j in gone_set:
+                entry[j].add(i)
+    weight = {i: g.tsize[i] + g.vsize[i] for i in left}
+    reach = []
+    for r in sorted(entry, key=lambda r: -weight[r])[:3000]:
+        seen, stack, w = {r}, [r], 0
+        while stack:
+            x = stack.pop()
+            w += weight[x]
+            for y in list(te[to[x]:to[x + 1]]) + list(ve[vo[x]:vo[x + 1]]):
+                if y in gone_set and y not in seen:
+                    seen.add(y)
+                    stack.append(y)
+        reach.append((w, len(seen), r))
+    reach.sort(reverse=True)
+    print(f'\nentry points: {len(entry):,} declarations that leave are mentioned by one that stays. '
+          f'Largest by what they reach among the leaving (nodes, declarations, entry point <- mentioned in), top {top}:')
+    for w, n, r in reach[:top]:
+        users = sorted(entry[r], key=lambda i: -g.vsize[i])
+        print(f'  {w:>13,}  {n:>7,}  {g.names[r]}  <-  {g.names[users[0]]}' + (f' (+{len(users) - 1} more)' if len(users) > 1 else ''))
     big = sorted(((dead_in[i], i) for i in stay if dead_in.get(i)), reverse=True)
     print(f'\nlargest unneeded parts inside a declaration that stays, top {top}:')
     for d, i in big[:top]:
