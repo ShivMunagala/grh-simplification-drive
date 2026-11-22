@@ -496,7 +496,16 @@ by intros; apply _root_.
 = 679 36
 + 32
 .Scale.mul_mem_Oh <;> assumption
-== src/CompanionTheory/AutomorphicTheory/ThetaDilations/SwOne.lean 6c66926bb71e6df0cc3e02100101e6a703cb0082e0e49495b0c1afd0e90cefcf 21393399ddf604c564021b2603e2112375b8526f59f47ed3162c18934fcf4595
+== src/CompanionTheory/AutomorphicTheory/ThetaDilations/SwOne.lean 6c66926bb71e6df0cc3e02100101e6a703cb0082e0e49495b0c1afd0e90cefcf 16bba7659a3680f602a64d221afb0806000608be601a1a689a5b2dd586eccf29
+@@ 1384 0 69
+import Development.WeilBound.CoreStatements.ThetaDilations.ThetaLint
+
+@% 2082 0 3
++ 17
+_root_.Positivity
+= 1601 39
++ 1
+.
 @@ 3117 292 0
 
 @% 4570 100 3
@@ -4632,6 +4641,14 @@ card_Psi <;> assumption)
 = 847 42
 + 28
 .exists_prime <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/CuspFormEvaluations/NormQuotientThetaFlatAttainsSupOffCommonZeros.lean e8c80f9bad05c3748a985b5c0a4e7d3763a940ae7c2400304cd0302c86d5cea9 3a0b465aec7f91b49571959955702f1cc4ffe87f043d6f124cd29f12f2159ede
+@% 727 0 2
+= 15 40
++ 42
+Proofs.TorusHaarMeasure.MahlerCompactness
+
+@@ 17437 20 48
+_root_.GlobalTheory.FlagMahler.mahler_compactnes
 == src/Development/AbelianVarietyTheory/Proofs/CuspFormEvaluations/NormShortGeneratorEvalLeOrthonormalFrame.lean 24204cda96854f555054bf1c6fdcf80652ec108bf36596cf87b192aa844ef0c2 8cd9bfa686913e466bf32aa5540271869573ff3f1d449189182ab73699535c58
 @@ 2637 86 76
  by intros; apply _root_.GlobalTheory.Dict.ShortVal.isSB_smul <;> assumption
@@ -6372,6 +6389,14 @@ have hPr := (
 == src/Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/GlobalFormOfSiegelWeil.lean e6a0c339f2c6f20a4a508c48ae73148c518b5fcd5f486310934294c87d475c22 f5bcd4ff17e57ad35d9437871e379686f6fcf790382ff9042b4b2481fdfe0b2c
 @@ 1914 195 82
  intros; apply _root_.GlobalTheory.WeilAtPlace.isSelfDualC_frameLat <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/GoodPositionSplitLinesReadCompletionsAtPlace.lean 9dc06f4c182141e5b10a8847723937e8171f4369ac50ca0708086eeac1851d16 40833333ccb9a7f51449098fe7bb1f9c462340e1c1052aed27809cfefd48ed7c
+@% 201 0 2
+= 91 70
++ 39
+BesselToJacobiFlatMapVacuumAtGoodPlace
+
+@@ 2339 0 35
+_root_.GlobalTheory.FinPl.VacFlat.s
 == src/Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/GramUnimodular.lean 322ac825a1c44f26091b38af65851d0b8e44ff73fb7ad95e228e3cb3d0e6fb6f d60225c546170404a89244d78a412d2d72bb49fcbaa75bec25ea0c1286eda32e
 @% 280 0 2
 = 15 47
@@ -10691,7 +10716,7 @@ DVR.res_res' <;> assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/CapelliDeterminantFirstRowsMemBmW.lean 813e67cae2158243dde7c29bf9f714bc3b5cc5a6ca36e72e3a936a600dbaf5a9 348d721471fdbc212db80aa00a5ad2dc0cc07782607945aa40dba00d5382cf45
 @@ 2009 38 77
  by intros; apply _root_.GlobalTheory.BranchFormula.fockB_comm <;> assumption
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/CardIndependentBoundedSectionsShiftedWeightLe.lean 26675556e283a7f3f3f957b4e85deb1c04e8f46aa70573795a71c44dd303892b 7d8fa6320a90a08980a9f0a7a1d881bacdf6c5ed77fd5bf554641dc5afa84b07
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/CardIndependentBoundedSectionsShiftedWeightLe.lean 26675556e283a7f3f3f957b4e85deb1c04e8f46aa70573795a71c44dd303892b 842ea938d1bacd5c7ea268489ad2b7509013e06a17ef16868f2043742d6799d3
 @@ 5583 40 0
 
 @@ 6208 19 0
@@ -10700,6 +10725,8 @@ DVR.res_res' <;> assumption
 
 @@ 8169 38 0
 
+@@ 10705 20 48
+_root_.GlobalTheory.FlagMahler.mahler_compactnes
 @% 18044 48 3
 + 12
 have q3 := (
@@ -11487,6 +11514,14 @@ Proofs.DivisorProofs.CharpolyCoeffsValuedBoundedOnCompactGL
 = 700 44
 + 26
 .spMap_comp <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ConjugateTwistOfDiscreteSeries.lean 0b57df1424259811352d4df9eebfd74797f80110f57bffb84cd2227364b9079b 22320c29e1e433d6b0aaaf56acc584e97046611a5e40879dd04d240af57718e4
+@% 1647 0 2
+= 701 61
++ 17
+ScaleRootOfPrint
+
+@@ 3766 1 33
+_root_.GlobalTheory.BigOn.Exp.isS
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ConjugateWeilRepresentationFifth.lean f4908bd7059af7627733023ea324ac23bdb928fe4d33b2fb621283b5568e8002 3b13331286e76c4214bdcce7407fb68fbf6ae31df7aeb32cb4eba35f82442a95
 @% 2924 32 2
 = 2927 29
@@ -15481,6 +15516,14 @@ GenericRegularity.ExistsValuationSubringComapEqNonunits
 
 @@ 2836 371 203
  first | exact @_root_.GlobalTheory.Reg.exists_prime_natCast_mem | exact _root_.GlobalTheory.Reg.exists_prime_natCast_mem | (intros; apply _root_.GlobalTheory.Reg.exists_prime_natCast_mem <;> assumption)
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsSmulShortNonneg.lean 596009fa83c90674e19a52affedd4dc209e61787b426ab32c82cf803f72a6a0e ab562075f6fabcaee83b2721def337fe7d2857a9819eb58fbec2ab2b6159e576
+@% 209 0 2
+= 107 47
++ 42
+DivisorProofs.ExistsSmulNonnegOfShortRule
+
+@@ 17251 24 50
+_root_.GlobalTheory.IntCuspLat.sum_bound_of_trivAt
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsSplitCompletelyAuxiliaryPlaceOutsideFinset.lean bfb7920c556fc65553847787377415ef8d262b693420addea238dc99bca5a74d 5c9bd8f89198f12fa37599e8e9b79719eddd4d28f9f34efc4c3a2e816dee8ebc
 @% 4728 92 3
 + 12
@@ -25176,9 +25219,16 @@ val_mul <;> assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TwistUpperBound.lean 4c6b82fc259f8aadce059b11d50a49046cb97e14950ef2efa164417c9fbe3b06 c00485786244f3f9c16883b74b1111c3f824e1e1bb3125352da85ad880d438c0
 @@ 2711 1294 80
  intros; apply _root_.GlobalTheory.BigOn.Exp.baseOf_of_realPin_at <;> assumption
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TwistedConjCoefAt.lean a56cf4d4fc7ca2c77bf697a75a4a232b71ba6106f9aa54c41ffc9180fd25f03b fc5a960180f7bf1a4bd7b7d2a56454a58e8048e89ee6022de4bc17f2ec99414f
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TwistedConjCoefAt.lean a56cf4d4fc7ca2c77bf697a75a4a232b71ba6106f9aa54c41ffc9180fd25f03b 8eb518fa818b8e67a0964011ccd7cde2f56118a8bb64f52ded9c5c481643ded4
+@% 881 0 2
+= 15 61
++ 17
+ScaleRootOfPrint
+
 @@ 3349 100 76
  intros; apply _root_.GlobalTheory.SeriesTie.Scale.coefFn_map <;> assumption
+@@ 6987 23 44
+_root_.GlobalTheory.BigOn.Exp.isScale_pow_eq
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TwistedConjOfTwistedNormConjHermitianTripleRegul.lean 559ca3a584c33b61f13f7e2012e7b8760872b3fc850f7e06d84ab4ed15cb233f 0c5e454002553c1641a17dc9e4202b427c6bc982d132581a64fd8173cd769ea2
 @% 2343 158 3
 + 40
@@ -27276,6 +27326,13 @@ ountHypPAtAddQAt
 == src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/DefiniteUnitaryGroupCountEqMainTerm.lean 5187ca023bcd0339458fb12ee8e93768b5ef6429bb3efb4a0b78ac0d267bb0d8 f25cc6d1b68e30b428888ef451b31a0e5a744321d2fe5a5197f0feaf6f3f244b
 @@ 2575 297 71
  intros; apply _root_.GlobalTheory.Count.Test.one_mem_GF <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/DegreeNearParameterBound.lean 1a5044ce67c6830e309e06e16c70d0f917c5f74e309b43296d4fa803cb49b42f be289d27c803fd4ab782a0bee68b20597e8aeb6c5b6e74ef969cb1a5a11ac89d
+@% 2668 32 3
++ 7
+_root_.
+= 1538 29
++ 19
+.big_cell_mem_holds
 == src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/DepthZeroIdentityFiniteTypeOfTypePrimeComponent.lean 3e1ed9340995bf5d5895df334743ca82a61c9f3490c09ae661b513bd669a504e dd68593aba3cfbf7812cd5b97247eb81722d7683a1617c8afe6b4c4e68cfb17c
 @@ 2172 36 79
  intros; apply _root_.Formalism.IndefR.principalLevelFrame.rt_rt <;> assumption
@@ -30103,7 +30160,12 @@ import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsSmulMemOfS
 
 @@ 385 1169 254
  first | exact @_root_.GlobalTheory.SmulMemSpanTop.exists_smul_mem_of_span_eq_top | exact _root_.GlobalTheory.SmulMemSpanTop.exists_smul_mem_of_span_eq_top | (intros; apply _root_.GlobalTheory.SmulMemSpanTop.exists_smul_mem_of_span_eq_top <;> assumption)
-== src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/MajorantLengthMomentsAmplitudesLargeGap.lean 570167b46561b07fd5706431e1a58fa43b6059f5568ce1c0b5ba76ed4f3e31e9 9068680b4c8f3f10c27888a55dea7bf827fe0d145393d98ff6dbc6e0e861ca76
+== src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/MajorantLengthMomentsAmplitudesLargeGap.lean 570167b46561b07fd5706431e1a58fa43b6059f5568ce1c0b5ba76ed4f3e31e9 b8c9cf92d9091c7ebd0c63aa493dd43b0cb5d94765c67606e0c83352bee09e5f
+@% 1250 0 2
+= 822 69
++ 38
+SizeConsequencesOfWordIndependentHyps
+
 @% 4325 94 4
 = 4334 24
 + 1
@@ -30116,7 +30178,14 @@ import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsSmulMemOfS
 + 16
 .2.2.2.2
   clear
-== src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/MajorantLengthTwoSidedMomentsLargeGap.lean 4225e243b5548c7a8bf9fb06cb26d7c37f0c1f1bf9316cd7127fe7e379bca3c3 343d9bc6fca80628f4cce1a821802725f9c3f1f974e129438062c098039c32b6
+@@ 8259 36 47
+_root_.GlobalTheory.Amp.SizesProof.sizes_of_hyp
+== src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/MajorantLengthTwoSidedMomentsLargeGap.lean 4225e243b5548c7a8bf9fb06cb26d7c37f0c1f1bf9316cd7127fe7e379bca3c3 b56967c5dd9bf79192f561a8deed9dcce8ed6297f0c0f0db39ebb0a63e196b18
+@% 1867 0 2
+= 1445 69
++ 38
+SizeConsequencesOfWordIndependentHyps
+
 @% 5226 94 4
 = 5235 24
 + 1
@@ -30141,6 +30210,8 @@ import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsSmulMemOfS
 + 16
 .2.2.2.2
   clear
+@@ 14057 36 47
+_root_.GlobalTheory.Amp.SizesProof.sizes_of_hyp
 == src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/MapConjLebesgueCommonStabilizerNormalForm.lean f75134024b467b54bcfb173e51f2b52b50b754ed33b2bf5a8307e57fcd7f1de8 ac0f8b12e9c1515430e035be1bd79035815877a4f751d067489a000177a38e20
 @% 393 0 2
 = 113 60
@@ -36693,7 +36764,7 @@ import Formalism.GL3MeanSquares.GenusMeanAsymptotics.JacobiCharacterSums.PNTExpl
 
 @@ 3658 66 0
 
-== src/Development/AbelianVarietyTheory/Proofs/GlobalInterpolation/TypePrimeFiniteGroupInductionFactor.lean 996bcc38102402439874149c0cb3fed1eaf0f709dd2d15ebf8b5977d7a214bbc 61af5998cfaa2a0eff99a63e7cca2f1d778f8346fd577319bfc3cd21a158dc39
+== src/Development/AbelianVarietyTheory/Proofs/GlobalInterpolation/TypePrimeFiniteGroupInductionFactor.lean 996bcc38102402439874149c0cb3fed1eaf0f709dd2d15ebf8b5977d7a214bbc 482f55457c1b3131ae16d2bac0938c67d144e3b04c50742e133fad6effaf4919
 @% 1823 0 2
 = 184 66
 + 26
@@ -36725,6 +36796,8 @@ have h2 := (
 = 16704 44
 + 3
 ).2
+@@ 18030 0 28
+_root_.GlobalTheory.TypeVec.
 == src/Development/AbelianVarietyTheory/Proofs/GlobalInterpolation/UkTermOfMoveStep.lean b9fd72447eed298f4da3e47405237a9d77b6cb0845d63b4d48ef0cf4e56f5ed1 a675a6c0a818ae6c7b492828b37e823fc502eff2b9a9147078e2b68b5b76e505
 @@ 27230 3 0
 
@@ -44451,6 +44524,13 @@ have hmul := (
  intros; apply _root_.GlobalTheory.TrueCx.idx_symm_inr <;> assumption
 @@ 6303 260 68
  intros; apply _root_.GlobalTheory.TrueCx.reindex_sgn <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsMovedDataLaterStagesWithNewTwist.lean 5ef8bd799330e0e4e42974217240d501d58009a3b5f81f2954cb05aed51ead08 710bd20757917c4b7642ae6e90bd9196c928293c0a52312c60e2b983ecdefce3
+@% 9830 8 3
++ 7
+_root_.
+= 1793 25
++ 7
+.pkT_tr
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsMovedRowLiftDataToFittingStages.lean 22208ca9bad4683b705d8d67942aebc7efd044cd59d1fbacc9f2bd672de8379d a5184a689387787a6debe3b11078f97ca61a6887986d553744625a91d2a465e7
 @@ 13485 57 0
 
@@ -49930,6 +50010,18 @@ hmulq, hrel⟩ := (
 = 2982 61
 + 17
 ).2.2.2.2.2.2.2.2
+== src/Development/AbelianVarietyTheory/Proofs/RingsOfIntegers/ValuationThetaRatioEqBilinear.lean ac62ef07db5bb3b26ba5ffb8871460cb092a4f5985a2444088ce2d28c5c591cb 8d5acc94500044cd79ab54eefe4dd422ba6a21f142d3a1427cbbcbc25db676a4
+@% 802 0 2
+= 15 83
++ 9
+VRatioGt
+
+@% 12889 0 3
++ 7
+_root_.
+= 1143 44
++ 1
+.
 == src/Development/AbelianVarietyTheory/Proofs/RingsOfIntegers/ValueAtUnitSectionGenericFibre.lean 7e9b9155f094cbd9088c3221b6ed57e9a0decc6b6d83caf055396d5b32dd7566 3ae9ebeaa3707134c9290f37c71ecb388c790979a08bbc455614f88abea8b9b4
 @@ 1709 1015 78
  intros; apply _root_.GlobalTheory.PullIntegral.sval_of_secScal <;> assumption
@@ -52778,6 +52870,9 @@ H1.cst_mul <;> assumption
 = 1288 37
 + 25
 H1.cst_one <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/ThetaLawProofs/MemNonzeroLocusOfVia.lean e9e2a51a565a2b2fd27b51abb430d0b6eb33a893556f93ea530299c516fe52e5 57607648867319493b725605d03cc1bec2445fc9bf91dab8c3baffd9fccdf993
+@@ 18861 0 27
+_root_.GlobalTheory.KaLift.
 == src/Development/AbelianVarietyTheory/Proofs/ThetaLawProofs/NormLeTsumOfCubeFourierCoeffLe.lean 93d0057e1dea307ea20dfdad1d7c2bacd7cad205eb4f264eb06e1eccadba4b74 4bd8b7681c6cb6da54fcab688634dd5f0f25d7fab719f92b4bddb1d4702cf7a6
 @@ 19286 118 0
 
@@ -53391,6 +53486,12 @@ hD, hcov⟩ := hX.2.2.2.2.2
 = 1167 39
 + 50
 .BoundedSectionAlgebra.pnorm_nonneg <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/TorusHaarMeasure/BoundOfIneqs.lean 9b4f7e03c44481a665b40b9a7964d30833802275e1b5a815062eaabc5dfa881b 9683840db8dc495e0bca8d46936e8b0286a74a447c95910c2f3d29be12582cad
+@@ 466 0 82
+import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.MahlerCompactness
+
+@@ 3559 20 48
+_root_.GlobalTheory.FlagMahler.mahler_compactnes
 == src/Development/AbelianVarietyTheory/Proofs/TorusHaarMeasure/CompactModLatticeStabiliserOfLeFirstMinimum.lean c0cabaf3986d539fcb519b4cb499e911270ee5e136165047d613f149185ec72e 62b4940a3dec3afbd21435ed23308c5fd23163b81ce29b848a71f9904e211a64
 @% 1611 80 3
 + 13
@@ -56455,6 +56556,12 @@ hz0⟩ := hL'
  intros; apply _root_.Formalism.REAL.exp_signature_conj <;> assumption
 @@ 6967 55 65
  intros; apply _root_.Formalism.REAL.f1alg_JJ_left <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/LeviRadicalProductLengthOfLatticeStepsStatement.lean c28c6ac78026817320fa7c111ab4a63d0ffc184736406d01d4a94340da5cd5ed dbf5a4cd24bde42337a98c3ce7936ac3ca5e963141e42b2c8f2c6d37ac245c3f
+@@ 212 0 86
+import Development.AutomorphicSpectrum.Proofs.TwistedProofs.PointwiseOfSpanHeisenberg
+
+@@ 415 150 189
+_root_.GlobalTheory.CompanionTheory.InertLen.pointwise | exact _root_.GlobalTheory.CompanionTheory.InertLen.pointwise | (intros; apply _root_.GlobalTheory.CompanionTheory.InertLen.pointwise
 == src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/LieActionFockOperatorsScalarsTrace.lean 4b97398a7f6bf0784573ede62fffdcd8ef39fdcc4c6f8d873af4987ec901dd5a a397d7b428af497c9f152d4fe81e1d205c49fcb25b98a4336a001366386bfef9
 @@ 3720 22 69
 intros; apply _root_.GlobalTheory.LieFock.sgn_mul_self <;> assumption
@@ -63557,9 +63664,22 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CardFiberEqOfSumEq
 == src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/TTypeVLoc.lean 2fe9611510a98c41ff0b5c150027d70753cd0b224fdc81412bdf3dc26371ff57 b9bfbce011bef3af95f2e42f3a8640cbea231f8a0a4b3331d414349c1ad3b845
 @@ 1826 969 87
  intros; apply _root_.UpperTheory.Reformulated.B.Qf50.multiset_eq_of_sum <;> assumption
-== src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/TemperedProductOfSquareIntegrable.lean 66abeb3daad4607158e6d636f538467d6d75625037074f6c46f38201efbb352c 8a42874fed0d1a9238dd867583e53c1deef28e82055a9e20b47fd8df48dc400f
+== src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/TemperedProductOfSquareIntegrable.lean 66abeb3daad4607158e6d636f538467d6d75625037074f6c46f38201efbb352c e0e68114cbce428f040a4752806db88e1ed92a74bf855e05d33106fee28901e2
 @@ 24216 21 129
 KernelIndexFullLattice.partC UpperTheory.V.KernelIndexFullLattice.splitEq_holds UpperTheory.V.KernelIndexFullLattice.brCusp_holds
+@% 35205 28 3
++ 7
+_root_.
+= 25537 29
++ 11
+Hypotheses₂
+== src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/TopMainZj.lean f824d3f7873a493432bdfcbdc279fa82d70a6a9dbaac44c2a30316cada2eae3e dd59bb62dd98a9aac887dea36ae6b44f5d58638993c0f900f321f5aa6fa6bcaf
+@% 5689 31 3
++ 7
+_root_.
+= 5629 26
++ 23
+gaussManinPeriods_holds
 == src/Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/TwistInvarianceAutomorphic.lean 916404ee07ada117ca3d5f3bb3b29eca6837d3bfaeaa5be894aa853e6b95ee2b fe739aa01101a250b5b179bcab20175fd54a55b31e041ff0a353bc4c1c4e17c3
 @@ 5657 313 85
  intros; apply _root_.GlobalTheory.TripleLocal.frobConj_natCast_notMem <;> assumption
@@ -66047,6 +66167,13 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PadicMemRangeComple
 + 12
 .2.2
   clear
+== src/Development/AutomorphicArithmetic/Foundations/BaseChangeIdentities/BaseChangeNB.lean 9db2852120b567d80a750c2a0b2bc95003906f679fc220738a6c15a865ed0a74 78cf41b7e7c84c13922ef08eb50a53f665b0a7325b1e01b151a6b04925d4ba1a
+@% 830 26 3
++ 7
+_root_.
+= 520 33
++ 24
+GelfandReading.frameRead
 == src/Development/AutomorphicArithmetic/Foundations/BaseChangeIdentities/FrameMatching/HeckeEigenvalueFiniteness/ClsFin.lean 3036de02a1f5b2490e47c2ae3ba9defd46b36c024aa2e389c7dad91b60dbc849 bc55082fd511c9d80b8d759bebadc358f7aa5f366669ee9ed804e200c8856436
 @@ 1229 77 13
 rl_spec hR E)
@@ -67950,6 +68077,11 @@ c', hc', hsc, -⟩ := (
 = 4534 66
 + 7
 ).2.2.2
+== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/KunnethLefschetz/EtSideGood.lean 5550db6c52b0c636db78c69a018bbc9b63680e34242984752a64207906a19448 ae1d838cb4b949de687cf93fd2f63a3f2a98eee97512824ae2f6ee7d4b9dc8ce
+@@ 1228 47 26
+_root_.GlobalTheory.EtC.b4
+@@ 2814 47 26
+_root_.GlobalTheory.EtC.b4
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/KunnethLefschetz/EtaleCharts/FlatSectionExtension/InjField.lean 79e0ae588c2ac7b993f500e038ebf44f5856b61e2397efce70e805020630a5de 6a29614ebcb57cf4bf21d572a14f5044b1df2204ba2d574c55bb6664b3bb021e
 @@ 4624 6 0
 
@@ -67965,6 +68097,11 @@ have hk := (
 have hoff := (blOff R π hπ).2.2
 @@ 5616 31 28
 have hiso := (hoff O0 rfl).1
+== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/KunnethLefschetz/InFormalGroupPoints.lean 0c606ff581b9df719d4ef2e43eaf29e625716acbc4121888d076256b9c07cec9 36b6b7dbbbb5598274d89f28935f4b61a9148608c350776c3094cdd857647a23
+@@ 2616 47 26
+_root_.GlobalTheory.EtC.b4
+@@ 3795 47 26
+_root_.GlobalTheory.EtC.b4
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/KunnethLefschetz/PTrComp.lean 1874caa787728993b696aff46b6769547ed9440363a973fea7bc4256f5bdabe2 c2904dcc8d825408cc31fa9cf2ec7fb6a64629012a0edca4669348d67756efee
 @% 1864 43 3
 + 12
@@ -82936,6 +83073,16 @@ have hconj := hA'.2
 @@ 6628 20 32
 have hP := hst.2.2
         clear
+== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/CoefAtOfTwAdm.lean 97ca0e948b325bcf3a1c23a6a66d776bb67fa6f6a62a1ccbef31f09f5c17d99a 65122ce552d5ee3a1b0df00cffa629ce5e52817844c74361ee0d1babcd300bb4
+@% 724 0 2
+= 0 61
++ 17
+ScaleRootOfPrint
+
+@% 3551 23 2
+= 1615 30
++ 14
+isScale_pow_eq
 == src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ColChiMulProdLam.lean 14b9bede9fd36d4ec5bffad3d2539670a0bf7631968f827895a39b9110541cc0 eb035e575db77c15cd7dd5f0a08e26e3ffd43437544d971966e07d0f204df2df
 @% 4501 77 4
 + 7
@@ -83027,9 +83174,17 @@ have hT := hX.2.2.2.2.2.2.2.2.2.2.2.1
 == src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EvPSizeRows.lean 7f9022cd8a59743acff03be7d05fc8f7ac05a96812318eb0e728806d9f83a155 ce97c7641d8239f12a0ab2b764dd68da9d529fbe6d611ddd944f3359f077f87d
 @@ 1829 3 0
 
-== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean 246b74eeb03dae250c45b46c155b3590cb53c2bac86f5e35f4b74338db487068 afccb40607e506b0900dd2ead25e2e1bbd52aadafa6f3ff8d22d397827bd07b4
+== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/EveryCharacterOfLiteratureOfVWin.lean 246b74eeb03dae250c45b46c155b3590cb53c2bac86f5e35f4b74338db487068 1d7ba92eb9fd171a1460863e656381dcc992a23bdcfbae9911a191c031f9818d
+@@ 25423 28 31
+_root_.GlobalTheory.ChernDegree
 @@ 30382 21 129
 KernelIndexFullLattice.partC UpperTheory.V.KernelIndexFullLattice.splitEq_holds UpperTheory.V.KernelIndexFullLattice.brCusp_holds
+@@ 44708 33 19
+_root_.GlobalTheory
+@% 71488 28 2
++ 7
+_root_.
+= 48734 40
 == src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExOfClaims.lean 89a2290bb1a6ba184738e1874332d58e1971059c21bb733c844c3b89ac8ead1a 9b1aa2250ab697f928603faed4540fe68dfa030d4d7873b4813a06db2c7ceb37
 @@ 3911 21 29
 Λ, hΛ⟩ := hFd.2.2.2.2
@@ -83835,7 +83990,16 @@ m, hm1, -⟩ := hcu.2
 = 3111 24
 + 2
 .2
-== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/TwOneOfSteps.lean 0d77835016bbe8803cc80bc18c30452fbefd49f145610f5a01c63e628df348d7 cb83c6044e7b8d0da680d61c51e00405d12ccf3d645558b06e77004107f28ea7
+== src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/TwOneOfSteps.lean 0d77835016bbe8803cc80bc18c30452fbefd49f145610f5a01c63e628df348d7 b0a23085b04480249517a4422de40776a443d33f0f8de6bee786ee741b19411b
+@% 1100 0 2
+= 0 61
++ 17
+ScaleRootOfPrint
+
+@% 2166 1 2
+= 1946 30
++ 3
+isS
 @@ 4148 3 0
 
 == src/Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/TwoLogCardLevelsLe.lean df947c39026bfb9f997b5ef41c5c6700b77b499d297bc252029c6f57508df04b 2be8b6c80aaf515d09252949b0ed1cdb7373c786c9b182e284062a894ae12c0b
@@ -84591,6 +84755,16 @@ have hCeq := (
 = 6364 71
 + 3
 ).2
+== src/Development/AutomorphicSpectrum/Proofs/AlgebraProofs/LatticeFamilyInjectiveModelFactsStatement.lean 19e3b9b4201c2ac90cbecfae970574a6b37c0cc27b708a1eea3576b069a5a8de 0706c5c8a69f1f258267d98044ae29895406463eab77ea7848b046ace23b85ac
+@@ 286 0 94
+import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XFamConstr
+
+@% 649 1553 3
++ 5
+alias
+= 692 61
++ 42
+= _root_.PositivityTheory.Xgn.t_fam_constr
 == src/Development/AutomorphicSpectrum/Proofs/AlgebraProofs/LieSubDegreeBoundByDual.lean 16cd53282e3bd7af0cb6e34c262ce2d14605d74695fd72b85bd1964836bbab6e c5408628ab1306b6ff0e9267dc933fc35b91a76f1bda7133a1270f3db0922030
 @@ 1694 53 0
 
@@ -93647,13 +93821,32 @@ have h2 := (ht.2 k (c k) (hc k)).2
 have hR := (hII K ι).2.2
 @@ 25436 30 26
 have hAdd := (hII K ι).2.1
-== src/Development/AutomorphicSpectrum/Proofs/GeometryProofs/OmegaLatticeDominantCompat.lean e2bba61004720f12830bc76763ea7027abf614ba93f2e5af70b0727439f872d9 78145961e9129683a512adb155c677a0e991f57ea0802c5934191efa4f7a42ca
+== src/Development/AutomorphicSpectrum/Proofs/GeometryProofs/OmegaLatticeDominantCompat.lean e2bba61004720f12830bc76763ea7027abf614ba93f2e5af70b0727439f872d9 e2812c35949d57188f685c5f9cf6b8ed64cfb43bd5f8fad387d305730ae5a24a
+@@ 2352 0 96
+import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.HeightPullbackDominatingMap
+
 @% 2861 60 3
 + 22
  intros; apply _root_.
 = 2655 32
 + 44
 SqAdd.dualMap_comp_algebraMap <;> assumption
+@% 25019 6 3
++ 7
+_root_.
+= 2655 38
++ 1
+K
+== src/Development/AutomorphicSpectrum/Proofs/GeometryProofs/OmegaLatticeDominantCompatStatement.lean 31cfe5f0a96f82a0f8e9ca3ee153bf32f4a395398f2b602dbd41c3b608343145 70a167121c6d2c3969213268cb04981c096748d02d5a674900460b7e84101389
+@% 757 1211 5
++ 5
+alias
+= 800 54
++ 1
+=
+= 1847 39
++ 6
+K.main
 == src/Development/AutomorphicSpectrum/Proofs/GeometryProofs/OrdinaryCurveHodgePrime.lean dd10f86ea2a2ecbc0093249b1efe545c50f00e581eb1cd1f9f99ae8d892f6b83 08e3871b00548660078172645e94f4b969e3e9ed37642b048b47d622fee37bea
 @@ 6854 49 0
 
@@ -96710,6 +96903,18 @@ LengthCountGeneratingSeriesFormula
  intros; apply _root_.GlobalTheory.UnitarySwap.antiJ_mul_self <;> assumption
 @@ 5573 669 74
  intros; apply _root_.GlobalTheory.SatakeWeyl.mat_inv_apply <;> assumption
+== src/Development/AutomorphicSpectrum/Proofs/TwistedProofs/HeisenbergMatrixFactsStatement.lean d813132a543bb4bc0c640ee9d093a840113588b9cdffa429c0414ed2f0ff48b9 f81bb5fb91a25d53f6387e9a93a667284da8755728e6fd45ce43fa5759ece3c8
+@% 176 0 2
+= 97 64
++ 36
+UnitaryHeisenbergRadicalCoordinates
+
+@% 204 313 3
++ 5
+alias
+= 247 48
++ 53
+= _root_.GlobalTheory.InertZeta.HeisCoord.Heisenberg₂
 == src/Development/AutomorphicSpectrum/Proofs/TwistedProofs/LatticeIndexOfSmith.lean 3c8cfc1c347e3c96c67825ab7235eaf535dd474a45ae2391b36717d344f96b3b ecb3db4c7d1ed2d0ebfcc646c04304bd1bc37e7c4d63993d9421a15f1c7429b1
 @@ 1875 7 71
 by intros; apply _root_.GlobalTheory.UnitarySwap.mem_int <;> assumption
@@ -100205,6 +100410,16 @@ I, -⟩ := (
 = 2488 32
 + 16
 isInternal_eigSp
+== src/Development/WeilBound/CoreStatements/HodgeTatePoints/HtatHopfMul.lean 05b10f6ab11c99a875b813ec4b674215b9d6f4e077a65bf03d6c577d9ff045c0 75a45614f5384c4db5bea2aea064e3872634ff438c70fa1405883ff9c2a7167d
+@% 354 0 2
+= 15 39
++ 53
+Proofs.GeometryProofs.CharacterSectionMultiplicative
+
+@% 15828 50 2
++ 7
+_root_.
+= 500 34
 == src/Development/WeilBound/CoreStatements/HodgeTatePoints/HtatHopfReg.lean 3fc22471f5f76da12e3191787efde36a92dd192e3868589832033e01d450f642 110981c3913d088e046376dc2cb68653c79b3e876bc9f601bf7c1c809db3a85e
 @@ 1584 99 80
  by intros; apply _root_.PositivityTheory.HtPt.Unc.valAt_restrict <;> assumption
@@ -103955,6 +104170,9 @@ TwistedOrbitalIntegralTwistedConjInvariant
 
 @@ 764 818 172
  first | exact @_root_.GlobalTheory.TwOrbConj.avg_left | exact _root_.GlobalTheory.TwOrbConj.avg_left | (intros; apply _root_.GlobalTheory.TwOrbConj.avg_left <;> assumption
+== src/Development/WeilBound/RepresentationTheoryGL/ArchimedeanBaseChange/ArchimedeanBaseChangeProof/ThetaNormCommutation/LocalComparisonSplitting/EulerFactorLevels/FinLevelHolds.lean 723920c5da9ef3b10720f592a35bfd9839f10d4289dabdca62770ae80e38f598 ba1c9c694955ff51e7f11735873e867bdf17310a163e36cab9d5d69dfc1a1d92
+@@ 2494 12 51
+_root_.GlobalTheory.CompanionTheory.UnitAEPair.main
 == src/Development/WeilBound/RepresentationTheoryGL/ArchimedeanBaseChange/ArchimedeanBaseChangeProof/ThetaNormCommutation/LocalComparisonSplitting/EulerFactorLevels/PUnitAE.lean d6c0ff705002d89c92cf0b5f9f9da37327def30cdf676a9b3788b65d7a267fd4 f5f10d44219f7962172a4aec5056512ae27c81611173e7200dfc05259bc1d105
 @% 1391 64 3
 + 13
@@ -109022,7 +109240,7 @@ simp [h, h.symm]
 = 2668 49
 + 19
 meas <;> assumption
-== src/Formalism/HermitianCurvature/HermitianCurvatureProofs/CoordinateCommuteRaisingConstant.lean 7d026652cedc95a23ee31802ba3cd7bc0b41cefd38e7f3b684fee58d5a45cf01 8919edd9287fd9efe0dfc10def2a69d30a6ecb4cb7da69fc861d751a2dc29464
+== src/Formalism/HermitianCurvature/HermitianCurvatureProofs/CoordinateCommuteRaisingConstant.lean 7d026652cedc95a23ee31802ba3cd7bc0b41cefd38e7f3b684fee58d5a45cf01 ad18ac14cb786b0534759652ff1f2338cd12678d91235e281ce380d49ad6ab12
 @% 12426 91 7
 + 23
  first | exact @_root_.
@@ -109432,6 +109650,12 @@ x6.star_qC <;> assumption)
 = 86264 25
 + 15
 <;> assumption)
+@% 187458 0 3
++ 7
+_root_.
+= 231 29
++ 3
+x6.
 @% 190782 193 7
 + 23
  first | exact @_root_.
@@ -117189,7 +117413,12 @@ intros; apply _root_.Formalism.BasicNotions.Ranks.N_zero <;> assumption
 by intros; apply _root_.Formalism.L2.DIV.lc_col_mem_colLat <;> assumption
 @@ 13433 375 65
  intros; apply _root_.Formalism.L2.DIV.lc_mem_gLat <;> assumption
-== src/Formalism/LocalToGlobal/Columns/CoefficientsModP/WeTransposeWordTransposeWord.lean 51d08489db95115cdbf3c3d1d8c55e5fa1151397ba24cf9bbdf471bef5cca6ba c5681fe4aae0204a4581f4e923aca9b3e886b3d0c2a1225a1275055f8cf3c500
+== src/Formalism/LocalToGlobal/Columns/CoefficientsModP/WeTransposeWordTransposeWord.lean 51d08489db95115cdbf3c3d1d8c55e5fa1151397ba24cf9bbdf471bef5cca6ba d6a2f1ca86c30784500dde9bf6fe48cd99a85c937b555b865a94c752d5c3d75b
+@@ 534 0 89
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.UnitriMonomialOfLowerTri
+
+@@ 4851 47 36
+_root_.GlobalTheory.CoeffWord.coeffW
 @% 7012 182 7
 + 23
  first | exact @_root_.
@@ -117980,6 +118209,14 @@ import Development.AbelianVarietyTheory.Proofs.FoundationProofs.LowerTriOfInterl
 
 @@ 462 855 239
  first | exact @_root_.GlobalTheory.FockHighestWeight.lowerTri_of_interlaced | exact _root_.GlobalTheory.FockHighestWeight.lowerTri_of_interlaced | (intros; apply _root_.GlobalTheory.FockHighestWeight.lowerTri_of_interlaced <;> assumption)
+== src/Formalism/LocalToGlobal/GroupLattices/FockModels/TransposeWords/TransposeWordsProofs/WeylFormNondegenerateGlobal.lean 57fe04d57025e607eaad3f5892150e0ffcb487cb42c5ff13344db64dd45f02ec 45d44510d774906bd2e3f053190d1abc0d5ea608579b86a6ae31bb7a0b42ebb4
+@@ 987 0 89
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.UnitriMonomialOfLowerTri
+
+@@ 10474 10 39
+_root_.GlobalTheory.CoeffWord.coeffWord
+@@ 10653 10 39
+_root_.GlobalTheory.CoeffWord.coeffWord
 == src/Formalism/LocalToGlobal/GroupLattices/JointServices/VAddEqVw.lean 36efb3d3d165b0a2025993679386b6ee933569fbdbea6f376ef24b162bc9b974 2c0ce0c63f058111092633b739a70a2aff348e7b1e37ff5364497c1c740927e9
 @% 886 421 3
 + 22
@@ -118450,12 +118687,16 @@ NormNatCoprime
 = 7493 25
 + 43
 E.ScaledModelNorms.norm_four <;> assumption
-== src/Formalism/LocalToGlobal/InertKernelTheory/InertCoprimeLemmas/GenusOneWittExistsOf.lean 2efb0304a38f1d47300ad38f23eb7ffe7a633d4e55f070c50a9d493974e2287c d054ddde320af8018c9daafe588bd72d968ffb0ed724860a650ed4793cbd36a1
+== src/Formalism/LocalToGlobal/InertKernelTheory/InertCoprimeLemmas/GenusOneWittExistsOf.lean 2efb0304a38f1d47300ad38f23eb7ffe7a633d4e55f070c50a9d493974e2287c ed3e81d78718a6ed14396c228fe6562840d60f3986488a5413189ebfb16b4879
 @% 933 0 2
 = 155 68
 + 10
 VarChange
 
+@@ 8252 0 32
+_root_.Formalism.L2.KerInert.VC.
+@@ 10780 0 32
+_root_.Formalism.L2.KerInert.VC.
 @@ 16943 54 183
  first | exact @_root_.Formalism.L2.KerInert.VC.intPS_add' | exact _root_.Formalism.L2.KerInert.VC.intPS_add' | (intros; apply _root_.Formalism.L2.KerInert.VC.intPS_add' <;> assumptio
 @@ 17093 54 183
@@ -126023,6 +126264,12 @@ have hl1 := (
 
 @@ 65949 61 0
 
+== src/Formalism/PieriBlockIdeals/PieriColumnMinors/RealOfSkeleton.lean 7fc2332a98235b199d4c610c97b347293ac293d6e4219616d88ea33d3167ee23 546c96083e0fb66721e168bc0816852cf91c59d7c4dfbd3eca0bf3656078b0da
+@@ 211 0 89
+import Development.AbelianVarietyTheory.Proofs.FoundationProofs.UnitriMonomialOfLowerTri
+
+@@ 4110 13 36
+_root_.GlobalTheory.CoeffWord.coeffW
 == src/Formalism/PieriBlockIdeals/PieriColumnMinors/RecursionInclusionExceptional.lean d217196589018b331f9922758d1ddced2c3c6f949f3be5408c9961a3d79877a7 98953c1c1aa988081e06421189caf7a0b3510e5caec460a0239bbd4e3179a2e4
 @% 9607 46 3
 + 22
