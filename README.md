@@ -18,16 +18,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.6M, written-out proof size 2.76B, time change -2.68K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.3M, written-out proof size 2.74B, time change -2.79K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 176,619,795 | −6,498,444 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,757,972,433 | −31,331,866 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,678.3 | −2,678.3 |
+| Source size (tokens) | 183,118,239 | 176,259,578 | −6,858,661 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,743,379,240 | −45,925,059 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,785.7 | −2,785.7 |
 
-Cone: 1,264,794 declarations in 146,536 files. Recorded changes: 12. Latest row: wave 5: powers kept as symbols (ampLimit; diff_key; diff_bound; bigProjP_of); exists_arcIn_of_unif (2026-11-22 05:06 UTC).
+Cone: 1,260,996 declarations in 146,524 files. Recorded changes: 13. Latest row: duplicate proofs cite a copy their file already imports (9729 theorems); lev_twArgs; bor1; case1/case2 (2026-11-22 05:21 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -39,10 +39,11 @@ Cone: 1,264,794 declarations in 146,536 files. Recorded changes: 12. Latest row:
 | 2026-11-22 | First heavy proofs rewritten without taking large structures apart (waves 1 and 2) | done |
 | 2026-11-22 | Restatements removed: 32,172 theorems that only repeated another theorem's statement and cited it are now aliases. Source size −3.5% | done |
 | 2026-11-22 | Repetition measured: 28,313 statements are proved independently more than once ([details](campaign/repetition/RESULTS.md)) | done |
-| | Repetition sweep, part 1: a duplicate proof cites a copy its file already imports | running |
-| | Repetition sweep, part 2: a duplicate proof takes over the shortest proof of the same statement | next |
-| | Repetition sweep, part 3: duplicates in files that cannot see each other share one proof | needs a rule for added imports |
-| | Sweep of the heaviest proofs, one family of cause at a time (wave 3) | running |
+| 2026-11-22 | Repetition sweep, part 1: 9,729 duplicate proofs now cite a copy their file already imports. Written-out size −0.5% | done |
+| 2026-11-22 | Heaviest proofs, waves 2 to 5: 40 proofs rewritten by hand, each kind of cause written up with its fix ([notes](campaign/proof-shrink/RESULTS.md)) | done |
+| | Repetition sweep, part 2: duplicates in files that cannot see each other share one proof | needs a rule for added imports |
+| | Heavy definitions built from chains of `choose` | next |
+| | More waves on the heaviest proofs | ongoing |
 | | Sweep of repetitions: the same argument written out in many proofs | next |
 | | Plain-language map of the argument: which known theorems it rests on, and what each costs | next |
 
@@ -139,9 +140,10 @@ pre-filter: a full rebuild with Comparator on a large machine remains the final 
 
 ## Layout
 
-- `patches/` — our changes to the proof, with no line of the archive in them: paths of deleted files, names
-  of rewritten wrappers, and for every other changed file the line ranges to replace plus the replacement
-  lines, pinned by the sha256 of the archive's file. Also the hash of the archive they apply to.
+- `patches/` — our changes to the proof, with none of the archive's text in them: paths of deleted files,
+  names of rewritten wrappers, and for every other changed file the character spans to replace plus the
+  text that replaces them, pinned by the sha256 of the archive's file. Also the hash of the archive they
+  apply to.
 - `tools/` — fetching, measuring, judging, recording.
 - `campaign/` — briefs and results of organised efforts; `campaign/proof-shrink/RESULTS.md` has the first one.
 - `baseline/` — dials, caps and dependency ranking for the unmodified archive.
@@ -169,10 +171,9 @@ Not in git: `proof/` (the archive with our patches applied, its own local reposi
 Apache License 2.0 (`LICENSE`), the same as Lean and Mathlib. It covers what is in this repository: the
 tools, the measurements, the write-ups, and the replacement text in `patches/`.
 
-It does not cover the proof archive. That is Levent Alpöge's work, it was published without a licence, and no
-line of it is stored here. Where a change only edits a line, the replacement line in `patches/` still
-resembles the line it replaces; the licence covers our part of it and nothing more. Applying `patches/`
-needs the archive, fetched from its author's site.
+It does not cover the proof archive. That is Levent Alpöge's work, it was published without a licence, and it
+is not stored here. `patches/` holds only the spans that changed: positions, and the text we put there.
+Applying it needs the archive, fetched from its author's site.
 
 ## Not built yet
 

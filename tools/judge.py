@@ -47,7 +47,9 @@ TIME_CACHE = os.path.join(C.ROOT, 'data', 'time_cache.json')
 
 def git(*args):
     """git in the proof repository (proof/), whose tag `upstream` is the unmodified archive."""
-    return subprocess.run(['git', '-C', C.PROOF] + list(args), stdout=subprocess.PIPE, check=True).stdout.decode()
+    # core.quotePath=false: paths with non-ASCII characters are printed as they are, not escaped
+    return subprocess.run(['git', '-C', C.PROOF, '-c', 'core.quotePath=false'] + list(args),
+                          stdout=subprocess.PIPE, check=True).stdout.decode()
 
 
 def to_module(path):

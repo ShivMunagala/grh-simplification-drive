@@ -73,7 +73,36 @@ dial falls. Four of them:
 | `FrameInvMulVecNegativeVector` | 6,275 → 5,289 | 432,214 → 121,486 | 60.3 s → 16.6 s |
 | `DetEqMulMinorOfColZero` | 16,557 → 16,258 | 257,037 → 87,619 | 366.7 s → 156.3 s |
 
-Result of the full run (6,678 files): pending.
+Result of the full run, recorded 2026-11-22: 10,872 theorems in 6,608 files were rewritten and compiled.
+6,137 files pass the strict check; 9,729 theorems in them now cite a copy. Source size −360,217 tokens,
+written-out size −14,593,193 nodes (both figures include three hand-edited files judged in the same run,
+about 685,000 nodes of it). Time, on 272 files timed with old and new version back to back: 2,197.5 s → 2,090.1 s.
+
+What was left out, and why:
+
+- 272 files register something different afterwards. Nearly all are theorems proved by `rfl`: Lean marks
+  such a theorem as usable by `dsimp`, and a citation is not marked. The check on registered attributes
+  caught this; it would not show in any statement.
+- 155 files did not compile (the citation form did not go through for at least one theorem in the file).
+- 44 files changed something another file can see.
+- 4 files under a directory with a non-ASCII name were skipped by a path-quoting slip in the judge (fixed).
+
+These are per file: one failing theorem keeps the whole file out. A second pass that tries each theorem on
+its own is prepared (`tools/proof_edits.py`, `tools/batch_variants.py`).
+
+About 4,700 of the citations replace a proof shorter than the citation itself (18 tokens). The sweep as a
+whole still lowers the source size, but those should use the short form `@c` where it compiles, or keep
+their original proof. Also prepared (`tools/proof_edits.py shorten`), not yet run.
+
+A first timing of this sweep showed it 61% slower. That was an artifact: the two versions were timed in
+separate passes while the machine was unevenly busy. Old and new must be timed back to back in the same job
+(`tools/batch_compile.py --paired`).
+
+### Tried and dropped: taking over the shortest proof
+
+For duplicates that cannot cite a copy, replacing the proof text by the text of the shortest proof of the
+same statement looked like 15.6 million nodes on paper. On a sample of 60 files only 5 passed. The shortest
+proofs are short because they lean on helper lemmas in their own file, which the other file cannot see.
 
 ## Tiers 3 and 4
 

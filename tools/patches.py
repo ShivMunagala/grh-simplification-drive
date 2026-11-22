@@ -13,15 +13,16 @@ keeps is:
   patches/deleted-paths.txt     files removed, one path per line (no content)
   patches/aliased-wrappers.tsv  files rewritten by tools/alias_wrappers.py: module, wrapper, original.
                                 Names only; the rewrite is mechanical and is redone from this list.
-  patches/changes.patch         every other changed or added file, as line ranges to replace and the
-                                new lines. The replaced lines themselves are not stored: each file is
-                                identified by the sha256 of its archive version, so the ranges are exact.
+  patches/changes.patch         every other changed or added file, as character spans to replace and
+                                the text that replaces them. Neither the replaced text nor the unchanged
+                                part of an edited line is stored: each file is identified by the sha256
+                                of its archive version, so the spans are exact.
 
 Format of changes.patch:
 
   == <path> <sha256 of the archive's file, or `new`> <sha256 of our file>
-  @@ <first line>,<number of lines>     lines of the archive's file that are replaced (0: insert before <first line>)
-  +<new line>                           what replaces them, one `+` line per line
+  @@ <start> <old length> <new length>   span of the archive's file (in characters) that is replaced
+  <new text, exactly <new length> characters, then a newline>
 
 So the archive plus `patches/` reproduces our version exactly, and the repository carries only text we wrote.
 """
@@ -41,7 +42,8 @@ ALIAS_LINE = re.compile(r'^alias (?:_root_\.)?(\S+) := (\S+)\n\Z', re.M)
 
 
 def git(*args, check=True, binary=False, stdin=None):
-    p = subprocess.run(['git', '-C', C.PROOF] + list(args), stdout=subprocess.PIPE, check=check, input=stdin)
+    p = subprocess.run(['git', '-C', C.PROOF, '-c', 'core.quotePath=false'] + list(args), stdout=subprocess.PIPE,
+                       check=check, input=stdin)
     return p.stdout if binary else p.stdout.decode()
 
 
@@ -69,44 +71,65 @@ def sha(text):
 
 
 def hunks(old, new):
-    """Line ranges of `old` to replace and the lines that replace them, without the replaced lines."""
+    """Character spans of `old` to replace, and what replaces them: [(start, old length, new text)].
+
+    Changed regions are found line by line; inside each region the characters that old and new
+    share at the start and at the end are left out, so only the part that really changed is kept.
+    Offsets are in `old + "\\n"` (every line then ends with a newline)."""
     a, b = old.split('\n'), new.split('\n')
+    A, B = old + '\n', new + '\n'
+    pos_a, pos_b = [0], [0]
+    for l in a:
+        pos_a.append(pos_a[-1] + len(l) + 1)
+    for l in b:
+        pos_b.append(pos_b[-1] + len(l) + 1)
     out = []
     for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes():
-        if tag != 'equal':
-            out.append((i1 + 1, i2 - i1, b[j1:j2]))
+        if tag == 'equal':
+            continue
+        x, y = A[pos_a[i1]:pos_a[i2]], B[pos_b[j1]:pos_b[j2]]
+        pre = 0
+        while pre < len(x) and pre < len(y) and x[pre] == y[pre]:
+            pre += 1
+        suf = 0
+        while suf < len(x) - pre and suf < len(y) - pre and x[-1 - suf] == y[-1 - suf]:
+            suf += 1
+        out.append((pos_a[i1] + pre, len(x) - pre - suf, y[pre:len(y) - suf]))
     return out
 
 
 def block(path, old, new):
     """One file's entry in changes.patch. old is None for a file we added."""
-    lines = [f'== {path} {sha(old) if old is not None else "new"} {sha(new)}']
-    for start, count, repl in hunks(old if old is not None else '', new):
-        lines.append(f'@@ {start},{count}')
-        lines += ['+' + l for l in repl]
-    return '\n'.join(lines) + '\n'
+    parts = [f'== {path} {sha(old) if old is not None else "new"} {sha(new)}\n']
+    for start, length, text in hunks(old if old is not None else '', new):
+        parts.append(f'@@ {start} {length} {len(text)}\n{text}\n')
+    return ''.join(parts)
 
 
 def parse_blocks(text):
-    """-> [(path, old sha or 'new', new sha, [(start, count, [lines])])]"""
-    blocks = []
-    for line in text.split('\n'):
+    """-> [(path, old sha or 'new', new sha, [(start, old length, new text)])]"""
+    blocks, i, n = [], 0, len(text)
+    while i < n:
+        j = text.index('\n', i)
+        line = text[i:j]
+        i = j + 1
         if line.startswith('== '):
             path, old_sha, new_sha = line[3:].rsplit(' ', 2)
             blocks.append((path, old_sha, new_sha, []))
         elif line.startswith('@@ '):
-            start, count = line[3:].split(',')
-            blocks[-1][3].append((int(start), int(count), []))
-        elif line.startswith('+'):
-            blocks[-1][3][-1][2].append(line[1:])
+            start, length, size = (int(x) for x in line[3:].split(' '))
+            blocks[-1][3].append((start, length, text[i:i + size]))
+            i += size + 1
+        elif line:
+            raise ValueError(f'unexpected line in changes.patch: {line[:60]!r}')
     return blocks
 
 
 def patched(old, hs):
-    lines = old.split('\n')
-    for start, count, repl in sorted(hs, reverse=True):       # from the end, so earlier positions stay valid
-        lines[start - 1:start - 1 + count] = repl
-    return '\n'.join(lines)
+    t = old + '\n'
+    for start, length, text in sorted(hs, reverse=True):       # from the end, so earlier offsets stay valid
+        t = t[:start] + text + t[start + length:]
+    return t[:-1]
 
 
 def compute():
@@ -147,7 +170,7 @@ def export():
     if os.path.exists(OLD_CHANGES):
         os.remove(OLD_CHANGES)
     n_del = len([l for l in deleted.splitlines() if l])
-    n_chg = sum(1 for l in changes.split('\n') if l.startswith('== '))
+    n_chg = len(parse_blocks(changes))
     print(f'patches written: {n_del} deleted paths, {aliased.count(chr(10))} aliased wrappers, '
           f'{n_chg} other changed or added files, {len(changes.encode("utf-8"))} bytes of replacement text')
 

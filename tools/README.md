@@ -107,10 +107,11 @@ git add -A && git commit                # this repository: the row, the patches 
 
 `proof/` is its own git repository and is ignored by this one. Its first commit, tagged `upstream`, is the
 unmodified archive. `patches.py export` turns everything after the tag into `patches/`, and
-`patches.py apply` rebuilds our version from a fresh copy of the archive. `patches/` holds no line of the
-archive: deleted files are paths, rewritten wrappers are names, and every other change is a list of line
-ranges to replace together with the replacement lines. Each file is pinned by the sha256 of its archive
-version and of the result, so the ranges are exact and a wrong base is refused.
+`patches.py apply` rebuilds our version from a fresh copy of the archive. `patches/` holds none of the
+archive's text: deleted files are paths, rewritten wrappers are names, and every other change is a list of
+character spans to replace together with the text that replaces them (the unchanged part of an edited line
+is not stored). Each file is pinned by the sha256 of its archive version and of the result, so the spans
+are exact and a wrong base is refused.
 
 One judged change takes about eight minutes here for a single file that imports all of Mathlib: two
 compiles (the new version and, for timing, the old one) and one pass over the tables.

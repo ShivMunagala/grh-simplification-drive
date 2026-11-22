@@ -26,7 +26,8 @@ HISTORY = os.path.join(C.ROOT, 'metrics', 'history.csv')
 
 
 def proof_git(*args, binary=False, check=True):
-    p = subprocess.run(['git', '-C', C.PROOF] + list(args), stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=check)
+    p = subprocess.run(['git', '-C', C.PROOF, '-c', 'core.quotePath=false'] + list(args), stdout=subprocess.PIPE,
+                       stderr=subprocess.PIPE, check=check)
     return (p.stdout if binary else p.stdout.decode()), p.returncode
 
 

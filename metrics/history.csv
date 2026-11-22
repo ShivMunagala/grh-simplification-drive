@@ -12,3 +12,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-22T04:35:56Z,6f9980b12,wave 4: five matrix lemmas and four mixed proofs,176619737,2765704515,-2303.3,1264792,146536
 2026-11-22T04:53:01Z,c0d6719c5,chain follow-up (wEx_of); ac_le; mom_num; exists_nonempty_nMore_upL,176619667,2762844502,-2394.9,1264794,146536
 2026-11-22T05:06:40Z,de04e5734,wave 5: powers kept as symbols (ampLimit; diff_key; diff_bound; bigProjP_of); exists_arcIn_of_unif,176619795,2757972433,-2678.3,1264794,146536
+2026-11-22T05:21:14Z,3c088377b,duplicate proofs cite a copy their file already imports (9729 theorems); lev_twArgs; bor1; case1/case2,176259578,2743379240,-2785.7,1260996,146524

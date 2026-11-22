@@ -146,9 +146,9 @@ Four workers on the proofs whose expansion is most out of proportion to their so
 | `…EtaleIntegralityFacts.Lim.diff_bound` | 408,773 → 2,695 | (same file) | recorded |
 | `GlobalTheory.ArcOfPoint.exists_arcIn_of_unif` | 500,408 → 92,251 | +12 | recorded |
 | `PositivityTheory.RgHe.A.Pf.bigProjP_of` | 457,279 → 60,796 | +32 | recorded |
-| `GlobalTheory.TopVal.TwSet.lev_twArgs` | 855,125 → 417,638 | −41 | being judged |
-| `UpperTheory.V.Ws.X1.bor1` | 167,440 → 22,274 | +41 | being judged |
-| `case1`, `case2` in `MixFlagExists` | 160,707 → 110,330 and 162,790 → 110,358 | +24 | being judged |
+| `GlobalTheory.TopVal.TwSet.lev_twArgs` | 855,125 → 417,638 | −41 | recorded |
+| `UpperTheory.V.Ws.X1.bor1` | 167,440 → 22,274 | +41 | recorded |
+| `case1`, `case2` in `MixFlagExists` | 160,707 → 110,330 and 162,790 → 110,358 | +24 | recorded |
 
 What these had in common: **an arithmetic tactic multiplying out a power.** `ring`, `linarith` and `nlinarith`
 expand any power of a sum they can see, and they see through names introduced by `set`. One power of degree 19
