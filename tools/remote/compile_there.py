@@ -23,6 +23,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('modules', nargs='+')
     ap.add_argument('--out', default=os.path.join(C.ROOT, 'build', 'pre'))
+    ap.add_argument('--with', dest='with_', default='',
+                    help='comma-separated modules whose pending change (already checked there) these files need')
     a = ap.parse_args()
     remote = (C.load_json(os.path.join(C.ROOT, 'grh.local.json'), {}) or {}).get('remote')
     if not remote:
@@ -42,7 +44,7 @@ def main():
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         # GRH_SLOTS well above what a batch running there uses, so this check does not wait behind it
         cmd = (f'cd {rpath} && export PATH=$HOME/.elan/bin:$PATH GRH_NO_SANDBOX=1 GRH_SLOTS=160 && '
-               f'python3 tools/try_change.py {m}')
+               f'python3 tools/try_change.py {m}' + (f' --with {a.with_}' if a.with_ else ''))
         p = subprocess.run(ssh + [cmd], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
         text = p.stdout.decode('utf-8', 'replace')
         print(f'--- {m}')

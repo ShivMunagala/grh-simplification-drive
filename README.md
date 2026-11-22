@@ -64,7 +64,10 @@ Three dials:
 1. **Source size** of the cone, in tokens. A name of any length is one token; comments are not counted.
 2. **Written-out proof size** of the cone: the size of the fully expanded proofs that Lean checks.
 3. **Time** to build and check, compared on the files a change recompiles. Measured as the time Lean spends
-   elaborating and checking those files, not counting the loading of what they import.
+   elaborating and checking those files, not counting the loading of what they import. Before and after are
+   always measured on the same machine under the same load. Large batches are timed on a rented machine,
+   sometimes on a random sample of their files (the history row then covers only the sample), so the running
+   total adds seconds from different machines and is a rough indicator, not a benchmark.
 
 A valid change is accepted if no dial goes up, and it is progress if one goes down. The two sizes are exact.
 Time is noisier, so it has a tolerance, and a change that raises it beyond that is reviewed by a person.

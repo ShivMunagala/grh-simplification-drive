@@ -8,6 +8,7 @@ elsewhere), so they are guesses: each one has to compile and pass the equivalenc
 
   tools/proof_edits.py citations  --out build/x/edits.jsonl [--form first|short] [--min-proof-tokens N]
   tools/proof_edits.py transplants --out build/x/edits.jsonl
+  tools/proof_edits.py shorten     --out build/x/edits.jsonl    # shorten citations already recorded
   tools/proof_edits.py variants --edits E --work W [--single-from W/results.jsonl]
   tools/proof_edits.py choose   --edits E --work W            # after tools/batch_variants.py ran
   tools/proof_edits.py apply    --chosen W/chosen.jsonl       # write the chosen edits into proof/src
@@ -23,7 +24,7 @@ gathers its compiled files under W/final/new for the judge.
 Because every file is rebuilt from the accepted commit and the edit list, applying the chosen
 edits on another machine gives byte-identical files.
 """
-import argparse, collections, json, os, shutil, subprocess, sys, time
+import argparse, collections, json, os, re, shutil, subprocess, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as C
@@ -271,6 +272,82 @@ def gen(kind, out, form, min_tokens):
     say(f'{len(edits)} edits in {len({e["module"] for e in edits})} files written to {out}')
 
 
+LONG_RE = re.compile(r':=( by first \| exact @(?P<c>\S+) \| exact (?P=c) \| \(intros; apply (?P=c) <;> assumption\))')
+
+
+def gen_shorten(out, candidates):
+    """Edits that shorten citations already in the accepted state. The long form tries three ways to
+    cite; the compiled proof shows which one applied. If the proof is the bare cited theorem, `@C`
+    is enough (2 tokens instead of 18); otherwise `by intros; apply C <;> assumption` (7). Where the
+    original proof was shorter than that, the original proof is put back.
+
+    candidates: the table tools/cite_duplicates.py wrote before the citations were made; it gives
+    each theorem's place in the unmodified file, from which the original proof is read."""
+    t0 = time.time()
+
+    def say(msg):
+        print(f'{msg}  [{time.time() - t0:.0f}s]', flush=True)
+
+    overlay_consts = os.path.join(C.DATA_OVERLAY, 'consts.tsv')
+    g = CONE.load_graph(C.DATA_BASE, overlay_consts if os.path.exists(overlay_consts) else None, (), say)
+    ranges = CD.load_ranges(g.patched)
+    by_mod = collections.defaultdict(list)             # module -> [(range, name)]
+    for (m, name), r in ranges.items():
+        if m in g.patched:
+            by_mod[m].append((r, name))
+    vsize = {}
+    for i in range(g.n):
+        if g.modnames[g.mods[i]] in g.patched and g.kinds[i] == 'thm':
+            vsize[(g.modnames[g.mods[i]], g.names[i])] = g.vsize[i]
+    old_place = {}
+    with open(candidates, encoding='utf-8') as fh:
+        head = fh.readline().rstrip('\n').split('\t')
+        for line in fh:
+            r = dict(zip(head, line.rstrip('\n').split('\t')))
+            old_place[(r['module'], r['theorem'])] = tuple(int(r[k]) for k in ('first_line', 'first_col', 'last_line', 'last_col'))
+    mods = sorted({m for m, _ in old_place} & set(g.patched))
+    new_text = texts_at(accepted_commit(), mods)
+    old_text = texts_at(C.UPSTREAM_TAG, mods)
+    edits, stats = [], collections.Counter()
+    for m in mods:
+        text = new_text.get(m)
+        if text is None or ':= by first | exact @' not in text:
+            continue
+        lines = text.split('\n')
+        spans = []
+        for r, name in by_mod[m]:
+            spans.append((CD.offset(lines, r[0], r[1]), CD.offset(lines, r[2], r[3]), r, name))
+        for mm in LONG_RE.finditer(text):
+            owner = [sp for sp in spans if sp[0] <= mm.start() < sp[1]]
+            if not owner:
+                stats['citation outside any known declaration'] += 1
+                continue
+            a, b, r, name = min(owner, key=lambda sp: sp[1] - sp[0])
+            c = mm.group('c')
+            v = vsize.get((m, name))
+            body = ' @' + c if v == 1 else f' by intros; apply {c} <;> assumption'
+            new_tokens = 2 if v == 1 else 7
+            tag = 'shorten:term' if v == 1 else 'shorten:apply'
+            op = old_place.get((m, name))
+            if op is not None and m in old_text:
+                ot = old_text[m]
+                sp = split_decl(ot, ot.split('\n'), op)
+                if sp is not None:
+                    old_proof = ot[sp[1]:sp[2]]
+                    if CONE.count_tokens(old_proof) < new_tokens:
+                        body, tag = old_proof, 'restore'
+            stats[tag] += 1
+            edits.append({'module': m, 'theorem': name, 'first_line': r[0], 'first_col': r[1], 'last_line': r[2],
+                          'last_col': r[3], 'body': body, 'tag': tag, 'source': c})
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
+    with open(out, 'w', encoding='utf-8') as fh:
+        for e in edits:
+            fh.write(json.dumps(e, ensure_ascii=False) + '\n')
+    for k, v in stats.items():
+        print(f'  {k}: {v:,}')
+    say(f'{len(edits)} edits in {len({e["module"] for e in edits})} files written to {out}')
+
+
 # ------------------------------------------------------------------ variants
 def load_edits(path):
     per = collections.defaultdict(list)
@@ -424,6 +501,9 @@ def main():
         s.add_argument('--out', required=True)
         s.add_argument('--form', choices=['first', 'short'], default='first')
         s.add_argument('--min-proof-tokens', type=int, default=LONG_TOKENS + 1)
+    sh = sub.add_parser('shorten')
+    sh.add_argument('--out', required=True)
+    sh.add_argument('--candidates', default=os.path.join(C.ROOT, 'build', 'cite', 'candidates.tsv'))
     v = sub.add_parser('variants')
     v.add_argument('--edits', required=True); v.add_argument('--work', required=True)
     v.add_argument('--single-from', default=None); v.add_argument('--modules', default=None)
@@ -434,6 +514,8 @@ def main():
     args = ap.parse_args()
     if args.cmd in ('citations', 'transplants'):
         gen(args.cmd, args.out, args.form, args.min_proof_tokens)
+    elif args.cmd == 'shorten':
+        gen_shorten(args.out, args.candidates)
     elif args.cmd == 'variants':
         os.makedirs(args.work, exist_ok=True)
         variants(args.edits, args.work, args.single_from, args.modules)

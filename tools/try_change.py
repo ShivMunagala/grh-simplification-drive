@@ -49,6 +49,9 @@ def main():
     ap.add_argument('module')
     ap.add_argument('--mem-gb', type=float, default=8.0)
     ap.add_argument('--timeout', type=int, default=3600)
+    ap.add_argument('--with', dest='with_', default='',
+                    help='comma-separated modules whose pending change (already checked with this tool) this file '
+                         'needs, for example the file that got a new helper lemma')
     a = ap.parse_args()
     m = a.module
     state = C.accepted_state()
@@ -56,7 +59,11 @@ def main():
     work = os.path.join(C.ROOT, 'build', 'try', m)
     new_dir, old_dir, oldsrc = (os.path.join(work, d) for d in ('new', 'old', 'oldsrc'))
 
-    r = compile_module(m, new_dir, overlays=[new_dir], mem_gb=a.mem_gb, timeout=a.timeout, quiet=True)
+    pending = [os.path.join(C.ROOT, 'build', 'try', w, 'new') for w in a.with_.split(',') if w]
+    missing = [w for w in pending if not os.path.isdir(w)]
+    if missing:
+        sys.exit(f'no checked result for {missing}: run this tool on those files first')
+    r = compile_module(m, new_dir, overlays=[new_dir] + pending, mem_gb=a.mem_gb, timeout=a.timeout, quiet=True)
     if not r['ok']:
         print('DOES NOT COMPILE')
         print(r.get('messages_tail') or r.get('error') or '')
