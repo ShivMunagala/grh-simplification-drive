@@ -532,6 +532,112 @@ def projection_lines(line, next_indent, before, after, fresh, min_parts):
     return lead + ('\n' + pad).join(out)
 
 
+MIN_REST = 4                       # parts from the first dropped one on, below which gathered_lines leaves a line
+
+
+def gathered_lines(line, next_indent, before, after, fresh, min_parts):
+    """A costlier rewrite for patterns whose dropped parts lie between the kept ones, where skipping by one
+    projection is not possible: every kept part after the first dropped one is read by its own projection.
+    Names at the front stay in a pattern (they may be witnesses). After that, if all names look like
+    hypotheses, the projections are gathered in one term, where they share everything, and named from it;
+    otherwise each run of names is taken out by a short `obtain`. This adds source when every projection
+    step is counted, so `choose` keeps a file only where the written-out size pays for it."""
+    if '--' in line or ';' in line:
+        return None
+    site = split_site(line)
+    if site is None:
+        return None
+    lead, kw, term, parts = site
+    k = len(parts)
+    if k < min_parts or next_indent > len(lead):
+        return None
+    for p in parts:
+        if p not in ('-', '_') and (p == 'rfl' or not IDENT_RE.match(p)):
+            return None
+    front = 0
+    while front < k and parts[front] not in ('-', '_'):
+        front += 1
+    rest = parts[front:]
+    r = len(rest)
+    names = [(i, p) for i, p in enumerate(rest) if p not in ('-', '_')]
+    if r < MIN_REST:
+        return None
+    depth = 0
+    for ch in term:
+        depth += (ch in OPEN) - (ch in CLOSE)
+        if depth < 0:
+            return None
+    if depth or term.split()[-1] in ('by', 'fun', '=>', ':=', 'with', 'at', 'from', '<|', '$', 'do'):
+        return None
+
+    def proj(i):
+        return '.2' * i + ('.1' if i < r - 1 else '')
+
+    out, gone = [], []
+    if front:
+        base = fresh() if names else '-'
+        pat = '⟨' + ', '.join(parts[:front] + [base]) + '⟩'
+        out.append(f'rcases {term} with {pat}' if kw == 'rcases' else f'{kw} {pat} := {term}')
+        if names:
+            gone.append(base)
+    else:
+        if not names:
+            return None
+        atom = bool(ATOM_RE.match(term))
+        base = term
+        word = re.compile(r'(?<![\w.\'])' + re.escape(term) + r'(?![\w\'])')
+        if (kw in ('obtain', 'rcases') and PLAIN_RE.match(term) and term not in [n for _, n in names]
+                and word.search(before) and not word.search(after)):
+            gone.append(term)
+        if not atom:
+            if len(names) == 1:
+                base = f'({term})'
+            else:
+                base = fresh()
+                out.append(f'have {base} := {term}')
+                gone.insert(0, base)
+    if names and not all(n[:1] in 'hH' for _, n in names):
+        cur, i = base, 0
+        while True:
+            d = 0
+            while i < r and rest[i] in ('-', '_'):
+                i, d = i + 1, d + 1
+            if i == r:
+                break
+            j = i
+            while j < r and rest[j] not in ('-', '_'):
+                j += 1
+            run, tail = rest[i:j], cur + '.2' * d
+            if j == r:
+                out.append(f'have {run[0]} := {tail}' if len(run) == 1 else f'obtain ⟨{", ".join(run)}⟩ := {tail}')
+                break
+            if all(p in ('-', '_') for p in rest[j:]):
+                out.append(f'have {run[0]} := {tail}.1' if len(run) == 1 and run[0][:1] in 'hH'
+                           else f'obtain ⟨{", ".join(run)}, -⟩ := {tail}')
+                break
+            nxt = fresh()
+            out.append(f'obtain ⟨{", ".join(run)}, {nxt}⟩ := {tail}')
+            gone.insert(0, nxt)
+            cur, i = nxt, j
+    elif len(names) == 1:
+        (i, n), = names
+        out.append(f'have {n} := {base}{proj(i)}')
+    elif names:
+        items = [base + proj(i) for i, _ in names]
+        gathered = items[-1]
+        for it in reversed(items[:-1]):
+            gathered = f'And.intro {it} ({gathered})' if ' ' in gathered else f'And.intro {it} {gathered}'
+        both = fresh()
+        out.append(f'have {both} := {gathered}')
+        last = len(names) - 1
+        out += [f'have {n} := {both}' + '.2' * j + ('.1' if j < last else '') for j, (_, n) in enumerate(names)]
+        gone.insert(0, both)
+    if gone:
+        out.append('clear ' + ' '.join(gone))
+    new = lead + ('\n' + ' ' * len(lead)).join(out)
+    return None if new == line else new
+
+
 # `set x := e with h` leaves x transparent: `ring`, `linarith` and their relatives see through it and
 # multiply out whatever powers and products e contains. With `clear_value x` right after, x is a plain
 # variable and `h : x = e` is still there for the steps that need the value.
@@ -553,6 +659,7 @@ def opaque_set_lines(line, next_indent, before, after, fresh, min_parts):
 
 REWRITES = {    # tag -> (how a line must start, the rewrite)
     'projections': (('obtain ⟨', 'obt ⟨', 'have ⟨', 'rcases '), projection_lines),
+    'projections-gathered': (('obtain ⟨', 'obt ⟨', 'have ⟨', 'rcases '), gathered_lines),
     'opaque-set': (('set ',), opaque_set_lines),
 }
 
