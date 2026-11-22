@@ -82,6 +82,9 @@ executes anything from a compiled file; it maps the file and walks the data, als
 - `compact.py` — reprints declarations that are written with every argument explicit: `find` lists them, `print`
   asks Lean (`compact/GrhCompact.lean`) for a shorter text that reads back as the same statement and value, and
   writes edits for the usual batch.
+- `try_auto.py` — lists theorems whose statement mentions only Mathlib (`find`) and asks Lean whether one closing
+  tactic proves each from the library alone (`run`, with `compact/GrhTry.lean`); `edits` turns the answers into edits
+  for the usual batch.
 - `try_change.py` — what a worker runs on one edited file before handing it in: compile, equivalence
   check, sizes and time before and after, and `PRECHECK: pass` or `fail`.
 - `alias_wrappers.py` — find theorems that only restate another theorem and cite it, and rewrite them
