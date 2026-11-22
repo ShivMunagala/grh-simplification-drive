@@ -13,6 +13,8 @@ elsewhere), so they are guesses: each one has to compile and pass the equivalenc
                                                                # read long conjunctions by projection
   tools/proof_edits.py opaque-set  --out build/x/edits.jsonl [--min-nodes N]
                                                                # `clear_value x` after `set x := e with h`
+  tools/proof_edits.py drop-restate --out build/x/edits.jsonl [--min-nodes N]
+                                                               # delete `show T` / `change T` / bare `dsimp only`
   tools/proof_edits.py variants --edits E --work W [--single-from W/results.jsonl]
   tools/proof_edits.py choose   --edits E --work W            # after tools/batch_variants.py ran
   tools/proof_edits.py apply    --chosen W/chosen.jsonl [--expect W/final/sources.tsv [--drop-stale]]
@@ -657,10 +659,40 @@ def opaque_set_lines(line, next_indent, before, after, fresh, min_parts):
     return line + '\n' + ' ' * len(m.group('lead')) + 'clear_value ' + m.group('x')
 
 
+# `show T` and `change T` restate the goal (or a hypothesis) in a form that is equal by computation. Often the
+# steps that follow would have worked without it; then the line is only extra source, and the restated
+# goal is written out once more in the proof. `dsimp only` with no lemmas is the same kind of step. The
+# edit deletes the line; it is kept only if the file still compiles to the same thing.
+RESTATE_RE = re.compile(r'^[ \t]*(?:show|change)[ \t]+\S[^\n]*$|^[ \t]*dsimp only(?:[ \t]+at[ \t]+[^\[\n]*)?[ \t]*$')
+OPEN_END = ('by', 'fun', '=>', ':=', 'with', 'at', 'from', '<|', '$', 'do', 'then', 'else', '∧', '∨', '→', '↔',
+            '=', '≤', '<', '+', '-', '*', '/', ',', '∘', '|>.', '|>', '▸')
+
+
+def restate_lines(line, next_indent, before, after, fresh, min_parts):
+    """'' (delete the line) for a tactic line that only restates the goal, or None to leave it alone."""
+    if '--' in line or ';' in line or '·' in line or not RESTATE_RE.match(line):
+        return None
+    indent = len(line) - len(line.lstrip(' \t'))
+    if next_indent > indent:                              # the term continues on the next line
+        return None
+    words = line.split()
+    if words[-1] in OPEN_END or ' from ' in line or ' by ' in line:
+        return None
+    depth = 0
+    for ch in line:
+        depth += (ch in OPEN) - (ch in CLOSE)
+        if depth < 0:
+            return None
+    if depth:
+        return None
+    return ''
+
+
 REWRITES = {    # tag -> (how a line must start, the rewrite)
     'projections': (('obtain ⟨', 'obt ⟨', 'have ⟨', 'rcases '), projection_lines),
     'projections-gathered': (('obtain ⟨', 'obt ⟨', 'have ⟨', 'rcases '), gathered_lines),
     'opaque-set': (('set ',), opaque_set_lines),
+    'drop-restate': (('show ', 'change ', 'dsimp only'), restate_lines),
 }
 
 
@@ -735,10 +767,13 @@ def gen_projections(out, min_parts, min_nodes, tag='projections', skip=()):
                     if new is None:
                         continue
                     stats['sites'] += 1
+                    old = line
+                    if new == '' and ln + 1 < len(lines):
+                        old = line + '\n'                 # a deleted line goes with its line break
                     edits.append({'module': m, 'theorem': name, 'first_line': ln, 'first_col': 0,
-                                  'start': starts[ln], 'end': starts[ln] + len(line),
-                                  'old_sha': hashlib.sha256(line.encode('utf-8')).hexdigest(),
-                                  'body': new, 'tag': tag, 'size': size})
+                                  'start': starts[ln], 'end': starts[ln] + len(old),
+                                  'old_sha': hashlib.sha256(old.encode('utf-8')).hexdigest(),
+                                  'body': new, 'tag': tag, 'size': size, 'tokens': CONE.count_tokens(line)})
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     with open(out, 'w', encoding='utf-8') as fh:
         for e in edits:
