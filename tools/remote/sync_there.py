@@ -37,7 +37,9 @@ def main():
     def run(cmd, **kw):
         return subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, **kw)
 
-    run(rsync + ['--delete', os.path.join(C.ROOT, 'compiled-overlay') + '/', f'{host}:{rpath}/compiled-overlay/'], check=True)
+    # --checksum: files the machine compiled itself and already holds are recognised by content, not by date
+    run(rsync + ['--delete', '--checksum', os.path.join(C.ROOT, 'compiled-overlay') + '/',
+                 f'{host}:{rpath}/compiled-overlay/'], check=True)
     run(rsync + [C.DATA_OVERLAY + '/', f'{host}:{rpath}/data/overlay/'], check=True)
     # source of the modules recorded changes touched, as committed here
     rels = ['src/' + m.replace('.', '/') + '.lean' for m in state['modules']]

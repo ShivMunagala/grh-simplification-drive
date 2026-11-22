@@ -278,11 +278,10 @@ LONG_RE = re.compile(r':=( by first \| exact @(?P<c>\S+) \| exact (?P=c) \| \(in
 def gen_shorten(out, candidates):
     """Edits that shorten citations already in the accepted state. The long form tries three ways to
     cite; the compiled proof shows which one applied. If the proof is the bare cited theorem, `@C`
-    is enough (2 tokens instead of 18); otherwise `by intros; apply C <;> assumption` (7). Where the
-    original proof was shorter than that, the original proof is put back.
+    is enough (2 tokens instead of 18); otherwise `by intros; apply C <;> assumption` (7).
 
-    candidates: the table tools/cite_duplicates.py wrote before the citations were made; it gives
-    each theorem's place in the unmodified file, from which the original proof is read."""
+    candidates: the table tools/cite_duplicates.py wrote before the citations were made; it names
+    the files to look at."""
     t0 = time.time()
 
     def say(msg):
@@ -328,14 +327,8 @@ def gen_shorten(out, candidates):
             body = ' @' + c if v == 1 else f' by intros; apply {c} <;> assumption'
             new_tokens = 2 if v == 1 else 7
             tag = 'shorten:term' if v == 1 else 'shorten:apply'
-            op = old_place.get((m, name))
-            if op is not None and m in old_text:
-                ot = old_text[m]
-                sp = split_decl(ot, ot.split('\n'), op)
-                if sp is not None:
-                    old_proof = ot[sp[1]:sp[2]]
-                    if CONE.count_tokens(old_proof) < new_tokens:
-                        body, tag = old_proof, 'restore'
+            # (Where the original proof was shorter still, the citation is kept anyway: putting the proof
+            # back would raise the written-out size, and a change may not raise a dial.)
             stats[tag] += 1
             edits.append({'module': m, 'theorem': name, 'first_line': r[0], 'first_col': r[1], 'last_line': r[2],
                           'last_col': r[3], 'body': body, 'tag': tag, 'source': c})
