@@ -62,6 +62,8 @@ Two fences:
 
 - A size cap on any single theorem or definition that is added, or that is changed and grows
   (`baseline/caps.json`, provisional). New helper lemmas are welcome as long as they stay under it.
+  A new helper may be over the cap when it replaces more than it adds: the cone's written-out size must
+  fall by at least what the helper weighs.
 - No new macros or notation.
 
 Reported to steer the work, not enforced: which declarations most of the cone hangs on

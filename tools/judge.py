@@ -271,9 +271,12 @@ def main():
 
     # modules compiled elsewhere: read both versions of all of them in a few passes
     bulk = None
+    pre_times = {}
     if a.precompiled:
-        a.no_time = True
         pre_new = os.path.join(os.path.abspath(a.precompiled), 'new')
+        pre_times = C.load_json(os.path.join(os.path.abspath(a.precompiled), 'times.json'), {}) or {}
+        if not all(m in pre_times and pre_times[m].get('before') is not None for m in modified):
+            a.no_time = True               # no before/after times came with the compiled modules
         pairs = []
         for m in modified + added:
             for tag, path in (('@old', C.current_olean(m)), ('@new', C.module_path(m, pre_new, '.olean'))):
@@ -283,7 +286,8 @@ def main():
         for i in range(0, len(pairs), 4000):
             bulk.update(C.parse_consts(C.moddump(pairs[i:i + 4000])))
         report['notes'].append(f'{len(modified) + len(added)} modules were compiled on another machine; '
-                               'interfaces and dials were checked here, time was not compared')
+                               'interfaces and dials were checked here'
+                               + (', time was not compared' if a.no_time else ', times were measured there'))
 
     # compile, with propagation to users of changed interfaces
     time_cache = C.load_json(TIME_CACHE, {}) or {}
@@ -298,7 +302,8 @@ def main():
         rounds += 1
         for m in todo:
             if bulk is not None and (m + '@new') in bulk:
-                r = {'module': m, 'ok': True, 'time_s': 0.0, 'mentions_sorry': False,
+                r = {'module': m, 'ok': True, 'time_s': (pre_times.get(m) or {}).get('after') or 0.0,
+                     'mentions_sorry': False,
                      'olean': C.module_path(m, pre_new, '.olean'), 'ilean': C.module_path(m, pre_new, '.ilean')}
             elif bulk is not None and m in modified + added:
                 r = {'module': m, 'ok': False, 'error': 'no compiled module was supplied for it'}
@@ -313,7 +318,9 @@ def main():
                 report['problems'].append(f'{m}: compiler output mentions sorry')
             time_after += r['time_s']
             old_olean = C.current_olean(m)
-            if os.path.exists(old_olean) and not a.no_time:
+            if bulk is not None and not a.no_time and m in pre_times:
+                time_before += pre_times[m]['before']
+            elif os.path.exists(old_olean) and not a.no_time:
                 # time the accepted version of the same file on this machine (cached per file content)
                 try:
                     old_text = git('show', f'{base}:{to_path(m)}')
@@ -452,7 +459,7 @@ def main():
                 if old_rec is not None:
                     # an existing declaration may stay over the cap as long as it did not grow
                     if w > caps['written_out'] and w > old_rec['tsize'] + old_rec['vsize']:
-                        over.append({'module': m, 'name': nm, 'written_out': w, 'source_tokens': tk})
+                        over.append({'module': m, 'name': nm, 'written_out': w, 'source_tokens': tk, 'existing': True})
                 elif w > caps['written_out'] or (tk is not None and tk > caps['source_tokens']):
                     over.append({'module': m, 'name': nm, 'written_out': w, 'source_tokens': tk})
     report['fence_size_cap'] = {'caps': caps, 'over': over[:20], 'count': len(over)}
@@ -496,7 +503,15 @@ def main():
         if new_syntax:
             fences.append('new macros or notation')
         if over:
-            fences.append('declaration over the size cap')
+            # A new helper may be over the cap when it replaces more than it adds: the cone's
+            # written-out size must fall by at least the weight of the over-cap new declarations.
+            grown = [o for o in over if o.get('existing')]
+            added_weight = sum(o['written_out'] for o in over if not o.get('existing'))
+            if not grown and wri <= -added_weight:
+                report['notes'].append(f'{len(over)} new declaration(s) over the size cap allowed: they weigh '
+                                       f'{added_weight} nodes and the cone lost {-wri}')
+            else:
+                fences.append('declaration over the size cap')
         if up or fences:
             verdict = 'review'
             report['review_reasons'] = [f'{k} went up' for k in up] + fences
