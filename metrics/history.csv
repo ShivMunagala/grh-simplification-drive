@@ -9,3 +9,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-22T03:42:47Z,b76b8f92c,restating theorems turned into aliases (32172 files),176618818,2772067606,-2173.2,1265169,146536
 2026-11-22T03:57:08Z,4010b570d,wave 3: record_heq; exists_sameVec; simpleU_rev_and_sq; fIwasawa_perm,176619432,2770710875,-2229.3,1265042,146536
 2026-11-22T04:25:49Z,c9d43e676,one shared statement for a six-deep choose chain (rl_spec),176620635,2766788620,-2248.5,1265044,146536
+2026-11-22T04:35:56Z,6f9980b12,wave 4: five matrix lemmas and four mixed proofs,176619737,2765704515,-2303.3,1264792,146536

@@ -65,7 +65,7 @@ worker finished in 15 to 25 minutes.
 | `PositivityTheory.Rg.BcB.F.BC.limAtOf_holds` | 831,837 → 831,795 | −6 | unchanged within tolerance | recorded, but no real gain: 98% of the size is the statement of a six-deep `choose_spec` chain |
 | `GlobalTheory.TwInputs.Move.exists_restX`, `exists_restY` | unchanged | −106 (file) | unchanged | recorded: source only (`subst a b c` in one call) |
 | `GlobalTheory.T.geo_heq_geoHalf_of_same` | 235,821, unchanged | unchanged | — | no gain: one attempt hit the heartbeat limit, the other grew the proof; restored |
-| `GlobalTheory.ColRows.rowsU_of_colPins_alt`, `GlobalTheory.Mem.KeepRef.exists_thPW_keep` | | | | worker still running |
+| `GlobalTheory.ColRows.rowsU_of_colPins_alt`, `GlobalTheory.Mem.KeepRef.exists_thPW_keep` | | | | worker still running at the time of writing |
 
 The five recorded files together: source +614 tokens, written-out size −1,356,731 nodes, time 252.9 s → 196.8 s.
 
@@ -87,6 +87,51 @@ Techniques added by this wave:
 Open lever found by this wave: the six-deep `choose_spec` chain behind `limAtOf_holds` is rebuilt in at
 least three other files (`ClsFin`, `AllLeavesMono`, `PreEquivSymm`). One helper stating the whole
 conjunction once, next to the definitions, would let all four share it.
+
+## Wave 4, 2026-11-22
+
+Four workers, checks on the rented machine.
+
+| Theorem | Written-out size | Source tokens (file) | Outcome |
+|---|---|---|---|
+| `rl_ktypes`, `rl_levels` (two identical copies each, in `PreEquivSymm` and `ClsFin`), `limAtOf_holds` | 797,334 / 796,980 / 831,795 → 9,002 / 9,192 / 45,406 | +1,206 over four files, of which +1,203 is the new shared statement | recorded: one shared statement `rl_spec` next to the definitions, proved through a generic `ex6_spec` |
+| `Qj20.Hpk_sq` | 202,413 → 33,774 | +24 | recorded |
+| `MatrixMultiplicationContinuity.hpk_sq_lemma` | 178,382 → 33,774 | +90 | recorded |
+| `B2x2.hpk_unit` | 177,993 → 370 | −209 | recorded |
+| `PI.MirrorSection₂.hpk_sq` | 163,761 → 33,774 | +116 | recorded |
+| `PI.SwBig.BigCellGProof.Hpk_rhoB` | 162,416 → 29,957 | +91 | recorded |
+| `GlobalTheory.Mem.R3.Ext.lawsJ_enl` | 198,135 → 104,408 | −151 | recorded |
+| `…FwBase.coreBaseFrames_eq_modelFrames_enlargedCoefficientBase` | 183,461 → 130,175 | −925 | recorded |
+| `hc_count` | 218,057 → 90,234 plus two helpers of 4,191 and 5,299 | +75 | recorded |
+| `GlobalTheory.RootSumDual.rootSum_dual_edges` | 195,752 → 130,309 | −9 | recorded |
+| `GlobalTheory.LayerMove.exists_nonempty_nMore_upL` | 477,164 → 357,527 | +57 | passes pre-check; being judged |
+| `UpperTheory.cusp_sections_over_coefficient_extension` | 299,398, unchanged | unchanged | no gain: the nine field substitutions are needed for the closing step; restored |
+| `PositivityTheory.Rg.BcB.F.F0.wEx_of` | 808,132, unchanged | unchanged | not done: its file does not import the shared statement; needs `ex6_spec` moved to a file both import |
+
+The shared statement was judged on its own: source +1,203 tokens, written-out size −3,922,255 nodes. The nine
+files of the matrix lemmas and the four mixed proofs together: source −898 tokens, written-out size −1,084,105 nodes, time 129.9 s → 75.1 s.
+
+Techniques added by this wave:
+
+- **A chain of `choose_spec` over a large statement.** `h.choose_spec.choose_spec.…` restates the whole
+  statement at every level. Prove the chain once over an abstract predicate
+  (`ex6_spec : (h : ∃ a b c d e f, p a b c d e f) → p h.choose h.choose_spec.choose …`), then apply it to the
+  concrete `h`: the large statement appears once. A direct proof of the shared statement was 613,795 nodes;
+  through the generic lemma it is 14,935.
+- **A matrix with one nonzero entry per row.** Do not expand a product entry by entry with `split_ifs`. First
+  prove the row form `M i j = if j = σ i then c i else 0` for an explicit involution `σ` (one small case
+  split), then the product is `simp only [Matrix.mul_apply, …, Fintype.sum_ite_eq']` and a two-case finish.
+- **Before `split_ifs`,** simplify with the hypothesis that makes many conditions false
+  (`simp only [h, false_and, and_false, false_or, if_false]`); conditions written differently often become
+  the same one. When a case analysis on a defined value feeds one large `omega`, move it into a small lemma
+  stating the value as an `if`, and rewrite with it.
+- **Before a chain of `subst`,** clear every hypothesis the goal does not need, and `generalize` projections
+  early so that their parent structures can be cleared. When large hypotheses mention the structure being
+  taken apart, `generalize ht : t' = t1 at <goal and the needed facts>`, take `t1` apart, and carry the large
+  hypotheses across with one final `subst ht`.
+- **Checker behaviour:** `simp only [D]` on a definition from another file creates the equation lemma
+  `D.eq_1` in the current file, which other compiled files may refer to; `unfold D` does not. Keep whichever
+  the original proof used, or the equivalence check will refuse the change.
 
 ## What the size was made of
 

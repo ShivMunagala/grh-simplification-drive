@@ -18,16 +18,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.6M, written-out proof size 2.77B, time change -2.25K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.6M, written-out proof size 2.77B, time change -2.30K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 176,620,635 | −6,497,604 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,766,788,620 | −22,515,679 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,248.5 | −2,248.5 |
+| Source size (tokens) | 183,118,239 | 176,619,737 | −6,498,502 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,765,704,515 | −23,599,784 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,303.3 | −2,303.3 |
 
-Cone: 1,265,044 declarations in 146,536 files. Recorded changes: 9. Latest row: one shared statement for a six-deep choose chain (rl_spec) (2026-11-22 04:25 UTC).
+Cone: 1,264,792 declarations in 146,536 files. Recorded changes: 10. Latest row: wave 4: five matrix lemmas and four mixed proofs (2026-11-22 04:35 UTC).
 <!-- dials:end -->
 
 ## Milestones
