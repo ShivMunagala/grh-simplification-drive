@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.1M, written-out proof size 2.72B, time change -2.85K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.1M, written-out proof size 2.71B, time change -3.50K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 176,105,783 | −7,012,456 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,718,033,527 | −71,270,772 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,852.3 | −2,852.3 |
+| Source size (tokens) | 183,118,239 | 176,105,147 | −7,013,092 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,705,323,909 | −83,980,390 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,502.8 | −3,502.8 |
 
-Cone: 1,260,824 declarations in 146,531 files. Recorded changes: 28. Latest row: wave 7: three enlarged-base proofs read their conjunctions by projection; jMt_rowsSame (2026-11-22 11:15 UTC).
+Cone: 1,260,827 declarations in 146,531 files. Recorded changes: 30. Latest row: wave 7: six more heavy proofs (instance arguments reduced before substitutions; a lemma used once instead of projected) (2026-11-22 11:36 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -45,11 +45,11 @@ Cone: 1,260,824 declarations in 146,531 files. Recorded changes: 28. Latest row:
 | 2026-11-22 | Repetition measured: 28,313 statements are proved independently more than once ([details](campaign/repetition/RESULTS.md)) | done |
 | 2026-11-22 | Repetition sweep, part 1: 10,064 duplicate proofs now cite a copy their file already imports (two passes), each citation in its shortest form. Written-out size −0.5%, source −0.2% | done |
 | 2026-11-22 | Heaviest proofs, waves 2 to 6: 50 proofs rewritten by hand, each kind of cause written up with its fix ([notes](campaign/proof-shrink/RESULTS.md)) | done |
-| | One shared lemma for 24 proofs that take the same record apart: 16 rewritten, 12.5 million nodes down to 0.6 million; not recorded | waits for the owner: the lemma needs one Lean tag the equivalence check sends to review |
+| 2026-11-22 | One shared lemma for 24 proofs that take the same record apart: 16 rewritten, written-out size −12.0 million nodes, their files compile in half the time | done |
 | 2026-11-22 | Patterns that drop parts of a conjunction read the kept parts by projection instead of matching every part. 9,519 lines in 7,351 files, −18.7 million nodes, source down ([notes](campaign/proof-shrink/RESULTS.md)) | done |
-| | Repetition sweep, part 2: duplicates in files that cannot see each other share one proof | needs a rule for added imports |
+| | Repetition sweep, part 2: a duplicate in a file that cannot see a copy cites it through one added import (4,447 cases meet the conditions; being compiled). Duplicates that would need a shared new file come after | in progress |
 | | Heavy definitions built from chains of `choose` | next |
-| | More waves on the heaviest proofs (wave 7 is running; proofs over 100,000 nodes are now only 2.8% of the whole, so returns are falling) | ongoing |
+| 2026-11-22 | Wave 7 on the heaviest proofs: 17 more rewritten. Proofs over 100,000 nodes are now only 2.8% of the whole, so returns from this kind of work are falling | done |
 | | Sweep of repetitions: the same argument written out in many proofs | next |
 | 2026-11-22 | Plain-language map of the argument, first version: the chain at the top, the four lines of argument under it and what each costs, known theorems proved inside (8.4% in all), six places where a shorter route might exist ([map](campaign/argument-map/MAP.md)). Everything above is about how the proof is written; this is the first step on the mathematics | done; testing the candidates is next |
 

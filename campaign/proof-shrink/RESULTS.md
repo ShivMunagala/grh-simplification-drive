@@ -186,7 +186,7 @@ ten more proofs whose expansion is out of proportion to their source. One older 
 | `…T.referenceTuple_rationalForm_lifts_algebraic_enlarged` | 398,876 → 72,006 | −76 | recorded |
 | `GlobalTheory.T.modW_of_rSideW` | 378,300 → 45,775 | −94 | recorded |
 | `PositivityTheory.HtPt.Kftwo.exists_pairHost` | 461,774 → 38,668, plus four helpers | +204 | recorded |
-| 16 of the 24 `cases pack` proofs | 12,548,424 → 179,597, plus shared `TwArgs.pack_elim` 384,142 | −667 | waits for the owner |
+| 16 of the 24 `cases pack` proofs | 12,548,424 → 179,597, plus shared `TwArgs.pack_elim` 384,142 | −667 | recorded |
 | `row_of_pack` (same family; its file cannot see the shared lemma) | 210,224 → 195,883 | −27 | recorded |
 | `GlobalTheory.ColRows.rowsU_of_colPins_alt` | 485,546 | | no version compiled in time |
 | `GlobalTheory.Mem.KeepRef.exists_thPW_keep` | 269,326 | | no gain |
@@ -215,8 +215,8 @@ What these had in common: **long conjunctions and records taken apart one level 
   restates its goal once instead of once per component: sixteen proofs went from 12.5 million nodes to
   179,597, and their files compile in half the time (1,236 s → 604 s).
   The lemma needs Lean's `@[elab_as_elim]` tag so that users need not write the motive; that adds an entry to
-  one of the registers the equivalence check watches, so the change waits for the owner. The judge's only
-  objection is that entry.
+  one of the registers the equivalence check watches, and that was the judge's only objection. A tag on a
+  lemma that the change itself adds has been allowed since 2026-11-22, and the change is recorded.
 - Using that eliminator: bring the goal to the fields of `a.x` first (`cases ax`, or `rw [← eq_of_heq w.ax]`),
   delete the destructuring, then `exact a.pack_elim <tail>` or `refine a.pack_elim ?_`. Any other field of
   `a.x` that the goal or the tail needs has to be generalized first, together with the `HEq` hypotheses that
@@ -235,6 +235,62 @@ What did not work, and why:
   nothing: the size is counted after identical subterms are merged, so only terms that are new count.
 
 For every proof here the statement alone was under 25,000 nodes: the size was in the steps.
+
+## Wave 7, 2026-11-22
+
+Four workers on 22 proofs of 119,000 to 353,000 nodes. Seventeen got smaller, five did not.
+
+| Theorem | Written-out size | Outcome |
+|---|---|---|
+| `…SelC.args_pinned_heq_zsOf_mem_eq` | 352,727 → 13,027 | recorded |
+| `…T.referenceTuple_weilDatum_vector_polynomialMap_enlarged` | 330,830 → 46,330 | recorded |
+| `…LiftExt.liftAt_of_rSide` | 321,388 → 52,287 | recorded |
+| `…T.referenceTuple_hilbertModel_definiteForms_enlarged` | 281,143 → 46,679 | recorded |
+| `GlobalTheory.FinGL.Mir.dm_perm` | 241,342 → 210,851 | recorded |
+| `…Move.exists_restX`, `exists_restY` | 223,799 → 110,157; 156,029 → 77,558 | recorded |
+| `…SerCopy.series_copy_embedding_alt` | 198,971 → 136,883 | recorded |
+| `…JmtUp.jMt_rowsSame` | 198,626 → 135,120 | recorded |
+| `UpperTheory.pointEquiv_family_transport_of_same_pre` | 193,948 → 176,889 | recorded |
+| `…GeoTies.BarAtOne.congr` | 192,874 → 75,528 | recorded |
+| `Formalism.L2.Th1.A.flowTranslation` | 147,012 → 26,975 | recorded |
+| `…RowEx.Jet.jets_congr` | 143,254 → 99,197 | recorded |
+| `…R2.exists_ratGL_dM`, `exists_ratGL_aE` | 138,328 → 2,446; 134,084 → 2,455 | recorded |
+| `PI.OneCosetSharp.W.C2.ent_unit`, `ent_τ0` | 128,421 → 58,721; 118,893 → 53,982 | recorded |
+| `…Rw.Up.rxs_up` | 320,472 → 160,970, but compile 33.0 s → 54.0 s | refused on time, restored |
+| `GlobalTheory.ModelIndep.datIndep` | 207,115 → 74,126, but compile 6.9 s → 11.2 s | refused on time, restored |
+| `…SelC.pack_heq` | 292,019 | no gain: the size is in the statement |
+| `…LiftExt.thetaLift_of`, `postLift_of` | 146,005; 145,030 | no gain |
+
+What was new:
+
+- **Structure literals hiding in instance arguments.** After `obtain` on a structure with instance fields,
+  `dsimp only at *` does not look inside instance arguments, so hypotheses keep the whole structure
+  literal there and every `subst` restates it. `dsimp +instances only at *` halved two proofs with dozens
+  of substitutions.
+- **Projecting a lemma applied to large literals.** `(lemma …).1` writes the lemma's statement, with the
+  literals put in and nothing reduced, into the arguments of the projection. Give the lemma once to
+  something that already has the expected type (`refine And.imp_right … ?_` and then the lemma). One proof
+  went from 352,727 to 13,027 nodes this way.
+- **A large fact built too early.** A `have` built from a variable that is taken apart later is restated
+  by each case split and substitution. Build it after them, from the fresh fields.
+- **`omega` and case splits.** Drop unused facts that contain truncated subtraction before `omega` runs:
+  each one doubles its case splits whether or not it matters. With two three-way facts, split on one and
+  hand the other to `omega` whole.
+- **2×2 matrices.** `Matrix.mul_fin_two`, `Matrix.one_fin_two`, `Matrix.eta_fin_two` and one `simp`
+  instead of `fin_cases` on both indices with a `simp` in each case: about 55 times smaller.
+- **A certificate by hand.** Where `linear_combination` would cube a polynomial value, name the value with
+  an equation (`obtain ⟨N, hN⟩ : ∃ N, e = N := ⟨_, rfl⟩`) and add the term for `hN` to the certificate.
+
+What stopped the rest:
+
+- **Time.** Two proofs lost half or more of their size by reading fields in place instead of taking the
+  record apart, and then compiled much slower, because Lean has to see through large literals to check
+  the result. The time dial refused them. Size and time pull against each other in this family.
+- **The statement.** `pack_heq` is 292,019 nodes, and a copy of it proved by `sorry` is already 247,650:
+  a large dependent-tuple type appears at several binder depths in the statement itself.
+- **A macro.** `thetaLift_of` and `postLift_of` spend their size in a macro that takes two related records
+  apart; a shared eliminator does not typecheck there because the two records are equal only after every
+  definition is unfolded.
 
 ## Bulk sweeps, 2026-11-22
 
