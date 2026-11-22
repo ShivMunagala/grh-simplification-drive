@@ -18,16 +18,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.3M, written-out proof size 2.74B, time change -2.82K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.3M, written-out proof size 2.74B, time change -2.87K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 176,259,776 | −6,858,463 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,741,524,386 | −47,779,913 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,817.7 | −2,817.7 |
+| Source size (tokens) | 183,118,239 | 176,259,918 | −6,858,321 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,739,280,271 | −50,024,028 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,865.8 | −2,865.8 |
 
-Cone: 1,260,999 declarations in 146,524 files. Recorded changes: 14. Latest row: wave 6: equivAll_enl; good_of; exists_setupRel (2026-11-22 06:10 UTC).
+Cone: 1,261,011 declarations in 146,524 files. Recorded changes: 15. Latest row: wave 6: geometric_action; exists_scharts_of_covers; ksForm_moved; exists_rest; rationalForm lifts; modW_of_rSideW (2026-11-22 06:33 UTC).
 <!-- dials:end -->
 
 ## Milestones

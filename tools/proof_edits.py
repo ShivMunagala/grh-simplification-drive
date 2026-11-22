@@ -11,7 +11,8 @@ elsewhere), so they are guesses: each one has to compile and pass the equivalenc
   tools/proof_edits.py shorten     --out build/x/edits.jsonl    # shorten citations already recorded
   tools/proof_edits.py variants --edits E --work W [--single-from W/results.jsonl]
   tools/proof_edits.py choose   --edits E --work W            # after tools/batch_variants.py ran
-  tools/proof_edits.py apply    --chosen W/chosen.jsonl       # write the chosen edits into proof/src
+  tools/proof_edits.py apply    --chosen W/chosen.jsonl [--expect W/final/sources.tsv]
+                                                               # write the chosen edits into proof/src
 
 Variants. For every module, `variants` writes the file with all its edits applied (variant `all`)
 under W/v/all/. Files are always built from the accepted commit, never from the working tree.
@@ -22,9 +23,10 @@ variant that removes the most, records exactly which edits it contains (W/chosen
 gathers its compiled files under W/final/new for the judge.
 
 Because every file is rebuilt from the accepted commit and the edit list, applying the chosen
-edits on another machine gives byte-identical files.
+edits on another machine gives byte-identical files. `choose` records the checksum of each source
+it kept (W/final/sources.tsv) and `apply --expect` refuses to write anything that differs from it.
 """
-import argparse, collections, json, os, re, shutil, subprocess, sys, time
+import argparse, collections, hashlib, json, os, re, shutil, subprocess, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as C
@@ -427,6 +429,7 @@ def choose(edits_path, work):
     os.makedirs(final)
     chosen, stats = [], collections.Counter()
     times = {}
+    sources = []                                          # (module, variant, sha256 of the source that was compiled)
     for m, es in sorted(per.items()):
         options = []                                      # (written-out of the module, variant, edits)
         r = res.get(('all', m))
@@ -452,6 +455,8 @@ def choose(edits_path, work):
         stats['edits kept'] += len(used)
         stats['written-out before'] += r.get('old_written_out') or 0
         stats['written-out after'] += w
+        with open(C.module_path(m, os.path.join(work, 'v', vid)), 'rb') as fh:
+            sources.append((m, vid, hashlib.sha256(fh.read()).hexdigest()))
         for e in used:
             chosen.append(e)
         for ext in ('.olean', '.ilean'):
@@ -467,23 +472,42 @@ def choose(edits_path, work):
     with open(os.path.join(work, 'final', 'modules.txt'), 'w') as fh:
         fh.write('\n'.join(sorted({e['module'] for e in chosen})) + '\n')
     json.dump(times, open(os.path.join(work, 'final', 'times.json'), 'w'))
+    with open(os.path.join(work, 'final', 'sources.tsv'), 'w') as fh:
+        for m, vid, digest in sources:
+            fh.write(f'{m}\t{vid}\t{digest}\n')
     for k, v in stats.items():
         print(f'  {k}: {v:,}')
     print(f'chosen edits: {os.path.join(work, "chosen.jsonl")}; compiled files: {final}')
 
 
-def apply(chosen_path, src=C.SRC):
+def apply(chosen_path, src=C.SRC, expect=None):
+    """Write the chosen edits into the source tree. With `expect` (W/final/sources.tsv from `choose`),
+    refuse unless every file written is byte-identical to the source that was compiled."""
     per = load_edits(chosen_path)
+    want = {}
+    if expect:
+        with open(expect) as fh:
+            for line in fh:
+                m, _vid, digest = line.rstrip('\n').split('\t')
+                want[m] = digest
+        if set(want) != set(per):
+            sys.exit(f'{expect} lists {len(want)} files, the chosen edits cover {len(per)}: they do not belong together')
     text = texts_at(accepted_commit(), sorted(per))
-    n = 0
+    out = {}
     for m, es in sorted(per.items()):
         new, failed = apply_edits(text[m], es)
         if failed:
             sys.exit(f'{m}: {len(failed)} edit(s) could not be placed; is the accepted state the one they were made for?')
+        out[m] = new
+    if expect:
+        differ = [m for m in sorted(out) if hashlib.sha256(out[m].encode('utf-8')).hexdigest() != want[m]]
+        if differ:
+            sys.exit(f'{len(differ)} file(s) would differ from the source that was compiled, nothing written; first: {differ[0]}')
+    for m, new in out.items():
         with open(C.module_path(m, src), 'w', encoding='utf-8', newline='') as fh:
             fh.write(new)
-        n += len(es)
-    print(f'applied {n} edits in {len(per)} files')
+    print(f'applied {sum(len(es) for es in per.values())} edits in {len(per)} files'
+          + ('; every file equals the source that was compiled' if expect else ''))
 
 
 def main():
@@ -504,6 +528,7 @@ def main():
     c.add_argument('--edits', required=True); c.add_argument('--work', required=True)
     a = sub.add_parser('apply')
     a.add_argument('--chosen', required=True)
+    a.add_argument('--expect', default=None, help='W/final/sources.tsv: refuse unless the files come out byte-identical')
     args = ap.parse_args()
     if args.cmd in ('citations', 'transplants'):
         gen(args.cmd, args.out, args.form, args.min_proof_tokens)
@@ -515,7 +540,7 @@ def main():
     elif args.cmd == 'choose':
         choose(args.edits, args.work)
     else:
-        apply(args.chosen)
+        apply(args.chosen, expect=args.expect)
 
 
 if __name__ == '__main__':

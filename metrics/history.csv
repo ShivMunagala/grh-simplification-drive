@@ -14,3 +14,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-22T05:06:40Z,de04e5734,wave 5: powers kept as symbols (ampLimit; diff_key; diff_bound; bigProjP_of); exists_arcIn_of_unif,176619795,2757972433,-2678.3,1264794,146536
 2026-11-22T05:21:14Z,3c088377b,duplicate proofs cite a copy their file already imports (9729 theorems); lev_twArgs; bor1; case1/case2,176259578,2743379240,-2785.7,1260996,146524
 2026-11-22T06:10:22Z,1e408b885,wave 6: equivAll_enl; good_of; exists_setupRel,176259776,2741524386,-2817.7,1260999,146524
+2026-11-22T06:33:45Z,753d8d02d,wave 6: geometric_action; exists_scharts_of_covers; ksForm_moved; exists_rest; rationalForm lifts; modW_of_rSideW,176259918,2739280271,-2865.8,1261011,146524
