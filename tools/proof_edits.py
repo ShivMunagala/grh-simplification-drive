@@ -871,22 +871,23 @@ def choose(edits_path, work):
         if not options:
             stats['files with no passing variant' if tried else 'files not compiled'] += 1
             continue
-        # Each file stands on its own: its written-out size must fall, and if its source grows (counting
-        # every projection step) the fall must be at least EXCHANGE nodes per token added.
+        # Each file stands on its own. Its written-out size may not grow, and one of the two sizes must
+        # fall. If its source grows (counting every projection step), the written-out size must fall by
+        # at least EXCHANGE nodes per token added.
         before = strict_tokens(accepted[m]) if m in accepted else None
         paying = []
         for w, vid, used in options:
             old = res[(vid, m)].get('old_written_out')
-            if old is None or before is None or w >= old:
+            if old is None or before is None or w > old:
                 continue
             with open(C.module_path(m, os.path.join(work, 'v', vid)), encoding='utf-8') as fh:
                 added = strict_tokens(fh.read()) - before
-            if added <= 0 or old - w >= EXCHANGE * added:
+            if added < 0 or (w < old and (added == 0 or old - w >= EXCHANGE * added)):
                 paying.append((w, vid, used, added))
         if not paying:
             stats['files where nothing got smaller, or the gain does not pay for the added source'] += 1
             continue
-        w, vid, used, added = min(paying, key=lambda o: o[0])
+        w, vid, used, added = min(paying, key=lambda o: (o[0], o[3]))
         r = res[(vid, m)]
         stats['files kept'] += 1
         stats['edits kept'] += len(used)
