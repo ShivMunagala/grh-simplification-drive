@@ -11,7 +11,7 @@ The archive's source is untrusted and compiling it runs code, so the compiler ru
 with no network and a read-only filesystem, and under a memory cap so that a file that is too big
 for this machine fails cleanly instead of making it swap.
 """
-import argparse, fcntl, json, os, re, sys, time
+import argparse, fcntl, json, os, re, sys, threading, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as C
@@ -48,6 +48,28 @@ def mem_available_gb():
     except OSError:
         pass
     return 0.0
+
+
+_OVERLAY_CACHE = {}                 # overlay directory -> (time read, {module: path of its .olean})
+_OVERLAY_LOCK = threading.Lock()
+OVERLAY_CACHE_S = 300
+
+
+def overlay_modules(overlay):
+    """The compiled modules an overlay directory holds. Listing a large overlay takes seconds, and a batch
+    compiles thousands of files against the same one, so the listing is kept for a few minutes."""
+    with _OVERLAY_LOCK:
+        hit = _OVERLAY_CACHE.get(overlay)
+        if hit and time.time() - hit[0] < OVERLAY_CACHE_S:
+            return hit[1]
+        mods = {}
+        for dp, dn, fn in os.walk(overlay):
+            for f in fn:
+                if f.endswith('.olean'):
+                    p = os.path.join(dp, f)
+                    mods.setdefault(os.path.relpath(p, overlay)[:-6].replace(os.sep, '.'), p)
+        _OVERLAY_CACHE[overlay] = (time.time(), mods)
+        return mods
 
 
 def acquire_slot():
@@ -92,13 +114,9 @@ def compile_module(module, out, src=C.SRC, overlays=(), threads=1, mem_gb=8.0, t
     # entry that has it, so a partial overlay would hide every other module under that folder.
     arts = {}
     for o in overlays:
-        for dp, dn, fn in os.walk(o):
-            for f in fn:
-                if f.endswith('.olean'):
-                    p = os.path.join(dp, f)
-                    mod = os.path.relpath(p, o)[:-6].replace(os.sep, '.')
-                    if mod != module and mod not in arts:
-                        arts[mod] = [[p]]
+        for mod, p in overlay_modules(o).items():
+            if mod != module and mod not in arts:
+                arts[mod] = [[p]]
     with open(setup, 'w') as fh:
         json.dump({'name': module, 'isModule': False, 'importArts': arts, 'dynlibs': [], 'plugins': [],
                    'options': {}}, fh)
@@ -118,6 +136,10 @@ def compile_module(module, out, src=C.SRC, overlays=(), threads=1, mem_gb=8.0, t
     boxed = C.sandbox(cmd, ro=ro, rw=[out], env={'LEAN_PATH': lean_path, 'LEAN_ABORT_ON_PANIC': '1'})
     with acquire_slot() as _slot, open(log, 'w') as lf:
         rc, _, wall, _ = C.run_timed(boxed, mem_gb=mem_gb, stdout=lf, stderr=lf, timeout=timeout)
+    try:
+        os.remove(setup)                    # one line per overlay module: megabytes, and only needed while compiling
+    except OSError:
+        pass
     st = C.load_json(stats, {}) or {}
     cpu = st.get('user_s', 0.0)             # user time only: system time swings with memory pressure
     rss = st.get('max_rss_mb', 0.0)
