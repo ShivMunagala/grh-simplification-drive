@@ -23,11 +23,11 @@ One point per recorded change, placed at the time of its commit.
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 176,229,318 | −6,888,921 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,730,248,045 | −59,056,254 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,891.9 | −2,891.9 |
+| Source size (tokens) | 183,118,239 | 176,229,350 | −6,888,889 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,730,155,019 | −59,149,280 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,886.5 | −2,886.5 |
 
-Cone: 1,260,827 declarations in 146,522 files. Recorded changes: 20. Latest row: long conjunctions: dropped parts skipped by projection (1063 lines; 851 files) (2026-11-22 08:26 UTC).
+Cone: 1,260,827 declarations in 146,522 files. Recorded changes: 21. Latest row: clear_value after set where the value contains a power (16 lines; 12 files) (2026-11-22 08:38 UTC).
 <!-- dials:end -->
 
 ## Milestones
