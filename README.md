@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 175.8M, written-out proof size 2.68B, time change -4.52K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 175.8M, written-out proof size 2.68B, time change -4.60K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 175,765,110 | −8,483,100 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,675,985,273 | −113,319,026 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,519.4 | −4,519.4 |
+| Source size (tokens) | 184,248,210 | 175,760,150 | −8,488,060 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,675,866,033 | −113,438,266 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,596.9 | −4,596.9 |
 
-Cone: 1,255,853 declarations in 146,191 files. Recorded changes: 45. Latest row: heavy transport proofs: six declarations of 0.4-0.95M nodes cut to 10-25k; goodTw_transfer 2.26M to 1.78M (2026-11-22 20:54 UTC).
+Cone: 1,255,851 declarations in 146,191 files. Recorded changes: 46. Latest row: Zero-free regions and Siegel-Walfisz: shared bounds and shorter numeric steps (16 files) (2026-11-22 22:59 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -42,7 +42,7 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
 | Area | What is known | Done | Next |
 |---|---|---|---|
 | **Repetition** ([results](campaign/repetition/RESULTS.md)) | 7.6% of the proof is repeated in some form: the same statement more than once 6.4%, copies under other names 1.25% | duplicate proofs cite a copy their file imports, or can import by one added line (13,300 proofs) | merge the rest through shared files: the largest lever measured |
-| **Known mathematics proved inside** ([results](campaign/library-lemmas/RESULTS.md)) | published theorems: 8.4% if they were free. Lemmas stated in Mathlib terms only: 6.9%, and 12.2% of the source; they are not copies of Mathlib and automation proves 0.7% of them | one proof replaced by a different argument (Smith normal form by a dual family) | workers on resolution of singularities and Siegel–Walfisz; published results proved twice |
+| **Known mathematics proved inside** ([results](campaign/library-lemmas/RESULTS.md)) | published theorems: 8.4% if they were free. Lemmas stated in Mathlib terms only: 6.9%, and 12.2% of the source; they are not copies of Mathlib and automation proves 0.7% of them | one proof replaced by a different argument (Smith normal form by a dual family); zero-free regions and Siegel–Walfisz with shared bounds (−120 thousand nodes) | resolution of singularities without what the five theorems do not use (under way); statements proved twice (being judged) |
 | **The argument** ([map](campaign/argument-map/MAP.md)) | four lines under one chain: families 39%, covolume bound 13.6%, VWin 8.2%, Galois representations 6.1%. The counting argument is a slope inequality and costs 0.1% itself; all 46 conditions on the families are used at the strength proved; main terms cancel exactly | four large shortcuts tested and ruled out | seven candidates of at most 0.5% each |
 | **What the five theorems need** ([results](campaign/unneeded-parts/RESULTS.md)) | 1.07% of what is proved is never read | 46 bundles bypassed or split, 8 statements trimmed: 3,051 declarations out; 6,343 unused local steps deleted | second round of unused steps; fresh measurement |
 | **How proofs are written** ([notes](campaign/proof-shrink/RESULTS.md)) | sweeps over the whole proof, hand rewrites of the heaviest proofs | 32,172 restatements made aliases; projections in place of long patterns; explicit-argument files reprinted; about a hundred heavy proofs rewritten (largest: 5.5 million nodes to 30 thousand) | returns falling: proofs over 100,000 nodes are under 3% of the whole |
@@ -51,7 +51,7 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
 ### Log
 
 - **2026-11-21.** Archive measured (cone, dials). Judge working. First changes recorded.
-- **2026-11-22.** Changes 3 to 45. Sweeps: restatements, citations of duplicates (two tiers), projections, unused steps,
+- **2026-11-22.** Changes 3 to 46. Sweeps: restatements, citations of duplicates (two tiers), projections, unused steps,
   explicit-argument files. Hand rewrites: waves 2 to 8 on the heaviest proofs. Statements: five lists of unneeded parts.
   Mathematics: map of the argument; four large shortcuts ruled out; the conditions on the families and the counting
   argument read in full; library-level lemmas and repetition measured. Tools: strict token count, patch format,

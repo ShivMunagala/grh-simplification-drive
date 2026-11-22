@@ -115847,34 +115847,86 @@ have h2 := h.2
 
 @@ 7259 78 0
 
-== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/BqKeyOf.lean 8b9858f3c817bdfb0e6f926bef883bbf3dc05233fba47ad7b05cf017a3c3c75e fdd18e659e1c067cd14ef2a7a75e8176b87ffe74a5ad00c9cdf8841065b506b3
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/BqKeyOf.lean 8b9858f3c817bdfb0e6f926bef883bbf3dc05233fba47ad7b05cf017a3c3c75e 512161ce25c7d3d8c5315a5ed9818fa3cf913a524a0702c2e81f4fe377861100
+@@ 361 58 33
+Nat.one_le_cast.mpr NeZero.one_le
+@% 4144 148 3
++ 33
+Nat.one_le_cast.mpr NeZero.one_le
+= 4203 30
++ 33
+Nat.one_le_cast.mpr NeZero.one_le
 @@ 5400 60 0
 
 @@ 8599 90 0
 
-== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/ChebyshevCharacterExplicitGeneral.lean 2521f54086d83d7ca71078fd34da8e2253f39704a85ebc1712a7d599e0d190a2 b0b49484e013d083e7a96a2b73cdfbf46ffe601a5769d2f7b67c3113747fd55a
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/ChebyshevCharacterExplicitGeneral.lean 2521f54086d83d7ca71078fd34da8e2253f39704a85ebc1712a7d599e0d190a2 89410b3731517c4c492d4b5cda56add3ba89dafe0b985ab3cf030835537c7263
+@@ 1406 66 41
+lt_trans (by norm_num) Real.log_two_gt_d9
 @@ 1549 51 0
 
+@@ 1790 89 38
+q := Nat.one_le_cast.mpr NeZero.one_le
 @@ 1983 42 0
 
-@@ 8602 65 0
+@@ 2059 64 0
 
-@@ 8815 84 0
+@@ 2174 81 56
+' : c₁ / L ≤ 1 / 10 := (div_le_iff₀ hL0).2 (by linarith)
+@@ 3259 63 0
 
+@@ 3420 12 35
+(div_lt_iff₀ hlogy).2 (by linarith)
+@@ 4746 232 42
+= div_le_div_of_nonneg_left hc₁.le hpos hm
+@% 7691 119 3
++ 30
+rwa [sub_neg_eq_add, ← two_mul
+= 7749 27
++ 2
+ a
+@@ 8265 54 18
+not_lt.1 fun hc =>
+@% 8591 374 2
+= 8889 64
++ 43
+(div_le_iff₀ (by linarith)).2 (by linarith)
+@@ 9980 531 76
+onvert (norm_add_le _ _).trans (add_le_add hmain hO) using 1
+  congr 1; ring
 == src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/EulerFactorLogDerivBound.lean 4f58a2f138551bcffe589e1a7fc269096bd2ae8f90241b1e7c2c2f0a883611b1 d5adac13595b5c78f09730cd9351d533252c671d244a24168abbcce561a03915
 @@ 983 71 0
 
 == src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/ExcBoundOf.lean 348f6d5c65c88ecc7ea12d61dcb5588293f08da92a38dfc78cf9dc1832138d4a 63127776ee47e8f284a484ca7514f5c50ceb87c42dd73b86d876255bda2d7e85
 @@ 4483 87 0
 
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/ExpGainFromZeroFreeRegion.lean c1e7a2c4621448b61436529973c8c8ecfa8d2f383702da71d640b7a6e2fdf46e 8766a7c6598ca66fa958acb1572308d98c408995a4848dd727c3e1cbcd80d9ac
+@@ 5028 57 24
+Real.exp_one_lt_three.le
 == src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/IteratedDerivLseriesAlternatingNonneg.lean cb02d52901536846fe38a53fd45625a2bfae5ae56bb1f80c6ef6df886378c6d9 f1f41135c7321dca7408f6231aaa4b0398e5bf4795cb843d048808ec973c79f0
 @@ 5359 63 0
 
-== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/LDerivNearOne.lean 5bc0f63764cf15bc00c2c571a55c4c7e0c933fb98a90f1b77771958bfae6c1bc f4baf96c05d78f2981fbf881f2c399bf187e19fd50ae9b6e05f55262dbc45be2
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/LDerivNearOne.lean 5bc0f63764cf15bc00c2c571a55c4c7e0c933fb98a90f1b77771958bfae6c1bc 2472f0a2a918cbd80357153bf7935af1ccb097d87a94803373572d7928a854eb
+@% 656 195 3
++ 92
+ := Real.exp_one_lt_three
+  have := mul_lt_mul'' h h (Real.exp_pos 1).le (Real.exp_pos 1).le
+= 797 47
++ 38
+← one_add_one_eq_two, Real.exp_add]
+  
 @@ 1109 51 0
 
 @@ 2237 42 0
 
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/LandauLemmaLfunctionZeros.lean bf3c0d72be5c4f673a7c210f1a39d6874120a8275b996c7eefebd772fe86a4d6 74ab6aeee694b4e35f227e12ed716fdaf0f4bfb3f9cddb8c1ba755cf30abfe16
+@@ 1625 61 19
+= lzb_two_le q s.im
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/LocalZerosOf.lean 10ffcfa68a3aac721ad89613290066b12607a18a0efedb83a958a1da6ea26975 58f1fdb3ca1f7a7a4d0951cad685e5878869184f1c5fe6b86c20b6bb06f06562
+@@ 2371 72 14
+= lzb_one_le q
+@@ 5486 27 23
+two_pos (lzb_two_le q t
 == src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/LogDerivRegionChiOf.lean e7334fe0fba4d0caaab08c09ed0d433d2293b1ba6dc598b8672becf5474db1c1 a1a488dfec667d2d1387669b0c7e9ccf980ced362ccf5902c3a738598936e773
 @@ 909 35 0
 
@@ -115902,13 +115954,53 @@ ExceptionalZeroBounds.ZFRDirichletOf
 = 106 27
 + 46
 .log_two_le_log_mul_abs_add_two <;> assumption
-== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/NoZeroComplexOf.lean 1f867daf891dce68fd1417aa06d3716262fb34c628a18d4171336b2b433b5263 d2f25a7685b595ebcdebdee3123c3558c13a4fb158439a3b1f3ed16bddd5dbc0
-@@ 2605 42 0
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/NoZeroComplexOf.lean 1f867daf891dce68fd1417aa06d3716262fb34c628a18d4171336b2b433b5263 08b07aabc42fc5d5bfa4d3e44dfa15a509efc5bea910b310439c9ba70f8d4863
+@@ 131 1106 0
 
-@@ 6230 51 0
+@@ 1297 85 0
 
-@@ 6825 53 0
+@@ 1414 468 241
+, hC0, hC⟩ := localZeros_bounds hLZ
+  obtain ⟨C₁, hC₁0, hC₁⟩ := hLD
+  have hk : (10 : ℝ) ≤ 12 * C + 12 * C₁ + 10 := by linarith
+  refine ⟨1 / (8 * (12 * C + 12 * C₁ + 10)), one_div_pos.mpr (by linarith),
+    fun q _ χ s hχ2 hreg hzero => ?_⟩
+@% 1940 4354 9
++ 195
+obtain ⟨-, hσ1, hσ2⟩ := lzb_sigma q s.im hk
+  have b1 := (hC q χ hχ).2.1 s _ hk hreg hzero
+  have hL := lzb_log_pos q s.im
+  obtain ⟨σ, hσ⟩ : ∃ σ : ℝ, σ = 1 + 1 / ((12 * C + 12 * C₁ + 10) *
+     
+= 2034 34
++ 156
+) := ⟨_, rfl⟩
+  rw [← hσ] at hσ1 hσ2 b1
+  have b0 := hC₁ q 1 (σ : ℂ) (by rw [Complex.ofReal_re]; exact hσ1)
+  have e : 1 / (σ - 1) = (12 * C + 12 * C₁ + 10)
+= 5972 25
++ 28
+s.im| + 2)) := by
+    rw [hσ
+= 3203 31
++ 9
+one_div]
 
+= 3172 25
++ 81
+e] at b0
+  have b2 := (hC q (χ ^ 2) hχ2).1 (2 * s.im) σ hσ1 hσ2
+  push_cast at b2
+@% 6334 554 5
++ 42
+linarith [(Complex.re_le_norm _).trans b0,
+= 6194 27
++ 55
+(lzb_log_two_mul q s.im) hC0,
+    mul_nonneg hC0 hL.le,
+= 6194 27
++ 28
+(lzb_log_gt q s.im).le hC₁0]
 == src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/PerronChi.lean a926a0fa0b33a67b3f5074ef0f1846fc1ed7d052052c353ac41685c24ee05209 c4de1947383bcbabd0bca51c44a88ccea89f4041fd1d3965aaecdfeda43d275c
 @% 166 0 2
 = 0 38
@@ -115927,7 +116019,7 @@ ExceptionalZeroBounds.Positivity
 = 296 27
 + 39
 .negLogDeriv_eq_LSeries <;> assumption)
-== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/PerronHorizontalSegmentBound.lean f4f241c7572c21371121e15a3f157fd15edac2e60899e75e9ac1b7fae5759b8e 6b1045fc68b38c884eb172f7c23b4cea75edc3f3a4260761a9ac0c5fba3a4560
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/PerronHorizontalSegmentBound.lean f4f241c7572c21371121e15a3f157fd15edac2e60899e75e9ac1b7fae5759b8e 742ce98271b3face29340b28db6aee4e942aec601d40ea8ef434362ff702919c
 @% 58 0 2
 = 0 38
 + 37
@@ -115945,20 +116037,269 @@ ExceptionalZeroBounds.ZFRDirichletOf
 = 120 27
 + 40
 .log_mul_abs_add_two_pos <;> assumption)
-== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/RealLargeTOf.lean b9ffb0c3b1fd7340d5141130e875fc44aa22d9ee734deb62b777f13f4fe560f6 a9eafe7d881b70cfa383b5497d035c24c297dbe657f9ab8ccb278c73985dcb7e
-@@ 2086 46 0
+@% 2984 203 3
++ 56
 
-@@ 4318 45 0
+  Real.log_le_log (two_pos.trans_le (lzb_two_le q u)) (
+= 3135 40
++ 13
+q.cast_nonneg
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/PsiChiBoundOf.lean 3ae1a3f41eb86a3118fe8736215ad488c816c5aefc7863346be2c1bd479335a8 f6f59200cd89960693074f641d2e8d47c98ebc533dc70094867a76d563537857
+@@ 2824 56 33
+Nat.one_le_cast.mpr NeZero.one_le
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/RealLargeTOf.lean b9ffb0c3b1fd7340d5141130e875fc44aa22d9ee734deb62b777f13f4fe560f6 8ee5855dfd828535ad0620f14f1cd7a2d4b421efc65cf1144823269d0095d62c
+@@ 131 1772 0
 
-== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/RealSmallTOf.lean f8da40bafd5a70f8ae0b29e2f5bfc0f652ea5a4d093c9d88d5f3b87410f2fd60 c5eab3e17fc3119bc79a86b8aff2efb07c9af22908b5b3ca182bbe935d0783ae
-@@ 4855 53 0
+@@ 2011 10 31
+, hC0, hC⟩ := localZeros_bounds
+@% 2095 3229 17
++ 259
+ := le_max_right C₃ 0
+  have hδ' := (one_div_pos.mpr hδ).le
+  have hk : (10 : ℝ) ≤ 12 * C₂ + 8 * C + 4 * max C₃ 0 + 2 * (1 / δ) + 10 := by linarith
+  refine ⟨1 / (8 * (12 * C₂ + 8 * C + 4 * max C₃ 0 + 2 * (1 / δ) + 10)), one_div_pos.mpr (by linarith),
+    fun
+= 2974 31
++ 133
+ => ?_⟩
+  obtain ⟨-, hσ1, hσ2⟩ := lzb_sigma q s.im hk
+  have b1 := (hC q χ hχ1).2.1 s _ hk hreg hzero
+  have hL := lzb_log_pos q s.im
+= 3597 37
++ 61
+1 / ((12 * C₂ + 8 * C + 4 * max C₃ 0 + 2 * (1 / δ) + 10) *
+  
+= 1223 26
++ 10
+s.im| + 2)
+= 3144 24
++ 26
+σ] at hσ1 hσ2 b1
+  have b0
+= 5468 24
++ 116
+rw [Complex.ofReal_re]; exact hσ1)
+  have e : 1 / (σ - 1) = (12 * C₂ + 8 * C + 4 * max C₃ 0 + 2 * (1 / δ) + 10) *
+  
+= 1223 26
++ 26
+s.im| + 2)) := by
+    rw [
+= 5586 33
++ 9
+one_div]
 
-@@ 6075 115 0
+= 5561 25
++ 8
+e] at b0
+@% 5386 2512 13
++ 2
+b2
+= 5739 28
++ 426
+hσ2.trans (by norm_num))
+  push_cast at b2
+  have hw : |s.im| ≤ ‖(σ : ℂ) - 1 + 2 * (s.im : ℂ) * I‖ := by
+    have h := Complex.abs_im_le_norm ((σ : ℂ) - 1 + 2 * (s.im : ℂ) * I)
+    have e2 : ((σ : ℂ) - 1 + 2 * (s.im : ℂ) * I).im = 2 * s.im := by simp
+    rw [e2, abs_mul, abs_two] at h
+    exact (le_mul_of_one_le_left (abs_nonneg _) one_le_two).trans h
+  have hpole : (1 / ((σ : ℂ) - 1 + 2 * (s.im : ℂ) * I)).re ≤
+      1 / δ
+= 1265 25
++ 28
+s.im| + 2)) := by
+    refine
+= 5649 30
++ 42
+?_
+    rw [norm_div, norm_one]
+    exact (
+= 5189 25
++ 101
+(div_pos hδ hL) (hδt.trans hw)).trans_eq
+      (by rw [one_div_div, one_div_mul_eq_div])
+  linarith [
+= 5650 29
++ 25
+b0, mul_nonneg hC0 hL.le,
+= 1674 32
++ 162
+lzb_log_gt q s.im).le hC₂0, mul_nonneg hM hL.le, mul_nonneg hδ' hL.le,
+    mul_le_mul (le_max_left C₃ 0) (lzb_log_two_mul q s.im) (lzb_log_pos q (2 * s.im)).le hM
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/RealSmallTOf.lean f8da40bafd5a70f8ae0b29e2f5bfc0f652ea5a4d093c9d88d5f3b87410f2fd60 155c8c3d09495ae59b60bb3c8dc7ce0200ff14f7a4e20a4f14e59af3103be93e
+@@ 131 1493 0
 
+@@ 1727 4 27
+0, hC⟩ := localZeros_bounds
+@@ 1769 225 63
+obtain ⟨W, hW⟩ : ∃ W : ℝ, W = 10 * (2 * C₀ + C + 1) := ⟨_, rfl⟩
+@% 2048 1921 20
++ 53
+c : 0 < 1 / (10 * W) := one_div_pos.mpr (by linarith)
+= 2075 39
++ 66
+hc, hc, fun q _ χ hχ2 hχ => ?_⟩
+  have hL := lzb_log_gt q 0
+  rw [
+= 2359 24
++ 33
+L
+  obtain ⟨L, hLd⟩ : ∃ L : ℝ, L 
+= 2398 25
++ 173
+:= ⟨_, rfl⟩
+  rw [← hLd] at hL
+  have hL0 : 0 < L := one_half_pos.trans hL
+  have hT5 : 5 ≤ W * L :=
+    (by norm_num : (5 : ℝ) = 10 * (1 / 2)).le.trans (mul_le_mul hW10 hL.
+= 5024 30
++ 90
+)
+  have hT0 : 0 < W * L := by linarith
+  have hTu := mul_one_div_cancel hT0.ne'
+  have hu
+= 3054 41
++ 113
+ : (0 : ℝ) < 5) hT5
+  have hu0 := one_div_pos.mpr hT0
+  obtain ⟨σ, hσ⟩ : ∃ σ : ℝ, σ = 1 + 1 / (W * L) := ⟨_, rfl⟩
+= 2924 25
++ 19
+ linarith
+  have b0
+= 3328 24
++ 76
+rw [Complex.ofReal_re]; exact hσ1)
+  have e : 1 / (σ - 1) = W * L := by rw [
+= 3446 44
+= 2307 26
++ 13
+re, e] at b0
+
+= 3201 40
++ 144
+have hD := (hC q χ hχ).2.2 σ hσ1 (by linarith)
+  rw [← hLd] at hD
+  have hWL : W * L = 20 * (C₀ * L) + 10 * (C * L) + 10 * L := by rw [hW]; ring
+@@ 4139 13 57
+Metric.closedBall (11 / 10 : ℂ) (1 / 5) ∧ 4 / 5 * (W * L)
+@% 4235 911 11
++ 9
+have hd :
+= 4002 50
++ 39
+≤ 1 / (W * L) / 10 := by
+      refine (
+= 4541 26
++ 45
+hc.le hL0 ?_).trans_eq ?_
+      · rw [hLd]
+  
+= 4395 29
++ 75
+mul_pos (zero_lt_one.trans_le (lzb_one_le q)) (zero_lt_two' ℝ))
+          (
+= 5805 27
++ 208
+le_add_of_nonneg_left (abs_nonneg _)) (Nat.cast_nonneg q))
+      · rw [div_div, div_div, mul_assoc, mul_comm (10 : ℝ)]
+    have hi' := hi.trans_le hd
+    have hβ1 := lzb_re_lt_one hχ hz
+    have hX0 : 0 < σ -
+= 4887 25
++ 10
+refine ⟨?_
+@@ 5279 255 141
+ρ - 11 / 10).re = ρ.re - 11 / 10 := by simp
+      have e1 : (ρ - 11 / 10).im = ρ.im := by simp
+      rw [e0, e1, abs_of_nonpos (by linarith)]
+@% 5556 634 16
++ 64
+have hTX : W * L * (σ - ρ.re) ≤ 11 / 10 := by
+        linarith [
+= 5805 25
++ 138
+
+          (show σ - ρ.re ≤ 11 / 10 * (1 / (W * L)) by linarith) hT0.le]
+      have hTG : W * L * |ρ.im| ≤ 1 / 10 := by
+        linarith [
+= 6020 27
++ 18
+i'.le hT0.le]
+    
+= 865 51
+= 5347 33
++ 8
+
+       
+= 5380 39
++ 56
+zero_sub, neg_mul_neg, ← abs_mul_abs_self ρ.im,
+        
+= 1541 39
++ 88
+mul_pos hX0 hX0)
+          (mul_nonneg (abs_nonneg _) (abs_nonneg _)))]
+      linarith [
+= 3611 28
++ 10
+TX hX0.le,
+= 5796 30
++ 28
+right hTG (abs_nonneg ρ.im)]
+@% 6522 7 3
++ 10
+(ρ₁ ≠ ρ₂ ∨
+= 7484 41
++ 6
+₁ = 0)
+@% 6605 1209 9
++ 1
+b
+= 6606 42
++ 1
+b
+= 6649 32
++ 37
+linarith [hD ρ₁ ρ₂ h1b h2b c1 c2 hne,
+= 3517 30
++ 27
+b0, mul_nonneg hC0 hL0.le,
+
+= 5799 32
++ 9
+hL.le hC₀
+@% 7962 50 2
++ 20
+(Or.inl ?_)
+    · rw
+= 7975 28
+@% 8050 59 2
++ 2
+rw
+= 8054 45
+@@ 8168 16 0
+
+@% 8261 57 3
++ 23
+exact hne (by linarith)
+= 8269 28
++ 47
+two s s ⟨hs, hrs, hz⟩ ⟨hs, hrs, hz⟩ (Or.inr hd)
+@@ 8389 3 12
+(Or.inl hne)
 == src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/SiegelOf.lean 6b852f9d409c525dd3642c03196596c65028c99699358fb586c8db03a69c5d7f 24e42b5f251d7f79e8349a1b8d83c69eea161a42b89f38b355623d167a9e49d0
 @@ 783 39 0
 
-== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/SiegelWalfiszOf.lean d4244eda1a22c8af2e6a4dea5266f7f6b3cc94f3925251ae9e2f2f4aa6ef3496 ab94a65ea222cdeefcd79fd883f176f1c0cc8ebbf734b0e627c4d01a3d858e05
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/SiegelProductCharacterInequality.lean 2564ec7195d0efdb46016a917e3ebdc5aab3cdc1da89e6de3431868967001396 da85b9c04335a84b4a6c089ed33f43656459307c0d8de80413bc9348350e0c02
+@@ 7517 59 33
+Nat.one_le_cast.mpr NeZero.one_le
+@@ 8459 58 33
+Nat.one_le_cast.mpr NeZero.one_le
+@@ 8798 21 33
+Nat.one_le_cast.mpr NeZero.one_le
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/SiegelWalfiszOf.lean d4244eda1a22c8af2e6a4dea5266f7f6b3cc94f3925251ae9e2f2f4aa6ef3496 6c26a7db70dc72a3a7f0f019f282fb1ba60cc7af04ce5da02ada02144e9b39fd
 @% 58 0 2
 = 0 38
 + 37
@@ -115976,6 +116317,24 @@ ExceptionalZeroBounds.ZFRDirichletOf
 = 132 27
 + 40
 .log_mul_abs_add_two_pos <;> assumption)
+@@ 1071 309 47
+l2 := log_two_le_log_mul_abs_add_two q (β:ℂ).im
+@@ 6841 1 0
+
+@@ 8746 88 33
+Nat.one_le_cast.mpr NeZero.one_le
+@% 11588 130 3
++ 25
+exact Real.exp_le_exp.mpr
+= 12255 30
++ 51
+neg_le_neg (min_le_left _ _)) (Real.sqrt_nonneg _))
+@% 11827 132 3
++ 25
+exact Real.exp_le_exp.mpr
+= 12255 30
++ 52
+neg_le_neg (min_le_right _ _)) (Real.sqrt_nonneg _))
 == src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/SmoothChiOf.lean 64e0f83a3bf1b15de356458690f00ecc5e1bff1673ee8ad54eda9c5cb2681bb0 763176fb0ddc50a16da0acd31d88dba058dfdb3ab4620b1da06f2d882692e060
 @@ 3567 77 0
 
@@ -115986,15 +116345,293 @@ ExceptionalZeroBounds.ZFRDirichletOf
 == src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/SumVonMangoldtNotCoprimeLe.lean 522d8f755a2745db1b3524616a8973dd3486f5eedfd08cc0ca8c0e6b1b241788 2fec911151f3c63f3cbc988aa233bd543392c772128d877405b6f3cfe154aec3
 @@ 2357 41 0
 
-== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/ZetaLogDerivLandauBound.lean 43e2cc704b1e7183e78be2a3acb4913915933dce3acd9166172363d808226c8a 064c39c115d18025dc7ddc70be8c54e8a310c8113677d3a1ed37da3c327c6c2b
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/TwoRealOf.lean 7d397352309b90a392799db1eb1cbb634c6629857c92bbbb184484b2cc7c1aa6 3307135a55774476a72836fd021a9e8f9ba8b0a8c84defa0eadae906debdc405
+@@ 131 3409 0
+
+@% 3607 347 7
++ 2
+LZ
+= 3609 25
++ 106
+0, hC⟩ := localZeros_bounds hLZ
+  obtain ⟨C₁, hC₁0, hC₁⟩ := hLD
+  have hk : (10 : ℝ) ≤ 4 * C + 4 * C₁ + 10
+= 3814 31
++ 70
+8 * (4 * C + 4 * C₁ + 10)), one_div_pos.mpr (by linarith),
+    fun q _
+= 3916 38
++ 7
+ => ?_⟩
+@% 3985 2873 3
++ 5
+, hz₂
+= 3992 28
++ 38
+12ne : χ₁ * χ₂ ≠ 1 := fun h => h12 (by
+@% 6995 1030 9
++ 256
+)
+  obtain ⟨-, hσ1, hσ2⟩ := lzb_sigma q 0 hk
+  have b1 := (hC q χ₁ h₁1).2.1 β₁ _ hk hr₁ (not_not.mp hz₁)
+  have b2 := (hC q χ₂ h₂1).2.1 β₂ _ hk hr₂ (not_not.mp hz₂)
+  have b3 := (hC q (χ₁ * χ₂) h12ne).1 0 _ hσ1 hσ2
+  have hL := lzb_log_gt q 0
+  simp only [
+= 5026 34
++ 122
+zero, zero_mul, add_zero, abs_zero, zero_add]
+    at b1 b2 b3 hσ1 hL
+  have b0 := hC₁ q 1 ((1 + 1 / ((4 * C + 4 * C₁ + 10)
+= 1848 25
++ 15
+) : ℝ) : ℂ)
+   
+= 6458 37
++ 207
+1)
+  rw [Complex.ofReal_re, add_sub_cancel_left, one_div_one_div] at b0
+  have hP := (hPos q _ hσ1).2.2 χ₁ χ₂ h₁ h₂
+  linarith [(Complex.re_le_norm _).trans b0, mul_nonneg hC0 (one_half_pos.trans hL).le,
+   
+= 7859 29
++ 9
+.le hC₁0]
+== src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/ZetaLogDerivLandauBound.lean 43e2cc704b1e7183e78be2a3acb4913915933dce3acd9166172363d808226c8a 37dc42d33fc3c9787407882dd999f80d523536a947cd9532a8715d966e2e2eca
 @@ 339 77 68
  intros; apply _root_.Formalism.ZF.zfo_neg_re_le_norm <;> assumption
 @@ 5696 99 0
 
 @@ 6844 75 0
 
+@@ 10059 54 46
+linarith [Real.exp_one_lt_three, abs_nonneg t]
 == src/Formalism/LandauZeroFreeBounds/ExceptionalZeroBounds/ZetaNegReal.lean 6b29fc58e89d8a88176cb026e97065c898e67f8fce521d3092089b2afa23a3dc 33ea990ba87b1a6236d303dcd415ffea81e834c52fd5f9c10472d0ef4b616c5e
 @@ 1838 435 0
+
+== src/Formalism/LandauZeroFreeBounds/NoZeroComplexOf.lean 9c6b397b521792d5ff504c2ae0c5df4d6a02e2c18b71d6ed0d208e750ab75882 d7c9cd7b694c85b3953627342bced3ba372ba8ab50c2eb6abf65b97359e0be5a
+@% 4887 0 64
++ 354
+lemma lzb_one_le (q : ℕ) [NeZero q] : (1 : ℝ) ≤ q :=
+  Nat.one_le_cast.mpr NeZero.one_le
+
+lemma lzb_two_le (q : ℕ) [NeZero q] (t : ℝ) : 2 ≤ (q : ℝ) * (|t| + 2) :=
+  (one_mul (2 : ℝ)).symm.trans_le
+    (mul_le_mul (lzb_one_le q) (le_add_of_nonneg_left (abs_nonneg t)) zero_le_two (Nat.cast_nonneg q))
+
+lemma lzb_log_gt (q : ℕ) [NeZero q] (t : ℝ) : 1 / 2 <
+= 3041 32
++ 191
+:=
+  ((by norm_num : (1 / 2 : ℝ) < 0.6931471803).trans Real.log_two_gt_d9).trans_le
+    (Real.log_le_log (zero_lt_two' ℝ) (lzb_two_le q t))
+
+lemma lzb_log_pos (q : ℕ) [NeZero q] (t : ℝ) : 0 <
+= 3041 32
++ 135
+:=
+  one_half_pos.trans (lzb_log_gt q t)
+
+lemma lzb_log_two_mul (q : ℕ) [NeZero q] (t : ℝ) :
+    Real.log ((q : ℝ) * (|2 * t| + 2)) ≤ 2
+= 3039 34
++ 279
+:= by
+  have hX := lzb_two_le q t
+  have hX0 := ((zero_lt_two' ℝ).trans_le hX).ne'
+  have h1 : (q : ℝ) * (|2 * t| + 2) ≤ 2 * ((q : ℝ) * (|t| + 2)) := by
+    rw [abs_mul, abs_two, mul_left_comm]
+    exact mul_le_mul_of_nonneg_left (by linarith) (Nat.cast_nonneg q)
+  rw [two_mul (
+= 2177 30
++ 257
+), ← Real.log_mul hX0 hX0]
+  exact Real.log_le_log ((zero_lt_two' ℝ).trans_le (lzb_two_le q (2 * t)))
+    (h1.trans (mul_le_mul_of_nonneg_right hX ((zero_lt_two' ℝ).le.trans hX)))
+
+lemma lzb_sigma (q : ℕ) [NeZero q] (t : ℝ) {k : ℝ} (hk : 10 ≤ k) :
+    0 < k
+= 3039 34
++ 16
+∧ 1 < 1 + 1 / (k
+= 2174 33
++ 20
+) ∧
+      1 + 1 / (k
+= 2174 33
++ 33
+) ≤ 6 / 5 := by
+  have h5 : 5 ≤ k
+= 3039 34
++ 142
+:=
+    (by norm_num : (5 : ℝ) = 10 * (1 / 2)).le.trans
+      (mul_le_mul hk (lzb_log_gt q t).le (by norm_num) (by linarith))
+  have h0 : 0 < k
+= 3039 34
++ 347
+:= by linarith
+  exact ⟨h0, lt_add_of_pos_right 1 (one_div_pos.mpr h0), by
+    linarith [one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 5) h5]⟩
+
+lemma lzb_re_add (σ t : ℝ) : ((σ : ℂ) + t * I).re = σ := by
+  rw [Complex.add_re, Complex.ofReal_re, Complex.re_ofReal_mul, Complex.I_re, mul_zero, add_zero]
+
+lemma lzb_re_lt_one {q : ℕ} [NeZero q] {
+= 197 26
++ 32
+} (hχ : χ ≠ 1) {ρ : ℂ}
+    (hρ :
+= 2809 38
++ 38
+ : ρ.re < 1 :=
+  lt_of_not_ge fun h =>
+= 286 29
++ 79
+_ne_zero_of_one_le_re χ (Or.inl hχ) h hρ
+
+lemma lzb_re_pos {q : ℕ} [NeZero q] {
+= 197 26
++ 34
+} (hχ : χ ≠ 1) {ρ s : ℂ}
+    (hρ :
+= 2809 38
++ 342
+ (hs : 1 < s.re) : 0 < (1 / (s - ρ)).re := by
+  have h : 0 < (s - ρ).re := by
+    rw [Complex.sub_re]
+    exact sub_pos.mpr ((lzb_re_lt_one hχ hρ).trans hs)
+  rw [one_div, Complex.inv_re]
+  exact div_pos h (Complex.normSq_pos.mpr fun h0 => h.ne' (by rw [h0, Complex.zero_re]))
+
+theorem localZeros_bounds (h : LocalZeros) : ∃ C : ℝ, 0 ≤ C ∧
+  
+= 2396 55
++ 16
+≠ 1 →
+      (∀ t
+= 2959 68
+= 2172 35
++ 70
+) ∧
+      (∀ (s : ℂ) (k : ℝ), 10 ≤ k → InRegion (1 / (8 * k)) q s →
+  
+= 3847 44
++ 31
+
+        (negLD χ (((1 + 1 / (k
+= 2174 25
++ 29
+s.im| + 2))) : ℝ) : ℂ) + s.im
+= 3016 48
++ 36
+s.im| + 2)) -
+            8 / 9 * (k
+= 2174 25
++ 12
+s.im| + 2)))
+= 2948 38
++ 118
+ ∀ ρ₁ ρ₂ : ℂ,
+        ρ₁ ∈ Metric.closedBall (11 / 10 : ℂ) (1 / 5) → ρ₂ ∈ Metric.closedBall (11 / 10 : ℂ) (1 / 5) →
+  
+= 3515 37
++ 2
+ρ₁
+= 3885 38
++ 27
+ρ₂ = 0 →
+        (ρ₁ ≠ ρ₂ ∨
+= 2893 41
++ 32
+₁ = 0) →
+        (negLD χ (σ : ℂ
+= 3020 42
++ 300
+2) - (1 / ((σ : ℂ) - ρ₁)).re - (1 / ((σ : ℂ) - ρ₂)).re := by
+  obtain ⟨C, hC⟩ := h
+  refine ⟨max C 0, le_max_right C 0, fun q _ χ hχ => ⟨fun t σ h1 h2 => ?_,
+    fun s k hk hreg hs0 => ?_, fun σ h1 h2 ρ₁ ρ₂ hb₁ hb₂ hz₁ hz₂ hne => ?_⟩⟩
+  · obtain ⟨Z, m, hZ, -, -, hb⟩ := hC q χ hχ t
+    have hnn : 0 ≤
+= 3074 52
++ 596
+ :=
+      Finset.sum_nonneg fun ρ hρ => mul_nonneg (Nat.cast_nonneg (m ρ))
+        (lzb_re_pos hχ ((hZ ρ).mp hρ).2 (by rw [lzb_re_add]; exact h1)).le
+    exact (hb σ h1 h2).trans ((sub_le_self _ hnn).trans
+      (mul_le_mul_of_nonneg_right (le_max_left C 0) (lzb_log_pos q t).le))
+  · obtain ⟨hx0, hσ1, hσ2⟩ := lzb_sigma q s.im hk
+    obtain ⟨Z, m, hZ, hm1, -, hb⟩ := hC q χ hχ s.im
+    have hCL := mul_le_mul_of_nonneg_right (le_max_left C 0) (lzb_log_pos q s.im).le
+    unfold InRegion at hreg
+    rw [div_div, mul_assoc, mul_comm (8 : ℝ), ← div_div] at hreg
+    obtain ⟨x, hx⟩ : ∃ x : ℝ, x = k
+= 2174 25
++ 513
+s.im| + 2)) := ⟨_, rfl⟩
+    rw [← hx] at hx0 hσ1 hσ2 hreg ⊢
+    obtain ⟨σ, hσ⟩ : ∃ σ : ℝ, σ = 1 + 1 / x := ⟨_, rfl⟩
+    rw [← hσ] at hσ1 hσ2 ⊢
+    have hs1 := lzb_re_lt_one hχ hs0
+    have hsZ : s ∈ Z := by
+      refine (hZ s).mpr ⟨?_, hs0⟩
+      have e : s - ((11 / 10 : ℂ) + s.im * I) = ((s.re - 11 / 10 : ℝ) : ℂ) := by
+        apply Complex.ext <;> simp
+      rw [Metric.mem_closedBall, Complex.dist_eq, e, Complex.norm_real, Real.norm_eq_abs, abs_le]
+      constructor <;> linarith
+    have hnn : ∀ ρ ∈ Z, 0 ≤
+= 3083 29
++ 324
+s.im * I - ρ)).re := fun ρ hρ =>
+      mul_nonneg (Nat.cast_nonneg (m ρ))
+        (lzb_re_pos hχ ((hZ ρ).mp hρ).2 (by rw [lzb_re_add]; exact hσ1)).le
+    have e : (σ : ℂ) + s.im * I - s = ((σ - s.re : ℝ) : ℂ) := by
+      apply Complex.ext <;> simp
+    have hpos : 0 < σ - s.re := by linarith
+    have hkey : 8 / 9 * x ≤ (m s
+= 3088 24
++ 832
+s.im * I - s)).re := by
+      rw [e, ← Complex.ofReal_one, ← Complex.ofReal_div, Complex.ofReal_re]
+      refine ((le_div_iff₀ hpos).mpr ?_).trans
+        (le_mul_of_one_le_left (one_div_pos.mpr hpos).le (Nat.one_le_cast.mpr (hm1 s hsZ)))
+      linarith [mul_le_mul_of_nonneg_left (show σ - s.re ≤ 9 / 8 * (1 / x) by linarith) hx0.le,
+        mul_one_div_cancel hx0.ne']
+    exact (hb σ hσ1 hσ2).trans (sub_le_sub hCL (hkey.trans (Finset.single_le_sum hnn hsZ)))
+  · obtain ⟨Z, m, hZ, hm1, hm2, hb⟩ := hC q χ hχ 0
+    have hb' := hb σ h1 h2
+    rw [Complex.ofReal_zero, zero_mul, add_zero] at hZ
+    rw [Complex.ofReal_zero, zero_mul, add_zero, abs_zero, zero_add] at hb'
+    have hL := lzb_log_pos q 0
+    rw [abs_zero, zero_add] at hL
+    have hσ : 1 < (σ : ℂ).re := by rw [Complex.ofReal_re]; exact h1
+    have hnn : ∀ ρ ∈ Z, 0 ≤
+= 3083 27
++ 340
+- ρ)).re := fun ρ hρ =>
+      mul_nonneg (Nat.cast_nonneg (m ρ)) (lzb_re_pos hχ ((hZ ρ).mp hρ).2 hσ).le
+    have hZ₁ := (hZ ρ₁).mpr ⟨hb₁, hz₁⟩
+    have hZ₂ := (hZ ρ₂).mpr ⟨hb₂, hz₂⟩
+    have hr₁ := (lzb_re_pos hχ hz₁ hσ).le
+    have hr₂ := (lzb_re_pos hχ hz₂ hσ).le
+    have key : (1 / ((σ : ℂ) - ρ₁)).re + (1 / ((σ : ℂ) - ρ₂)).re ≤
+       
+= 3074 36
++ 622
+- ρ)).re := by
+      by_cases heq : ρ₁ = ρ₂
+      · rw [← heq]
+        have h2' : (2 : ℝ) ≤ m ρ₁ := by
+          exact_mod_cast hm2 ρ₁ hZ₁ (hne.resolve_left fun h => h heq)
+        exact ((two_mul _).symm.le.trans (mul_le_mul_of_nonneg_right h2' hr₁)).trans
+          (Finset.single_le_sum hnn hZ₁)
+      · exact (add_le_add (le_mul_of_one_le_left hr₁ (Nat.one_le_cast.mpr (hm1 ρ₁ hZ₁)))
+          (le_mul_of_one_le_left hr₂ (Nat.one_le_cast.mpr (hm1 ρ₂ hZ₂)))).trans
+          (Finset.add_le_sum hnn hZ₁ hZ₂ heq)
+    rw [sub_sub]
+    exact hb'.trans (sub_le_sub (mul_le_mul_of_nonneg_right (le_max_left C 0) hL.le) key)
+
 
 == src/Formalism/LatticeRigidity/HeightMinimum/SqrtAbsNormLeProd.lean 526232268a783b65ae0a7482d1770afd03db87e12edf34d0c198d7f23d2c9b20 1c6f003a8306982e6a4985de3931cafce044ecfbbcf4743d5d91ad85d32ae43a
 @@ 6373 50 0
