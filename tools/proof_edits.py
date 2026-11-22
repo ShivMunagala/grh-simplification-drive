@@ -491,7 +491,7 @@ REWRITES = {    # tag -> (how a line must start, the rewrite)
 }
 
 
-def gen_projections(out, min_parts, min_nodes, tag='projections'):
+def gen_projections(out, min_parts, min_nodes, tag='projections', skip=()):
     """Edits of single lines in cone theorems whose proof is written out in at least `min_nodes` nodes.
     `projections`: `obtain ⟨…⟩ := H` (also `obt`, `rcases H with ⟨…⟩`, `have ⟨…⟩ := H`) with a flat
     pattern of at least `min_parts` parts is replaced by projections. `opaque-set`: `clear_value x` is
@@ -518,7 +518,7 @@ def gen_projections(out, min_parts, min_nodes, tag='projections'):
             continue
         size = g.vsize[i] + aux[(g.mods[i], g.names[i])]
         m = g.modnames[g.mods[i]]
-        if size >= min_nodes and (m, g.names[i]) in ranges:
+        if size >= min_nodes and m not in skip and (m, g.names[i]) in ranges:
             cands[m].append((ranges[(m, g.names[i])], g.names[i], size))
     say(f'{sum(len(v) for v in cands.values()):,} cone theorems of at least {min_nodes:,} nodes in {len(cands):,} files')
     mods = sorted(cands)
@@ -797,6 +797,8 @@ def main():
         pj.add_argument('--out', required=True)
         pj.add_argument('--min-parts', type=int, default=5)
         pj.add_argument('--min-nodes', type=int, default=20000)
+        pj.add_argument('--min-saved', type=int, default=MIN_SAVED, help='pattern entries a rewrite must save')
+        pj.add_argument('--skip', default=None, help='file naming modules to leave out, one per line')
     v = sub.add_parser('variants')
     v.add_argument('--edits', required=True); v.add_argument('--work', required=True)
     v.add_argument('--single-from', default=None); v.add_argument('--modules', default=None)
@@ -812,7 +814,12 @@ def main():
     elif args.cmd == 'shorten':
         gen_shorten(args.out, args.candidates)
     elif args.cmd in REWRITES:
-        gen_projections(args.out, args.min_parts, args.min_nodes, args.cmd)
+        globals()['MIN_SAVED'] = args.min_saved
+        skip = set()
+        if args.skip:
+            with open(args.skip) as fh:
+                skip = {l.strip() for l in fh if l.strip()}
+        gen_projections(args.out, args.min_parts, args.min_nodes, args.cmd, skip)
     elif args.cmd == 'variants':
         os.makedirs(args.work, exist_ok=True)
         variants(args.edits, args.work, args.single_from, args.modules)

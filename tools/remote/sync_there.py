@@ -44,17 +44,27 @@ def main():
     # source of the modules recorded changes touched, as committed here
     rels = ['src/' + m.replace('.', '/') + '.lean' for m in state['modules']]
     with tempfile.TemporaryDirectory() as tmp:
+        # one git process for all files
+        req = ''.join(f"{state['proof_commit']}:{rel}\n" for rel in rels).encode()
+        blob = subprocess.run(['git', '-C', C.PROOF, 'cat-file', '--batch'], input=req, stdout=subprocess.PIPE,
+                              check=True).stdout
+        pos = 0
         for rel in rels:
-            data = subprocess.run(['git', '-C', C.PROOF, 'show', f"{state['proof_commit']}:{rel}"],
-                                  stdout=subprocess.PIPE, check=True).stdout
+            nl = blob.index(b'\n', pos)
+            header = blob[pos:nl].split()
+            if len(header) < 3 or header[1] != b'blob':
+                sys.exit(f'{rel} is not in the accepted commit')
+            size = int(header[2])
             dst = os.path.join(tmp, rel)
             os.makedirs(os.path.dirname(dst), exist_ok=True)
             with open(dst, 'wb') as fh:
-                fh.write(data)
+                fh.write(blob[nl + 1:nl + 1 + size])
+            pos = nl + 1 + size + 1
         listing = os.path.join(tmp, 'files.txt')
         with open(listing, 'w') as fh:
             fh.write('\n'.join(rels) + '\n')
-        run(rsync + [os.path.join(tmp, 'src'), f'{host}:{rpath}/proof/'], check=True)
+        # --checksum: a file that already has the accepted text there is left alone
+        run(rsync + ['--checksum', os.path.join(tmp, 'src'), f'{host}:{rpath}/proof/'], check=True)
         run(rsync + [listing, f'{host}:{rpath}/build/sync_files.txt'], check=True)
     script = f'''
 cd {rpath} || exit 1
