@@ -45,6 +45,48 @@ EXT_IGNORED_SUFFIX = ('.Lean.extraModUses', '.Lean.exportedAxiomsExt', '.Lean.na
 # `theorem _root_.X ...` registers the root itself as a namespace; nothing can open it.
 ROOT_ENTRY = '[anonymous]'
 
+# Registers that only hold bookkeeping about a module's own declarations (how they compile to code, which
+# are noncomputable or protected, what their structure or recursion looks like, lint and documentation
+# marks). A module whose every entry is in one of these cannot change how a file that imports it reads
+# anything that is not one of its own declarations. Instances, simp and grind lemmas, notation, macros,
+# coercions, ext lemmas, exported aliases, reducibility marks (which can be put on someone else's
+# definition) and the like are NOT here: a module with any of those is not "plain".
+PLAIN_REGISTERS = {
+    '_private.Lean.Compiler.ModPkgExt.0.Lean.modPkgExt', 'Lean.deprecatedModuleExt', 'symbolFrequency', 'sineQueNon',
+    'Lean.backwardDefeqAttr', 'Lean.defeqAttr', 'Lean.noncomputableExt', 'Lean.protectedExt',
+    'Lean.IR.declMapExt', 'Lean.Compiler.LCNF.baseExt', 'Lean.Compiler.LCNF.monoExt', 'Lean.Compiler.LCNF.impureSigExt',
+    'Lean.Compiler.LCNF.UnreachableBranches.functionSummariesExt', 'Lean.Compiler.inlineAttrs',
+    'Lean.Compiler.LCNF.specExtension', 'Lean.Compiler.LCNF.monoTypeExt',
+    '_private.Lean.Compiler.LCNF.MonoTypes.0.Lean.Compiler.LCNF.trivialStructureInfoExt',
+    '_private.Lean.Compiler.LCNF.ToImpureType.0.Lean.Compiler.LCNF.impureTypeExt',
+    '_private.Lean.Compiler.LCNF.ToImpureType.0.Lean.Compiler.LCNF.impureTrivialStructureInfoExt',
+    '_private.Lean.Compiler.LCNF.ToImpureType.0.Lean.Compiler.LCNF.ctorLayoutExt',
+    '_private.Lean.Compiler.LCNF.Specialize.0.Lean.Compiler.LCNF.Specialize.specCacheExt',
+    '_private.Lean.Compiler.MetaAttr.0.Lean.metaExt',
+    'Lean.Meta.Match.Extension.extension', 'Lean.auxRecExt', '_private.Lean.Structure.0.Lean.structureExt',
+    'Lean.projectionFnInfoExt', 'Lean.noConfusionExt', 'Lean.Meta.completionBlackListExt', 'recExt',
+    'Lean.Elab.Structural.eqnInfoExt', 'Lean.Elab.WF.eqnInfoExt', 'Lean.Meta.eqnOptionsExt', 'eqnsAttribute',
+    '_private.Lean.AuxRecursor.0.Lean.sparseCasesOnExt',
+    '_private.Lean.Meta.Constructions.SparseCasesOn.0.Lean.Meta.sparseCasesOnInfoExt', 'Lean.auxParentProjInfoExt',
+    'Lean.Linter.deprecatedAttr', 'Batteries.Tactic.Lint.nolintAttr',
+    '_private.Lean.DocString.Extension.0.Lean.inheritDocStringExt', 'Lean.LibrarySuggestions.nameDenyListExt',
+    'Lean.indirectModUseExt', '_private.Lean.ExtraModUses.0.Lean.isExtraRevModUseExt',
+}
+
+
+def outside_import_covered(name, seen):
+    """Is an import from outside the archive (`name`) already visible to a file whose imports, direct or
+    not, include the names in `seen`? Either it is among them, or the file imports all of Mathlib and
+    the name is a Mathlib or Init module (Mathlib imports every one of those)."""
+    return name in seen or ('Mathlib' in seen and (name == 'Init' or name.startswith(('Init.', 'Mathlib.'))))
+
+
+def plain_module(entries):
+    """entries: {register: number of entries} of one module. True if it registers nothing that can act on
+    another file (see PLAIN_REGISTERS)."""
+    return all(not v or k in PLAIN_REGISTERS or k in EXT_IGNORED or k.endswith(EXT_IGNORED_SUFFIX)
+               for k, v in (entries or {}).items())
+
 
 def compare(old, new):
     """old/new: {name: record}. Returns a dict describing the difference between declarations."""

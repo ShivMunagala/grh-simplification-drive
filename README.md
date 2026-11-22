@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.1M, written-out proof size 2.72B, time change -2.83K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.1M, written-out proof size 2.72B, time change -2.85K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 176,105,982 | −7,012,257 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,719,481,805 | −69,822,494 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,830.5 | −2,830.5 |
+| Source size (tokens) | 183,118,239 | 176,105,783 | −7,012,456 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,718,033,527 | −71,270,772 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,852.3 | −2,852.3 |
 
-Cone: 1,260,830 declarations in 146,531 files. Recorded changes: 26. Latest row: kept parts between dropped ones read by projection; second pass (171 lines; 125 files) (2026-11-22 10:50 UTC).
+Cone: 1,260,824 declarations in 146,531 files. Recorded changes: 28. Latest row: wave 7: three enlarged-base proofs read their conjunctions by projection; jMt_rowsSame (2026-11-22 11:15 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -100,9 +100,17 @@ Two fences:
 A change to a proof must also leave alone what other files see of its file: the statements, the
 definitions, and what the file registers with Lean (instances, tagged lemmas, namespaces, its imports).
 If that changes, the files that use it have to be recompiled and judged with it, or a person decides.
-One register change is allowed outright (decided 2026-11-22): the tag `@[elab_as_elim]` on a lemma that
-the change itself adds. It only tells Lean how to apply that new lemma, so no file that existed before
-can be read differently. The judge checks that each such tag sits on an added lemma.
+Two such changes are allowed outright (decided 2026-11-22), and the judge checks the conditions:
+
+- The tag `@[elab_as_elim]` on a lemma that the change itself adds. It only tells Lean how to apply that
+  new lemma, so no file that existed before can be read differently.
+- An import added to a file, so that a proof in it can cite a copy of its statement in a file it could not
+  see. Two conditions: the file already imported, directly or not, everything the newly imported file
+  imports, so the files that use it get to see exactly one more file; and that file registers nothing
+  that can act on other files, only bookkeeping about its own declarations (the list is
+  `PLAIN_REGISTERS` in `tools/iface.py`; instances, simp lemmas, notation, coercions and the like are not
+  on it). On top of that, a sample of the files that use the changed ones is recompiled to confirm that
+  nothing else moves.
 
 Reported to steer the work, not enforced: which declarations most of the cone hangs on
 (`tools/ablation.py`), what each known theorem costs on its own, and how often each definition is used.

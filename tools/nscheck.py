@@ -95,6 +95,23 @@ def load():
     return imports, registers
 
 
+def load_entries():
+    """-> {module: {extension: number of entries}}: what each module of the unmodified archive registers
+    with Lean (instances, simp lemmas, notation, tagged lemmas and so on), from the same table."""
+    if not os.path.exists(TABLE):
+        sys.exit('no namespace table yet: run tools/nscheck.py build')
+    entries = {}
+    for line in zlines(TABLE):
+        f = line.rstrip(b'\n').split(b'\t')
+        if f[0] == b'A':
+            d = {}
+            for kv in (f[2].decode().split(',') if len(f) > 2 and f[2] else []):
+                k, _, v = kv.rpartition('=')
+                d[k] = int(v) if v.isdigit() else 1
+            entries[f[1].decode()] = d
+    return entries
+
+
 def seen_by(imports, registers, namespace, extra_registers=None):
     """Set of modules whose imports (direct or not) register `namespace`; a module that registers
     it itself does not count for itself. extra_registers: {module: set} overriding the table."""

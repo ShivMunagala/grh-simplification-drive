@@ -8,6 +8,8 @@ elsewhere), so they are guesses: each one has to compile and pass the equivalenc
 
   tools/proof_edits.py citations  --out build/x/edits.jsonl [--form first|short] [--min-proof-tokens N]
   tools/proof_edits.py transplants --out build/x/edits.jsonl
+  tools/proof_edits.py import-citations --out build/x/edits.jsonl   # cite a copy through one added import;
+                                                               # run variants and choose with --allow-imports
   tools/proof_edits.py shorten     --out build/x/edits.jsonl    # shorten citations already recorded
   tools/proof_edits.py projections --out build/x/edits.jsonl [--min-parts N] [--min-nodes N]
                                                                # read long conjunctions by projection
@@ -103,7 +105,27 @@ def apply_edits(text, edits):
             continue
         text = text[:a] + body + text[b:]
         last = a
+    # An edit may need one more import (a citation of a copy in a file this one does not import yet).
+    # The import lines go after the file's last import line; a module is never listed twice.
+    gone = {id(e) for e in failed}
+    need = []
+    for e in edits:
+        if id(e) not in gone:
+            for m in e.get('imports', ()):
+                if m not in need:
+                    need.append(m)
+    if need:
+        have = set(IMPORT_LINE.findall(text))
+        new = ''.join(f'import {m}\n' for m in need if m not in have)
+        if new:
+            pos = 0
+            for mm in IMPORT_LINE.finditer(text):
+                pos = mm.end()
+            text = text[:pos] + new + text[pos:]
     return text, failed
+
+
+IMPORT_LINE = re.compile(r'^import[ \t]+(\S+)[ \t]*\n', re.M)
 
 
 # ------------------------------------------------------------------ generating edits
@@ -284,6 +306,122 @@ def gen(kind, out, form, min_tokens):
     for k, v in stats.items():
         print(f'  {k}: {v:,}')
     say(f'{len(edits)} edits in {len({e["module"] for e in edits})} files written to {out}')
+
+
+def gen_import_citations(out, min_tokens):
+    """Citations that need one added import. A theorem whose file cannot see any other proof of its
+    statement cites the earliest public copy, and its file imports the copy's file, when
+
+      (a) the theorem's file already imports everything the copy's file imports, so that the files which
+          use it get to see exactly one more module, and
+      (b) that module registers nothing that can act on other files (iface.plain_module).
+
+    Added imports always point from a file to one that comes earlier in the order of the import graph,
+    so they cannot close a cycle. Needs a few gigabytes of memory for the import closures: run it where
+    there is room."""
+    import nscheck as NS
+    t0 = time.time()
+
+    def say(msg):
+        print(f'{msg}  [{time.time() - t0:.0f}s]', flush=True)
+
+    g, ranges, indep, aux = groups_of_copies(say)
+    modnames = g.modnames
+    midx = {m: k for k, m in enumerate(modnames)}
+    imports = [[midx[x] for x in imps if x in midx] for imps in g.mod_imports]
+    order, state = [], bytearray(len(modnames))
+    for root in range(len(modnames)):
+        if state[root]:
+            continue
+        stack = [(root, iter(imports[root]))]
+        state[root] = 1
+        while stack:
+            m, it = stack[-1]
+            for i in it:
+                if not state[i]:
+                    state[i] = 1
+                    stack.append((i, iter(imports[i])))
+                    break
+            else:
+                stack.pop()
+                order.append(m)
+    topo = [0] * len(modnames)
+    for k, m in enumerate(order):
+        topo[m] = k
+    closure = [0] * len(modnames)                         # everything a module imports, directly or not
+    outside = [None] * len(modnames)                      # and what it imports from outside the archive
+    shared = {}
+    for m in order:
+        c = 0
+        out_names = {x for x in g.mod_imports[m] if x not in midx}
+        for i in imports[m]:
+            c |= closure[i] | (1 << i)
+            out_names |= outside[i]
+        closure[m] = c
+        key = frozenset(out_names)
+        outside[m] = shared.setdefault(key, key)
+    say(f'import closures for {len(modnames):,} modules')
+    entries = NS.load_entries()
+    plain = [m in entries and IFACE.plain_module(entries[m]) for m in modnames]
+    need = sorted({modnames[g.mods[i]] for _, roots in indep for i in roots})
+    text = texts_at(accepted_commit(), need)
+    lines = {}
+    edits, stats = [], collections.Counter()
+    for tsize, roots in indep:
+        ms = sorted(roots, key=lambda i: (topo[g.mods[i]], g.names[i]))
+        for d in ms:
+            md = g.mods[d]
+            seen = closure[md]
+            if any(g.mods[c] == md or (seen >> g.mods[c]) & 1 for c in ms if c != d):
+                continue                                  # sees a copy already: the plain citation sweep's case
+            earlier = [c for c in ms if topo[g.mods[c]] < topo[md]]
+            if not earlier:
+                stats['earliest copies (they stay)'] += 1
+                continue
+            cite, why = None, 'every earlier copy is private'
+            for c in earlier:
+                if g.names[c].startswith('_private.'):
+                    continue
+                mc = g.mods[c]
+                if not plain[mc]:
+                    why = 'the copy\'s file registers something that can act on other files'
+                elif (any(not ((seen >> i) & 1) for i in imports[mc])
+                      or any(not IFACE.outside_import_covered(x, outside[md]) for x in g.mod_imports[mc] if x not in midx)):
+                    why = 'the copy\'s file imports something this file does not'
+                else:
+                    cite = c
+                    break
+            if cite is None:
+                stats['cannot: ' + why] += 1
+                continue
+            m = modnames[md]
+            r = ranges.get((m, g.names[d]))
+            if r is None or m not in text:
+                continue
+            if m not in lines:
+                lines[m] = text[m].split('\n')
+            s = split_decl(text[m], lines[m], r)
+            if s is None:
+                continue
+            ptok = CONE.count_tokens(text[m][s[1]:s[2]])
+            if ptok < min_tokens:
+                stats['proof too short to be worth a citation'] += 1
+                continue
+            edits.append({'module': m, 'theorem': g.names[d], 'first_line': r[0], 'first_col': r[1],
+                          'last_line': r[2], 'last_col': r[3],
+                          'old_written_out': g.vsize[d] + aux.get((md, g.names[d]), 0), 'old_proof_tokens': ptok,
+                          'body': LONG.format(c='_root_.' + g.names[cite]), 'tag': 'cite-import',
+                          'source': g.names[cite], 'imports': [modnames[g.mods[cite]]]})
+            stats['citations through one added import'] += 1
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
+    with open(out, 'w', encoding='utf-8') as fh:
+        for e in edits:
+            fh.write(json.dumps(e, ensure_ascii=False) + '\n')
+    for k, v in stats.items():
+        print(f'  {k}: {v:,}')
+    say(f'{len(edits)} edits in {len({e["module"] for e in edits})} files, '
+        f'{sum(e["old_written_out"] for e in edits):,} nodes in the proofs replaced, '
+        f'{len({e["imports"][0] for e in edits})} files newly imported; written to {out}')
 
 
 LONG_RE = re.compile(r':=( by first \| exact @(?P<c>\S+) \| exact (?P=c) \| \(intros; apply (?P=c) <;> assumption\))')
@@ -816,8 +954,18 @@ def load_results(path):
     return res
 
 
+ALLOW_IMPORTS = False              # set for a batch of citations through added imports (--allow-imports)
+
+
 def good(r):
-    return bool(r and r.get('ok') and r.get('compatible') and not r.get('added') and not r.get('sorry'))
+    if not (r and r.get('ok')) or r.get('added') or r.get('sorry'):
+        return False
+    if r.get('compatible'):
+        return True
+    # An added import makes the comparison say "not compatible". In a batch of citations through added
+    # imports that is expected; the judge decides whether each import meets the conditions.
+    return bool(ALLOW_IMPORTS and r.get('imports_added') and not r.get('breaking') and not r.get('ext_changed')
+                and not r.get('ns_removed'))
 
 
 def variants(edits_path, work, single_from, modules_file=None):
@@ -993,6 +1141,9 @@ def apply(chosen_path, src=C.SRC, expect=None, drop_stale=False):
 def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest='cmd', required=True)
+    ic = sub.add_parser('import-citations')
+    ic.add_argument('--out', required=True)
+    ic.add_argument('--min-proof-tokens', type=int, default=LONG_TOKENS + 1)
     for name in ('citations', 'transplants'):
         s = sub.add_parser(name)
         s.add_argument('--out', required=True)
@@ -1011,14 +1162,20 @@ def main():
     v = sub.add_parser('variants')
     v.add_argument('--edits', required=True); v.add_argument('--work', required=True)
     v.add_argument('--single-from', default=None); v.add_argument('--modules', default=None)
+    v.add_argument('--allow-imports', action='store_true')
     c = sub.add_parser('choose')
     c.add_argument('--edits', required=True); c.add_argument('--work', required=True)
+    c.add_argument('--allow-imports', action='store_true')
     a = sub.add_parser('apply')
     a.add_argument('--chosen', required=True)
     a.add_argument('--expect', default=None, help='W/final/sources.tsv: refuse unless the files come out byte-identical')
     a.add_argument('--drop-stale', action='store_true', help='leave out files that would not come out identical')
     args = ap.parse_args()
-    if args.cmd in ('citations', 'transplants'):
+    if getattr(args, 'allow_imports', False):
+        globals()['ALLOW_IMPORTS'] = True
+    if args.cmd == 'import-citations':
+        gen_import_citations(args.out, args.min_proof_tokens)
+    elif args.cmd in ('citations', 'transplants'):
         gen(args.cmd, args.out, args.form, args.min_proof_tokens)
     elif args.cmd == 'shorten':
         gen_shorten(args.out, args.candidates)

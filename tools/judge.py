@@ -50,6 +50,46 @@ ALLOWED_TAG = 'Lean.Elab.Term.elabAsElim'
 TAG_RE = re.compile(r'@\[elab_as_elim\]\s*(?:(?:private|protected|noncomputable)\s+)*(?:theorem|lemma)\s+([^\s:({\[]+)')
 
 
+class PlainImports:
+    """The other allowed register change (owner's decision, 2026-11-22): an import added to a file, when
+    (a) the file already imported, directly or not, everything the newly imported file imports, so that
+        the files which use it get to see exactly one more module, and
+    (b) that module registers nothing that can act on other files (iface.plain_module).
+    Both are read from the table of the unmodified archive. A file that has gained imports since then
+    sees more than the table says, so the check can only err towards refusing."""
+
+    def __init__(self):
+        self.imports = self.entries = None
+        self.allowed = 0
+        self.reasons = collections.Counter()
+
+    def refused(self, module, added):
+        """None if every added import is allowed, else the reason."""
+        if self.imports is None:
+            import nscheck as NS
+            self.imports, _ = NS.load()
+            self.entries = NS.load_entries()
+        if module not in self.imports:
+            return 'the importing file is not in the table'
+        seen, stack = set(), list(self.imports[module])
+        while stack:
+            x = stack.pop()
+            if x not in seen:
+                seen.add(x)
+                stack.extend(self.imports.get(x, ()))
+        for x in added:
+            if x not in self.imports or x not in self.entries:
+                return 'the imported file is not in the table'
+            if not IFACE.plain_module(self.entries[x]):
+                return 'the imported file registers something that can act on other files'
+            if any(not IFACE.outside_import_covered(y, seen) for y in self.imports[x]):
+                return 'the imported file imports something the importing file did not'
+        return None
+
+
+plain_imports = PlainImports()
+
+
 def tags_only_on_added(new_text, old_text, added, before, after):
     """Are the `elab_as_elim` entries a module gained exactly tags on declarations the change adds?
     new_text/old_text: the module's source after and before; added: full names of the declarations the
@@ -511,9 +551,24 @@ def main():
                 del ext[ALLOWED_TAG]
                 report['notes'].append(f'{m}: {n_after - n_before} `elab_as_elim` tag(s), each on a lemma this change '
                                        'adds; allowed, because such a tag cannot change how an existing file is read')
-        if ext or res.get('ns_removed') or res.get('imports_added') or res.get('imports_removed'):
+        imp_added = list(res.get('imports_added') or [])
+        if imp_added and not res.get('imports_removed'):
+            refused = plain_imports.refused(m, imp_added)
+            if not refused:
+                plain_imports.allowed += len(imp_added)
+                imp_added = []
+            else:
+                plain_imports.reasons[refused] += 1
+        if ext or res.get('ns_removed') or imp_added or res.get('imports_removed'):
             registers_changed.append({'module': m, 'entries': ext or None, 'namespaces_removed': res.get('ns_removed'),
-                                      'imports_added': res.get('imports_added'), 'imports_removed': res.get('imports_removed')})
+                                      'imports_added': imp_added or None, 'imports_removed': res.get('imports_removed')})
+    if plain_imports.allowed:
+        report['notes'].append(
+            f'{plain_imports.allowed} added import(s) allowed: each importing file already imported everything the '
+            'imported file imports, and the imported file registers nothing that can act on other files')
+    if plain_imports.reasons:
+        report['notes'].append('added imports not allowed: ' + '; '.join(f'{k} ({v})' for k, v in plain_imports.reasons.items()))
+    for m, res in ifaces.items():
         for n in res.get('ns_added', []):
             ns_added[n].append(m)
     report['registers_changed'] = registers_changed[:20]
