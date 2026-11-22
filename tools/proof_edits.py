@@ -9,6 +9,8 @@ elsewhere), so they are guesses: each one has to compile and pass the equivalenc
   tools/proof_edits.py citations  --out build/x/edits.jsonl [--form first|short] [--min-proof-tokens N]
   tools/proof_edits.py transplants --out build/x/edits.jsonl
   tools/proof_edits.py shorten     --out build/x/edits.jsonl    # shorten citations already recorded
+  tools/proof_edits.py projections --out build/x/edits.jsonl [--min-parts N] [--min-nodes N]
+                                                               # read long conjunctions by projection
   tools/proof_edits.py variants --edits E --work W [--single-from W/results.jsonl]
   tools/proof_edits.py choose   --edits E --work W            # after tools/batch_variants.py ran
   tools/proof_edits.py apply    --chosen W/chosen.jsonl [--expect W/final/sources.tsv]
@@ -78,6 +80,12 @@ def apply_edits(text, edits):
     lines = text.split('\n')
     placed, failed = [], []
     for e in edits:
+        if 'start' in e:                                  # an edit of one exact span inside a proof
+            if hashlib.sha256(text[e['start']:e['end']].encode('utf-8')).hexdigest() != e['old_sha']:
+                failed.append(e)
+            else:
+                placed.append((e['start'], e['end'], e['body']))
+            continue
         s = split_decl(text, lines, (e['first_line'], e['first_col'], e['last_line'], e['last_col']))
         short = CD.user_name(e['theorem']).split('.')[-1]
         if s is None or short not in text[s[0]:s[1]]:
@@ -344,6 +352,174 @@ def gen_shorten(out, candidates):
 
 
 # ------------------------------------------------------------------ variants
+# ------------------------------------------------------------------ projections instead of taking apart
+# `obtain ⟨-, -, h, -, …⟩ := H` on a long conjunction is written out as one nested case split per part,
+# and every level restates what is left of the conjunction. Reading the parts that are used by
+# projection (`have h := H.2.2.1`) writes each part once. These edits replace one such line each; the
+# proof is otherwise untouched, and each edit has to compile and pass the equivalence check.
+SITE_RE = re.compile(r'^(?P<lead>[ \t]*(?:·[ \t]*)?)(?P<kw>obtain|obt|have)[ \t]+'
+                     r'⟨(?P<pat>[^⟨⟩()|@:\n]*)⟩[ \t]*:=[ \t]*(?P<t>\S[^\n]*?)[ \t]*$')
+RCASES_RE = re.compile(r'^(?P<lead>[ \t]*(?:·[ \t]*)?)(?P<kw>rcases)[ \t]+(?P<t>\S[^\n]*?)[ \t]+with[ \t]+'
+                       r'⟨(?P<pat>[^⟨⟩()|@:\n]*)⟩[ \t]*$')
+IDENT_RE = re.compile(r"^[^\W\d][\w'!?]*$")
+ATOM_RE = re.compile(r'^[^\s()\[\]{}⟨⟩@]+$')
+PLAIN_RE = re.compile(r"^[^\W\d][\w']*$")
+OPEN, CLOSE = '([{⟨', ')]}⟩'
+
+
+def projection_lines(line, next_indent, before, after, fresh, min_parts):
+    """The replacement for one tactic line that takes a flat tuple apart, or None if the line is not
+    one we can rewrite safely. before/after: the declaration's text before and after the line."""
+    if '--' in line or ';' in line:
+        return None
+    m = SITE_RE.match(line) or RCASES_RE.match(line)
+    if not m:
+        return None
+    lead, kw, term = m.group('lead'), m.group('kw'), m.group('t')
+    parts = [p.strip() for p in m.group('pat').split(',')]
+    k = len(parts)
+    if k < min_parts or next_indent > len(lead):         # too short to matter, or the term continues below
+        return None
+    names = []
+    for i, p in enumerate(parts):
+        if p in ('-', '_'):
+            continue
+        if p == 'rfl' or not IDENT_RE.match(p):
+            return None
+        names.append((i, p))
+    # A pattern that keeps every part is usually an existence statement (no projections), and gains little.
+    if not names or len(names) == k:
+        return None
+    depth = 0
+    for ch in term:
+        depth += (ch in OPEN) - (ch in CLOSE)
+        if depth < 0:
+            return None
+    if depth or term.split()[-1] in ('by', 'fun', '=>', ':=', 'with', 'at', 'from', '<|', '$', 'do'):
+        return None
+
+    def proj(i):
+        return '.2' * i + ('.1' if i < k - 1 else '')
+
+    atom = bool(ATOM_RE.match(term))
+    word = re.compile(r'(?<![\w.\'])' + re.escape(term) + r'(?![\w\'])')
+    # `obtain` and `rcases` consume a hypothesis they take apart; so do we
+    consumed = (kw in ('obtain', 'rcases') and bool(PLAIN_RE.match(term)) and term not in [n for _, n in names]
+                and bool(word.search(before)) and not word.search(after))
+    out, gone = [], []
+    if len(names) == 1:
+        (i, n), = names
+        out.append(f'have {n} := {term if atom else "(" + term + ")"}{proj(i)}')
+    else:
+        # Each `have` sits one binder deeper than the last, and a term under a different number of binders is
+        # a different term: one `have` per part would write the conjunction out once per part. So the parts
+        # wanted are gathered in one term first, where the projections share everything, and named from that.
+        base = term
+        if not atom:
+            base = fresh()
+            out.append(f'have {base} := {term}')
+            gone.append(base)
+        items = [base + proj(i) for i, _ in names]
+        gathered = items[-1]
+        for it in reversed(items[:-1]):
+            gathered = f'And.intro {it} ({gathered})' if ' ' in gathered else f'And.intro {it} {gathered}'
+        both = fresh()
+        out.append(f'have {both} := {gathered}')
+        last = len(names) - 1
+        out += [f'have {n} := {both}' + '.2' * j + ('.1' if j < last else '') for j, (_, n) in enumerate(names)]
+        gone.insert(0, both)
+    if consumed:
+        gone.append(term)
+    if gone:
+        out.append('clear ' + ' '.join(gone))
+    pad = ' ' * len(lead)
+    return lead + ('\n' + pad).join(out)
+
+
+def gen_projections(out, min_parts, min_nodes):
+    """Edits that replace `obtain ⟨…⟩ := H` (also `obt`, `rcases H with ⟨…⟩`, `have ⟨…⟩ := H`) with
+    a flat pattern of at least `min_parts` parts by projections, in cone theorems whose proof is
+    written out in at least `min_nodes` nodes."""
+    t0 = time.time()
+
+    def say(msg):
+        print(f'{msg}  [{time.time() - t0:.0f}s]', flush=True)
+
+    overlay_consts = os.path.join(C.DATA_OVERLAY, 'consts.tsv')
+    g = CONE.load_graph(C.DATA_BASE, overlay_consts if os.path.exists(overlay_consts) else None, (), say)
+    by_name = CONE.find_names(g, set(C.TARGETS))
+    cone = CONE.reach(g, [by_name[t] for t in C.TARGETS])
+    ranges = CD.load_ranges(g.patched)
+    aux = collections.Counter()
+    for i in range(g.n):
+        if cone[i] and IFACE.AUX.search(g.names[i]):
+            nm = g.names[i]
+            aux[(g.mods[i], nm[:IFACE.AUX.search(nm).start()])] += g.tsize[i] + g.vsize[i]
+    cands = collections.defaultdict(list)                 # module -> [(range, name, proof size)]
+    for i in range(g.n):
+        if not cone[i] or g.kinds[i] != 'thm' or IFACE.AUX.search(g.names[i]):
+            continue
+        size = g.vsize[i] + aux[(g.mods[i], g.names[i])]
+        m = g.modnames[g.mods[i]]
+        if size >= min_nodes and (m, g.names[i]) in ranges:
+            cands[m].append((ranges[(m, g.names[i])], g.names[i], size))
+    say(f'{sum(len(v) for v in cands.values()):,} cone theorems of at least {min_nodes:,} nodes in {len(cands):,} files')
+    mods = sorted(cands)
+    edits, stats = [], collections.Counter()
+    for lo in range(0, len(mods), 2000):
+        text = texts_at(accepted_commit(), mods[lo:lo + 2000])
+        for m in mods[lo:lo + 2000]:
+            src = text.get(m)
+            if src is None or '⟨' not in src:
+                continue
+            lines = src.split('\n')
+            starts = [0]
+            for l in lines:
+                starts.append(starts[-1] + len(l) + 1)
+            n_fresh = [0]
+
+            def fresh():
+                while True:
+                    name = f'hz{n_fresh[0]}'
+                    n_fresh[0] += 1
+                    if name not in src:
+                        return name
+
+            for r, name, size in cands[m]:
+                s = split_decl(src, lines, r)
+                if s is None:
+                    stats['declarations whose statement end was not found'] += 1
+                    continue
+                a, body_start, b = s
+                first = src.count('\n', 0, body_start)
+                last = src.count('\n', 0, b)
+                for ln in range(first, last + 1):
+                    line = lines[ln]
+                    st = line.lstrip(' \t·')
+                    if (not st.startswith(('obtain ⟨', 'obt ⟨', 'have ⟨', 'rcases ')) or starts[ln] < body_start
+                            or starts[ln] + len(line) > b):
+                        continue
+                    nxt = next((l for l in lines[ln + 1:last + 1] if l.strip()), '')
+                    next_indent = len(nxt) - len(nxt.lstrip(' \t')) if ln + 1 <= last and nxt else 0
+                    new = projection_lines(line, next_indent, src[a:starts[ln]], src[starts[ln + 1]:b], fresh, min_parts)
+                    if new is None:
+                        continue
+                    stats['sites'] += 1
+                    edits.append({'module': m, 'theorem': name, 'first_line': ln, 'first_col': 0,
+                                  'start': starts[ln], 'end': starts[ln] + len(line),
+                                  'old_sha': hashlib.sha256(line.encode('utf-8')).hexdigest(),
+                                  'body': new, 'tag': 'projections', 'size': size})
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
+    with open(out, 'w', encoding='utf-8') as fh:
+        for e in edits:
+            fh.write(json.dumps(e, ensure_ascii=False) + '\n')
+    for k, v in stats.items():
+        print(f'  {k}: {v:,}')
+    theorems = {(e['module'], e['theorem']): e['size'] for e in edits}
+    say(f'{len(edits)} edits in {len(theorems):,} theorems ({sum(theorems.values()):,} nodes) in '
+        f'{len({e["module"] for e in edits}):,} files written to {out}')
+
+
 def load_edits(path):
     per = collections.defaultdict(list)
     with open(path, encoding='utf-8') as fh:
@@ -521,6 +697,10 @@ def main():
     sh = sub.add_parser('shorten')
     sh.add_argument('--out', required=True)
     sh.add_argument('--candidates', default=os.path.join(C.ROOT, 'build', 'cite', 'candidates.tsv'))
+    pj = sub.add_parser('projections')
+    pj.add_argument('--out', required=True)
+    pj.add_argument('--min-parts', type=int, default=5)
+    pj.add_argument('--min-nodes', type=int, default=20000)
     v = sub.add_parser('variants')
     v.add_argument('--edits', required=True); v.add_argument('--work', required=True)
     v.add_argument('--single-from', default=None); v.add_argument('--modules', default=None)
@@ -534,6 +714,8 @@ def main():
         gen(args.cmd, args.out, args.form, args.min_proof_tokens)
     elif args.cmd == 'shorten':
         gen_shorten(args.out, args.candidates)
+    elif args.cmd == 'projections':
+        gen_projections(args.out, args.min_parts, args.min_nodes)
     elif args.cmd == 'variants':
         os.makedirs(args.work, exist_ok=True)
         variants(args.edits, args.work, args.single_from, args.modules)

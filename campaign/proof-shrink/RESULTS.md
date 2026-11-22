@@ -169,6 +169,63 @@ cost over a million nodes.
 - A structure with an equation among its fields: `have pack := a.pack; generalize a.x = x at pack ⊢; cases x;
   cases pack` instead of `cases a`, so the other fields are never restated.
 
+## Wave 6, 2026-11-22
+
+Four workers: one lead on a family of 24 proofs that all run `cases pack` on the same structure, three on
+ten more proofs whose expansion is out of proportion to their source. One older worker reported back.
+
+| Theorem | Written-out size | Source tokens (file) | Outcome |
+|---|---|---|---|
+| `…Rw.EqvMove.equivAll_enl` | 967,767 → 254,658 | −113 | recorded |
+| `…Move.SetupRel.good_of` | 964,736 → 2,166 | +311 for both | recorded |
+| `…Move.exists_setupRel` | 771,276 → 879, plus shared `setupRel_move` 590,799 | (same file) | recorded |
+| `UpperTheory.geometric_action_over_coefficient_extension` | 741,655 → 203,248 | +248 | recorded |
+| `GlobalTheory.Reg.exists_scharts_of_covers` | 569,393 → 147,321 | +10 | recorded |
+| `GlobalTheory.ksForm_moved` | 473,861 → 149,167 | +74 | recorded |
+| `…Move.CopyTw.exists_rest` | 491,356 → 186,666 | −20 | recorded |
+| `…T.referenceTuple_rationalForm_lifts_algebraic_enlarged` | 398,876 → 72,006 | −76 | recorded |
+| `GlobalTheory.T.modW_of_rSideW` | 378,300 → 45,775 | −94 | recorded |
+| `PositivityTheory.HtPt.Kftwo.exists_pairHost` | 461,774 → 38,668, plus four helpers | +204 | recorded |
+| eight of the 24 `cases pack` proofs | 6,562,253 → 59,236, plus shared `TwArgs.pack_elim` 384,142 | −209 | waits for the owner |
+| `GlobalTheory.ColRows.rowsU_of_colPins_alt` | 485,546 | | no version compiled in time |
+| `GlobalTheory.Mem.KeepRef.exists_thPW_keep` | 269,326 | | no gain |
+
+What these had in common: **long conjunctions and records taken apart one level at a time.**
+
+- `obtain ⟨-, -, …, h, -⟩ := H` on a conjunction of 14 or 19 parts is written out as one case split per
+  part, and every level restates what is left of the conjunction, one binder deeper, so nothing is shared.
+  It cost 300,000–400,000 nodes each time it appeared. Read the parts instead: by projection, written where
+  the part is used (`H.2.2.1`; all at one depth, so shared), or through a small generic lemma over
+  propositions (`pick14 : a ∧ … ∧ n → (c → j → P) → P`). Pulling parts out with one `have` each also works
+  but is larger than using them in place.
+- Take parts out late. A hypothesis whose type is a folded definition (`RSide z W R`) costs almost nothing
+  each time a `subst` restates it; its fifty unfolded parts do not. For the same reason keep a bundled
+  hypothesis whole until the step that needs it.
+- Two records related field by field (the macros `geo_cases`, `set_cases`, `copy_cases`): take only one of
+  them apart and replace its fresh fields by the other's projections. Theorems that repeat the same
+  destructuring can share one lemma that states all their conclusions as a conjunction.
+- Many substitutions into a large context: do them in a sub-proof that begins with `clear * - needed` and
+  proves `∃ fresh…, x = ⟨…⟩`, then substitute that one equation outside.
+- A long tactic proof inside a field of a structure literal (a `RingHom`) is copied into the goals of the
+  fields after it. Move it to a top-level lemma.
+- A structure literal mentioned in later goals: `refine let S : T := { … }; ⟨S, ?_, ?_⟩` (as in wave 5).
+- A structure field that is an equation between dependent tuples (`pack`): one eliminator over the tuple's
+  components, proved without `cases` as `(congrArg (fun s => motive s.1 s.2.1 …) a.pack).mpr h`. A user then
+  restates its goal once instead of once per component: eight proofs went from 6.56 million nodes to 59,236.
+  The lemma needs Lean's `@[elab_as_elim]` tag so that users need not write the motive; that adds an entry to
+  one of the registers the equivalence check watches, so the change waits for the owner.
+
+What did not work, and why:
+
+- `rowsU_of_colPins_alt`: stating a compact goal first and substituting in one step is sound, but taking the
+  structures apart afterwards took over 20 minutes of compiler time, because the context then holds fourteen
+  equations whose types mention the structure literal. The other order (take apart first) was not tried.
+- `exists_thPW_keep`: the size is in `choose … using key`, which splits off sixteen pieces and restates the
+  remaining existence statement at each step with the new functions put in. Restating the goal costs
+  nothing: the size is counted after identical subterms are merged, so only terms that are new count.
+
+For every proof here the statement alone was under 25,000 nodes: the size was in the steps.
+
 ## What the size was made of
 
 - **Taking large structures apart.** `cases` on structures with dozens of fields followed by dozens of
