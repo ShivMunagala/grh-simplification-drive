@@ -89,7 +89,9 @@ def main():
     reasons = []
     if not res['compatible']:
         what = res['breaking'][:5] or [f'{k}: {a} -> {b} entries' for k, (a, b) in res.get('ext_changed', {}).items()] \
-            or ['namespaces removed: ' + ', '.join(res.get('ns_removed', []))]
+            or [f'imports changed: +{res.get("imports_added")} -{res.get("imports_removed")}'
+                if res.get('imports_added') or res.get('imports_removed')
+                else 'namespaces removed: ' + ', '.join(res.get('ns_removed', []))]
         reasons.append('interface changed: ' + ', '.join(what))
     if res.get('signature_changed'):
         print('  same statement but different argument names, explicit/implicit arguments or universe order: '

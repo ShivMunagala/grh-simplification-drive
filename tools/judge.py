@@ -278,8 +278,11 @@ def main():
     pre_times = {}
     if a.precompiled:
         pre_new = os.path.join(os.path.abspath(a.precompiled), 'new')
-        pre_times = C.load_json(os.path.join(os.path.abspath(a.precompiled), 'times.json'), {}) or {}
-        if not all(m in pre_times and pre_times[m].get('before') is not None for m in modified):
+        # times measured where the modules were compiled; only modules timed both ways are compared
+        pre_times = {m: t for m, t in (C.load_json(os.path.join(os.path.abspath(a.precompiled), 'times.json'), {})
+                                       or {}).items()
+                     if t.get('before') is not None and t.get('after') is not None}
+        if not any(m in pre_times for m in modified):
             a.no_time = True               # no before/after times came with the compiled modules
         pairs = []
         for m in modified + added:
@@ -289,9 +292,12 @@ def main():
         bulk = {}
         for i in range(0, len(pairs), 4000):
             bulk.update(C.parse_consts(C.moddump(pairs[i:i + 4000])))
+        timed = sum(1 for m in modified if m in pre_times)
         report['notes'].append(f'{len(modified) + len(added)} modules were compiled on another machine; '
                                'interfaces and dials were checked here'
-                               + (', time was not compared' if a.no_time else ', times were measured there'))
+                               + (', time was not compared' if a.no_time else
+                                  f', time was measured there before and after on {timed} of them; the time dial '
+                                  'counts only those'))
 
     # compile, with propagation to users of changed interfaces
     time_cache = C.load_json(TIME_CACHE, {}) or {}
@@ -306,7 +312,7 @@ def main():
         rounds += 1
         for m in todo:
             if bulk is not None and (m + '@new') in bulk:
-                r = {'module': m, 'ok': True, 'time_s': (pre_times.get(m) or {}).get('after') or 0.0,
+                r = {'module': m, 'ok': True, 'time_s': pre_times[m]['after'] if m in pre_times else 0.0,
                      'mentions_sorry': False,
                      'olean': C.module_path(m, pre_new, '.olean'), 'ilean': C.module_path(m, pre_new, '.ilean')}
             elif bulk is not None and m in modified + added:
@@ -324,7 +330,7 @@ def main():
             old_olean = C.current_olean(m)
             if bulk is not None and not a.no_time and m in pre_times:
                 time_before += pre_times[m]['before']
-            elif os.path.exists(old_olean) and not a.no_time:
+            elif bulk is None and os.path.exists(old_olean) and not a.no_time:
                 # time the accepted version of the same file on this machine (cached per file content)
                 try:
                     old_text = git('show', f'{base}:{to_path(m)}')
@@ -382,8 +388,9 @@ def main():
     # statement changing. A new namespace matters only if some `open` in the tree can resolve to it.
     registers_changed, ns_added = [], collections.defaultdict(list)
     for m, res in ifaces.items():
-        if res.get('ext_changed') or res.get('ns_removed'):
-            registers_changed.append({'module': m, 'entries': res.get('ext_changed'), 'namespaces_removed': res.get('ns_removed')})
+        if res.get('ext_changed') or res.get('ns_removed') or res.get('imports_added') or res.get('imports_removed'):
+            registers_changed.append({'module': m, 'entries': res.get('ext_changed'), 'namespaces_removed': res.get('ns_removed'),
+                                      'imports_added': res.get('imports_added'), 'imports_removed': res.get('imports_removed')})
         for n in res.get('ns_added', []):
             ns_added[n].append(m)
     report['registers_changed'] = registers_changed[:20]
@@ -437,9 +444,25 @@ def main():
             for m, lines in table_blocks(overlay_consts):
                 if m not in replaced:
                     fh.writelines(lines)
-        if ok_mods:
-            fh.write(b'\n'.join(C.moddump([(m, compiled[m]['olean']) for m in ok_mods])))
+        stored_ranges = {}
+        for i in range(0, len(ok_mods), 4000):
+            lines = C.moddump([(m, compiled[m]['olean']) for m in ok_mods[i:i + 4000]])
+            fh.write(b'\n'.join(lines))
             fh.write(b'\n')
+            for m, info in C.parse_consts(lines).items():
+                stored_ranges[m] = info.get('ranges') or {}
+    # Source ranges come from each module's index file (.ilean), as for the baseline. Some commands
+    # leave no entry there (`alias` is one); the declaration would then count as zero tokens. For a
+    # declaration that had a range before, or is new, the range stored in the compiled module is used.
+    had_range = collections.defaultdict(set)
+    judged = set(ok_mods)
+    for path in (os.path.join(C.DATA_BASE, 'decls.tsv.zst'), os.path.join(C.DATA_OVERLAY, 'decls.tsv')):
+        if judged and os.path.exists(path):
+            for line in CONE.zlines(path):
+                f = line.rstrip(b'\n').split(b'\t', 5)
+                if len(f) == 6 and f[0].decode() in judged:
+                    had_range[f[0].decode()].add(f[5].decode('utf-8', 'replace'))
+    filled = 0
     with open(patch_decls, 'w', encoding='utf-8') as fh:
         overlay_decls = os.path.join(C.DATA_OVERLAY, 'decls.tsv')
         if os.path.exists(overlay_decls):
@@ -452,6 +475,16 @@ def main():
             for name, r in (d.get('decls') or {}).items():
                 fh.write(f'{m}\t{r[0]}\t{r[1]}\t{r[2]}\t{r[3]}\t{name}\n')
                 new_ranges[(m, name)] = (r[0], r[1], r[2], r[3])
+            for name, r in stored_ranges.get(m, {}).items():
+                if (m, name) in new_ranges or name not in news.get(m, {}):
+                    continue
+                if name in had_range[m] or name not in olds.get(m, {}):
+                    fh.write(f'{m}\t{r[0]}\t{r[1]}\t{r[2]}\t{r[3]}\t{name}\n')
+                    new_ranges[(m, name)] = r
+                    filled += 1
+    if filled:
+        report['notes'].append(f'{filled} declaration(s) have no entry in the index file; their source range was taken '
+                               'from the compiled module so that they are still counted')
 
     # validity of what was compiled
     for m in ok_mods:
@@ -561,8 +594,8 @@ def main():
             else:
                 fences.append('declaration over the size cap')
         if registers_changed:
-            fences.append(f'{len(registers_changed)} recompiled module(s) register different attributes, instances '
-                          'or namespaces than before')
+            fences.append(f'{len(registers_changed)} recompiled module(s) import different modules, or register '
+                          'different attributes, instances or namespaces, than before')
         fences += ns_reasons
         if up or fences:
             verdict = 'review'

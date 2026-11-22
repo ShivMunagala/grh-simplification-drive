@@ -23,6 +23,67 @@ import common as C
 import iface as IFACE
 
 
+def time_accepted(a, out, after, load, compile_module):
+    """Compile the accepted version of each module (source from the accepted commit) and note its time."""
+    import shutil, subprocess
+    state = C.accepted_state()
+    commit = state['proof_commit'] if state else C.UPSTREAM_TAG
+    before_path = os.path.join(out, 'before.jsonl')
+    before = load(before_path)
+    oldsrc, old_dir = os.path.join(out, 'oldsrc'), os.path.join(out, 'old')
+    with open(a.modules) as fh:
+        modules = [l.strip() for l in fh if l.strip()]
+    if a.sample:
+        import random
+        pool_ = sorted(m for m in modules if after.get(m, {}).get('ok') and after[m].get('compatible'))
+        random.Random(a.seed).shuffle(pool_)
+        modules = pool_[:a.sample]
+    todo = [m for m in modules if m not in before]
+    print(f'{len(modules)} modules, {len(before)} already timed, {len(todo)} accepted versions to compile, '
+          f'{a.jobs} at a time', flush=True)
+    lock = threading.Lock()
+    t0 = time.time()
+    n = [0]
+
+    def work(m):
+        rel = 'src/' + m.replace('.', '/') + '.lean'
+        try:
+            text = subprocess.run(['git', '-C', C.PROOF, 'show', f'{commit}:{rel}'], stdout=subprocess.PIPE,
+                                  check=True).stdout
+            src = C.module_path(m, oldsrc)
+            os.makedirs(os.path.dirname(src), exist_ok=True)
+            with open(src, 'wb') as fh:
+                fh.write(text)
+            r = compile_module(m, old_dir, src=oldsrc, overlays=[], mem_gb=a.mem_gb, timeout=a.timeout, quiet=True)
+            rec = {'module': m, 'ok': r['ok'], 'time_s': r.get('time_s'), 'wall_s': r.get('wall_s')}
+            for ext in ('.olean', '.ilean'):             # only the time is wanted
+                try:
+                    os.remove(C.module_path(m, old_dir, ext))
+                except OSError:
+                    pass
+        except Exception as e:                           # noqa: keep the batch going
+            rec = {'module': m, 'ok': False, 'error': f'exception: {e}'}
+        with lock:
+            with open(before_path, 'a') as fh:
+                fh.write(json.dumps(rec) + '\n')
+            before[m] = rec
+            n[0] += 1
+            if n[0] % 200 == 0:
+                el = time.time() - t0
+                print(f'{n[0]}/{len(todo)} timed, {el:.0f}s, {n[0] / el * 3600:.0f} per hour', flush=True)
+
+    with ThreadPoolExecutor(max_workers=a.jobs) as pool:
+        list(pool.map(work, todo))
+    times = {m: {'before': before[m]['time_s'], 'after': after[m]['time_s']} for m in modules
+             if before.get(m, {}).get('ok') and after.get(m, {}).get('ok')
+             and before[m].get('time_s') is not None and after[m].get('time_s') is not None}
+    json.dump(times, open(os.path.join(out, 'times.json'), 'w'))
+    tb, ta = sum(t['before'] for t in times.values()), sum(t['after'] for t in times.values())
+    print(f'finished: {len(times)} modules timed before and after; total {tb:.0f}s -> {ta:.0f}s; '
+          f'{time.time() - t0:.0f}s', flush=True)
+    shutil.rmtree(oldsrc, ignore_errors=True)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--modules', required=True)
@@ -30,6 +91,13 @@ def main():
     ap.add_argument('--jobs', type=int, default=8)
     ap.add_argument('--mem-gb', type=float, default=16.0)
     ap.add_argument('--timeout', type=int, default=1800)
+    ap.add_argument('--accepted', action='store_true',
+                    help='compile the accepted version of each module instead of the edited one, only to time it '
+                         'under the same load: results go to <out>/before.jsonl, and <out>/times.json then holds '
+                         'the time before and after for every module that has both')
+    ap.add_argument('--sample', type=int, default=0,
+                    help='with --accepted: time only this many modules, chosen at random among those that compiled')
+    ap.add_argument('--seed', type=int, default=1)
     ap.add_argument('--recheck', action='store_true',
                     help='compile nothing: run the equivalence check again on the modules already compiled in '
                          '<out>/new (after the check itself changed) and rewrite results.jsonl')
@@ -41,15 +109,23 @@ def main():
     new_dir = os.path.join(out, 'new')
     os.makedirs(new_dir, exist_ok=True)
     results_path = os.path.join(out, 'results.jsonl')
-    done = {}
-    if os.path.exists(results_path):
-        with open(results_path) as fh:
-            for line in fh:
-                try:
-                    r = json.loads(line)
-                    done[r['module']] = r
-                except ValueError:
-                    pass
+
+    def load(path):
+        d = {}
+        if os.path.exists(path):
+            with open(path) as fh:
+                for line in fh:
+                    try:
+                        r = json.loads(line)
+                        d[r['module']] = r
+                    except ValueError:
+                        pass
+        return d
+
+    done = load(results_path)
+    if a.accepted:
+        time_accepted(a, out, done, load, compile_module)
+        return
     with open(a.modules) as fh:
         modules = [l.strip() for l in fh if l.strip()]
     todo = [m for m in modules if m not in done]

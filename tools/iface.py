@@ -10,8 +10,9 @@ definition's statement and body. So if a recompiled module has
   * with the same statement, written the same way: same argument names, same explicit and
     implicit arguments, same universe parameters in the same order,
   * for anything that is not a theorem, the same body,
-  * and registers the same things with Lean (attributes, instances, simp lemmas, notation,
+  * registers the same things with Lean (attributes, instances, simp lemmas, notation,
     namespaces),
+  * and imports the same modules,
 
 then every already-compiled module that uses it is still a valid proof and needs no rebuild.
 New declarations are harmless. Changed or missing ones are listed, so that only the modules
@@ -96,6 +97,13 @@ def compare_modules(old_mod, new_mod):
     res = compare(old_mod['decls'], new_mod['decls'])
     res['strict'] = old_mod.get('ext') is not None and new_mod.get('ext') is not None
     res['ext_changed'], res['ns_added'], res['ns_removed'] = {}, [], []
+    # A changed import list changes what every file that imports this one can see, whatever the
+    # module itself exposes.
+    oi, ni = old_mod.get('imports'), new_mod.get('imports')
+    res['imports_added'] = sorted(set(ni or ()) - set(oi or ())) if old_mod['decls'] else []
+    res['imports_removed'] = sorted(set(oi or ()) - set(ni or ())) if old_mod['decls'] else []
+    if res['imports_added'] or res['imports_removed']:
+        res['compatible'] = False
     if res['strict']:
         oe, ne = old_mod['ext'], new_mod['ext']
         for k in sorted(set(oe) | set(ne)):

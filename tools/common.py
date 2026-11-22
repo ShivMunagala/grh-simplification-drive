@@ -172,6 +172,10 @@ def parse_consts(lines):
             mods[cur]['ext'] = ext
         elif tag == b'N' and cur is not None:
             mods[cur]['namespaces'] = f[2].decode().split(',') if len(f) > 2 and f[2] else []
+        elif tag == b'R' and cur is not None and len(f) >= 7:
+            # source range Lean stored for a declaration: (first line, column, last line, column)
+            mods[cur].setdefault('ranges', {})[b'\t'.join(f[6:]).decode('utf-8', 'replace')] = \
+                (int(f[2]), int(f[3]), int(f[4]), int(f[5]))
         elif tag == b'X':
             m = f[1].decode()
             mods.setdefault(m, {'imports': [], 'decls': {}, 'error': None, 'ext': None, 'namespaces': None})['error'] = \

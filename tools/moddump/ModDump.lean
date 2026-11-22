@@ -9,8 +9,9 @@ Output (stdout): tab-separated records
   S  <id>  <strict statement hash>  <strict body hash>  <universe parameters hash>      (with `--strict`)
   A  <module>  <extension>=<number of entries>,...                                       (with `--strict`)
   N  <module>  <namespace>,...           namespaces the module registers                 (with `--strict`)
+  R  <id>  <first line>  <column>  <last line>  <column>  <name>   source range        (with `--strict`)
   B  <id>  <argument name>:<kind>,...    leading arguments of the statement              (with `--binders`)
-With `--nsonly` only `M`, `N` and `E` are printed, which is fast: nothing is traversed.
+With `--nsonly` only `M`, `A`, `N` and `E` are printed, which is fast: nothing is traversed.
   X  <module>  <error>                  (the module could not be read)
   E  <module>                           (end of module)
 
@@ -36,6 +37,7 @@ With `--delete`, a file is removed once it has been processed.
 import Lean.Environment
 import Lean.Util.FoldConsts
 import Lean.Util.NumObjs
+import Lean.DeclarationRange
 
 open Lean
 
@@ -183,6 +185,22 @@ partial def telescope (e : Expr) (acc : Array String := #[]) : Array String :=
 
 end Strict
 
+/-- `R` records: the source range Lean stored for each declaration (0-based lines, UTF-16 columns,
+the same convention as the `.ilean` files). -/
+unsafe def rangeRecords (mod : ModuleData) (out : IO.FS.Stream) : IO Unit := do
+  for (n, es) in mod.entries do
+    if toString n == "Lean.declRangeExt" then
+      for e in es do
+        let (name, r) := (unsafeCast e : Name × DeclarationRanges)
+        out.putStrLn
+          s!"R\t{name.hash}\t{r.range.pos.line - 1}\t{r.range.charUtf16}\t{r.range.endPos.line - 1}\t{r.range.endCharUtf16}\t{name}"
+
+/-- `A` record: how many entries the module adds to each environment extension. -/
+def extensionRecord (modName : String) (mod : ModuleData) (out : IO.FS.Stream) : IO Unit := do
+  let exts := mod.entries.foldl (init := (#[] : Array String)) fun acc (n, es) =>
+    if es.size == 0 then acc else acc.push s!"{n}={es.size}"
+  out.putStrLn s!"A\t{modName}\t{",".intercalate exts.toList}"
+
 /-- `N` record: the namespaces a module registers (entries of that extension are names). -/
 unsafe def namespaceRecord (modName : String) (mod : ModuleData) (out : IO.FS.Stream) : IO Unit := do
   for (n, es) in mod.entries do
@@ -196,6 +214,7 @@ unsafe def processOne (mode : SizeMode) (strict binders nsOnly : Bool) (modName 
   let imports := mod.imports.map fun i => toString i.module
   out.putStrLn s!"M\t{modName}\t{mod.constants.size}\t{",".intercalate imports.toList}"
   if nsOnly then
+    extensionRecord modName mod out
     namespaceRecord modName mod out
     out.putStrLn s!"E\t{modName}"
     region.free
@@ -219,10 +238,9 @@ unsafe def processOne (mode : SizeMode) (strict binders nsOnly : Bool) (modName 
     if binders then
       out.putStrLn s!"B\t{ci.name.hash}\t{",".intercalate (Strict.telescope ci.type).toList}"
   if strict then
-    let exts := mod.entries.foldl (init := (#[] : Array String)) fun acc (n, es) =>
-      if es.size == 0 then acc else acc.push s!"{n}={es.size}"
-    out.putStrLn s!"A\t{modName}\t{",".intercalate exts.toList}"
+    extensionRecord modName mod out
     namespaceRecord modName mod out
+    rangeRecords mod out
   out.putStrLn s!"E\t{modName}"
   out.flush
   region.free

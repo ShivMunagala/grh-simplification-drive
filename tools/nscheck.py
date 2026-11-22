@@ -72,7 +72,7 @@ def build(jobs=3):
     n = errors = 0
     for out in outs:
         for line in out.split(b'\n'):
-            if line[:1] in (b'M', b'N'):
+            if line[:1] in (b'M', b'N', b'A'):
                 z.stdin.write(line + b'\n')
                 n += line[:1] == b'M'
             elif line[:1] == b'X':
