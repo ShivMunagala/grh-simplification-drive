@@ -23,11 +23,11 @@ One point per recorded change, placed at the time of its commit.
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 176,106,784 | −7,011,455 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,720,318,671 | −68,985,628 |
+| Source size (tokens) | 183,118,239 | 176,105,982 | −7,012,257 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,719,481,805 | −69,822,494 |
 | Time (CPU seconds on recompiled files, running total) | 0.0 | -2,830.5 | −2,830.5 |
 
-Cone: 1,260,830 declarations in 146,531 files. Recorded changes: 25. Latest row: dropped parts of patterns skipped by projection; broad round (5288 lines; 3945 files) (2026-11-22 10:14 UTC).
+Cone: 1,260,830 declarations in 146,531 files. Recorded changes: 26. Latest row: kept parts between dropped ones read by projection; second pass (171 lines; 125 files) (2026-11-22 10:50 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -42,12 +42,12 @@ Cone: 1,260,830 declarations in 146,531 files. Recorded changes: 25. Latest row:
 | 2026-11-22 | Repetition sweep, part 1: 10,064 duplicate proofs now cite a copy their file already imports (two passes), each citation in its shortest form. Written-out size −0.5%, source −0.2% | done |
 | 2026-11-22 | Heaviest proofs, waves 2 to 6: 50 proofs rewritten by hand, each kind of cause written up with its fix ([notes](campaign/proof-shrink/RESULTS.md)) | done |
 | | One shared lemma for 24 proofs that take the same record apart: 16 rewritten, 12.5 million nodes down to 0.6 million; not recorded | waits for the owner: the lemma needs one Lean tag the equivalence check sends to review |
-| 2026-11-22 | Patterns that drop parts of a conjunction read the kept parts by projection instead of matching every part. 9,348 lines in 7,226 files, −17.9 million nodes, source down ([notes](campaign/proof-shrink/RESULTS.md)). A last pass is being compiled | nearly done |
+| 2026-11-22 | Patterns that drop parts of a conjunction read the kept parts by projection instead of matching every part. 9,519 lines in 7,351 files, −18.7 million nodes, source down ([notes](campaign/proof-shrink/RESULTS.md)) | done |
 | | Repetition sweep, part 2: duplicates in files that cannot see each other share one proof | needs a rule for added imports |
 | | Heavy definitions built from chains of `choose` | next |
-| | More waves on the heaviest proofs | ongoing |
+| | More waves on the heaviest proofs (wave 7 is running; proofs over 100,000 nodes are now only 2.8% of the whole, so returns are falling) | ongoing |
 | | Sweep of repetitions: the same argument written out in many proofs | next |
-| | Plain-language map of the argument: which known theorems it rests on, and what each costs | next |
+| | Plain-language map of the argument: the chain at the top, the largest blocks under it and what each costs, where a shorter route might exist. Everything above is about how the proof is written; this is the first step on the mathematics | started |
 
 ## Fixed
 

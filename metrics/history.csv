@@ -25,3 +25,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-22T09:52:17Z,c034e7479,dropped parts of patterns skipped by projection; second round (2712 lines; 2188 files),176217753,2723260092,-2880.9,1260827,146526
 2026-11-22T10:05:02Z,43cc9f42e,citations of a copy written in their short form (9676 theorems; 6127 files),176113724,2723260092,-2855.6,1260827,146526
 2026-11-22T10:14:15Z,30eeb2ca1,dropped parts of patterns skipped by projection; broad round (5288 lines; 3945 files),176106784,2720318671,-2830.5,1260830,146531
+2026-11-22T10:50:18Z,7b05e7b56,kept parts between dropped ones read by projection; second pass (171 lines; 125 files),176105982,2719481805,-2830.5,1260830,146531
