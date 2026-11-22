@@ -54,9 +54,11 @@ def acquire_slot():
     """Wait for a compile slot. Memory is the limit on this machine: one compile at a time,
     and a second one only while plenty of memory is free."""
     os.makedirs(os.path.dirname(C.LOCK), exist_ok=True)
+    slots = int(os.environ.get('GRH_SLOTS', '0'))      # a large machine: this many compiles at once
+    paths = [C.LOCK + (str(i) if i else '') for i in range(slots)] if slots else [C.LOCK, C.LOCK + '2']
     while True:
-        for i, path in enumerate((C.LOCK, C.LOCK + '2')):
-            if i == 1 and mem_available_gb() < SECOND_SLOT_MIN_FREE_GB:
+        for i, path in enumerate(paths):
+            if not slots and i == 1 and mem_available_gb() < SECOND_SLOT_MIN_FREE_GB:
                 continue
             fh = open(path, 'w')
             try:

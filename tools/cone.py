@@ -248,10 +248,10 @@ def find_names(g, wanted):
 
 
 def compute(data, src, out=None, patch_consts=None, patch_decls=None, removed=(), targets=None, verbose=True,
-            src_override=None):
-    """src_override: {module: source text} for modules whose text must not be read from `src`
-    (files that are edited in the working tree but are not part of what is being judged)."""
-    src_override = src_override or {}
+            read_source=None):
+    """read_source: optional function module -> source text (or None). The judge passes one that
+    reads the judged files as they were when judging started and everything else from the accepted
+    commit, so that files other people are editing meanwhile cannot leak into the count."""
     targets = targets or C.TARGETS
     rh_only = [t for t in RH_ONLY if t in targets] or targets[:1]
     t0 = time.time()
@@ -331,8 +331,12 @@ def compute(data, src, out=None, patch_consts=None, patch_decls=None, removed=()
         tokens = lines_total = missing_files = 0
         per_decl_tokens = []
         for m, rs in byfile.items():
-            if m in src_override:
-                lines = src_override[m].split('\n')
+            if read_source is not None:
+                text = read_source(m)
+                if text is None:
+                    missing_files += 1
+                    continue
+                lines = text.split('\n')
             else:
                 try:
                     with open(C.module_path(m, src), encoding='utf-8') as fh:

@@ -150,6 +150,33 @@ def decl_tokens(module, name, ranges, src=C.SRC, cache={}):
     return CONE.count_tokens(CONE.slice_range(cache[module], *r))
 
 
+class BaseSource:
+    """Read source files from a commit of the proof repository, through one long-lived git process."""
+
+    def __init__(self, commit):
+        self.commit = commit
+        self.p = subprocess.Popen(['git', '-C', C.PROOF, 'cat-file', '--batch'],
+                                  stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+
+    def read(self, module):
+        self.p.stdin.write(f'{self.commit}:{to_path(module)}\n'.encode())
+        self.p.stdin.flush()
+        header = self.p.stdout.readline().split()
+        if len(header) < 3:
+            return None
+        size = int(header[2])
+        data = self.p.stdout.read(size)
+        self.p.stdout.read(1)
+        return data.decode('utf-8', 'replace')
+
+    def close(self):
+        try:
+            self.p.stdin.close()
+            self.p.wait(timeout=10)
+        except Exception:
+            self.p.kill()
+
+
 def sha(text):
     return hashlib.sha256(text if isinstance(text, bytes) else text.encode('utf-8')).hexdigest()
 
@@ -163,6 +190,9 @@ def main():
     ap.add_argument('--baseline', default=os.path.join(C.ROOT, 'baseline'))
     ap.add_argument('--propagate', action='store_true', help='also recompile modules that use what changed')
     ap.add_argument('--no-time', action='store_true', help='skip timing of the accepted versions')
+    ap.add_argument('--precompiled', default=None,
+                    help='directory holding new/<Module>.olean and .ilean compiled elsewhere (tools/batch_compile.py '
+                         'on a rented machine). Nothing is compiled here; interfaces and dials are still checked here.')
     ap.add_argument('--threads', type=int, default=1)
     ap.add_argument('--mem-gb', type=float, default=8.0)
     ap.add_argument('--max-propagate', type=int, default=50)
@@ -194,27 +224,26 @@ def main():
     report = {'base': base_commit, 'problems': [], 'notes': []}
 
     modified, added, removed = changed_files(base)
-    src_override = {}          # files edited in the working tree but not part of this judgement
     if a.only:
         only = set(a.only.split(','))
         skipped = [m for m in modified + added + removed if m not in only]
         if skipped:
             report['notes'].append(f'{len(skipped)} other changed files ignored because of --only')
-        for m in skipped:
-            try:
-                src_override[m] = git('show', f'{base}:{to_path(m)}')     # judged as they are in the base
-            except subprocess.CalledProcessError:
-                pass                                                         # new file: not in any table
         modified, added, removed = ([m for m in l if m in only] for l in (modified, added, removed))
     report['modified'], report['added'], report['removed'] = modified, added, removed
     print(f'changed: {len(modified)} modified, {len(added)} added, {len(removed)} deleted')
     if not (modified or added or removed):
         print('nothing changed')
         return
+    # Snapshot the judged files now. Everything else is read from the accepted commit, never from
+    # the working tree, where other people may be editing while this runs.
     report['changed_hashes'] = {}
+    snapshot = {}
     for m in modified + added:
         with open(C.module_path(m), 'rb') as fh:
-            report['changed_hashes'][to_path(m)] = sha(fh.read())
+            data = fh.read()
+        report['changed_hashes'][to_path(m)] = sha(data)
+        snapshot[m] = data.decode('utf-8', 'replace')
     for m in removed:
         report['changed_hashes'][to_path(m)] = None
 
@@ -240,6 +269,22 @@ def main():
         if still:
             report['problems'].append(f'{len(still)} remaining files still import deleted modules, e.g. {still[:3]}')
 
+    # modules compiled elsewhere: read both versions of all of them in a few passes
+    bulk = None
+    if a.precompiled:
+        a.no_time = True
+        pre_new = os.path.join(os.path.abspath(a.precompiled), 'new')
+        pairs = []
+        for m in modified + added:
+            for tag, path in (('@old', C.current_olean(m)), ('@new', C.module_path(m, pre_new, '.olean'))):
+                if os.path.exists(path):
+                    pairs.append((m + tag, path))
+        bulk = {}
+        for i in range(0, len(pairs), 4000):
+            bulk.update(C.parse_consts(C.moddump(pairs[i:i + 4000])))
+        report['notes'].append(f'{len(modified) + len(added)} modules were compiled on another machine; '
+                               'interfaces and dials were checked here, time was not compared')
+
     # compile, with propagation to users of changed interfaces
     time_cache = C.load_json(TIME_CACHE, {}) or {}
     todo = order_by_imports(modified + added)
@@ -252,9 +297,15 @@ def main():
     while todo:
         rounds += 1
         for m in todo:
-            r = compile_module(m, new_dir, overlays=[new_dir], threads=a.threads, mem_gb=a.mem_gb, quiet=True)
+            if bulk is not None and (m + '@new') in bulk:
+                r = {'module': m, 'ok': True, 'time_s': 0.0, 'mentions_sorry': False,
+                     'olean': C.module_path(m, pre_new, '.olean'), 'ilean': C.module_path(m, pre_new, '.ilean')}
+            elif bulk is not None and m in modified + added:
+                r = {'module': m, 'ok': False, 'error': 'no compiled module was supplied for it'}
+            else:
+                r = compile_module(m, new_dir, overlays=[new_dir], threads=a.threads, mem_gb=a.mem_gb, quiet=True)
+                print(f"  compiled {m}: ok={r['ok']} time={r.get('time_s')}s rss={r.get('max_rss_mb')}MB", flush=True)
             compiled[m] = r
-            print(f"  compiled {m}: ok={r['ok']} time={r.get('time_s')}s rss={r.get('max_rss_mb')}MB", flush=True)
             if not r['ok']:
                 report['problems'].append(f"{m} does not compile: {r.get('messages_tail', r.get('error', ''))[-600:]}")
                 continue
@@ -282,7 +333,13 @@ def main():
                     time_before += time_cache.get(key, 0.0)
                 except subprocess.CalledProcessError:
                     pass                                  # file is new relative to the base
-            res, old, new = IFACE.check_module(m, new_dir, old_path=old_olean)
+            if bulk is not None and (m + '@new') in bulk:
+                old = bulk.get(m + '@old', {'decls': {}})['decls']
+                new = bulk[m + '@new']['decls']
+                res = IFACE.compare(old, new)
+                res['module'] = m
+            else:
+                res, old, new = IFACE.check_module(m, new_dir, old_path=old_olean)
             ifaces[m] = res; news[m] = new; olds[m] = old
             for nm in res['breaking'] + res['aux_to_check']:
                 if nm in old:
@@ -353,8 +410,14 @@ def main():
     summary = None
     if not report['problems'] and 'incomplete' not in report:
         try:
+            for m in modified + added:              # the judged files must not have moved under us
+                with open(C.module_path(m), 'rb') as fh:
+                    if sha(fh.read()) != report['changed_hashes'][to_path(m)]:
+                        raise RuntimeError(f'{m} was edited while it was being judged; run the judge again')
+            base_source = BaseSource(base_commit)
             summary = CONE.compute(C.DATA_BASE, C.SRC, work, patch_consts, patch_decls, all_removed, verbose=False,
-                                   src_override=src_override)
+                                   read_source=lambda mod: snapshot[mod] if mod in snapshot else base_source.read(mod))
+            base_source.close()
         except RuntimeError as e:
             report['problems'].append(str(e))
     if summary and base_summary and before:

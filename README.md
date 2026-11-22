@@ -144,8 +144,6 @@ Not in git: `proof/` (the archive with our patches applied, its own local reposi
 
 ## Not built yet
 
-- A steadier time measure. Compile time is taken per file and swings with machine load; Lean's own
-  per-phase timing, excluding module loading, would be steadier.
 - Rebuilding the overlay from `patches/` on a fresh clone (recompiling every changed module in order).
 - Measuring on CI. A hosted runner cannot hold the compiled base, so dials are measured locally and recorded.
 - Comparator and the independent checkers on our version: they need a full build on a large machine.

@@ -54,9 +54,16 @@ def main():
         extra, missing = sorted(names - set(judged))[:5], sorted(set(judged) - names)[:5]
         sys.exit(f'the proof commit does not match what was judged. Committed but not judged: {extra}. '
                  f'Judged but not committed: {missing}.')
+    # the judged files are committed (not dirty) and their contents are what was judged
+    dirty = set(l[3:] for l in proof_git('status', '--porcelain')[0].splitlines())
     for path, h in judged.items():
-        blob, rc = proof_git('show', f'HEAD:{path}', binary=True, check=False)
-        got = None if rc != 0 else hashlib.sha256(blob).hexdigest()
+        if path in dirty:
+            sys.exit(f'{path} has uncommitted changes; commit the judged files first')
+        full = os.path.join(C.PROOF, path)
+        got = None
+        if os.path.exists(full):
+            with open(full, 'rb') as fh:
+                got = hashlib.sha256(fh.read()).hexdigest()
         if got != h:
             sys.exit(f'{path} differs from what was judged; run the judge again')
     commit, when = proof_git('show', '-s', '--format=%h %cI', 'HEAD')[0].split()
