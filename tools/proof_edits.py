@@ -11,9 +11,11 @@ elsewhere), so they are guesses: each one has to compile and pass the equivalenc
   tools/proof_edits.py shorten     --out build/x/edits.jsonl    # shorten citations already recorded
   tools/proof_edits.py projections --out build/x/edits.jsonl [--min-parts N] [--min-nodes N]
                                                                # read long conjunctions by projection
+  tools/proof_edits.py opaque-set  --out build/x/edits.jsonl [--min-nodes N]
+                                                               # `clear_value x` after `set x := e with h`
   tools/proof_edits.py variants --edits E --work W [--single-from W/results.jsonl]
   tools/proof_edits.py choose   --edits E --work W            # after tools/batch_variants.py ran
-  tools/proof_edits.py apply    --chosen W/chosen.jsonl [--expect W/final/sources.tsv]
+  tools/proof_edits.py apply    --chosen W/chosen.jsonl [--expect W/final/sources.tsv [--drop-stale]]
                                                                # write the chosen edits into proof/src
 
 Variants. For every module, `variants` writes the file with all its edits applied (variant `all`)
@@ -365,6 +367,7 @@ IDENT_RE = re.compile(r"^[^\W\d][\w'!?]*$")
 ATOM_RE = re.compile(r'^[^\s()\[\]{}⟨⟩@]+$')
 PLAIN_RE = re.compile(r"^[^\W\d][\w']*$")
 OPEN, CLOSE = '([{⟨', ')]}⟩'
+MIN_REST = 4                       # parts from the first dropped one on, below which a line is left alone
 
 
 def projection_lines(line, next_indent, before, after, fresh, min_parts):
@@ -380,15 +383,18 @@ def projection_lines(line, next_indent, before, after, fresh, min_parts):
     k = len(parts)
     if k < min_parts or next_indent > len(lead):         # too short to matter, or the term continues below
         return None
-    names = []
-    for i, p in enumerate(parts):
-        if p in ('-', '_'):
-            continue
-        if p == 'rfl' or not IDENT_RE.match(p):
+    for p in parts:
+        if p not in ('-', '_') and (p == 'rfl' or not IDENT_RE.match(p)):
             return None
-        names.append((i, p))
-    # A pattern that keeps every part is usually an existence statement (no projections), and gains little.
-    if not names or len(names) == k:
+    # Parts named at the front may be witnesses of an existence statement, which has no projections: they
+    # stay in the pattern. What follows the first dropped part is read by projection.
+    front = 0
+    while front < k and parts[front] not in ('-', '_'):
+        front += 1
+    rest = parts[front:]
+    r = len(rest)
+    names = [(i, p) for i, p in enumerate(rest) if p not in ('-', '_')]
+    if r < MIN_REST:                                      # nothing dropped, or too little to matter
         return None
     depth = 0
     for ch in term:
@@ -399,26 +405,66 @@ def projection_lines(line, next_indent, before, after, fresh, min_parts):
         return None
 
     def proj(i):
-        return '.2' * i + ('.1' if i < k - 1 else '')
+        return '.2' * i + ('.1' if i < r - 1 else '')
 
-    atom = bool(ATOM_RE.match(term))
-    word = re.compile(r'(?<![\w.\'])' + re.escape(term) + r'(?![\w\'])')
-    # `obtain` and `rcases` consume a hypothesis they take apart; so do we
-    consumed = (kw in ('obtain', 'rcases') and bool(PLAIN_RE.match(term)) and term not in [n for _, n in names]
-                and bool(word.search(before)) and not word.search(after))
     out, gone = [], []
-    if len(names) == 1:
-        (i, n), = names
-        out.append(f'have {n} := {term if atom else "(" + term + ")"}{proj(i)}')
+    if front:
+        # keep the front of the pattern; one name (or a dash, if nothing else is used) stands for the rest
+        base = fresh() if names else '-'
+        pat = '⟨' + ', '.join(parts[:front] + [base]) + '⟩'
+        out.append(f'rcases {term} with {pat}' if kw == 'rcases' else f'{kw} {pat} := {term}')
+        if names:
+            gone.append(base)
     else:
+        if not names:
+            return None
+        atom = bool(ATOM_RE.match(term))
+        base = term
+        word = re.compile(r'(?<![\w.\'])' + re.escape(term) + r'(?![\w\'])')
+        # `obtain` and `rcases` consume a hypothesis they take apart; so do we
+        if (kw in ('obtain', 'rcases') and PLAIN_RE.match(term) and term not in [n for _, n in names]
+                and word.search(before) and not word.search(after)):
+            gone.append(term)
+        if not atom:
+            if len(names) == 1:
+                base = f'({term})'
+            else:
+                base = fresh()
+                out.append(f'have {base} := {term}')
+                gone.insert(0, base)
+    if names and not all(n[:1] in 'hH' for _, n in names):
+        # Some name after the first dropped part does not look like a hypothesis: it may be the witness of
+        # an existence statement inside the conjunction. Dropped parts are skipped by projection, and each
+        # run of named parts is taken out by a short `obtain`, which handles witnesses.
+        cur, i = base, 0
+        while True:
+            d = 0
+            while i < r and rest[i] in ('-', '_'):
+                i, d = i + 1, d + 1
+            if i == r:
+                break
+            j = i
+            while j < r and rest[j] not in ('-', '_'):
+                j += 1
+            run, tail = rest[i:j], cur + '.2' * d
+            if j == r:                                    # the run ends the pattern
+                out.append(f'have {run[0]} := {tail}' if len(run) == 1 else f'obtain ⟨{", ".join(run)}⟩ := {tail}')
+                break
+            if all(p in ('-', '_') for p in rest[j:]):    # only dropped parts follow
+                out.append(f'have {run[0]} := {tail}.1' if len(run) == 1 and run[0][:1] in 'hH'
+                           else f'obtain ⟨{", ".join(run)}, -⟩ := {tail}')
+                break
+            nxt = fresh()
+            out.append(f'obtain ⟨{", ".join(run)}, {nxt}⟩ := {tail}')
+            gone.insert(0, nxt)
+            cur, i = nxt, j
+    elif len(names) == 1:
+        (i, n), = names
+        out.append(f'have {n} := {base}{proj(i)}')
+    elif names:
         # Each `have` sits one binder deeper than the last, and a term under a different number of binders is
         # a different term: one `have` per part would write the conjunction out once per part. So the parts
         # wanted are gathered in one term first, where the projections share everything, and named from that.
-        base = term
-        if not atom:
-            base = fresh()
-            out.append(f'have {base} := {term}')
-            gone.append(base)
         items = [base + proj(i) for i, _ in names]
         gathered = items[-1]
         for it in reversed(items[:-1]):
@@ -428,18 +474,43 @@ def projection_lines(line, next_indent, before, after, fresh, min_parts):
         last = len(names) - 1
         out += [f'have {n} := {both}' + '.2' * j + ('.1' if j < last else '') for j, (_, n) in enumerate(names)]
         gone.insert(0, both)
-    if consumed:
-        gone.append(term)
     if gone:
         out.append('clear ' + ' '.join(gone))
     pad = ' ' * len(lead)
     return lead + ('\n' + pad).join(out)
 
 
-def gen_projections(out, min_parts, min_nodes):
-    """Edits that replace `obtain ⟨…⟩ := H` (also `obt`, `rcases H with ⟨…⟩`, `have ⟨…⟩ := H`) with
-    a flat pattern of at least `min_parts` parts by projections, in cone theorems whose proof is
-    written out in at least `min_nodes` nodes."""
+# `set x := e with h` leaves x transparent: `ring`, `linarith` and their relatives see through it and
+# multiply out whatever powers and products e contains. With `clear_value x` right after, x is a plain
+# variable and `h : x = e` is still there for the steps that need the value.
+SET_RE = re.compile(r'^(?P<lead>[ \t]*(?:·[ \t]*)?)set[ \t]+(?P<x>[^\s:(){}\[\]⟨⟩]+)[ \t]*(?::[^=\n]*)?:=[^\n]*'
+                    r'\bwith[ \t]+(?:←[ \t]*)?[^\s]+[ \t]*$')
+ARITH_RE = re.compile(r'\b(ring|ring_nf|linarith|nlinarith|field_simp|positivity|polyrith|linear_combination)\b')
+
+
+def opaque_set_lines(line, next_indent, before, after, fresh, min_parts):
+    if '--' in line or ';' in line:
+        return None
+    m = SET_RE.match(line)
+    if not m or next_indent > len(m.group('lead')) or not IDENT_RE.match(m.group('x')):
+        return None
+    if not ARITH_RE.search(after):
+        return None
+    return line + '\n' + ' ' * len(m.group('lead')) + 'clear_value ' + m.group('x')
+
+
+REWRITES = {    # tag -> (how a line must start, the rewrite)
+    'projections': (('obtain ⟨', 'obt ⟨', 'have ⟨', 'rcases '), projection_lines),
+    'opaque-set': (('set ',), opaque_set_lines),
+}
+
+
+def gen_projections(out, min_parts, min_nodes, tag='projections'):
+    """Edits of single lines in cone theorems whose proof is written out in at least `min_nodes` nodes.
+    `projections`: `obtain ⟨…⟩ := H` (also `obt`, `rcases H with ⟨…⟩`, `have ⟨…⟩ := H`) with a flat
+    pattern of at least `min_parts` parts is replaced by projections. `opaque-set`: `clear_value x` is
+    added after `set x := e with h` where an arithmetic tactic follows."""
+    starts_with, rewrite = REWRITES[tag]
     t0 = time.time()
 
     def say(msg):
@@ -470,7 +541,7 @@ def gen_projections(out, min_parts, min_nodes):
         text = texts_at(accepted_commit(), mods[lo:lo + 2000])
         for m in mods[lo:lo + 2000]:
             src = text.get(m)
-            if src is None or '⟨' not in src:
+            if src is None:
                 continue
             lines = src.split('\n')
             starts = [0]
@@ -496,19 +567,19 @@ def gen_projections(out, min_parts, min_nodes):
                 for ln in range(first, last + 1):
                     line = lines[ln]
                     st = line.lstrip(' \t·')
-                    if (not st.startswith(('obtain ⟨', 'obt ⟨', 'have ⟨', 'rcases ')) or starts[ln] < body_start
+                    if (not st.startswith(starts_with) or starts[ln] < body_start
                             or starts[ln] + len(line) > b):
                         continue
                     nxt = next((l for l in lines[ln + 1:last + 1] if l.strip()), '')
                     next_indent = len(nxt) - len(nxt.lstrip(' \t')) if ln + 1 <= last and nxt else 0
-                    new = projection_lines(line, next_indent, src[a:starts[ln]], src[starts[ln + 1]:b], fresh, min_parts)
+                    new = rewrite(line, next_indent, src[a:starts[ln]], src[starts[ln + 1]:b], fresh, min_parts)
                     if new is None:
                         continue
                     stats['sites'] += 1
                     edits.append({'module': m, 'theorem': name, 'first_line': ln, 'first_col': 0,
                                   'start': starts[ln], 'end': starts[ln] + len(line),
                                   'old_sha': hashlib.sha256(line.encode('utf-8')).hexdigest(),
-                                  'body': new, 'tag': 'projections', 'size': size})
+                                  'body': new, 'tag': tag, 'size': size})
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     with open(out, 'w', encoding='utf-8') as fh:
         for e in edits:
@@ -570,10 +641,13 @@ def variants(edits_path, work, single_from, modules_file=None):
             continue
         if not single_from:
             new, failed = apply_edits(text[m], es)
-            n_unplaced += len(failed)
-            if len(failed) < len(es):
-                write_variant(work, 'all', m, new)
-                plan.append(('all', m))
+            if failed:
+                # The file is not the one the edits were made for (this machine's accepted state is behind,
+                # or ahead). A variant with only some edits could never match the source elsewhere: skip.
+                n_unplaced += 1
+                continue
+            write_variant(work, 'all', m, new)
+            plan.append(('all', m))
             continue
         if good(res.get(('all', m))) or ('all', m) not in res:
             continue
@@ -594,7 +668,7 @@ def variants(edits_path, work, single_from, modules_file=None):
         for vid, m in plan:
             fh.write(f'{vid}\t{m}\n')
     print(f'{len(plan)} variants written under {os.path.join(work, "v")}; plan: {os.path.join(work, name)}'
-          + (f'; {n_unplaced} edits could not be placed' if n_unplaced else ''))
+          + (f'; {n_unplaced} files skipped: they differ from the files the edits were made for' if n_unplaced else ''))
 
 
 def choose(edits_path, work):
@@ -656,9 +730,12 @@ def choose(edits_path, work):
     print(f'chosen edits: {os.path.join(work, "chosen.jsonl")}; compiled files: {final}')
 
 
-def apply(chosen_path, src=C.SRC, expect=None):
+def apply(chosen_path, src=C.SRC, expect=None, drop_stale=False):
     """Write the chosen edits into the source tree. With `expect` (W/final/sources.tsv from `choose`),
-    refuse unless every file written is byte-identical to the source that was compiled."""
+    refuse unless every file written is byte-identical to the source that was compiled. With
+    `drop_stale`, files that would not be identical (they have changed here since the other machine
+    was brought up to date) are left untouched instead, and the files written are listed in
+    applied_modules.txt next to the chosen edits, for the judge's --only-file."""
     per = load_edits(chosen_path)
     want = {}
     if expect:
@@ -669,21 +746,24 @@ def apply(chosen_path, src=C.SRC, expect=None):
         if set(want) != set(per):
             sys.exit(f'{expect} lists {len(want)} files, the chosen edits cover {len(per)}: they do not belong together')
     text = texts_at(accepted_commit(), sorted(per))
-    out = {}
+    out, stale = {}, []
     for m, es in sorted(per.items()):
         new, failed = apply_edits(text[m], es)
-        if failed:
-            sys.exit(f'{m}: {len(failed)} edit(s) could not be placed; is the accepted state the one they were made for?')
-        out[m] = new
-    if expect:
-        differ = [m for m in sorted(out) if hashlib.sha256(out[m].encode('utf-8')).hexdigest() != want[m]]
-        if differ:
-            sys.exit(f'{len(differ)} file(s) would differ from the source that was compiled, nothing written; first: {differ[0]}')
+        if failed or (expect and hashlib.sha256(new.encode('utf-8')).hexdigest() != want[m]):
+            stale.append(m)
+        else:
+            out[m] = new
+    if stale and not drop_stale:
+        sys.exit(f'{len(stale)} file(s) would differ from the source that was compiled, nothing written; first: {stale[0]}'
+                 if expect else f'{stale[0]}: edit(s) could not be placed; is the accepted state the one they were made for?')
     for m, new in out.items():
         with open(C.module_path(m, src), 'w', encoding='utf-8', newline='') as fh:
             fh.write(new)
-    print(f'applied {sum(len(es) for es in per.values())} edits in {len(per)} files'
-          + ('; every file equals the source that was compiled' if expect else ''))
+    with open(os.path.join(os.path.dirname(os.path.abspath(chosen_path)), 'applied_modules.txt'), 'w') as fh:
+        fh.write('\n'.join(sorted(out)) + '\n')
+    print(f'applied {sum(len(per[m]) for m in out)} edits in {len(out)} files'
+          + ('; every file written equals the source that was compiled' if expect else '')
+          + (f'; {len(stale)} files left alone because they have changed here since' if stale else ''))
 
 
 def main():
@@ -697,10 +777,11 @@ def main():
     sh = sub.add_parser('shorten')
     sh.add_argument('--out', required=True)
     sh.add_argument('--candidates', default=os.path.join(C.ROOT, 'build', 'cite', 'candidates.tsv'))
-    pj = sub.add_parser('projections')
-    pj.add_argument('--out', required=True)
-    pj.add_argument('--min-parts', type=int, default=5)
-    pj.add_argument('--min-nodes', type=int, default=20000)
+    for name in REWRITES:
+        pj = sub.add_parser(name)
+        pj.add_argument('--out', required=True)
+        pj.add_argument('--min-parts', type=int, default=5)
+        pj.add_argument('--min-nodes', type=int, default=20000)
     v = sub.add_parser('variants')
     v.add_argument('--edits', required=True); v.add_argument('--work', required=True)
     v.add_argument('--single-from', default=None); v.add_argument('--modules', default=None)
@@ -709,20 +790,21 @@ def main():
     a = sub.add_parser('apply')
     a.add_argument('--chosen', required=True)
     a.add_argument('--expect', default=None, help='W/final/sources.tsv: refuse unless the files come out byte-identical')
+    a.add_argument('--drop-stale', action='store_true', help='leave out files that would not come out identical')
     args = ap.parse_args()
     if args.cmd in ('citations', 'transplants'):
         gen(args.cmd, args.out, args.form, args.min_proof_tokens)
     elif args.cmd == 'shorten':
         gen_shorten(args.out, args.candidates)
-    elif args.cmd == 'projections':
-        gen_projections(args.out, args.min_parts, args.min_nodes)
+    elif args.cmd in REWRITES:
+        gen_projections(args.out, args.min_parts, args.min_nodes, args.cmd)
     elif args.cmd == 'variants':
         os.makedirs(args.work, exist_ok=True)
         variants(args.edits, args.work, args.single_from, args.modules)
     elif args.cmd == 'choose':
         choose(args.edits, args.work)
     else:
-        apply(args.chosen, expect=args.expect)
+        apply(args.chosen, expect=args.expect, drop_stale=args.drop_stale)
 
 
 if __name__ == '__main__':
