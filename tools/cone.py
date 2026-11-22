@@ -86,7 +86,17 @@ TOKEN = re.compile(
 
 
 def count_tokens(text):
-    return len(TOKEN.findall(strip_comments(text)))
+    """Source tokens. A dotted name is one token, plus one for every numeric projection step in it:
+    `h.2.2.1` is four tokens. (Until 2026-11-22 such a name counted as one token whatever its length,
+    which made a chain of projections look free; the baseline and the history were recounted.)"""
+    n = 0
+    for t in TOKEN.findall(strip_comments(text)):
+        n += 1
+        if '.' in t and t[0] not in '"0123456789':
+            for part in t.split('.')[1:]:
+                if part.isdigit():
+                    n += 1
+    return n
 
 
 def u16_index(line, col):
@@ -222,6 +232,7 @@ def load_graph(data, patch_consts=None, removed=(), say=lambda m: None):
     say(f'pass2: statement edges={len(g.t_edges)}, body edges={len(g.v_edges)}, '
         f'references to Mathlib/Lean={g.base_refs}')
     g.patched, g.skip = patched, skip
+    g.idx = idx                                   # hash of a name -> declaration index
     return g
 
 

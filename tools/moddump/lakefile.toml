@@ -4,3 +4,7 @@ defaultTargets = ["moddump"]
 [[lean_exe]]
 name = "moddump"
 root = "ModDump"
+
+[[lean_exe]]
+name = "liveness"
+root = "Liveness"

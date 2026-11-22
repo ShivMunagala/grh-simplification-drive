@@ -2,6 +2,7 @@
 """Spot check of the claim behind the equivalence check: recompile files that USE changed modules.
 
   tools/downstream_check.py --new build/batch/new --sample 300 --jobs 40 [--control] [--seed 1]
+  tools/downstream_check.py --new build/batch/new --modules FILE --jobs 40      (exactly the listed files)
 
 The judge does not rebuild files that import a changed module when the module still exposes the
 same statements. This tool tests that on a sample: it takes files that directly import at least
@@ -34,6 +35,8 @@ def main():
     ap.add_argument('--control', action='store_true', help='compile the sample without swapping anything in')
     ap.add_argument('--exclude', default=None,
                     help='file with modules never to sample (for instance files that are being rewritten themselves)')
+    ap.add_argument('--modules', default=None,
+                    help='check exactly the modules listed in this file, not a sample (changed modules are left out)')
     ap.add_argument('--out', default=os.path.join(C.ROOT, 'build', 'downstream'))
     ap.add_argument('--mem-gb', type=float, default=16.0)
     a = ap.parse_args()
@@ -51,11 +54,17 @@ def main():
     if a.exclude:
         with open(a.exclude) as fh:
             skip |= {l.strip() for l in fh if l.strip()}
-    users = sorted(m for m, imps in imports.items() if m not in skip and any(i in changed for i in imps))
-    random.Random(a.seed).shuffle(users)
-    sample = users[:a.sample]
-    print(f'{len(changed)} changed modules; {len(users)} files import at least one of them directly; '
-          f'checking {len(sample)}' + (' (control: nothing swapped in)' if a.control else ''), flush=True)
+    if a.modules:
+        with open(a.modules) as fh:
+            sample = sorted({l.strip() for l in fh if l.strip()} - changed)
+        print(f'{len(changed)} changed modules; checking the {len(sample)} listed files'
+              + (' (control: nothing swapped in)' if a.control else ''), flush=True)
+    else:
+        users = sorted(m for m, imps in imports.items() if m not in skip and any(i in changed for i in imps))
+        random.Random(a.seed).shuffle(users)
+        sample = users[:a.sample]
+        print(f'{len(changed)} changed modules; {len(users)} files import at least one of them directly; '
+              f'checking {len(sample)}' + (' (control: nothing swapped in)' if a.control else ''), flush=True)
 
     out = os.path.abspath(a.out) + ('_control' if a.control else '')
     os.makedirs(out, exist_ok=True)

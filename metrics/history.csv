@@ -1,32 +1,32 @@
 time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarations,cone_modules
-2026-11-21T19:14:16Z,d6ef6b3,baseline (unmodified archive),183118239,2789304299,0,1265254,146536
-2026-11-21T19:52:16Z,30fd1c8bf,drop redundant parentheses in Bl.FirstBlockLemmaI.goal1,183118237,2789304299,0.1,1265254,146536
-2026-11-21T20:11:33Z,6370ac734,drop redundant parentheses in Bl.CurryModusPonens.curry_mp,183118233,2789304299,0.0,1265254,146536
-2026-11-21T21:10:10Z,4038a8f9d,fewer case-split branches in PG_conjTranspose and PG_mul_PG,183118221,2789164165,0.3,1265167,146536
-2026-11-21T21:24:58Z,6b5727bf8,prove same_basic without taking the structures apart,183118012,2787043943,-7.5,1265167,146536
-2026-11-22T02:14:29Z,4b701e8a3,sigSpan_copy and nine IsClassSystem transfer proofs without taking the structures apart,183119401,2780473858,-180.7,1265168,146536
-2026-11-22T03:08:43Z,ea4955b25,wave 2: six heavy transfer proofs without taking the structures apart,183120272,2772068048,-334.8,1265169,146536
-2026-11-22T03:42:47Z,b76b8f92c,restating theorems turned into aliases (32172 files),176618818,2772067606,-2173.2,1265169,146536
-2026-11-22T03:57:08Z,4010b570d,wave 3: record_heq; exists_sameVec; simpleU_rev_and_sq; fIwasawa_perm,176619432,2770710875,-2229.3,1265042,146536
-2026-11-22T04:25:49Z,c9d43e676,one shared statement for a six-deep choose chain (rl_spec),176620635,2766788620,-2248.5,1265044,146536
-2026-11-22T04:35:56Z,6f9980b12,wave 4: five matrix lemmas and four mixed proofs,176619737,2765704515,-2303.3,1264792,146536
-2026-11-22T04:53:01Z,c0d6719c5,chain follow-up (wEx_of); ac_le; mom_num; exists_nonempty_nMore_upL,176619667,2762844502,-2394.9,1264794,146536
-2026-11-22T05:06:40Z,de04e5734,wave 5: powers kept as symbols (ampLimit; diff_key; diff_bound; bigProjP_of); exists_arcIn_of_unif,176619795,2757972433,-2678.3,1264794,146536
-2026-11-22T05:21:14Z,3c088377b,duplicate proofs cite a copy their file already imports (9729 theorems); lev_twArgs; bor1; case1/case2,176259578,2743379240,-2785.7,1260996,146524
-2026-11-22T06:10:22Z,1e408b885,wave 6: equivAll_enl; good_of; exists_setupRel,176259776,2741524386,-2817.7,1260999,146524
-2026-11-22T06:33:45Z,753d8d02d,wave 6: geometric_action; exists_scharts_of_covers; ksForm_moved; exists_rest; rationalForm lifts; modW_of_rSideW,176259918,2739280271,-2865.8,1261011,146524
-2026-11-22T06:41:47Z,e35ef129e,duplicate proofs cite a copy; second pass (335 theorems; 165 files),176237256,2738648940,-2861.0,1260822,146522
-2026-11-22T06:51:57Z,01cd96612,wave 6: exists_pairHost,176237376,2738276137,-2864.1,1260826,146522
-2026-11-22T07:54:26Z,2ab28319e,long conjunctions read by projection; first batch (88 lines; 56 files),176236923,2736133335,-2874.5,1260826,146522
-2026-11-22T08:12:41Z,a9ff092dd,row_of_pack: no cases x before cases pack,176236896,2736118994,-2875.6,1260826,146522
-2026-11-22T08:26:20Z,88c6464b9,long conjunctions: dropped parts skipped by projection (1063 lines; 851 files),176229318,2730248045,-2891.9,1260827,146522
-2026-11-22T08:38:07Z,65b541094,clear_value after set where the value contains a power (16 lines; 12 files),176229350,2730155019,-2886.5,1260827,146522
-2026-11-22T09:10:57Z,b6bfe4e0c,kept parts between dropped ones read by projection (197 lines; 186 files),176229191,2729058271,-2880.3,1260827,146522
-2026-11-22T09:52:17Z,c034e7479,dropped parts of patterns skipped by projection; second round (2712 lines; 2188 files),176217753,2723260092,-2880.9,1260827,146526
-2026-11-22T10:05:02Z,43cc9f42e,citations of a copy written in their short form (9676 theorems; 6127 files),176113724,2723260092,-2855.6,1260827,146526
-2026-11-22T10:14:15Z,30eeb2ca1,dropped parts of patterns skipped by projection; broad round (5288 lines; 3945 files),176106784,2720318671,-2830.5,1260830,146531
-2026-11-22T10:50:18Z,7b05e7b56,kept parts between dropped ones read by projection; second pass (171 lines; 125 files),176105982,2719481805,-2830.5,1260830,146531
-2026-11-22T11:04:43Z,2d5b0dfd6,wave 7: dm_perm; flowTranslation; exists_ratGL_dM/aE; ent_unit/ent_τ0; jets_congr,176106004,2718885098,-2834.1,1260824,146531
-2026-11-22T11:15:10Z,eafeb73c9,wave 7: three enlarged-base proofs read their conjunctions by projection; jMt_rowsSame,176105783,2718033527,-2852.3,1260824,146531
-2026-11-22T11:25:40Z,27523d9d7,one eliminator for the packing equation of TwArgs; used by 16 proofs,176105116,2706052215,-3483.6,1260827,146531
-2026-11-22T11:36:14Z,4c3d77a34,wave 7: six more heavy proofs (instance arguments reduced before substitutions; a lemma used once instead of projected),176105147,2705323909,-3502.8,1260827,146531
+2026-11-21T19:14:16Z,d6ef6b3,baseline (unmodified archive),184248210,2789304299,0,1265254,146536
+2026-11-21T19:52:16Z,30fd1c8bf,drop redundant parentheses in Bl.FirstBlockLemmaI.goal1,184248208,2789304299,0.1,1265254,146536
+2026-11-21T20:11:33Z,6370ac734,drop redundant parentheses in Bl.CurryModusPonens.curry_mp,184248204,2789304299,0.0,1265254,146536
+2026-11-21T21:10:10Z,4038a8f9d,fewer case-split branches in PG_conjTranspose and PG_mul_PG,184248192,2789164165,0.3,1265167,146536
+2026-11-21T21:24:58Z,6b5727bf8,prove same_basic without taking the structures apart,184247983,2787043943,-7.5,1265167,146536
+2026-11-22T02:14:29Z,4b701e8a3,sigSpan_copy and nine IsClassSystem transfer proofs without taking the structures apart,184249400,2780473858,-180.7,1265168,146536
+2026-11-22T03:08:43Z,ea4955b25,wave 2: six heavy transfer proofs without taking the structures apart,184250317,2772068048,-334.8,1265169,146536
+2026-11-22T03:42:47Z,b76b8f92c,restating theorems turned into aliases (32172 files),177735835,2772067606,-2173.2,1265169,146536
+2026-11-22T03:57:08Z,4010b570d,wave 3: record_heq; exists_sameVec; simpleU_rev_and_sq; fIwasawa_perm,177736452,2770710875,-2229.3,1265042,146536
+2026-11-22T04:25:49Z,c9d43e676,one shared statement for a six-deep choose chain (rl_spec),177737645,2766788620,-2248.5,1265044,146536
+2026-11-22T04:35:56Z,6f9980b12,wave 4: five matrix lemmas and four mixed proofs,177736765,2765704515,-2303.3,1264792,146536
+2026-11-22T04:53:01Z,c0d6719c5,chain follow-up (wEx_of); ac_le; mom_num; exists_nonempty_nMore_upL,177736696,2762844502,-2394.9,1264794,146536
+2026-11-22T05:06:40Z,de04e5734,wave 5: powers kept as symbols (ampLimit; diff_key; diff_bound; bigProjP_of); exists_arcIn_of_unif,177736824,2757972433,-2678.3,1264794,146536
+2026-11-22T05:21:14Z,3c088377b,duplicate proofs cite a copy their file already imports (9729 theorems); lev_twArgs; bor1; case1/case2,177372398,2743379240,-2785.7,1260996,146524
+2026-11-22T06:10:22Z,1e408b885,wave 6: equivAll_enl; good_of; exists_setupRel,177372651,2741524386,-2817.7,1260999,146524
+2026-11-22T06:33:45Z,753d8d02d,wave 6: geometric_action; exists_scharts_of_covers; ksForm_moved; exists_rest; rationalForm lifts; modW_of_rSideW,177373151,2739280271,-2865.8,1261011,146524
+2026-11-22T06:41:47Z,e35ef129e,duplicate proofs cite a copy; second pass (335 theorems; 165 files),177350292,2738648940,-2861.0,1260822,146522
+2026-11-22T06:51:57Z,01cd96612,wave 6: exists_pairHost,177350412,2738276137,-2864.1,1260826,146522
+2026-11-22T07:54:26Z,2ab28319e,long conjunctions read by projection; first batch (88 lines; 56 files),177350461,2736133335,-2874.5,1260826,146522
+2026-11-22T08:12:41Z,a9ff092dd,row_of_pack: no cases x before cases pack,177350434,2736118994,-2875.6,1260826,146522
+2026-11-22T08:26:20Z,88c6464b9,long conjunctions: dropped parts skipped by projection (1063 lines; 851 files),177345763,2730248045,-2891.9,1260827,146522
+2026-11-22T08:38:07Z,65b541094,clear_value after set where the value contains a power (16 lines; 12 files),177345795,2730155019,-2886.5,1260827,146522
+2026-11-22T09:10:57Z,b6bfe4e0c,kept parts between dropped ones read by projection (197 lines; 186 files),177346283,2729058271,-2880.3,1260827,146522
+2026-11-22T09:52:17Z,c034e7479,dropped parts of patterns skipped by projection; second round (2712 lines; 2188 files),177338866,2723260092,-2880.9,1260827,146526
+2026-11-22T10:05:02Z,43cc9f42e,citations of a copy written in their short form (9676 theorems; 6127 files),177234837,2723260092,-2855.6,1260827,146526
+2026-11-22T10:14:15Z,30eeb2ca1,dropped parts of patterns skipped by projection; broad round (5288 lines; 3945 files),177229921,2720318671,-2830.5,1260830,146531
+2026-11-22T10:50:18Z,7b05e7b56,kept parts between dropped ones read by projection; second pass (171 lines; 125 files),177229745,2719481805,-2830.5,1260830,146531
+2026-11-22T11:04:43Z,2d5b0dfd6,wave 7: dm_perm; flowTranslation; exists_ratGL_dM/aE; ent_unit/ent_τ0; jets_congr,177229767,2718885098,-2834.1,1260824,146531
+2026-11-22T11:15:10Z,eafeb73c9,wave 7: three enlarged-base proofs read their conjunctions by projection; jMt_rowsSame,177229969,2718033527,-2852.3,1260824,146531
+2026-11-22T11:25:40Z,27523d9d7,one eliminator for the packing equation of TwArgs; used by 16 proofs,177229379,2706052215,-3483.6,1260827,146531
+2026-11-22T11:36:14Z,4c3d77a34,wave 7: six more heavy proofs (instance arguments reduced before substitutions; a lemma used once instead of projected),177229428,2705323909,-3502.8,1260827,146531

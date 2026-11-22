@@ -22,12 +22,12 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.1M, written-out proof size 2.71B, time change -3.50K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 177.2M, written-out proof size 2.71B, time change -3.50K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 176,105,147 | −7,013,092 |
+| Source size (tokens) | 184,248,210 | 177,229,428 | −7,018,782 |
 | Written-out proof size (term nodes) | 2,789,304,299 | 2,705,323,909 | −83,980,390 |
 | Time (CPU seconds on recompiled files, running total) | 0.0 | -3,502.8 | −3,502.8 |
 
@@ -47,7 +47,9 @@ Cone: 1,260,827 declarations in 146,531 files. Recorded changes: 30. Latest row:
 | 2026-11-22 | Heaviest proofs, waves 2 to 6: 50 proofs rewritten by hand, each kind of cause written up with its fix ([notes](campaign/proof-shrink/RESULTS.md)) | done |
 | 2026-11-22 | One shared lemma for 24 proofs that take the same record apart: 16 rewritten, written-out size −12.0 million nodes, their files compile in half the time | done |
 | 2026-11-22 | Patterns that drop parts of a conjunction read the kept parts by projection instead of matching every part. 9,519 lines in 7,351 files, −18.7 million nodes, source down ([notes](campaign/proof-shrink/RESULTS.md)) | done |
-| | Repetition sweep, part 2: a duplicate in a file that cannot see a copy cites it through one added import (4,447 cases meet the conditions; being compiled). Duplicates that would need a shared new file come after | in progress |
+| 2026-11-22 | Source dial made stricter: every projection step is a token (before, `h.2.2.1` counted as one). Baseline and history recounted; all 30 recorded changes still pass | done |
+| 2026-11-22 | Patch file stores nothing of the archive: pieces a rewrite kept or moved are given as positions. Earlier versions, which repeated such pieces, removed from this repository's history | done |
+| | Repetition sweep, part 2: a duplicate in a file that cannot see a copy cites it through one added import (4,447 cases meet the conditions; 3,279 compile to something smaller; being checked). Duplicates that would need a shared new file come after | in progress |
 | | Heavy definitions built from chains of `choose` | next |
 | 2026-11-22 | Wave 7 on the heaviest proofs: 17 more rewritten. Proofs over 100,000 nodes are now only 2.8% of the whole, so returns from this kind of work are falling | done |
 | | Sweep of repetitions: the same argument written out in many proofs | next |
@@ -68,7 +70,8 @@ actually depend on. Anything else in the tree does not count.
 
 Three dials:
 
-1. **Source size** of the cone, in tokens. A name of any length is one token; comments are not counted.
+1. **Source size** of the cone, in tokens. A name is one token however long it is, and every numeric
+   projection step after it is one more (`h.2.2.1` is four tokens); comments are not counted.
 2. **Written-out proof size** of the cone: the size of the fully expanded proofs that Lean checks.
 3. **Time** to build and check, compared on the files a change recompiles. Measured as the time Lean spends
    elaborating and checking those files, not counting the loading of what they import. Before and after are
@@ -84,10 +87,15 @@ at least 1,000 nodes for every token added.** The cone averages about 15 nodes p
 changes that are far better than the going rate. Any other change that trades one dial for another needs a
 written reason and a human decision.
 
-Because a name of any length is one token, a chain of projections such as `h.2.2.1` is one token too. Changes
-made in bulk that turn patterns into such chains are therefore held to a stricter count, in which every
-projection step is a token, and file by file: a file is changed only if its written-out size falls and, if its
-source grows on that count, by at least 1,000 nodes per token added.
+Until 2026-11-22 a name counted as one token together with its projection steps, so a chain such as
+`h.2.2.1` cost nothing more than `h`, and a change could lower the source dial just by writing such chains.
+The dial now counts every step. The baseline and the history were recounted: the first and the last row
+exactly, the rows between by what each change did to the number of steps. On the new count the baseline is
+0.6% higher, and every recorded change still meets the rules above.
+
+Changes made in bulk are judged file by file as well: a file is changed only if its written-out size does
+not grow, one of the two sizes falls, and, if its source grows, the written-out size falls by at least 1,000
+nodes per token added.
 
 Two fences:
 

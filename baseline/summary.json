@@ -39,7 +39,7 @@
   "written_out_size": 2789304299,
   "written_out_statements": 395917884,
   "written_out_bodies": 2393386415,
-  "source_tokens": 183118239,
+  "source_tokens": 184248210,
   "source_lines": 10616192,
   "source_ranges": 805451,
   "declarations_without_source_range": 9040,
@@ -56,10 +56,10 @@
   "per_declaration_source_tokens": {
    "count": 805451,
    "p50": 115,
-   "p90": 531,
-   "p95": 827,
-   "p99": 1656,
-   "p999": 3139,
+   "p90": 535,
+   "p95": 833,
+   "p99": 1669,
+   "p999": 3164,
    "max": 63189
   }
  },
@@ -76,7 +76,7 @@
   "written_out_size": 2789290590,
   "written_out_statements": 395917090,
   "written_out_bodies": 2393373500,
-  "source_tokens": 183116460,
+  "source_tokens": 184246427,
   "source_lines": 10616059,
   "source_ranges": 805432,
   "declarations_without_source_range": 9040,

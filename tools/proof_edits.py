@@ -826,11 +826,29 @@ def restate_lines(line, next_indent, before, after, fresh, min_parts):
     return ''
 
 
+# `dsimp only at h` does not look inside instance arguments. After a structure with instance fields has
+# been taken apart, hypotheses keep the whole structure literal there, and every substitution after that
+# restates it. `dsimp +instances only` reduces those arguments too. (Found by hand in wave 7, where it
+# halved two proofs.) The edit is kept only where the file still compiles to the same statements and gets
+# smaller.
+DSIMP_RE = re.compile(r'^(?P<lead>[ \t]*)dsimp only(?P<rest>(?:[ \t]+\[[^\]\n]*\])?[ \t]+at[ \t]+[^\n]*)$')
+
+
+def dsimp_instances_lines(line, next_indent, before, after, fresh, min_parts):
+    if '--' in line or ';' in line:
+        return None
+    m = DSIMP_RE.match(line)
+    if not m:
+        return None
+    return m.group('lead') + 'dsimp +instances only' + m.group('rest')
+
+
 REWRITES = {    # tag -> (how a line must start, the rewrite)
     'projections': (('obtain ⟨', 'obt ⟨', 'have ⟨', 'rcases '), projection_lines),
     'projections-gathered': (('obtain ⟨', 'obt ⟨', 'have ⟨', 'rcases '), gathered_lines),
     'opaque-set': (('set ',), opaque_set_lines),
     'drop-restate': (('show ', 'change ', 'dsimp only'), restate_lines),
+    'dsimp-instances': (('dsimp only',), dsimp_instances_lines),
 }
 
 
@@ -1017,15 +1035,10 @@ EXCHANGE = 1000                    # nodes of written-out size that one added so
 
 
 def strict_tokens(text):
-    """Source tokens with every numeric projection step counted. The dial counts a dotted name as one
-    token whatever its length, so `h.2.2.1` is one token there and four here. Edits that turn patterns
-    into projection chains are held to this stricter count, so that they do not lean on that convention."""
-    n = 0
-    for t in CONE.TOKEN.findall(CONE.strip_comments(text)):
-        n += 1
-        if '.' in t and t[0] not in '"0123456789':
-            n += sum(1 for part in t.split('.')[1:] if part.isdigit())
-    return n
+    """Source tokens of a text, as the source dial counts them: a dotted name is one token plus one for
+    every numeric projection step in it, so `h.2.2.1` is four. (Before 2026-11-22 the dial counted such a
+    name as one token and this function was the stricter count that bulk edits were held to.)"""
+    return CONE.count_tokens(text)
 
 
 def choose(edits_path, work):
