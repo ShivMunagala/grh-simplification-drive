@@ -168,8 +168,9 @@ pre-filter: a full rebuild with Comparator on a large machine remains the final 
 
 - `patches/` — our changes to the proof, with none of the archive's text in them: paths of deleted files,
   names of rewritten wrappers, and for every other changed file the character spans to replace plus the
-  text that replaces them, pinned by the sha256 of the archive's file. Also the hash of the archive they
-  apply to.
+  text that replaces them, pinned by the sha256 of the archive's file. Where a rewrite kept or moved a
+  piece of the archive's file (24 characters or more), the patch names its position and length and does
+  not repeat it. Also the hash of the archive they apply to.
 - `tools/` — fetching, measuring, judging, recording.
 - `campaign/` — briefs and results of organised efforts; `campaign/proof-shrink/RESULTS.md` has the first one.
 - `baseline/` — dials, caps and dependency ranking for the unmodified archive.
@@ -198,8 +199,10 @@ Apache License 2.0 (`LICENSE`), the same as Lean and Mathlib. It covers what is 
 tools, the measurements, the write-ups, and the replacement text in `patches/`.
 
 It does not cover the proof archive. That is Levent Alpöge's work, it was published without a licence, and it
-is not stored here. `patches/` holds only the spans that changed: positions, and the text we put there.
-Applying it needs the archive, fetched from its author's site.
+is not stored here. `patches/` holds only the spans that changed: positions, and the text we put there;
+anything a rewrite reuses from the archive's file is given as a position, not as text. Applying it needs
+the archive, fetched from its author's site. Earlier versions of the patch file, whose formats could
+repeat lines of the archive, were removed from this repository's history on 2026-11-22.
 
 ## Not built yet
 

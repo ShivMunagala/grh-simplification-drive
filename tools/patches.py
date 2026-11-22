@@ -16,15 +16,23 @@ keeps is:
   patches/changes.patch         every other changed or added file, as character spans to replace and
                                 the text that replaces them. Neither the replaced text nor the unchanged
                                 part of an edited line is stored: each file is identified by the sha256
-                                of its archive version, so the spans are exact.
+                                of its archive version, so the spans are exact. Where the replacing text
+                                repeats a run of the archive's file (a line that a rewrite kept or moved),
+                                the run is stored as a position and a length, not as text.
 
 Format of changes.patch:
 
   == <path> <sha256 of the archive's file, or `new`> <sha256 of our file>
   @@ <start> <old length> <new length>   span of the archive's file (in characters) that is replaced
   <new text, exactly <new length> characters, then a newline>
+  @% <start> <old length> <pieces>       the same, with the replacing text given in pieces, each either
+  + <length>                               text we wrote: <length> characters on the next line, or
+  <text>
+  = <position> <length>                    a run of the archive's own file, by position and length
 
-So the archive plus `patches/` reproduces our version exactly, and the repository carries only text we wrote.
+Every run of MIN_COPY or more characters that the replacing text shares with the archive's version of the
+same file is given the second way. So the archive plus `patches/` reproduces our version exactly, and the
+repository carries only text we wrote.
 """
 import argparse, difflib, hashlib, json, os, re, subprocess, sys
 
@@ -38,6 +46,7 @@ DELETED = os.path.join(C.PATCHES, 'deleted-paths.txt')
 ALIASED = os.path.join(C.PATCHES, 'aliased-wrappers.tsv')
 CHANGES = os.path.join(C.PATCHES, 'changes.patch')
 OLD_CHANGES = os.path.join(C.PATCHES, 'changes.diff')        # earlier format, which quoted the replaced lines
+MIN_COPY = 24            # a shared run this long is stored as a reference to the archive's file, not as text
 ALIAS_LINE = re.compile(r'^alias (?:_root_\.)?(\S+) := (\S+)\n\Z', re.M)
 
 
@@ -98,16 +107,57 @@ def hunks(old, new):
     return out
 
 
+def pieces(A, text):
+    """Replacing text as pieces: text we wrote, and (position, length) for every run of MIN_COPY or more
+    characters that also occurs in the archive's file A. None when there is no such run."""
+    k, n = MIN_COPY, len(text)
+    if n < k or len(A) < k:
+        return None
+    out, lit, i, found = [], [], 0, False
+    while i < n:
+        p = A.find(text[i:i + k]) if i + k <= n else -1
+        if p < 0:
+            lit.append(text[i])
+            i += 1
+            continue
+        best_p, best_len, tries = p, 0, 0
+        while p >= 0 and tries < 16:                 # the longest run among the first few places it occurs
+            m = k
+            while i + m < n and p + m < len(A) and text[i + m] == A[p + m]:
+                m += 1
+            if m > best_len:
+                best_p, best_len = p, m
+            tries += 1
+            p = A.find(text[i:i + k], p + 1)
+        if lit:
+            out.append(''.join(lit))
+            lit = []
+        out.append((best_p, best_len))
+        found = True
+        i += best_len
+    if lit:
+        out.append(''.join(lit))
+    return out if found else None
+
+
 def block(path, old, new):
     """One file's entry in changes.patch. old is None for a file we added."""
     parts = [f'== {path} {sha(old) if old is not None else "new"} {sha(new)}\n']
+    A = old + '\n' if old is not None else ''
     for start, length, text in hunks(old if old is not None else '', new):
-        parts.append(f'@@ {start} {length} {len(text)}\n{text}\n')
+        ps = pieces(A, text)
+        if ps is None:
+            parts.append(f'@@ {start} {length} {len(text)}\n{text}\n')
+        else:
+            parts.append(f'@% {start} {length} {len(ps)}\n')
+            for q in ps:
+                parts.append(f'+ {len(q)}\n{q}\n' if isinstance(q, str) else f'= {q[0]} {q[1]}\n')
     return ''.join(parts)
 
 
 def parse_blocks(text):
-    """-> [(path, old sha or 'new', new sha, [(start, old length, new text)])]"""
+    """-> [(path, old sha or 'new', new sha, [(start, old length, new text or list of pieces)])]
+    A piece is text, or (position, length) in the archive's file."""
     blocks, i, n = [], 0, len(text)
     while i < n:
         j = text.index('\n', i)
@@ -120,14 +170,34 @@ def parse_blocks(text):
             start, length, size = (int(x) for x in line[3:].split(' '))
             blocks[-1][3].append((start, length, text[i:i + size]))
             i += size + 1
+        elif line.startswith('@% '):
+            start, length, count = (int(x) for x in line[3:].split(' '))
+            ps = []
+            for _ in range(count):
+                j = text.index('\n', i)
+                head = text[i:j]
+                i = j + 1
+                if head.startswith('+ '):
+                    size = int(head[2:])
+                    ps.append(text[i:i + size])
+                    i += size + 1
+                elif head.startswith('= '):
+                    a, b = head[2:].split(' ')
+                    ps.append((int(a), int(b)))
+                else:
+                    raise ValueError(f'unexpected piece in changes.patch: {head[:60]!r}')
+            blocks[-1][3].append((start, length, ps))
         elif line:
             raise ValueError(f'unexpected line in changes.patch: {line[:60]!r}')
     return blocks
 
 
 def patched(old, hs):
-    t = old + '\n'
-    for start, length, text in sorted(hs, reverse=True):       # from the end, so earlier offsets stay valid
+    A = old + '\n'
+    t = A
+    for start, length, text in sorted(hs, key=lambda h: h[0], reverse=True):   # from the end: earlier offsets stay valid
+        if not isinstance(text, str):
+            text = ''.join(q if isinstance(q, str) else A[q[0]:q[0] + q[1]] for q in text)
         t = t[:start] + text + t[start + length:]
     return t[:-1]
 
