@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 175.8M, written-out proof size 2.68B, time change -3.97K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 175.8M, written-out proof size 2.68B, time change -3.98K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 175,770,081 | −8,478,129 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,682,394,619 | −106,909,680 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,974.5 | −3,974.5 |
+| Source size (tokens) | 184,248,210 | 175,766,516 | −8,481,694 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,682,353,662 | −106,950,637 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,980.1 | −3,980.1 |
 
-Cone: 1,255,860 declarations in 146,191 files. Recorded changes: 43. Latest row: 252 declarations written with every argument explicit reprinted in ordinary form (50 files) (2026-11-22 19:39 UTC).
+Cone: 1,255,858 declarations in 146,191 files. Recorded changes: 44. Latest row: pb_abs by a dual family in place of Smith normal form (33k to 5k nodes); shorter classical estimates in two files (2026-11-22 20:06 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -61,6 +61,8 @@ Cone: 1,255,860 declarations in 146,191 files. Recorded changes: 43. Latest row:
 | | Removing those unneeded parts, largest first ([brief](campaign/unneeded-parts/BRIEF.md), [results](campaign/unneeded-parts/RESULTS.md)). Eight changes so far take 3,051 declarations out of what the five theorems need (−7.7 million nodes, −451,000 tokens): seven of eight statements about period unfoldings; the main theorem of the raw theta lift, which was built only to be passed to a theorem that ignored it; theorems that prove lists of statements of which a few are read (46 so far: users cite the part they read); eight statements trimmed to what their users read | in progress |
 | 2026-11-22 | Local steps whose result nothing uses (`have h : P := proof`, and `h` is never read): the same measurement names them, and 6,343 are deleted in 2,099 files, each deletion kept only if its file still compiles to the same statements and is smaller. Written-out size −1.6 million nodes, source −126,000 tokens. This round took the 3,000 files that hold most of them; about 18,000 files with a few each remain | first round done |
 | 2026-11-22 | Declarations written with every argument explicit (machine-printed terms, about fifty files, 0.37% of the source): 252 reprinted in ordinary form by `tools/compact.py`, each kept only if Lean reads it back at the same place as the same statement and, for a definition, the same value. Source −482,000 tokens; written-out size unchanged. Another project had reported the pattern for four of these files; no text was taken from it ([notes](campaign/proof-shrink/RESULTS.md)) | done |
+| 2026-11-22 | The conditions on the families, read one by one: all 46 fields of the hypothesis list are used, and the costly ones are consumed at the strength in which they are proved. There is room only in error terms and in smallness parameters (two small new candidates: an off-diagonal spectral bound, 1.5%, and a dimension estimate, 0.3%); main terms cancel exactly ([map, section 6](campaign/argument-map/MAP.md)) | done |
+| 2026-11-22 | First proof replaced by a different argument: a statement proved through Smith normal form is proved by a dual family (33,347 → 5,167 nodes; the idea is from another project's notes, the proof is written here) | done |
 
 ## Fixed
 

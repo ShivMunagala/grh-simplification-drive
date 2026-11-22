@@ -421,7 +421,8 @@ step were replaced by a free proof; a real replacement costs something too.
   content. A real map of section 2.A needs a reading of the definitions in
   `Development.AbelianVarietyTheory.Definitions.GlobalTwisting` and the `Formalism.L2` namespace.
 - Whether every field of the hypothesis list (`GlobalTheory.Fc.Hyps`) is used by the shape theorem
-  (`UpperTheory.Top.shapeWin`). An unused field would be pure cost.
+  (`UpperTheory.Top.shapeWin`). An unused field would be pure cost. **Answered 2026-11-22 (section 6): every one of the 46
+  fields is passed to a step of the shape theorem.**
 - Where the 18.3% shared pool under spine 6 and the 16% shared pool under spine 4 go: they are spread
   over thousands of small pieces (the folder named for divisors alone has 4,433 entry points). Shares of
   a shared pool cannot be assigned to one line without choosing a rule.
@@ -430,3 +431,92 @@ step were replaced by a free proof; a real replacement costs something too.
 - Whether the counting (determinant) argument itself has slack: it lives in `Formalism` (13.6% of the
   whole), and I read only its interface, not its proof.
 - The exact reference for a few known statements (row 14 of section 3).
+
+---
+
+## 6. How strongly each condition on the families is used (read 2026-11-22)
+
+Section 4 asked, for one condition (the covolume bound), whether it is needed in the strength in which it is
+proved. This section asks it for all of them. It was made by reading the statements and, where marked, the
+proofs of the consuming steps; shares are of the accepted state at change 42 (2,682,395,289 nodes), as what hangs
+only on the producing theorem. Evidence: **[S]** read the statement, **[P]** read the proof, **[N]** inferred from
+names or sizes.
+
+**Result.** Every costly condition is consumed at the strength in which it is proved. The room that exists is in
+error terms and in smallness parameters, and no shorter proof of a relaxed form is known for any of them.
+
+Two corrections to names used above: in the cone the hypothesis list is `GlobalTheory.Fc.HypsAlt` (`Fc.Hyps` is a
+copy outside the cone with the same fields), and the shape theorem is `UpperTheory.Top.shape_closed_link_n_of_green`.
+
+### The mechanism
+
+- **One error budget.** All inequality conditions meet in one inequality (`Formalism.L2.DIV.RecNums.divIneq`) [P].
+  The error it allows is a constant times |TT|·a·La plus a constant times m·U, where U = x^ε·(B0 + Nc),
+  B0 = f·m·b·x^ε and b = exp(x^ε).
+- **The exponent of x in the error is free.** It is carried to the end as a constant that only has to exist [S],
+  so a factor x^{O(ε)} costs nothing.
+- **Main terms cancel exactly.** The CM-period term cancels against the same sum on the other side, and the
+  hook-product term likewise [P]. This is why no main term has room.
+- **Smallness parameters are used far below what is proved.** The counting argument uses them only as "at most
+  x^{−(CH+1)}" and "at most 1/2" [P].
+
+### Glossary of the internal vocabulary
+
+| Term | Meaning |
+|---|---|
+| `D7`, `FamP ε` | `D7` is the arithmetic datum at one point: a CM field over a host field, ranks, primes, words, members, lattices. `FamP ε` gives, for each scale x, an index set and a `D7` with sizes [S]. |
+| `Closed 𝒞 P` | For all small ε there is a size beyond which every family of class 𝒞 satisfies P. `DesignExists` says such large families exist [S]. |
+| member | One link of the chain, built in two passes: untwisted, then twisted [S]. |
+| bundle point, slot | A point constructed at a parameter context; a slot is a predicate on such points saying which ones a statement is about [S]. |
+| bundle | The auxiliary package chosen at a point: reciprocity record, row-side family of hermitian spaces, lattices and theta maps, columns, heights, spectral ties, indefinite realisation [S]. |
+| linkage, "linked at p" | The bundle is tied by equations to the data built from parameters p. "Linked at p, r": r holds on the good slot, after a refinement to a large base, for every linked bundle [S]. |
+| selection, row | A selection picks a bundle at every point. A row statement says: H follows from a pointwise property true at all linked bundles of a slot [S]. |
+
+### The conditions
+
+Form of use: **E** exactly as stated, **P** passed along unchanged, **W** only a weaker consequence, **X** existence.
+
+| Condition | Meaning | Producer, share | Form of use |
+|---|---|---|---|
+| Class of families, selection, existence, "duties", stability of a lattice | The families exist and a bundle is selected at every point | members with large unramified exponents, 4.33% (base lattice 2.55%) | X. Four of seven duties are read [P] |
+| Dictionary between bundle and datum (eight fields) | 23 Hecke, level and positivity facts; periods; theta maps; eigenvalue labels; twisted places; two surjectivities | thin wrappers, each below 0.01%; the cost is in the member block | E (equalities) [S] |
+| Covolume (linked L3) | Normalized log-covolume ≤ main term + C·B0·log log x | 7.29% (13.6% with inputs) | W in the error (C·U would do), exact in the main term [P] |
+| Onto | Local indices of theta-lift lattices at twisted places ≤ main term + error, with the weighted error ≤ C·U | 2.91% | E: stated at the budget unit [P] |
+| Eigenvalue lower bound | log λ ≥ sum of logs of hook products − error | 0.05% | W: only the sum over lifts and the mean over real places [P] |
+| Functional condition (linked FUN) | Largest slope of the row lattice ≤ x^CH·b − mean log κ | 0.62% plus the grid | E, with CH a free constant [P] |
+| Multiplicity identity, isometry | The period pairing equals a unit times a pairing of the theta lift with a period vector | 2.17% | E: all four parts of the identity are read [P] |
+| Support of twists, passage, κ dictionary, row statements | | 0.15% + 0.14% | P [P] |
+| Algebraicity of period pairings (seven fields) | Period pairings of integral forms are algebraic, with valuations bounded below at every place | 0.39% + 0.07% + 0.02% | E for the first conclusion; the second is discarded [P] |
+| Service | Kernels are served by orbits (from Artin reciprocity) | 1.16% | E for one part; another part feeds only a discarded conclusion (already on the list of unneeded parts) [P] |
+| Off-diagonal kernel bound | ‖K₀(u,u′)‖² ≤ (1 + b⁻⁶)·d_u·d_u′/D* | 1.49% | **W**: the consumer needs x^{−(CH+1)} in place of b⁻⁶ [P] |
+| Diagonal and positivity inputs of the same estimate (eleven fields) | | 0.07%, 0.33%, 0.33%, rest below 0.02% | W, as the line above [S] |
+| Dimension of label cylinders | Expected dimension to relative precision exp(−c·r·f·log r) | inside a 0.33% block | **W**: used only as "below 1" and "at most 1/2" [P] |
+| Real-place ties, volume ratio, mass formula in rank 2, class-number formula, thin scales | | all below 0.01% | E [S] |
+| Norm link | A sum of local quantities ≤ D0·(C·(f·m·b·L² + log²x·Nc) + Sha terms) | 3.30% | E in the main term, W only in log²x ≤ x^ε [P] |
+| VWin (an input, not a field) | Weighted sum of Sha lengths ≤ √b | 8.38% | W: √b is used as ≤ b ≤ U [P] |
+
+### Candidates, by share times room
+
+1. **Covolume (7.3%; 13.6% with inputs)** and 2. **VWin (8.4%) with the norm link (3.3%).** The room is as found
+   in section 4: in the error term only. Nothing new.
+3. **Off-diagonal spectral bound (1.49%) — new.** A bound with 1 + x^{−A} for every A would serve in place of
+   1 + b⁻⁶. The constant 1 is still needed, so the Siegel–Weil main term stays, and the parts of this block look
+   structural, not error estimates [N]. No reason is visible why the weaker form would be shorter to prove. Test:
+   find the step that supplies b⁻⁶ and what hangs on it.
+4. **Dimension of label cylinders (at most 0.33%) — new.** "Between 0 and 1/2 eventually" would serve. The
+   exponential precision probably comes free from exact dimension formulas [N].
+5. **Eigenvalue lower bound (0.05%).** Too small to matter.
+
+**No room found** [P for the consumers]: the surjectivity statement (2.9%) is stated at the budget unit; the
+multiplicity identity (2.2%) is exact and read in full; the member block (4.3%) is pure existence; service (1.2%).
+
+### Not determined
+
+- Whether any weaker form has a shorter proof. All remarks on that above are guesses.
+- Inside the counting argument: how the link conditions on G and μ are consumed, and how the count, slope and loss
+  inputs are used.
+- Whether the member conditions need their full quantification over arbitrary finite sets of algebraic numbers
+  and avoided primes.
+- A by-product to check with the measurement of unneeded parts: 47 fields of the three literature bundles seem to
+  have projections that nothing in the cone reaches (0.19%). The test used cannot see primitive projections, so
+  this may be an artefact.

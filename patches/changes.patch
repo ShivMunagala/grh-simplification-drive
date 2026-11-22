@@ -23423,6 +23423,11 @@ hinj, -, -, hreg⟩ := (
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/SpMapStalkHomFromSpecStalk.lean f52d937663b49ebf9e3d3548033d4b3c2571e2130e8b214c02819e74c0eb17cb 29210d2555e814822823147b47ad733365017f2687a8a835754fb470406b0571
 @@ 1573 28 84
  intros; apply _root_.GlobalTheory.Frames.EigenBaseChange.spMap_spMap <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/SpanEqTopIffDense.lean 03c03fb5b26e873c7cf9d11f6c9afe47b9f7e4864f4763c635cfc4e9a15acd67 f37c61f1460b07bd207136599c6f63f5780b5ef8813ae1400656dd6a00c86ee0
+@@ 591 112 56
+rw [← Module.End.mul_apply, U.mul_eq]; split_ifs <;> rfl
+@@ 1967 83 49
+, Pi.single_apply, apply_ite Subtype.val] <;> rfl
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/SpanHeisenbergTranslatesOfLatticeVacuaEqTop.lean 26b82cfc1d274ebd7eadca0009b1b3c28add7fd16b5d67e7c4bf58ca50462d48 9650febed476f808a31e2009c71f94de540154e6e1e8520c13a4db0cd5db36aa
 @% 4669 127 3
 + 13
@@ -127617,25 +127622,197 @@ z0.2.2.2.2.2.2.2.2.2.2.2.2
 
 @@ 6405 50 0
 
-== src/Formalism/SharpRestriction/GlobalSchurBounds/FirstClaimLemmaTwoFourOfLemmaTwoThree.lean 1dcba9474c1680f769afe55efac99ad6b99ca449fc34b81e23696e671f72a6f2 604b7c90f53ad663f9727817590d01627185f4c86b86c465045e6638cc41dcc7
+== src/Formalism/SharpRestriction/GlobalSchurBounds/FirstClaimLemmaTwoFourOfLemmaTwoThree.lean 1dcba9474c1680f769afe55efac99ad6b99ca449fc34b81e23696e671f72a6f2 6dc9c04420c73cde584989d940c6358d6c22ec50144322853d09dbebf5ca60fa
 @@ 10293 58 0
 
+@@ 10552 10 10
+, neg_mul]
 @@ 52072 58 0
+
+@@ 96125 262 92
+
+    (Real.rpow_inv_le_iff_of_pos zero_le_two hxpos.le (by positivity)).1 (by rwa [inv_div])
+@% 96688 199 3
++ 97
+
+    max_le (one_le_mul_of_one_le_of_one_le (one_le_mul_of_one_le_of_one_le (by norm_num)
+      (
+= 96762 46
++ 23
+)) (one_le_pow₀ hlogx))
+@% 99844 45 3
++ 1
+(
+= 56480 26
++ 3
+).2
+@@ 100009 18 0
 
 @@ 100124 55 0
 
 @@ 100358 37 0
 
+@@ 100571 40 41
+(Real.exp_le_exp.2 hsv).trans_eq huv.symm
 @@ 100726 34 0
 
+@@ 101071 74 20
+rw [neg_mul, neg_div
+@@ 101248 74 20
+rw [neg_mul, neg_div
 @@ 101776 40 0
 
+@% 102094 325 6
++ 57
+rw [div_eq_mul_inv, mul_right_comm]
+    exact (mul_le_mul
+= 115703 29
++ 80
+TE hu0.le) a1 (by positivity)
+      (by positivity)).trans_eq (by rw [hP]; ring)
+= 102297 44
++ 18
+
+    l2.trans_le (
+= 102364 56
+@% 102647 122 3
+= 66557 28
+= 102708 25
++ 33
+).trans_eq (mul_assoc _ _ _).symm
+@@ 102808 139 97
+rw [Real.log_le_iff_le_exp (by norm_num)]
+    have := Real.quadratic_le_exp_of_nonneg zero_le_two
+@% 103966 390 6
++ 72
+rw [hP, hE, neg_mul, neg_div, mul_div_right_comm, ← neg_mul]
+      exact
+= 103976 53
+= 41262 85
++ 26
+,
+      mul_div_left_comm]
+= 35242 38
++ 19
+hle (by positivity)
+@% 104836 637 4
++ 168
+-- `‖ψ‖ ≤ ‖ψ + Σ‖ + ‖Σ‖`, then the explicit formula `hexp` and the bound `e4` for the sum over zeros
+  refine (norm_le_add_norm_add _ _).trans ((add_le_add (hexp.trans
+
+= 61458 31
+= 61208 41
++ 21
+)) e4).trans_eq ?_)
+ 
+@% 106686 324 2
+= 106966 29
++ 105
+, ← le_div_iff₀' (Real.exp_pos 1), ← Real.exp_sub]
+    linarith [Real.add_one_le_exp (x ^ (eps / 3) - 1)]
 @@ 108122 46 0
 
 @@ 108258 34 0
 
+@% 108422 191 2
+= 160952 30
++ 13
+zero_lt_three
 @@ 110140 54 0
 
+@@ 111912 211 85
+, mul_assoc, mul_left_comm]
+      exact le_mul_of_one_le_right (Nat.cast_nonneg _) h1
+@% 112224 161 5
++ 320
+-- the zeros of the fibre on one side of the real axis lie in the window of radius 1 at `t = ±i`
+    have hside : ∀ (t : ℝ) (p : ℂ → Prop) [DecidablePred p], |t| = i →
+        (∀ ρ : ℂ, p ρ → (i : ℝ) ≤ |ρ.im| → |ρ.im| < (i : ℝ) + 1 → |ρ.im - t| ≤ 1) →
+        ∑ ρ ∈ (hfin.toFinset.filter fun ρ => ⌊|ρ.im|⌋₊ = i).filter p
+= 45821 36
++ 26
+  intro t p _ ht hwd
+     
+= 47873 32
++ 4
+t ht
+@% 112688 288 5
++ 25
+exact ⟨r0, r1, hwd ρ hs (
+= 46828 48
++ 13
+)
+          (
+= 48385 43
++ 6
+), r3⟩
+@% 113033 727 12
+= 47768 83
++ 71
+exact add_le_add
+      (hside i _ (Nat.abs_cast i) fun ρ hs a1 a2 => by
+= 48428 39
++ 1
+;
+= 160843 38
++ 27
+)
+      (hside (-(i : ℝ)) _
+= 48620 32
++ 21
+ fun ρ hs a1 a2 => by
+= 49151 48
++ 1
+;
+= 160843 38
++ 1
+)
+@% 115285 519 8
++ 37
+refine (Finset.sum_le_sum hfib).trans
+= 6094 30
++ 20
+exact (mul_le_mul hA
+= 23081 28
+= 115704 52
++ 5
+)
+   
+= 115631 32
++ 20
+).trans_eq (by ring)
+@% 116649 275 3
++ 26
+rw [Real.log_le_iff_le_exp
+= 38406 35
++ 51
+quadratic_le_exp_of_nonneg zero_le_two
+    linarith
+@% 117104 62 4
++ 1
+]
+= 128250 32
++ 8
+left hc.
+= 28270 30
+@@ 117998 262 138
+
+    (Real.rpow_inv_le_iff_of_pos zero_le_three ((Real.rpow_nonneg zero_le_three _).trans hx3)
+      (by positivity)).1 (by rwa [inv_div])
+@% 122217 331 5
++ 19
+Complex.ext rfl him
+= 122256 78
++ 24
+
+    (div_le_self hm0.le
+= 24034 24
++ 16
+in_le_right _ _)
+@% 151081 123 2
+= 151110 56
++ 22
+Complex.ext rfl (hr _)
 == src/Formalism/SharpRestriction/GlobalSchurBounds/FrameCodeOfAdditive.lean 5c045cbc6467d70abac86d5acb3a2f3480dd32e15ccf92b52858da5cdca7e72c ce614e5d3aef358356b20b1251af0eb58bd873d60f9582a277928fdf44a0eec4
 @@ 4038 93 77
  intros; apply _root_.Formalism.MainNotions.J.logWeight_nonneg <;> assumption
@@ -128763,6 +128940,25 @@ sap, -⟩ := (
 = 4824 32
 + 10
 (hb m).2.2
+== src/Formalism/SharpRestriction/GrowthBounds/HermitianTensor/GrowthOfBasic.lean e766bfee432e9805fdc361f8842ef6ce6638a0e670c6ccffccd1d57ae965b93c dbe11ae00e4f81e7a85d2dbb136ebdda7016eb40863b5ad5f0ea37a6d758bf74
+@@ 1053 10456 1223
+-- Take `x = b` and `ka = N`: what is left is a family `x'` in the span, dual to `b` under `B0`.
+  -- `Q ↦ (B0 (b i) Q)ᵢ` is injective on the `K`-span of `b` by `hb`, hence onto `Fin n → K`.
+  haveI := FiniteDimensional.span_of_finite K (Set.finite_range b)
+  choose x' hx' using fun a' =>
+    (LinearMap.injective_iff_surjective_of_finrank_eq_finrank
+      ((finrank_span_eq_card hli).trans (Module.finrank_pi K).symm)).1
+      ((injective_iff_map_eq_zero (LinearMap.pi (fun i => B0 (b i)) ∘ₗ Submodule.subtype _)).2
+        fun Q hQ => Subtype.ext (hb Q Q.2
+          (LinearMap.eqOn_span (f := B0.flip Q) (g := 0) (Set.eqOn_range.2 hQ))))
+      fun i => algebraMap O K (if a' = i then 1 else 0)
+  -- `x' a'` pairs with every `b i` to `0` or `1`, so `hc` puts it in the `O`-span.
+  exact ⟨b, (x' ·), fun _ => N, fun _ => le_rfl, fun i => subset_span ⟨i, rfl⟩,
+    fun a' => hc _ (x' a').2 ((span_le (p := Submodule.comap (LinearMap.restrictScalars O
+      (B0.flip (x' a'))) (LinearMap.range (Algebra.linearMap O K)))).2
+      (Set.range_subset_iff.2 fun i => ⟨_, congrFun (hx' a').symm i⟩)),
+    fun a' i => (congrArg _ ((congrFun (hx' a') i).trans
+      (MonoidWithZeroHom.map_ite_one_zero _ _))).trans (mul_boole _ _)⟩
 == src/Formalism/SharpRestriction/GrowthBounds/HermitianTensor/MemInvariantSectionsIffIntegral.lean 8c985d12d4454c610b3d5683da9430f30de25683675303e8a767a8cf32d9aec9 7fed7e81253735b3dd851eba5b65083e960a720331c4e65b91d094be70649047
 @% 2685 420 3
 + 22
