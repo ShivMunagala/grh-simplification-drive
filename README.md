@@ -27,11 +27,11 @@ One point per recorded change, placed at the time of its commit.
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 176,431,681 | −7,816,529 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,684,702,811 | −104,601,488 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,916.1 | −3,916.1 |
+| Source size (tokens) | 184,248,210 | 176,379,652 | −7,868,558 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,684,030,388 | −105,273,911 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -3,921.5 | −3,921.5 |
 
-Cone: 1,256,340 declarations in 146,221 files. Recorded changes: 39. Latest row: fourth list of unneeded parts: 25 files; two statements trimmed; bundles bypassed or split (2026-11-22 17:23 UTC).
+Cone: 1,256,010 declarations in 146,191 files. Recorded changes: 40. Latest row: fifth list of unneeded parts: 34 files; four statements trimmed; bundles bypassed or split (2026-11-22 17:47 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -58,7 +58,7 @@ Cone: 1,256,340 declarations in 146,221 files. Recorded changes: 39. Latest row:
 | 2026-11-22 | Plain-language map of the argument, first version: the chain at the top, the four lines of argument under it and what each costs, known theorems proved inside (8.4% in all), six places where a shorter route might exist ([map](campaign/argument-map/MAP.md)). Everything above is about how the proof is written; this is the first step on the mathematics | done |
 | 2026-11-22 | All four large candidates for a shorter route tested by reading every statement and every use: the covolume bound (13.6%), the Galois representations (6.1%), the vanishing statement VWin (8.2%) and the staging of the family construction. None can be replaced or narrowed; the reasons are in the map | done |
 | 2026-11-22 | What the five theorems actually ask of each intermediate statement, measured on the compiled proof (`tools/demand.py`): parts of conjunctions, fields of records, arguments, local steps and whole declarations that nothing needed reads come to 1.07% of the written-out size. The proof uses almost everything it proves ([results](campaign/unneeded-parts/RESULTS.md)) | done |
-| | Removing those unneeded parts, largest first ([brief](campaign/unneeded-parts/BRIEF.md), [results](campaign/unneeded-parts/RESULTS.md)). Six changes so far take 2,705 declarations out of what the five theorems need (−7.0 million nodes, −397,000 tokens): seven of eight statements about period unfoldings; the main theorem of the raw theta lift, which was built only to be passed to a theorem that ignored it; theorems that prove lists of statements of which a few are read (33 so far: users cite the part they read); five statements trimmed to what their users read | in progress |
+| | Removing those unneeded parts, largest first ([brief](campaign/unneeded-parts/BRIEF.md), [results](campaign/unneeded-parts/RESULTS.md)). Seven changes so far take 3,035 declarations out of what the five theorems need (−7.7 million nodes, −449,000 tokens): seven of eight statements about period unfoldings; the main theorem of the raw theta lift, which was built only to be passed to a theorem that ignored it; theorems that prove lists of statements of which a few are read (45 so far: users cite the part they read); eight statements trimmed to what their users read | in progress |
 
 ## Fixed
 
