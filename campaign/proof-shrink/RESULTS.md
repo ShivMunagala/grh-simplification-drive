@@ -186,7 +186,8 @@ ten more proofs whose expansion is out of proportion to their source. One older 
 | `…T.referenceTuple_rationalForm_lifts_algebraic_enlarged` | 398,876 → 72,006 | −76 | recorded |
 | `GlobalTheory.T.modW_of_rSideW` | 378,300 → 45,775 | −94 | recorded |
 | `PositivityTheory.HtPt.Kftwo.exists_pairHost` | 461,774 → 38,668, plus four helpers | +204 | recorded |
-| eight of the 24 `cases pack` proofs | 6,562,253 → 59,236, plus shared `TwArgs.pack_elim` 384,142 | −209 | waits for the owner |
+| 16 of the 24 `cases pack` proofs | 12,548,424 → 179,597, plus shared `TwArgs.pack_elim` 384,142 | −667 | waits for the owner |
+| `row_of_pack` (same family; its file cannot see the shared lemma) | 210,224 → 195,883 | −27 | recorded |
 | `GlobalTheory.ColRows.rowsU_of_colPins_alt` | 485,546 | | no version compiled in time |
 | `GlobalTheory.Mem.KeepRef.exists_thPW_keep` | 269,326 | | no gain |
 
@@ -211,9 +212,18 @@ What these had in common: **long conjunctions and records taken apart one level 
 - A structure literal mentioned in later goals: `refine let S : T := { … }; ⟨S, ?_, ?_⟩` (as in wave 5).
 - A structure field that is an equation between dependent tuples (`pack`): one eliminator over the tuple's
   components, proved without `cases` as `(congrArg (fun s => motive s.1 s.2.1 …) a.pack).mpr h`. A user then
-  restates its goal once instead of once per component: eight proofs went from 6.56 million nodes to 59,236.
+  restates its goal once instead of once per component: sixteen proofs went from 12.5 million nodes to
+  179,597, and their files compile in half the time (1,236 s → 604 s).
   The lemma needs Lean's `@[elab_as_elim]` tag so that users need not write the motive; that adds an entry to
-  one of the registers the equivalence check watches, so the change waits for the owner.
+  one of the registers the equivalence check watches, so the change waits for the owner. The judge's only
+  objection is that entry.
+- Using that eliminator: bring the goal to the fields of `a.x` first (`cases ax`, or `rw [← eq_of_heq w.ax]`),
+  delete the destructuring, then `exact a.pack_elim <tail>` or `refine a.pack_elim ?_`. Any other field of
+  `a.x` that the goal or the tail needs has to be generalized first, together with the `HEq` hypotheses that
+  mention it (`have h := a.tup; revert h; generalize a.x.Y = Y; revert Y; refine a.pack_elim ?_; intro Y h`),
+  or the motive is not type-correct. Seven of the 24 did not go through; the reasons are in `attempted.tsv`.
+- A second eliminator of the same kind for another structure, with two users, bought 574 nodes per token and
+  was left out: a helper has to pay for itself.
 
 What did not work, and why:
 

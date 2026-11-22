@@ -18,16 +18,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.2M, written-out proof size 2.74B, time change -2.87K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 176.2M, written-out proof size 2.74B, time change -2.88K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 183,118,239 | 176,236,923 | −6,881,316 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,736,133,335 | −53,170,964 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,874.5 | −2,874.5 |
+| Source size (tokens) | 183,118,239 | 176,236,896 | −6,881,343 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,736,118,994 | −53,185,305 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -2,875.6 | −2,875.6 |
 
-Cone: 1,260,826 declarations in 146,522 files. Recorded changes: 18. Latest row: long conjunctions read by projection; first batch (88 lines; 56 files) (2026-11-22 07:54 UTC).
+Cone: 1,260,826 declarations in 146,522 files. Recorded changes: 19. Latest row: row_of_pack: no cases x before cases pack (2026-11-22 08:12 UTC).
 <!-- dials:end -->
 
 ## Milestones

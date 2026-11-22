@@ -18,3 +18,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-22T06:41:47Z,e35ef129e,duplicate proofs cite a copy; second pass (335 theorems; 165 files),176237256,2738648940,-2861.0,1260822,146522
 2026-11-22T06:51:57Z,01cd96612,wave 6: exists_pairHost,176237376,2738276137,-2864.1,1260826,146522
 2026-11-22T07:54:26Z,2ab28319e,long conjunctions read by projection; first batch (88 lines; 56 files),176236923,2736133335,-2874.5,1260826,146522
+2026-11-22T08:12:41Z,a9ff092dd,row_of_pack: no cases x before cases pack,176236896,2736118994,-2875.6,1260826,146522

@@ -360,16 +360,68 @@ def gen_shorten(out, candidates):
 # parts by projection (`obtain ⟨h, -⟩ := H.2.2`) leaves only the levels that are used. These edits replace
 # one such line each; the proof is otherwise untouched, and each edit has to compile and pass the
 # equivalence check.
-SITE_RE = re.compile(r'^(?P<lead>[ \t]*(?:·[ \t]*)?)(?P<kw>obtain|obt|have)[ \t]+'
-                     r'⟨(?P<pat>[^⟨⟩()|@:\n]*)⟩[ \t]*:=[ \t]*(?P<t>\S[^\n]*?)[ \t]*$')
-RCASES_RE = re.compile(r'^(?P<lead>[ \t]*(?:·[ \t]*)?)(?P<kw>rcases)[ \t]+(?P<t>\S[^\n]*?)[ \t]+with[ \t]+'
-                       r'⟨(?P<pat>[^⟨⟩()|@:\n]*)⟩[ \t]*$')
+KW_RE = re.compile(r'^(?P<lead>[ \t]*(?:·[ \t]*)?)(?P<kw>obtain|obt|have|rcases)[ \t]+')
 IDENT_RE = re.compile(r"^[^\W\d][\w'!?]*$")
 ATOM_RE = re.compile(r'^[^\s()\[\]{}⟨⟩@]+$')
 PLAIN_RE = re.compile(r"^[^\W\d][\w']*$")
 OPEN, CLOSE = '([{⟨', ')]}⟩'
 SPLIT = 6                          # dropped parts in a row, inside a pattern, from which a new line pays
 MIN_SAVED = 3                      # pattern entries a rewrite must save for a line to be touched
+
+
+def split_site(line):
+    """`obtain ⟨a, -, ⟨b, c⟩⟩ := t` (also `obt`, `have`, and `rcases t with ⟨…⟩`) -> (text before the
+    keyword, keyword, t, the entries of the outer pattern), or None if the line is not of that shape."""
+    m = KW_RE.match(line)
+    if not m:
+        return None
+    lead, kw, rest = m.group('lead'), m.group('kw'), line[m.end():].rstrip()
+    term = None
+    if kw == 'rcases':
+        w = rest.rfind(' with ⟨')
+        if w < 0:
+            return None
+        term, rest = rest[:w].strip(), rest[w + len(' with '):]
+    if not rest.startswith('⟨'):
+        return None
+    depth, end = 0, None
+    for i, ch in enumerate(rest):
+        if ch in OPEN:
+            depth += 1
+        elif ch in CLOSE:
+            depth -= 1
+            if depth == 0:
+                end = i
+                break
+    if end is None or rest[end] != '⟩':
+        return None
+    inner, after = rest[1:end], rest[end + 1:].strip()
+    if kw == 'rcases':
+        if after:
+            return None
+    else:
+        if not after.startswith(':='):
+            return None
+        term = after[2:].strip()
+    if not term:
+        return None
+    parts, depth, cur = [], 0, ''
+    for ch in inner:
+        if ch in OPEN:
+            depth += 1
+        elif ch in CLOSE:
+            depth -= 1
+        if depth == 0 and ch == '|':                      # alternatives: not a plain tuple
+            return None
+        if depth == 0 and ch == ',':
+            parts.append(cur.strip())
+            cur = ''
+        else:
+            cur += ch
+    parts.append(cur.strip())
+    if depth or not all(parts):
+        return None
+    return lead, kw, term, parts
 
 
 def projection_lines(line, next_indent, before, after, fresh, min_parts):
@@ -384,18 +436,16 @@ def projection_lines(line, next_indent, before, after, fresh, min_parts):
     tokens than the line it replaces, even counting every projection step as a token."""
     if '--' in line or ';' in line:
         return None
-    m = SITE_RE.match(line) or RCASES_RE.match(line)
-    if not m:
+    site = split_site(line)
+    if site is None:
         return None
-    lead, kw, term = m.group('lead'), m.group('kw'), m.group('t')
-    parts = [p.strip() for p in m.group('pat').split(',')]
+    lead, kw, term, parts = site
     k = len(parts)
     if k < min_parts or next_indent > len(lead):         # too short to matter, or the term continues below
         return None
+    # An entry is dropped (`-`, `_`) or kept. A kept entry may be a name or a pattern of its own; it is
+    # copied as it stands.
     drop = [p in ('-', '_') for p in parts]
-    for p, d in zip(parts, drop):
-        if not d and (p == 'rfl' or not IDENT_RE.match(p)):
-            return None
     if not any(drop) or all(drop):
         return None
     depth = 0
@@ -442,15 +492,15 @@ def projection_lines(line, next_indent, before, after, fresh, min_parts):
         return None
 
     def write(first, cur, pat):
+        if first and plain_first:
+            cur = term                                   # the whole term, as in the original line
         if len(pat) == 1:
-            return f'have {pat[0]} := {cur}'
-        if len(pat) == 2 and pat[1] == '-' and pat[0][:1] in 'hH':
+            return f'have {pat[0]} := {cur}' if IDENT_RE.match(pat[0]) else f'obtain {pat[0]} := {cur}'
+        if len(pat) == 2 and pat[1] == '-' and pat[0][:1] in 'hH' and IDENT_RE.match(pat[0]) and not (first and plain_first):
             return f'have {pat[0]} := {cur}.1'
         body = '⟨' + ', '.join(pat) + '⟩'
         if not first:
             return f'obtain {body} := {cur}'
-        if plain_first:
-            cur = term                                   # the whole term, as in the original line
         return f'rcases {cur} with {body}' if kw == 'rcases' else f'{kw} {body} := {cur}'
 
     out = [write(n == 0, c, p) for n, (c, p) in enumerate(stmts)]
