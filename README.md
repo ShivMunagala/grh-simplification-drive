@@ -27,11 +27,11 @@ One point per recorded change, placed at the time of its commit.
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 175,313,986 | −8,934,224 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,669,868,989 | −119,435,310 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,628.4 | −4,628.4 |
+| Source size (tokens) | 184,248,210 | 175,310,966 | −8,937,244 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,669,666,299 | −119,638,000 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,634.9 | −4,634.9 |
 
-Cone: 1,252,745 declarations in 145,773 files. Recorded changes: 48. Latest row: Resolution of singularities without base-change compatibility (25 files) [review] (2026-11-22 23:24 UTC).
+Cone: 1,252,729 declarations in 145,772 files. Recorded changes: 49. Latest row: Six heavy proofs in Formalism: records read by projection and not rebuilt (2026-11-22 23:57 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -51,7 +51,7 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
 ### Log
 
 - **2026-11-21.** Archive measured (cone, dials). Judge working. First changes recorded.
-- **2026-11-22.** Changes 3 to 48. Sweeps: restatements, citations of duplicates (two tiers), projections, unused steps,
+- **2026-11-22.** Changes 3 to 49. Sweeps: restatements, citations of duplicates (two tiers), projections, unused steps,
   explicit-argument files. Hand rewrites: waves 2 to 8 on the heaviest proofs. Statements: five lists of unneeded parts.
   Mathematics: map of the argument; four large shortcuts ruled out; the conditions on the families and the counting
   argument read in full; library-level lemmas and repetition measured. Tools: strict token count, patch format,

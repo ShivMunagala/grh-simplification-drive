@@ -107130,7 +107130,7 @@ have hz0 := And.intro hT.2.2.2.2.1 (And.intro hT.2.2.2.2.2.2.2.2.1 (And.intro hT
   have hcard1 := hz0.2.2.1
   have hOne := hz0.2.2.2
   clear hz0
-== src/Formalism/AdmissibleDesigns/RealDisplayAllKOf.lean 32fe7217eda1d1343875e6db523cad8469d00bd3cbdc0cc5c7c67ac09c7f8e60 66f0322ba4a60c2fa5bc4f82ff29b57b6397595c09f14c0aa3c3c07d111424a0
+== src/Formalism/AdmissibleDesigns/RealDisplayAllKOf.lean 32fe7217eda1d1343875e6db523cad8469d00bd3cbdc0cc5c7c67ac09c7f8e60 cee2c40de8104c97d4c67d3beb8dd7331598b6d1b964993ef2418472391eede6
 @% 3248 95 3
 + 65
 have hz0 := And.intro hR.2.2.2.2.2.2.2.2.2.2.1 hR.2.2.2.2.2.2.2.2
@@ -107140,6 +107140,28 @@ card1 := hz0.1
   have hOne0 := hz0.2
   clear hz0 hR
   obtain ⟨p1
+@% 3868 35 2
+= 7791 48
++ 20
+8, a9, a10, a11, a13
+@% 4337 638 3
++ 37
+a7 := fun w (hw : w ∈ what₂) =>
+    (
+= 4684 82
++ 12
+) ▸ hres 0 w
+@@ 5493 65 0
+
+@% 6506 30 2
++ 23
+a10 a5 a6 a7 a9
+      (
+= 4801 174
+@@ 7484 396 0
+
+@@ 8987 8 12
+(hpp w hw).2
 @% 9755 36 2
 = 9758 26
 + 11
@@ -107165,6 +107187,23 @@ card1 := hz0.1
 == src/Formalism/AdmissibleDesigns/TensSubsingleton.lean 460947f711182c5573b6e7f071fac2b6aa4d4bba55d63dcb73224e1124dca887 caa869cdc4212448918b03a94811bbfe23be749cc610c4a44df3d60c166f34a4
 @@ 11838 33 29
 have hmult := (hF1 hcrys).2.2
+== src/Formalism/AdmissibleDesigns/TheoremFromNormalizedOpenThree.lean 4e2b957c19285c0171804ea8300beeb9b8e8d0f1e57b5182a7bb0a5593170d40 0a468d57a5cc8ab4e400e088ee852fd39e8dbe96a5420c32531babe935ef0ba6
+@@ 8113 68 7
+have hF
+@% 9397 175 3
++ 7
+F.2.2.1
+= 9400 60
++ 74
+F.1.2.2.2.2.2.1) (hiLeq := hF.1.2.2.1)
+    (hspL := hF.1.2.2.2.2.2.2.2.2.1
+@% 9946 169 4
++ 11
+F.2.2.2.2.1
+= 9948 35
+= 10013 39
++ 11
+hL1, hL2, h
 == src/Formalism/BranchSandwichDivisors/BranchIsometryProofs/BranchMap.lean 79fb69cb66521aa3aa94bc973301f75d723b5d993be96161e9a979605e241fd6 d194e2a7a472fc1a06caa1fdff756167d5a8861bb2cd61563d84fa356ce08f0f
 @% 73823 65 3
 + 22
@@ -133515,7 +133554,7 @@ have hAdd := (
 = 3500 38
 + 7
 ).2.2.1
-== src/Formalism/SharpRestriction/LevelLetterCocycles/QuotientImageDivisibility/LengthBoundOfHypotheses.lean 116201336e804d1abef810cebd49393cf4f4ac8c63c4101acaee2ac60ee15f82 0e0f42889179459d0d480d6da48db466d216712bb1353f2a3608197780d0c4bd
+== src/Formalism/SharpRestriction/LevelLetterCocycles/QuotientImageDivisibility/LengthBoundOfHypotheses.lean 116201336e804d1abef810cebd49393cf4f4ac8c63c4101acaee2ac60ee15f82 475e1503e180604edf8cc214be51aa3199223d520aa84e113684cb3bb0ba5ac7
 @@ 6907 9 0
 
 @@ 7266 27 0
@@ -133526,6 +133565,10 @@ have hAdd := (
 
 @@ 9263 44 0
 
+@@ 13715 10 17
+, add_sub_cancel]
+@@ 13885 10 17
+, sub_add_cancel]
 == src/Formalism/SharpRestriction/LevelLetterCocycles/QuotientImageDivisibility/Pi0PowSmulInjective.lean 46d64d118aab530b7881a16929c5cb4616d9c83f32681173a4aac456b4279116 27af35d71374bf0f62d38924c264c86954c4a30014fa587b0bd992837e8c2a4e
 @@ 1187 71 87
  intros; apply _root_.Formalism.MainNotions.WachCoordinates.Br.map_smulA <;> assumption
@@ -133752,7 +133795,9 @@ have h9c := (
 == src/Formalism/SharpRestriction/LevelLetterCocycles/RepresentationCongruences/CoefStepOf.lean a584acbcb6a9cec1a3159f4973afbd0067e9ccc360acd0d1688262fad593b1d8 8a0011e001102d9cfbff16f5ad50b36d5a321b4e5e912488e19127d1d2562d22
 @@ 2303 37 33
 have h9c := (hP9 T hT hs1 hp2).2.
-== src/Formalism/SharpRestriction/LevelLetterCocycles/RepresentationCongruences/CoeffXSubCPowSelf.lean 7f9917dfc022ea9ff96402c2c0b099d9b5ce58fadc07174f72ebb0c333821d2f d1fd58d748c2fffd3c8296a1c486b1d91413b81ac315aa4417038e460cc75b01
+== src/Formalism/SharpRestriction/LevelLetterCocycles/RepresentationCongruences/CoeffXSubCPowSelf.lean 7f9917dfc022ea9ff96402c2c0b099d9b5ce58fadc07174f72ebb0c333821d2f 82b2d11f4b8d1803680c96914f1fa2094f69a6a1c22cbce45cb9f60770c32c6c
+@@ 8121 38 24
+ simpa [hup] using hdiff
 @@ 8716 46 156
 have hz0 := And.intro hOK.2.2.1 (And.intro hOK.2.2.2.2.1 hOK.2.2.2.2.2.2.2.2)
   have hcuts := hz0.1
@@ -133768,10 +133813,19 @@ hqu, hΔu⟩ := (
 @@ 10291 85 76
 hNP₂, -, hfr₂⟩ := (HT T₂ hW₂).2
   have hnl2 := (hfr₂ d bb sol hbb).2.2.2.2.1
+@% 11551 0 2
+= 11947 30
++ 4
+rfl
+
+@@ 11945 45 0
+
 @% 14077 70 2
 + 31
 hNP₁, -, hfr₁⟩ := (HT T₁ hW₁).2
 = 14107 34
+@@ 16518 43 0
+
 == src/Formalism/SharpRestriction/LevelLetterCocycles/RepresentationCongruences/ConstantCoeffResidueUXPow.lean 5059a347b8dd00a89c0a51c9933999f0f417581525206a9ca58435c3869c3ebb 7b5914306b8d36eaebadd9980b83eb70242a2c947119c689aa12607483e6fe1c
 @% 7040 341 3
 + 22
@@ -133832,7 +133886,7 @@ frame_letE_idem <;> assumption
 == src/Formalism/SharpRestriction/LevelLetterCocycles/RepresentationCongruences/ExistsFractionInFrame.lean ab10ea82bfb42ef8efe7c8eaa66f918d0941e94b38728462f0dd2152fbf6fe17 f0b40f3686838181b648adb02557fda570aa557551526b96ffdd50b9d57831cd
 @@ 1520 3 0
 
-== src/Formalism/SharpRestriction/LevelLetterCocycles/RepresentationCongruences/ExistsHorizontalLiftOfLenThreeOfUp.lean f418148303b2ff4b7c505b972f694c1dd3fa8e4061997c5f7d90cfa31a58701d 7b554f19283293733573b1f13414323ed84992ff86082c8474c7d5e2846dc22e
+== src/Formalism/SharpRestriction/LevelLetterCocycles/RepresentationCongruences/ExistsHorizontalLiftOfLenThreeOfUp.lean f418148303b2ff4b7c505b972f694c1dd3fa8e4061997c5f7d90cfa31a58701d a26f95e7462937f6f63503ded0c3026f2adbe2b6785264e0d4431e994ededc2e
 @@ 11858 67 63
 C2₁, -, hD₁⟩ := (hAT T₁ hW₁).2
   have hD₂ := (hAT T₂ hW₂).2.2.2
@@ -133844,6 +133898,10 @@ D4₁, -⟩ := (hD₁ d₁ b₁ sol₁ hb₁).2.2.2
 = 12180 89
 + 3
 ).2
+@@ 14579 12 8
+from rfl
+@@ 23814 12 8
+from rfl
 == src/Formalism/SharpRestriction/LevelLetterCocycles/RepresentationCongruences/ExistsLiftMapEqPrimePowSmul.lean 341754567bc75a3b01a950bf0691e6f16b9854fbd45695f0423facdaee79decc ebbe0e21f7ff4fb0564053b4b2070f2b897a59d15d5bfad63c0fc9b0e4d19d5d
 @% 3963 59 3
 + 12
@@ -134118,7 +134176,7 @@ have hπ := (
 == src/Formalism/SharpRestriction/LevelLetterCocycles/ResidualIrreducibleOfTheoremThreePrime.lean 39c061f18bfa422634cb4ad5656a511ea6f74358994b202bd5012c5998c42468 aa9c34fa0931659baf3d24f034b0b6abacefa6e033bbb5e9a930063d2e6b468b
 @@ 7902 3 0
 
-== src/Formalism/SharpRestriction/LevelLetterCocycles/RingClausesAtUniformizer.lean ec4336804ffed75c78c4ac5a5a71abe0d3b6c215a4a088cd81295dd6aeaf0e99 2cbe040c08f75fcd6674156c6b353b3b44a6b77a5986c04401d14e5f84b0fb2e
+== src/Formalism/SharpRestriction/LevelLetterCocycles/RingClausesAtUniformizer.lean ec4336804ffed75c78c4ac5a5a71abe0d3b6c215a4a088cd81295dd6aeaf0e99 0921b038380d7ab31e42f5e4ceb5d8606e8287c15cf74bfcdd57b9e7ba7cfcb0
 @@ 20018 75 68
 have h9' := (h9 T hT hA.2.1 hA.2.2).2.2
   have hring := (h9' hfin1).
@@ -134130,6 +134188,12 @@ have h9' := (
 = 21416 24
 + 1
 )
+@% 27533 134 3
++ 24
+'.reindex_apply σ.symm t
+= 27573 73
++ 11
+dif_pos j.2
 @@ 28449 98 0
 
 == src/Formalism/SharpRestriction/LevelLetterCocycles/RingConditionOfDeltaInvariants.lean fa8d159a1f98701568dd37d36221b0ece32edf5ab2a27dc790509cb58a148456 880c1ba420e924e7583b0bed7296949ea524251c45bea3cd0b52acc59951be5d
