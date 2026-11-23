@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 173.0M, written-out proof size 2.63B, time change -4.72K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 172.8M, written-out proof size 2.62B, time change -4.97K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 173,001,518 | −11,246,692 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,626,569,009 | −162,735,290 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,717.8 | −4,717.8 |
+| Source size (tokens) | 184,248,210 | 172,816,729 | −11,431,481 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,621,971,929 | −167,332,370 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,966.0 | −4,966.0 |
 
-Cone: 1,205,293 declarations in 111,879 files. Recorded changes: 59. Latest row: Siegel-Weil development and its copy: ten twin theorems share one proof (22 files) [review] (2026-11-23 18:27 UTC).
+Cone: 1,203,612 declarations in 111,799 files. Recorded changes: 60. Latest row: Local class field theory once; one proof per theorem over Core5 (17 files; added import checked) [review] (2026-11-23 19:08 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -41,7 +41,7 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
 
 | Area | What is known | Done | Next |
 |---|---|---|---|
-| **Repetition** ([results](campaign/repetition/RESULTS.md)) | 7.6% of the proof is repeated in some form: the same statement more than once 6.4%, copies under other names 1.25% | duplicate proofs cite a copy their file imports, or can import by one added line (13,300 proofs); users of statements with two independent proofs cite one (−6.3 million nodes); restatements and other theorems with one statement: their users cite one of them (22,820 files: −38.1 million nodes, −2.3 million tokens) | being carried out: one hypothesis for both copies of the Siegel–Weil development (0.4%; the first ten twin theorems share a proof), local class field theory once (0.1%), a structure defined three ways (0.07%). Measured: local names for Mathlib objects are defined several times over (finite adeles six times), which keeps copies of lemmas apart (up to 1.25%). Second proofs that the users' files cannot see need shared files |
+| **Repetition** ([results](campaign/repetition/RESULTS.md)) | 7.6% of the proof is repeated in some form: the same statement more than once 6.4%, copies under other names 1.25% | duplicate proofs cite a copy their file imports, or can import by one added line (13,300 proofs); users of statements with two independent proofs cite one (−6.3 million nodes); restatements and other theorems with one statement: their users cite one of them (22,820 files: −38.1 million nodes, −2.3 million tokens) | being carried out: one hypothesis for both copies of the Siegel–Weil development (0.4%; the first ten twin theorems share a proof). Done: local class field theory once and one proof per theorem over a structure that was defined three ways (−4.6 million nodes). Measured: local names for Mathlib objects are defined several times over (finite adeles six times), which keeps copies of lemmas apart (up to 1.25%). Second proofs that the users' files cannot see need shared files |
 | **Known mathematics proved inside** ([results](campaign/library-lemmas/RESULTS.md)) | published theorems: 8.4% if they were free. Lemmas stated in Mathlib terms only: 6.9%, and 12.2% of the source; they are not copies of Mathlib and automation proves 0.7% of them. Proofs that blow up (150 nodes per source token or more) hold 2.2%: half is records moved between copies of a structure, then `simp` 0.66%, case enumeration 0.21%, `omega` 0.15% | one proof replaced by a different argument (Smith normal form by a dual family); zero-free regions and Siegel–Walfisz with shared bounds (−120 thousand nodes); resolution of singularities without its compatibility with base change, which the five theorems never use (−303 thousand nodes, −64 thousand tokens) | toroidal compactifications: are they needed in the generality proved? |
 | **The argument** ([map](campaign/argument-map/MAP.md)) | four lines under one chain: families 39%, covolume bound 13.6%, VWin 8.2%, Galois representations 6.1%. The counting argument is a slope inequality and costs 0.1% itself; all 46 conditions on the families are used at the strength proved; main terms cancel exactly | four large shortcuts tested and ruled out. The bound on Galois cohomology (8.4%) implies an open conjecture on the K-groups of ℤ, so no published theorem can replace it. The two covolume conditions are read in one place and are equivalent to one divisibility statement between twisted and untwisted theta lattices; that statement is the division step of the argument itself and carries the main term, so it is no shortcut. The four large blocks all pay for the twist: the untwisted chain needs none of them and gives a weaker bound | seven candidates of at most 0.5% each |
 | **What the five theorems need** ([results](campaign/unneeded-parts/RESULTS.md)) | 1.07% of what is proved is never read | 46 bundles bypassed or split, 8 statements trimmed: 3,051 declarations out; 6,343 unused local steps deleted | second round of unused steps; fresh measurement |
@@ -63,6 +63,8 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
   divisibility statement on theta lattices, which is the division step of the argument and no shortcut. Every needed statement ranked by what hangs only on it: below the four
   large blocks the proof splits into about 230 separate statements of at most 1% each.
   Change 59: the Siegel–Weil development and its copy share a weaker hypothesis; ten twin theorems have one proof.
+  Change 60: the second formalisation of local class field theory is no longer needed; theorems proved three
+  times over variants of one structure have one proof.
 
 ## Fixed
 

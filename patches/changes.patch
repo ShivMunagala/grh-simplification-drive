@@ -31828,6 +31828,20 @@ PointTransfer.solvable_transfer
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ClassGroupDedekindAlgClosedDivisible.lean f06bc30b45d2ca1e7359cd69e0fb34d90ae7dacc32ba11334ceea791bd04bdaa 7bfe34f621c4c3ce5bab13637a8d3d6ced440fd9403232133e421658587231dc
 @@ 484 45 20
 PicDiv.pic_divisible
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ClassScalarValueCore.lean a8ec438a974e05d3b4ecda0275628c19f651d7697e5d5e6e3982996a47af6d06 688ee9a18b12aaf8c953ac0b4ee26e34c1c9a3be214e059cabef3e2f47229934
+@% 337 0 2
+= 249 61
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 1164 4362 4
+= 1200 1279
++ 19
+
+  by intros; apply
+= 347 30
++ 70
+.class_scalar_value_ofFive <;> first | exact .of_core ‹_› | assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ClassSumEqMassMulOrbitalIntegral.lean 80764d66bc1f04ca47893feac5d8b770631dd5f65e43168e82023ce9a3c0e4f7 f715fe4d96170267583c903d4489b0fff9f24cf7c6fcaabcf233aaf6ad60a128
 @% 1842 453 9
 + 19
@@ -32485,6 +32499,20 @@ PtExt.fv_isCoc_and_ev
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/CoefInjective.lean e22969dee786365c11d0368795fe2989242ac5bdca446c468c19abb185a8553b aa79b8688223bf82007a3e3a261f4cfcef226fed6e74c4a77f0e68bb03b4b952
 @@ 3532 693 0
 
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/CoefMapNormEquivariantBasisAlt.lean fa74ada34b2631a3f23f1f2ed643c58981b80fcc9f3fd8fe6c48d42061ceb249 395a15379a5fb1727e83f8bec4961daab09147cba41fec5909f91f03691cdd1d
+@% 338 0 2
+= 249 61
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 1146 3602 4
+= 1182 946
++ 38
+
+  by intros; apply GlobalTheory.AdTh.
+= 1190 30
++ 51
+_ofFive <;> first | exact .of_core ‹_› | assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/CoefMapNormEquivariantBasisOfFive.lean 4513a7eecfcc99022d15f78174336b4310a45c5618999d304ae33b9812d42725 ab1130d74e752c8d672a94493138b53226c3d7cc3184a2efc9e23be3e1d0d652
 @% 21205 43 2
 = 21208 28
@@ -34535,13 +34563,19 @@ Eis.Conv.CovSkew.cover_skew
 FamIntAt
 @@ 1795 17 8
 FamIntAt
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/CoverValueCore.lean 7300530e8cd55a70e01644453f16737c48c2781abc5ae42bdfbf0fbf6133ae92 94f015f34a77c1008d04fe6ba62ae0fd7f8de50ce3d47685fd480ef0b9709da1
-@% 4354 66 3
-+ 16
-hrat, hmul⟩ := (
-= 4375 45
-+ 5
-).2.2
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/CoverValueCore.lean 7300530e8cd55a70e01644453f16737c48c2781abc5ae42bdfbf0fbf6133ae92 b00b3cc60e2c851196785a20568f35d38be3df9de3aa33fa9dd03d0b9227e763
+@% 524 0 2
+= 249 61
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 2765 1924 3
++ 19
+
+  by intros; apply
+= 1280 27
++ 63
+.cover_value_ofFive <;> first | exact .of_core ‹_› | assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/CoverValueRoot.lean c82008c6bc9cfcb841750f16c084027cb05217ab23c7406b636f2159c09a42af 3952bf37df76a830d9bf203e3b101c41af91741122a5944c809a900506d86202
 @@ 5795 25 35
 χ₁, hχ₁, hxi⟩ := hrun.2.2.2
@@ -40551,8 +40585,8 @@ FrameSpread.unitAt_det_co
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsCartierDivisorGroupQuotientDescent.lean 277e9bbfc7465da12a7c6e4340975094a54ff233fec7298ee0e5983330febeae 2ba7345c74ebee55e08f6cfffb4acbf793fe7585b2179bd0942c1ed69d28cf30
 @@ 2548 47 38
 OrbitSep.unitAt_of_forall_unitAt_fibre
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsCcIsEquivAtSerOfOneMapRowOfCore.lean 52daff59f2e80045a71ebb734d6b1e3c19354ed4f23ac2f8e5acecca9698e888 12b5a1e869e52d1058a4d95b0a46cf5c637ad83f9e3babd99bb0ce215aa7efe5
-@% 2503 0 25
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsCcIsEquivAtSerOfOneMapRowOfCore.lean 52daff59f2e80045a71ebb734d6b1e3c19354ed4f23ac2f8e5acecca9698e888 64429d97bdfcb822c0cfe63b7dd1902fd1126a6d3c636d610f9548b559e83abd
+@% 2503 0 27
 = 249 61
 + 15
 IsPairRecordCor
@@ -40588,8 +40622,11 @@ ThetaLiftEqClassSumThetaKernelsLowestKTyp
 + 41
 MovedFiniteDatumEqSumRationalRootTranslat
 = 667 64
-+ 19
-ModelsAtRecordCore
++ 17
+ModelsAtRecordCor
+= 2421 63
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
 
 @% 4110 2376 7
 + 23
@@ -40617,16 +40654,17 @@ Core.vec_fock_core | (intros; apply _root_.
 Core.vec_fock_core <;> assumption)
 @@ 9860 316 235
  first | exact @_root_.GlobalTheory.AdTh.VecNeCore.thetaVector_ne_zero_core | exact _root_.GlobalTheory.AdTh.VecNeCore.thetaVector_ne_zero_core | (intros; apply _root_.GlobalTheory.AdTh.VecNeCore.thetaVector_ne_zero_core <;> assumption
-@% 19614 38 3
-+ 7
-_root_.
-= 19614 35
-+ 1
-c
-@% 20525 61 2
-= 20543 28
-+ 29
-(hM (O.dict 1).1).2.2.2.2.2.2
+@% 13489 4219 4
+= 13526 1374
++ 19
+
+  by intros; apply
+= 19613 38
++ 48
+Five <;> first | exact .of_core ‹_› | assumption
+@@ 19319 1516 105
+
+  by intros; apply GlobalTheory.AdTh.CcEx.exists_ccIs_ofFive <;> first | exact .of_core ‹_› | assumption
 @@ 22875 742 206
  first | exact @_root_.GlobalTheory.AdTh.letters_eq_fockVars_core | exact _root_.GlobalTheory.AdTh.letters_eq_fockVars_core | (intros; apply _root_.GlobalTheory.AdTh.letters_eq_fockVars_core <;> assumption)
 @% 24952 860 7
@@ -40641,6 +40679,14 @@ Core.omega_level_vP_core | (intros; apply _root_.
 = 24409 26
 + 40
 Core.omega_level_vP_core <;> assumption)
+@% 26638 2991 4
+= 26675 901
++ 19
+
+  by intros; apply
+= 38245 43
++ 48
+Five <;> first | exact .of_core ‹_› | assumption
 @% 31779 3044 7
 + 23
  first | exact @_root_.
@@ -40653,16 +40699,22 @@ Core.class_scalar_value_core | (intros; apply _root_.
 = 29683 29
 + 44
 Core.class_scalar_value_core <;> assumption)
-@@ 38246 43 52
-_root_.GlobalTheory.LiftUnfoldCore.thF_eq_classSum_c
+@@ 36044 37 0
+
+@% 38134 3334 3
++ 50
+
+  GlobalTheory.PtId.ad_value_ofFive (.of_core hC)
+= 48004 43
++ 60
+X g Dc hX hp hrt x₀ hon hinv hbas hΛ mk₂ ha₂ v a hv hrd Y hY
 @@ 42764 386 191
  first | exact @_root_.GlobalTheory.AdThCore.weil_twist_base | exact _root_.GlobalTheory.AdThCore.weil_twist_base | (intros; apply _root_.GlobalTheory.AdThCore.weil_twist_base <;> assumption)
-@% 45579 20 3
-+ 7
-_root_.
-= 19614 35
-+ 1
-c
+@@ 44360 37 0
+
+@@ 45457 3034 105
+
+  GlobalTheory.PtId.exact_identity_ofFive (.of_core hC) hT O hP hka hδ hc hcc t h J' hR y xs hpl f hf g'
 @% 50509 5800 13
 + 23
  first | exact @_root_.
@@ -40684,18 +40736,24 @@ Core
 = 59074 31
 + 20
 core <;> assumption)
-@% 65050 44 3
-+ 7
-_root_.
-= 57192 28
-+ 18
-Core.moved_datum_c
-@% 66042 91 3
-+ 13
-have hmv := (
-= 66067 66
-+ 7
-).2.2.1
+@% 58964 2025 3
++ 19
+
+  by intros; apply
+= 65049 44
++ 48
+Five <;> first | exact .of_core ‹_› | assumption
+@% 61910 7268 6
+= 61947 3016
++ 19
+
+  by intros; apply
+= 61791 30
++ 1
+.
+= 61955 26
++ 48
+Five <;> first | exact .of_core ‹_› | assumption
 @% 71016 2455 7
 + 49
  first | exact @_root_.GlobalTheory.AdTh.OverCore
@@ -40708,12 +40766,14 @@ have hmv := (
 = 76066 31
 + 16
  <;> assumption)
-@% 76278 101 3
-+ 16
-w1, w2, w3⟩ := (
-= 76299 80
-+ 5
-).2.2
+@% 74317 8976 4
+= 74354 1231
++ 19
+
+  by intros; apply
+= 74288 27
++ 68
+.io_eq_phase_smul_ofFive <;> first | exact .of_core ‹_› | assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsCcIsEquivAtSerOfOneMapRowOfFive.lean e78fdfac9b1361803c05aa4314cb2d37a7dec7a2c521a18b82d6680f31a56ab4 ced4fbc896dd76d6b200dc22ce2265d4cc0c37af3cadb6f04b7ee6427a5e7fc7
 @% 29339 61 2
 = 29357 28
@@ -42025,6 +42085,22 @@ SymCubDense.sym_cub_of_dense_abelian
 @@ 29135 34 0
 
 @@ 37867 60 0
+
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsCuspFormClassSumNormalisedData.lean 5ef65cdc4a1d46a2d7154ec4dedaac84954c71cd76a8b95272103bb760a30137 55e51241d4119957ce45c2bd13c0637e30466d92855b7e683ffc715e28fa223f
+@% 417 0 2
+= 249 61
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 1163 34 4
+= 1200 894
++ 19
+
+  by intros; apply
+= 1207 48
++ 49
+ofFive <;> first | exact .of_core ‹_› | assumptio
+@@ 1200 3005 0
 
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsCuspFormIndependentTranslates.lean c37ceed97ee9abe5380024923baf2b74804eaa9721206ae1aba053c6e1157709 1c060e24a7c925460dfc04042555d0a020f2ab6f9bb602f253a29d5f0b63ba16
 @@ 9079 36 29
@@ -58052,6 +58128,20 @@ FockNormBound.fock_norm_bounds
 quad_eq_sum_symplD
 @@ 8208 45 36
 FockHeisQuad.fockAct2_eq_heisOp_quad
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/FockCoefficientMapExtremalEqPhaseSmulLetters.lean afeac2096173e979dab8f4a2ad472e0842963d7956e8d9174026fb6f96b3ae93 4ad793d262d8663d0064a5b886596bc51b71bb5308c2317ba8326770995351fd
+@% 657 0 2
+= 249 61
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 1501 8981 4
+= 1538 1229
++ 19
+
+  by intros; apply
+= 1436 27
++ 68
+.io_eq_phase_smul_ofFive <;> first | exact .of_core ‹_› | assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/FockCoinvariantKernelStableAndAdmissible.lean 347ddedffbaed851bfe0fd37dd88444e403f46453d2d51eacd0889e96490281a 0210bbe16f9043120b44c1277a9005d22b1668fb4a43ff4850be84ad24386683
 @@ 1001 41 23
 HoweR.fock_lie_wts_comm
@@ -66111,13 +66201,19 @@ ExistsNormSolutionFields
  first | exact @_root_.GlobalTheory.NormAssemble.cT_aeval | exact _root_.GlobalTheory.NormAssemble.cT_aeval | (intros; apply _root_.GlobalTheory.NormAssemble.cT_aeval <;> assumption)
 @@ 3717 0 26
 GlobalTheory.NormAssemble.
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IoExtCore.lean 813eb604fb60e6ed3b7e4c64d2e10ba4584c5452000da6031fc904db08d97046 f053b4e749af39ad4ad911fe24861ca9ff86dece69391694c0687abd65e15f22
-@% 1935 48 2
-= 1938 28
-+ 21
-(hR.thP.ioP i A.μ0).2
-@@ 3326 45 47
-AdTh.MinorWeightCore.delta_extremal_weight_core
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IoExtCore.lean 813eb604fb60e6ed3b7e4c64d2e10ba4584c5452000da6031fc904db08d97046 0917cd568f59ca123c11c5e6d3141538891027b50b4e7bd3e311e74e0132113e
+@% 673 0 2
+= 249 63
++ 36
+istsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 1846 2169 3
++ 19
+
+  by intros; apply
+= 1462 26
++ 57
+.ioExt_ofFive <;> first | exact .of_core ‹_› | assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IrrUnitaryTraceNeZeroCopyFinDSX.lean 6378ea4c44e5779f6b311387eba8a63a278071d8035a6b4347ad090ff709530f 2d5f9d5f6ac59a696c8525e9547735e6b0ba17b7cb5aba5ec0765c060550e730
 @% 4294 33 2
 = 4306 24
@@ -67628,6 +67724,19 @@ GlobalTheory.SharpPull.exists_lift
 GlobalTheory.MatEndPull.ext_of_pb
 @@ 2091 11 33
 GlobalTheory.MatEndPull.ext_of_pb
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IsPairRecordCore.lean e1ebfd3dd5ecee9d7f7c0c90f24788299450a244fea6c067537bfe554de243dc 5ca4d99e1e16fcfd08ee351e8d804703d993c7d58b9fdc044ac54ee746affb7f
+@% 337 0 2
+= 249 61
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 1967 2379 3
++ 19
+
+  by intros; apply
+= 1093 26
++ 65
+.isPair_record_ofFive <;> first | exact .of_core ‹_› | assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IsPerPull.lean d73ba6c2cda5e0f77b803ec1f0237f199873242837a26e8225e11a2cb80e324b 0cd0aa44e9abe52bb9b13a1926c2e880ee585b2103a8ca4eed59c4f21340bca2
 @@ 2070 46 22
 CechPer.evForm_secPull
@@ -71000,11 +71109,27 @@ GlobalTheory.Parabolic.mem_fixed
 GlobalTheory.Parabolic.mem_fixed
 @@ 9192 13 32
 GlobalTheory.Parabolic.mem_fixed
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/LevelActionEquivariantAtFrameConstantsOfClauses.lean 3dfc52f927e7be6fcc56d8d764396105f5a5ae71516b3e4bc485eef791974c51 805ce1fbd56e6bc4b61340e4a3d1910c8ead83ae1e77201ae18d48d8b1ae8323
-@@ 3118 47 20
-VacStab.om_vacuum_eq
-@@ 3421 15 57
-GlobalTheory.VacStab.actO_one_left, GlobalTheory.VacStab.
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/LevelActionEquivariantAtFrameConstantsOfClauses.lean 3dfc52f927e7be6fcc56d8d764396105f5a5ae71516b3e4bc485eef791974c51 07d230e583f20cfb3a6436c80d6f9547ced44a0595b16bdc6e938c25c7f23909
+@% 610 0 2
+= 249 61
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 2013 1594 3
++ 2
+
+ 
+= 1366 28
++ 47
+.om_lift_vac_ofFive (.of_core hR) i hV H hmu hk
+@% 3609 3435 4
+= 3646 782
++ 19
+
+  by intros; apply
+= 1366 28
++ 67
+.equivAt_of_ccIs_ofFive <;> first | exact .of_core ‹_› | assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/LevelActionMulAndFaithfulFiniteGroup.lean b93871aef06d4182d06db41a75343cb0a95715eb98c0d44b4cd56bd1a2ef434d c12f8e359f8d61f82c811dd07ee5c8d261cc77a1eb51bf16f197f99229ff54d2
 @% 15256 122 3
 + 22
@@ -74080,9 +74205,19 @@ Poinc.MinSysType.finite_minimiser_syste
 Poinc.polFn_cell_eq_min_integral
 @@ 2993 49 18
 relabel_minimisers
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MinorProductFockVectorExtremalTorusWeight.lean d73b7ba78f5e9e0dcc06e2598d5bc3fb64dcd0471c97b8dd37e0263adbe78e7f 4defbcbff62b82c90e132125356c60223b9f6c46b920e4d48a72f5ea0d2c3b57
-@@ 5032 49 40
-FockCompactAction.om_pureTensorO_eq_fact
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MinorProductFockVectorExtremalTorusWeight.lean d73b7ba78f5e9e0dcc06e2598d5bc3fb64dcd0471c97b8dd37e0263adbe78e7f 9d04c149db8fd462447905f89e6221772a14e1d83c3defd5ab526c6301897c65
+@% 1025 0 2
+= 854 61
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 2506 3763 3
++ 19
+
+  by intros; apply
+= 1781 30
++ 73
+.delta_extremal_weight_ofFive <;> first | exact .of_core ‹_› | assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MinpolyEqOfAevalOfLinearIndependent.lean 0d03b0ebdcecbe2b2bc092ededbfc16a6a6427935f787bce2fd8c43282a43794 472f92aba52d0c2d1384bda54e8790344acf43e1cd8ee31bb109863acf2f4d43
 @@ 3039 20 6
 tensor
@@ -74276,6 +74411,17 @@ ExpFrame.LinkQ
 = 8947 25
 @@ 9513 45 40
 ExpFrame.heckeStable_heckeNat_of_isHecke
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ModelsAtRecordCore.lean ed4e967a041a012536294481512a218677ba701f4591b0c48e327ab0c8ad9ec0 10bfac89c8813c684645928ee5916426968ad6340c99170550050651521c5f9f
+@% 339 0 2
+= 249 61
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 1114 4217 2
+= 1151 1372
++ 105
+
+  by intros; apply GlobalTheory.AdTh.models_at_record_ofFive <;> first | exact .of_core ‹_› | assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ModerateGrowthIntegralNormKernelBigVertexRoute.lean 11a93ae1101ec3674decf7a24000940ab0dc4824b9134461f6c0c95c7b7c2ed1 8e459a822329aef990919859f8492fd6fdd2b272bc9cae364dbbb00f4fb63ecd
 @% 1817 170 3
 + 36
@@ -74399,6 +74545,19 @@ LineConst.projLine_map
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MoveMarkOfIrreducible.lean 32cbf2bad0bb8cb8d9a79d46bff50acd83182d96ce9dfdf0d071d2a6e49b8e08 b58258656f68b55ccf1e3f4d85960ac9859b24244c213c6b21fb58931d231beb
 @@ 8148 51 19
 LKMid.psi_eigenbasi
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MovedFiniteDatumEqSumRationalRootTranslates.lean c2f01f2d5c04ec81aa3e7bd42455e689a05ec6bf45bff7ef094dbef86c8a37b0 63546eee1c06c727a8277c31769216a2b976cca2e0b60aa41da74144e9a4c26a
+@% 491 0 2
+= 249 61
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 3117 2084 3
++ 19
+
+  by intros; apply
+= 1326 29
++ 63
+.moved_datum_ofFive <;> first | exact .of_core ‹_› | assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MovedSectionReadingEqMovedFrameReading.lean 86f41b4fac1bd33ff9dfe12d38203e43a0dc983067f9d6cf3a18667e6c6ae856 24b23cb25c120176fe30be67545bb72fb4e6cf00086b42dba41bc335636b9d69
 @@ 6866 48 22
 GeoLevel.theta_move_sq
@@ -74558,11 +74717,54 @@ FlatTw.Hol.isSec_modelWt_rdU
 GlobalTheory.SymLiftOdd.
 @@ 4170 0 24
 GlobalTheory.SymLiftOdd.
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MulMemRangeNorm.lean ecee8b5704cba54c17f70e9f1bd98e2c56ad7b1550158d8ed980b87ac37c2b82 2a56be0289c67658f3a45b9ba5e3b0c44053167f19fdf58fdd61704ea4586af3
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MulMemRangeNorm.lean ecee8b5704cba54c17f70e9f1bd98e2c56ad7b1550158d8ed980b87ac37c2b82 1125d3875f186b30114efeb4ed8666bf945ecc6f9f1357cd205aab27839adb4a
+@@ 187 61 43
+GroundTheory.LocalFields.NormCorrespondence
+@@ 447 17 0
+
 @@ 1512 3 0
 
-@@ 2738 38 35
-have hker := (hArt.2.2.2.2 L hab).2
+@% 1820 237 8
++ 27
+SeparableClosure F := IsSep
+= 1847 43
++ 9
+Separable
+= 1899 53
++ 19
+Hom.equivFieldRange
+= 1974 38
++ 4
+e.to
+= 2012 29
+@@ 2107 80 0
+
+@% 2241 607 11
+= 2250 28
++ 3
+, ←
+= 2145 27
++ 6
+, h2]
+
+= 2424 73
+= 2503 83
++ 144
+haveI := IsAbelianGalois.of_isCyclic (K := F) (L := L)
+  have hidx := GroundTheory.LocalField.index_range_normUnits_of_isAbelianGalois L
+  rw [←
+= 2145 27
++ 13
+, h2] at hidx
+= 2776 58
++ 52
+
+      (GroundTheory.LocalField.normUnits F L).range
+@@ 2880 9 33
+GroundTheory.LocalField.normUnits
+@@ 3170 199 84
+] at hx hy ⊢
+  exact (Subgroup.mul_mem_iff_of_index_two hidx).2 (iff_of_false hx hy)
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MulNormDualWeylTensorEvaluationLeFibreNorm.lean 00162730ddccc5a83dd513aeaf264e2274fb5560b88da7a159c95657514c801c 3fcf0faf0d3df8846183c56ad5dc5dcc05f9be929851f6ff4151a3fe0cae7098
 @@ 2878 46 20
 DefPt.tval_translate
@@ -87138,15 +87340,23 @@ WittSig.wittIndex_le_neg
 SiegelSet.lintegral_cone_modulus_lt_top
 @% 9397 45 1
 = 9399 39
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ThetaKernelOneClassEqClassicalShortSeries.lean 66b969d3b97856bcab32103f95ba10f2caf29a45188b5b28aa863bf4b8b6da43 c34e463bead3d6f4ad2f93c3d934cc5c253d0add46f233df3d8db6636e67c2ab
-@@ 4505 50 36
-AdTh.MovedDatumCore.moved_datum_core
-@@ 6491 50 30
-AdTh.SplitClass.om_reads_projA
-@@ 7828 0 24
-GlobalTheory.SW.TensVac.
-@@ 8234 23 56
-GlobalTheory.DiagDifferent.cmField_host_element_add_conj
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ThetaKernelOneClassEqClassicalShortSeries.lean 66b969d3b97856bcab32103f95ba10f2caf29a45188b5b28aa863bf4b8b6da43 cb887c7ee0ae60d27baca6511495cfdd1412deb7c7fc277665fc72f0af7aa5cf
+@% 527 0 2
+= 249 61
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 1354 7284 6
+= 1391 3014
++ 19
+
+  by intros; apply
+= 1283 30
++ 1
+.
+= 1399 24
++ 50
+ofFive <;> first | exact .of_core ‹_› | assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ThetaKernelReal.lean d2742872d3c3bea0531b50b10fbc2b4bd56fccb943934e83a54466590a101382 d6203cb3dd89bf821d80444c7106753eee53d2c147c4f15280d5b98fc81ec6dc
 @@ 9381 46 21
 RealLift.locFin_sumPl
@@ -87426,6 +87636,20 @@ VmTwo.twoSided_goodIner
 RealWeil.schur_rho_l2
 @@ 7700 45 19
 sq_scalar_character
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ThetaLiftEqClassSumThetaKernelsLowestKType.lean 71e086611957c6d220d5f1d48ede5ecf5887475ad80279be1fcd6738452758a9 096c10fb7b0d3c05ef720f5da3e7bf62995d8c9a3b46c97220709aa959a89fc1
+@% 502 0 2
+= 249 61
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 1288 3014 4
+= 1325 899
++ 19
+
+  by intros; apply
+= 3264 25
++ 66
+thF_eq_classSum_ofFive <;> first | exact .of_core ‹_› | assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ThetaLiftEqIntegralRouteKernelFubini.lean 18264e8d66a9b063aa61bf19a1d4f8ee4439732f42b578c424247c7783e6f171 5f1f143df2f75009933d585c45318f526ad35b2007978c191b075a961281de6d
 @% 3302 236 5
 + 8
@@ -92580,6 +92804,23 @@ XFTorsion.torsion_rational
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/VAddNonnegOfIsIntegral.lean 246b7bd96002418dd8c23d1e2eaa8b10928669f236c9042eee69577ed69eb380 7f52cf5267e532498795c98bf4bb013994199aba2be04b456ecd2556d5690561
 @@ 1054 54 51
 Formalism.BasicNotions.Examples₂.PlacesToy.vAdd_mul
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/VPEqSumHeisCore.lean 413294ef38f1dcc5965d873106050de79a6935e3803f28e0012f891986968691 e4200011cf5242f83354af0647d224ce7838fef27c276b12e95ff0c51a328e5d
+@% 178 0 2
+= 92 61
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 1099 6891 6
+= 1136 1051
++ 19
+
+  by intros; apply
+= 290 26
++ 1
+.
+= 1144 30
++ 56
+of_core_five <;> first | exact .of_core ‹_› | assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/VactVmul.lean c7ffbff07b792e699cc5dbd9ff62073b22a0293a2d739a98f0804b3eb3fa7345 cecadf025738bc06c72cc6bbc0c480100fab308fe851acbad5940c651f709a3f
 @@ 905 38 18
 WpFam.isFam_wp_wpd
@@ -151488,59 +151729,193 @@ Mem.Col2.RatMove.isPtOf_ratAd
 Mem.Col2.cosetIn_congr
 @@ 14111 42 24
 Mem.Col2.cosetIn_act_rat
-== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/MovedFiniteDatumFourierExpansionChainless.lean c2f24d530f69b6a812d73afe09d8cfad9752aad16a96d5432c3ecc676228eaa3 34e66c2ddac55e4c89ddf9fb28a952b5ccc892a130d48366ba4d760dc1ea2837
-@% 24708 61 2
-= 24726 28
-+ 29
-(hM (O.dict 1).1).2.2.2.2.2.2
-@@ 29383 47 20
-VacStab.om_vacuum_eq
-@@ 29686 15 57
-GlobalTheory.VacStab.actO_one_left, GlobalTheory.VacStab.
-@% 65343 47 1
-= 61154 39
-@% 66340 91 3
-+ 13
-have hmv := (
-= 66365 66
-+ 7
-).2.2.1
-@@ 67329 50 30
-AdTh.SplitClass.om_reads_projA
-@@ 68666 0 24
-GlobalTheory.SW.TensVac.
-@@ 69072 23 56
-GlobalTheory.DiagDifferent.cmField_host_element_add_conj
-@% 84679 101 3
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/MovedFiniteDatumFourierExpansionChainless.lean c2f24d530f69b6a812d73afe09d8cfad9752aad16a96d5432c3ecc676228eaa3 9186de08af4f4941a80cf097f770062d0d0a3a6432fa0bc94693f55e88785e19
+@% 2884 0 2
+= 249 61
++ 38
+ExistsCcIsEquivAtSerOfOneMapRowOfFive
+
+@% 3620 168 3
++ 6
+abbrev
+= 3629 56
++ 25
+:= GlobalTheory.Core5 R F
+@% 4613 4227 3
+= 4650 1383
+= 10754 35
++ 6
+ofFive
+@% 9624 3053 3
+= 9661 905
+= 9669 47
++ 6
+ofFive
+@% 13437 1180 3
+= 13473 919
+= 9669 47
++ 6
+ofFive
+@% 15414 2401 3
+= 15451 918
+= 131186 38
++ 6
+ofFive
+@% 19501 2378 2
+= 18617 25
++ 21
+.isPair_record_ofFive
+@% 23497 1544 2
+= 24778 37
++ 4
+Five
+@% 26639 201 2
+= 24778 37
++ 4
+Five
+@% 28275 1597 3
++ 2
+
+ 
+= 27611 28
++ 36
+.om_lift_vac_ofFive hR i hV H hmu hk
+@% 29874 3461 3
+= 29911 793
+= 27612 27
++ 23
+.equivAt_of_ccIs_ofFive
+@% 34976 228 2
+= 27612 27
++ 23
+.equivAt_of_ccIs_ofFive
+@% 35994 1829 3
+= 36031 1205
+= 126951 37
++ 6
+ofFive
+@% 39177 862 2
+= 38618 26
++ 22
+.omega_level_vP_ofFive
+@% 40876 3034 3
+= 40913 910
+= 42873 24
++ 22
+thF_eq_classSum_ofFive
+@% 45654 216 2
+= 42873 24
++ 22
+thF_eq_classSum_ofFive
+@% 46806 6915 5
+= 46843 1075
++ 2
+
+ 
+= 45997 26
+= 56526 39
++ 4
+five
+@% 56413 2093 2
+= 54612 28
++ 19
+.moved_datum_ofFive
+@% 59304 2036 3
+= 59340 1781
+= 54612 28
++ 19
+.moved_datum_ofFive
+@% 62182 7294 5
+= 62219 3024
++ 2
+
+ 
+= 62111 30
+= 73420 25
++ 6
+ofFive
+@% 70275 3350 5
+= 70311 3055
++ 2
+
+ 
+= 62111 30
+= 73420 25
++ 6
+ofFive
+@% 74448 3612 4
+= 74484 957
++ 17
+GlobalTheory.AdTh
+= 84471 32
++ 6
+ofFive
+@% 79673 622 2
+= 78869 25
 + 16
-w1, w2, w3⟩ := (
-= 84700 80
-+ 5
-).2.2
-@% 107591 66 3
-+ 16
-hrat, hmul⟩ := (
-= 107612 45
-+ 5
-).2.2
-@% 111565 44 1
-= 45687 38
-@% 120671 185 3
-= 73400 53
-= 120714 98
-= 93810 42
-@% 126556 329 5
-= 26672 34
-= 126609 84
-= 124269 34
-= 126736 95
-= 35009 42
-@% 127072 48 1
-= 9682 41
-@% 130981 49 1
-= 129238 48
-@% 131306 48 1
-= 9682 41
+.vec_fock_ofFive
+@% 81453 343 2
+= 81509 26
++ 30
+etaVector_ne_zero_of_core_five
+@% 82688 9008 3
+= 82725 1240
+= 82624 26
++ 24
+.io_eq_phase_smul_ofFive
+@% 93777 228 2
+= 82624 26
++ 24
+.io_eq_phase_smul_ofFive
+@@ 95289 381 40
+GlobalTheory.AdTh.weil_twist_base_ofFive
+@% 96539 4372 3
+= 96575 1290
+= 95723 29
++ 26
+.class_scalar_value_ofFive
+@% 101740 1970 2
+= 101777 1189
++ 44
+GlobalTheory.AdTh.letters_eq_fockVars_ofFive
+@% 106000 1926 2
+= 120932 39
++ 6
+ofFive
+@@ 109340 37 0
+
+@% 111440 3391 3
++ 36
+
+  GlobalTheory.PtId.ad_value_ofFive
+= 118457 46
++ 60
+X g Dc hX hp hrt x₀ hon hinv hbas hΛ mk₂ ha₂ v a hv hrd Y hY
+@@ 115904 3043 94
+
+  GlobalTheory.PtId.exact_identity_ofFive hC hT O hP hka hδ hc hcc t h J' hR y xs hpl f hf g'
+@% 118962 3613 2
+= 119572 819
++ 43
+GlobalTheory.AdTh.SerAll.exists_serOf_ofFiv
+@@ 124236 201 44
+GlobalTheory.AdTh.SerAll.exists_serOf_ofFive
+@% 126453 716 3
++ 2
+
+ 
+= 129294 55
++ 6
+ofFive
+@% 129204 247 3
++ 2
+
+ 
+= 129294 55
++ 6
+ofFive
+@@ 130854 566 49
+GlobalTheory.OneMapTies.oneMapRow0_of_ties_ofFive
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/MulAntiOfUnitary.lean 49790922645ea62c172afd8838f9d9876fb2397157a0b4d7f6cd0fbeb060f716 5dc124abcc43609fea146dd1d6c2c1a07870d57216ba93658e4a3d536a4db147
 @% 7117 150 3
 = 7119 42
