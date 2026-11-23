@@ -5310,6 +5310,19 @@ Formalism.L2.Col.
 = 3469 79
 + 17
 Formalism.L2.Col.
+== src/Development/AbelianVarietyTheory/BlockTheory/DivisorBase/WeilTensorModels.lean 62209e957e734a32e4a85feb546cb2e8e7e087475d54fe5575b8fa7b4bd80197 166186470a3d81f7a7f308cb8a72bc0a4501384f34e4986b30db08ef9f1e1292
+@% 13930 0 4
++ 124
+-- `Base.IsGood` without the `galois` field: what the shared theta-kernel proofs use.
+variable (σ) in
+structure Base.IsGoodW
+= 13646 52
+= 13722 208
++ 116
+theorem Base.IsGood.toW {B : Base F E} (h : B.IsGood σ) : B.IsGoodW σ :=
+  ⟨h.cm, h.unram, h.std, h.inert, h.psiP⟩
+
+
 == src/Development/AbelianVarietyTheory/BlockTheory/GlobalSignature/LocalDensityEuler.lean 8a3f18f478c0bdff87f7f3c47d94f55a598e8ea62dbe9cf477f86d5be2a8980e 1238e672e52c21865138f20c616f1f8b7420a4d175bdebba6311af41a96d3bba
 @@ 154 0 83
 import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.LocalDualIndex
@@ -208080,6 +208093,12 @@ j, hj, hm⟩ := (
 FinWeil.span_translates_vacua
 @@ 2189 39 26
 FinWeil.exists_weil_rep_of
+== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/HalfIndexLattices/SplitStab.lean c724fb9f8fc7ba20c562902b1e5601f008c77e9777886bb8790af80eb949546a fb2a5bde4caa34a878d509fb0c4aaed7d08e0a2382a32f998a51ef3d8126819a
+@@ 1144 0 125
+
+theorem GoodK.toW {σ : E →ₐ[F] E} {B : Base F E} (h : GoodK σ B) : B.IsGoodW σ :=
+  ⟨h.cm, h.unram, h.std, h.inert, h.psiP⟩
+
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/SatakeLifts/CompUnitPf.lean 93200af79666bf9b251e15e1446b6f1008054faf9456c28e243a0a486ef37395 d35523f8fd2f170f10dc1c41919e3aa85de02e690e1858e8b6ff787e74cbac8f
 @@ 863 31 4
 locU
@@ -208306,13 +208325,17 @@ JC
 = 2581 42
 + 2
 JC
-== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/EventuallyIsVacIndicatorK.lean 4d0527a83840dc6471d6e93223f20906ed46326365e5f26f8ac1d1971625db9a 8990e02af17445372d2ad57d5a8ca26729d3fd12d3921db2b61a055a6b6a60a6
-@@ 3571 10 32
-GlobalTheory.GaugeEx.IntBasis.ev
-@@ 3885 40 84
-GlobalTheory.GaugeEx.IntBasis.ev_int (yc g k)).and (GlobalTheory.GaugeEx.IntBasis.ev
-@@ 4199 10 32
-GlobalTheory.GaugeEx.IntBasis.ev
+== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/EventuallyIsVacIndicatorK.lean 4d0527a83840dc6471d6e93223f20906ed46326365e5f26f8ac1d1971625db9a 1485445fb3365b4ef536fc5470f33893d3a4d2437b933413c91a3d4fd5b1c77f
+@% 3386 4078 5
++ 2
+
+ 
+= 2424 26
++ 10
+w B hB.toW
+= 8634 29
++ 2
+hθ
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/ExistsCoordK.lean 4d86f35db8962068d8a761185ded0f36e73a8b1fbd7bc100fbb46b75b793775a 29369ea4f56b09583749334040f5e49c6a59d4b984c1b4a2994f28f330f49a26
 @@ 4012 52 40
 GlobalTheory.ThetaOntoF.exists_thV_eqF_k
@@ -208527,9 +208550,10 @@ eps_mul
 AdelicU.cm_conj_conj
 @@ 5316 49 25
 AdelicFourierUniq.eq_zero
-== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/FirstTermPLZfcCore.lean 10361fa3c0770ba94c31751a0e883a6e592712d777d3c4f00f2494fc7a0841e6 ec9ad9cd3d03c9b2869cc43a8be0303fede59cf68da1b1ac96ed8a8f72fc3de6
-@@ 1211 20 20
-AdelicU.cm_conj_conj
+== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/FirstTermPLZfcCore.lean 10361fa3c0770ba94c31751a0e883a6e592712d777d3c4f00f2494fc7a0841e6 63446d66be30735bab3598f1fcf761b3886cdf40d2c6f2ecd0c6a1959db1be52
+@@ 1162 1565 24
+
+  chr_ker_w hB.toW hb β
 @@ 3233 20 20
 AdelicU.cm_conj_conj
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/FrameSignEqInvolutionScalar.lean 95b971a08228ff80878ca6496863e6e06ce9038d24541f3167e526e1d71b1e58 bf95b4c0bdc98c04ba76d4bbb77c954a6f43af9c7c8b419f7fc8a874b0cf2158
@@ -208562,6 +208586,10 @@ HeckeSplitGen.
 = 878 29
 + 18
 StdK.isCompact_K_k
+== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/HeisCK.lean e9d9b351be9a736aeff55784fc0ca8f2d4218f061c1e088d8f8ff1c08ee46067 f54a867b57506bfd2aaada59041d01c6da1cfa43f6bb10c26c616bcbd0a60294
+@@ 1614 1133 46
+
+  heis_C_w hB.toW JS JT ξ₀ N α β e hCe he Φ y
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/HermitianFormSelfadjointGlobal.lean bba242a6f73534ba27da03508dc5638c4ca677466d6499a747d317e322eb1ef1 40b6f1c1147220862bb22df530492d58c9f3a2dec4edf6150458cbc85afa9c0b
 @% 344 0 2
 = 110 89
@@ -208655,9 +208683,10 @@ PositivityTheory.ThKW.fundamental_domain_plancherel_globa
 PositivityTheory.ThKW.fundamental_domain_parseval_glob
 @@ 4603 54 55
 GlobalTheory.HeckeSplitBase.heckeChar_eq_one_of_split_k
-== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/MemLatAtVK.lean b38addedd5fe8a1adb42bdd096fb258cd1c2410f5ba6ce7d198704db1ea5b87e 7cf539416321126aff73b986f4c0315286710d114a367382b0296047448ada53
-@@ 1199 11 33
-GlobalTheory.AdelicU.cm_conj_conj
+== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/MemLatAtVK.lean b38addedd5fe8a1adb42bdd096fb258cd1c2410f5ba6ce7d198704db1ea5b87e 7235be3c45923e49465ec5d5ff10df1ecb13a448f0365b6956201bab3d01a08a
+@@ 1182 2783 30
+
+  mem_latW_w hB.toW hW v hw h
 @@ 4355 11 33
 GlobalTheory.AdelicU.cm_conj_conj
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/PadMatrixLowerBlockZero.lean 76039fc4ea8dd7ee63521d59578d70cf98a2039c7ad324ec116b4cb84035b1df d7a8494552cd248d90a68821e116b4303c8f06a3008c154af850bb9f172dc106
@@ -208668,6 +208697,10 @@ t₁, ht₁⟩ := d.ok.frame.2
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/PadZeroMemUnipotent.lean e4afa5af82cb3e1b7e981d2c0763da64f69e314a3aa35ce589db33f2794e64fa 3355473cd77b4b3450e7d540de5f9f4fac19b318ab2514661ecbd1befb368035
 @@ 7972 35 41
 CompanionTheory.FiberInt.integral_comp_eq
+== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/PairingK.lean a1f0967dd09dfe24b1af61d2f3f4b80d993f30988628550f1c727e49f0fa5027 5ee8e452e544a16699f84d9510c330ab567531ad8a8064f467b28c961496ce0d
+@@ 1711 2108 28
+
+  pairing_w hB.toW hS hT hξ
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/ParsevalPolK.lean 8b17cf592b28b8f5216a8fd24edca110523eb8c648cbbe060b513682787a4187 c5e5d735966ff01a42a5a606a2764bc91c068bf34a93e3b281a81ea729355613
 @@ 2097 9 0
 
@@ -209136,6 +209169,10 @@ GlobalTheory.LagrUniq.lagr_invariant_unique_k
 = 3105 103
 + 43
 GlobalTheory.SiegelLawDblTargetF.main_law_k
+== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/SiegelWeilAeisBase.lean f6f7d43893e30531a8f2d10ba54845ac94543aef2e8f9354609994e24763e236 21a666bf156b95d8506e5d70f877e84619dd9c58327f4d93c71b11ad326b7ba0
+@@ 2074 5079 35
+
+  godement_sum_w_w hB.toW hb hK ha
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/SiegelWeilAeisHalf.lean 914c765f2960299330d4f21159ac3eb9f17a0a596c8d84b9207a2a3844bd7ad5 e8954fb17cccc0484527615e096eb14e48c87fc512db46a9e007102f1de6c24f
 @% 1752 90 3
 + 14
@@ -209624,6 +209661,10 @@ hz0⟩ := hE 0
 = 1565 40
 + 36
 mem_stabiliser_iff_frame_lower_block
+== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/SiegelWeilKunfSecA.lean bb9c22878f9a6d54a97fe50cf2068170cb0ac8b0670f5b3c56ce08947da339ce de8bf89ce5a60161284c08ae983a7078c0b5bc871f533bbd9fa614523599e408
+@@ 1320 3168 38
+
+  isCompact_stdK'_w B Y hB.toW b K hK
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/SiegelWeilKwhitHeight.lean 937424e63fb46325f9ca333b3862dfef90dcfc7b8bc714b77036fa2decd2a998 baf02209f7f8254b7de1ca1f7f98063c198aa2cee50630c18a8d9a7f8645cb80
 @@ 7200 40 46
 CompanionTheory.KWhit.norm_det_bottom_block_sq
@@ -209860,6 +209901,18 @@ A
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/ThetaModerateGrowth.lean 19a83fa92d412184018c5c4f063509a901b554ad7d7f8e125e4d052629455b7e 6b5d6ef4899f38e7bf097fc90e38e1060add036e93b4075667e9cbb31d476a93
 @@ 1934 32 50
 PositivityTheory.ThKF0.LatSum.thetaSum_norm_le_pow
+== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/ThkBaseFrameB.lean 059bcdd96a2f749b79418d74c958d585c98d9b72f2f23cad69c6a2ccc822e588 fad151183a99532dc43feb0cd4ffbb3622d0af40f70da09afbd18c46587ed45e
+@@ 1180 1641 25
+
+  inD_mem_w hB.toW hw hz
+== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/ThkBaseHgtExA.lean a24bc917d908f31da3b331356edc2e4312e19b5403e2517f2887b61d9e138346 98aa51b9f6bcff880d69c0d8bd8228ea4abe6c4663d50afaf47acfbcce908102
+@@ 1370 1739 26
+
+  exists_scal_w hB.toW hY
+== src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/ThkTowStabCpt.lean 7194841ea5630b32b8e1f12574d147af171c5b9b8139b504bbf884cfe5fe5448 f259f0bbfb0f2fa31dd02396f7899ae0aaf3a4b86493325007c8a8346a2ab3f8
+@@ 1095 930 33
+
+  exists_compact_mat_w hB.toW hX
 == src/Development/AutomorphicArithmetic/Foundations/GaloisRepresentations/ThetaParseval/ThetaKernels/TransportAdmissibleWeilDatum.lean 47186982a28828a4c4227d292eb7aafbfd5621f86ce0fe3ad43d04d1714eda3d 5785fb271cdb796fd718c82c09f9a5352f349e4cf3b9fa6e57fa83506c0120c6
 @@ 2844 57 39
 GlobalTheory.TransportHeisF.pres_impl_k
@@ -276123,11 +276176,26 @@ have hdim := (
 = 1844 82
 + 7
 ).2.2.2
-== src/Development/WeilBound/CoreStatements/AutomorphicKernels/ArchimedeanJacquetFirstTerm/ArchimedeanWhittakerTrace/LZfcCore.lean 3c5b6577dd760dfdec8f6d10c968f8dd6a83d61cd45590756d27942eaafb0fe7 b26697d7f55f1e0748e506b68129311ee84dcc89029396c7c281e37c03e62e64
+== src/Development/WeilBound/CoreStatements/AutomorphicKernels/ArchimedeanJacquetFirstTerm/ArchimedeanWhittakerTrace/LZfcCore.lean 3c5b6577dd760dfdec8f6d10c968f8dd6a83d61cd45590756d27942eaafb0fe7 7bc365cc4f94158df7afc2dbd6a04aceebb0f77aaeb98529e31f6d21391c9810
 @@ 1778 20 20
 AdelicU.cm_conj_conj
-@@ 6952 20 20
+@% 6746 226 6
++ 2
+_w
+= 6746 30
++ 1
+W
+= 6776 124
+= 6901 51
++ 20
 AdelicU.cm_conj_conj
+@% 8470 0 2
+= 6731 172
++ 26
+
+  chr_ker_w hB.toW hb β
+
+
 @@ 8950 20 20
 AdelicU.cm_conj_conj
 == src/Development/WeilBound/CoreStatements/AutomorphicKernels/BernsteinUnitaryProducts/BernsteinTheoremA/FrobeniusReciprocity/TensInduction.lean 6b5154ea57f04633b715147f7c5f66c7ed053e828fdd21e5844f38dfced512dd 8f53f3d784f67e61895e657a3e23da06d069b418319482818e6079f8e10ac7de
@@ -276686,6 +276754,20 @@ top.LD.n_succ
 == src/Development/WeilBound/CoreStatements/AutomorphicKernels/SiegelWeilFormula/AdelicEisensteinSeries/EisHalfPlaneW.lean b3d3193003e8a44213a86b748b574ae9b387eaa91880a38c0d06bf3e2dfb092f ba8b72fe8526841cb6c095626e75ee6fe9653f0d3b72c23afe1a99e52080a32f
 @@ 1734 41 38
 have hpos := (height_pos_w hB hK hH).2
+== src/Development/WeilBound/CoreStatements/AutomorphicKernels/SiegelWeilFormula/AdelicEisensteinSeries/GodementSumW.lean 6092b1b59c69f30e3675d9d5d51db685f533dec69956b4bf410286a33534b2f7 3ef0708b17db421a4e5b64e5e1d052805d7e3b74b4cad659b9a743c3b608fb21
+@% 1978 30 2
+= 963 32
++ 1
+W
+@@ 2369 1 0
+
+@% 7453 0 2
+= 1956 416
++ 37
+
+  godement_sum_w_w hB.toW hb hK ha
+
+
 == src/Development/WeilBound/CoreStatements/AutomorphicKernels/SiegelWeilFormula/AdelicEisensteinSeries/SiegelMultW.lean 7ac00690ccc223fbae5c4e5a4e3d01cdd010d1bd0bb0869f73ee48f862107bd0 6a689c5c37236a1659fdbba38b1987a44df27063235530c28e23692f49965a6b
 @% 2017 76 4
 = 2026 26
@@ -277945,6 +278027,21 @@ ing.UnitaryGroupBasics
 = 617 39
 + 13
 .psi_moves_pf
+== src/Development/WeilBound/CoreStatements/AutomorphicKernels/SiegelWeilFormula/UnfoldingCompactness/TBlkEqTFMulProdTV.lean 58ea50ac9b100b06e59e0ec1cf733c1718f57f9ffb9c54b70d7c2d07c7d5f382 9daf15a10f70ef2a7aaa1530b8de4381733b52b68dccaba4c828b9d9edf9a9fe
+@% 956 174 4
++ 2
+_w
+= 956 46
++ 1
+W
+= 1002 127
+@% 4302 0 2
+= 933 199
++ 40
+
+  isCompact_stdK'_w B Y hB.toW b K hK
+
+
 == src/Development/WeilBound/CoreStatements/AutomorphicKernels/SiegelWeilFormula/UnfoldingCompactness/UnfoldCore.lean 7eed5531784f036f092a4660b20681e4967f9b2b489f97132433af785c315400 c97e993176edefbb7dc4951d6d12d72cd438b92d3044e12f1231f7a1c8db0614
 @% 5257 7 2
 = 801 39
@@ -278779,11 +278876,25 @@ k, -⟩ := (
 = 32623 80
 + 5
 ).2.2
-== src/Development/WeilBound/CoreStatements/CompactAveragingSplitting/EigenvectorLifting/VaceigenDual.lean def70a97fca5d1e8ce12caf17f973307b314f8434fbf01d48a819a86489c2d51 bc268aa80f68077dfee617728ea3e52bb9e99996f36e0bc23707ae4bff0b84b6
+== src/Development/WeilBound/CoreStatements/CompactAveragingSplitting/EigenvectorLifting/VaceigenDual.lean def70a97fca5d1e8ce12caf17f973307b314f8434fbf01d48a819a86489c2d51 d3710581f41d5c4ebd390512b1a1703e808e46f1b832b3864bf9230e52fd2621
 @@ 4778 109 70
  intros; apply _root_.GlobalTheory.AdelicU.cm_conj_conj <;> assumption
-@@ 8848 11 33
-GlobalTheory.AdelicU.cm_conj_conj
+@% 8579 30 3
++ 2
+_w
+= 8579 30
++ 1
+W
+@@ 8828 31 52
+:= by
+  have hσ := GlobalTheory.AdelicU.cm_conj_conj
+@% 11616 0 2
+= 8563 268
++ 32
+
+  mem_latW_w hB.toW hW v hw h
+
+
 @@ 13622 11 33
 GlobalTheory.AdelicU.cm_conj_conj
 == src/Development/WeilBound/CoreStatements/CrystallinePeriodRings/InvRestrictScalarsMem.lean 8bbe5dd59032c96181341d4fb0b9f429d8bf8c1b8df5cbed4cad3dd4f3eee4b6 28576e955db28a6b2a53e8aa85980b7cc3183f16ae0b5daa69969d24bba23494
@@ -295012,8 +295123,37 @@ GlobalTheory.NatMulIntegralNsmul.exists_nat_mul_integra
 == src/Development/WeilBound/ThetaLifts/LatticeBasics/ConstHecke.lean f04075829c4403b879a1a9734e6f4702052d9c80fa57d0ac87c4d980043e49f2 a08f69994be79110470e3a4c595b9ae9dc19a11e0cbc6c9804671c579b92cb68
 @@ 6119 46 51
 UpperTheory.Reformulated.B.CharactersSeparatePoints
+== src/Development/WeilBound/ThetaLifts/LatticeBasics/FrameB.lean 178a2862366ce6bca09e8ffb359b5e692a28136015992aa57d387b1398b5bb00 6282c7e4e75d5caa21358ca29b0abbd42c09cb876e4e44f5967e64f326370da2
+@% 2551 151 4
++ 2
+_w
+= 2551 30
++ 1
+W
+= 2581 120
+@% 4346 0 2
+= 2535 169
++ 26
+
+  inD_mem_w hB.toW hw hz
+
 == src/Development/WeilBound/ThetaLifts/LatticeBasics/HgtCount.lean 6ee06fb2f28ecbc19faf17fa58c2b1ff1b656bd59d3ba0fd734a6a1f5e3b19e8 ba68f41e36007b6d0f72114688c159b762fdd1b2ef54267e4161fa5ddf388065
 @@ 6370 37 0
+
+== src/Development/WeilBound/ThetaLifts/LatticeBasics/HgtExA.lean c16e8a009ac5c5b39543104b6378b81bfc9da060ef3cbf9580ea7b90beffd566 6bf13f761da439fcaf7cb23e4c948ff7779f7c68f0878eb173ca77a04683ed1a
+@% 8772 30 3
++ 2
+_w
+= 8772 30
++ 1
+W
+@@ 9061 1 0
+
+@% 10804 0 2
+= 8752 312
++ 27
+
+  exists_scal_w hB.toW hY
 
 == src/Development/WeilBound/ThetaLifts/LatticeBasics/LocUnrSplitL.lean 671dee269f392bfc45c1c73f918b85aa0c84d176e84e91a5ae1b55504cacc3a7 2adb42428a39005465682b57f3f8f7502f1b4efdb5d938f1593d692d33bc9379
 @@ 1990 36 46
@@ -295955,6 +296095,21 @@ SchwartzDecay.decay_of_mem_schA
 AdelicU.cm_conj_conj
 @@ 9610 49 25
 AdelicFourierUniq.eq_zero
+== src/Development/WeilBound/ThetaLifts/Reductions/WeilPairs/ProjFacts.lean 00e82d5afedb9e01bb28fee97a491664bea68bb2878b82fb233cbe03a3f3475a a379e2476b98f3199a0273e3517b1e518afd02389fa535ad03151745d28c7673
+@% 5548 30 3
++ 2
+_w
+= 5548 30
++ 1
+W
+@@ 6075 1 0
+
+@% 8187 0 2
+= 5532 546
++ 29
+
+  pairing_w hB.toW hS hT hξ
+
 == src/Development/WeilBound/ThetaLifts/Reductions/WeilPairs/RowsStackRight.lean 188741b594820caee04256bde71eefc1b9a48d265aca72d20eb9326a4f806c0e 92413a8431c49893ab9a0463f637c7120024ce6060b6e3720e07d4179f47be91
 @@ 708 109 70
  intros; apply _root_.GlobalTheory.AdelicU.cm_conj_conj <;> assumption
@@ -296091,6 +296246,22 @@ LatticeIntertwinerRepNormalizesHeisenbergFinite
  first | exact @_root_.GlobalTheory.FinLatHeis.hOF_actOF | exact _root_.GlobalTheory.FinLatHeis.hOF_actOF | (intros; apply _root_.GlobalTheory.FinLatHeis.hOF_actOF <;> assumption)
 @@ 3554 0 24
 GlobalTheory.FinLatHeis.
+== src/Development/WeilBound/ThetaLifts/Reductions/WeilPairs/SymplOHF.lean 07710bbd7adc7ff3130080906141a87ef180fd14fb09f297abb9aa6ddde6f194 d9ddf7e7b20d951107be346da57d34a04664e8d731c00a001cf8b8d50ff4d7c6
+@% 1027 46 3
++ 2
+_w
+= 1027 46
++ 1
+W
+@@ 1673 1 0
+
+@% 2811 0 2
+= 1013 663
++ 48
+
+  heis_C_w hB.toW JS JT ξ₀ N α β e hCe he Φ y
+
+
 == src/Development/WeilBound/ThetaLifts/Reductions/WeilPairs/UnitaryCharEqOneOfTrivialRationalSplitPlace.lean a722c694d16dbe64aa816d9003afc78746e6ccd4b27b12b9e1a793c4e34981cd 1621bbeadce7e5ab10ebd8012ae0ba380583960a65ca9a2d94f36a7aaea07887
 @@ 1928 149 0
 
@@ -296504,13 +296675,28 @@ GlobalTheory.AdelicU.cm_conj_conj
 = 2807 72
 + 33
 GlobalTheory.AdelicU.cm_conj_conj
+== src/Development/WeilBound/ThetaLifts/TowerModels/StabCpt.lean eed8f04055b1e73c2bd835ed950fe2f96fdedaeb40e7deb0222d3901d2795192 0addb016163b6111f33526ed41924a15a5286721187a099a14e293fa999454d2
+@% 13068 185 4
++ 2
+_w
+= 13068 56
++ 1
+W
+= 13124 128
+@% 14187 0 2
+= 13042 213
++ 35
+
+  exists_compact_mat_w hB.toW hX
+
+
 == src/Development/WeilBound/ThetaLifts/TowerModels/TwistedSums/AdelicSchrodingerTensorEqLocalOfSupportedAt.lean c25c3ff1aa5c4a3bc8f4a42084d33e038e1d4b3ac1966449dd711f9212339f44 a12086d66ce830761bd85ffff6c29dfc650fd6a6b4e569481f4e3b1923c0ccfc
 @@ 243 0 107
 import Development.WeilBound.ThetaLifts.TowerModels.TwistedSums.EqAdeleSupportedAtFinitePlaceOfSupportedAt
 
 @@ 1150 268 158
  first | exact @_root_.Tw.VacAny.eq_atPlace_of_at | exact _root_.Tw.VacAny.eq_atPlace_of_at | (intros; apply _root_.Tw.VacAny.eq_atPlace_of_at <;> assumption)
-== src/Development/WeilBound/ThetaLifts/TowerModels/TwistedSums/EventuallySelfDualLatticeIndicatorIsVacuum.lean 240437881e629b0376751bd4c912a24b1451d441cf4e2fadff9d989bf9cd7865 372ddd0efb506ba11365ad33158d8d186faef52b43f3f3c5d5bd25ace6a0681b
+== src/Development/WeilBound/ThetaLifts/TowerModels/TwistedSums/EventuallySelfDualLatticeIndicatorIsVacuum.lean 240437881e629b0376751bd4c912a24b1451d441cf4e2fadff9d989bf9cd7865 ee51e02d3d7930106cbdccff8b42c76bced1a9d63d818d50c1705dfeb75d0c64
 @% 192 0 4
 = 15 40
 + 69
@@ -296523,12 +296709,33 @@ Proofs.GlobalInterpolation.ImportsTer
  first | exact @_root_.GlobalTheory.GaugeEx.IntBasis.ev_int | exact _root_.GlobalTheory.GaugeEx.IntBasis.ev_int | (intros; apply _root_.GlobalTheory.GaugeEx.IntBasis.ev_int <;> assumption)
 @@ 2552 995 194
  first | exact @_root_.GlobalTheory.IterationConvergence.main | exact _root_.GlobalTheory.IterationConvergence.main | (intros; apply _root_.GlobalTheory.IterationConvergence.main <;> assumption)
+@% 18326 46 3
++ 2
+_w
+= 18326 46
++ 1
+W
+@@ 19235 1 0
+
 @@ 19423 10 32
 GlobalTheory.GaugeEx.IntBasis.ev
 @@ 19737 40 84
 GlobalTheory.GaugeEx.IntBasis.ev_int (yc g k)).and (GlobalTheory.GaugeEx.IntBasis.ev
 @@ 20051 10 32
 GlobalTheory.GaugeEx.IntBasis.ev
+@% 23320 0 6
+= 18294 944
++ 2
+
+ 
+= 18301 25
++ 11
+_w B hB.toW
+= 24445 29
++ 4
+hθ
+
+
 == src/Development/WeilBound/ThetaLifts/TowerModels/TwistedSums/ExistsSchroedingerEigenvectorCompactCocycle.lean c5153f01a668e35d953d4493540357a0fac679756c6a2d2c594217423daccb87 cec35246eb75e67a30b380fa05f8fe974f6e557e14cc53535079f72f030904c0
 @@ 8841 30 24
 CocycleChar.cocycle_char

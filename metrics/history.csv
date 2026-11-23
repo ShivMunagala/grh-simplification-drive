@@ -58,3 +58,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-23T02:15:05Z,0277481ce,Restatements: users cite the original theorem (parts 2 and 3 of 3; 10216 files),173393131,2629100132,-4703.0,1213491,114540
 2026-11-23T02:21:22Z,6bdc30b76,Restatements: users cite the original theorem (109 files held back for a name check),173383567,2628830310,-4702.9,1213160,114326
 2026-11-23T03:18:07Z,d64c6f6c3,Theorems with one statement: users cite one of them (7330 files),173006523,2626670268,-4703.2,1205284,111879
+2026-11-23T18:27:55Z,6d3e594d75,Siegel-Weil development and its copy: ten twin theorems share one proof (22 files) [review],173001518,2626569009,-4717.8,1205293,111879
