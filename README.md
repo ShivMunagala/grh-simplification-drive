@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 173.4M, written-out proof size 2.63B, time change -4.70K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 173.0M, written-out proof size 2.63B, time change -4.70K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 173,383,567 | −10,864,643 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,628,830,310 | −160,473,989 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,702.9 | −4,702.9 |
+| Source size (tokens) | 184,248,210 | 173,006,523 | −11,241,687 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,626,670,268 | −162,634,031 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,703.2 | −4,703.2 |
 
-Cone: 1,213,160 declarations in 114,326 files. Recorded changes: 57. Latest row: Restatements: users cite the original theorem (109 files held back for a name check) (2026-11-23 02:21 UTC).
+Cone: 1,205,284 declarations in 111,879 files. Recorded changes: 58. Latest row: Theorems with one statement: users cite one of them (7330 files) (2026-11-23 03:18 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -41,9 +41,9 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
 
 | Area | What is known | Done | Next |
 |---|---|---|---|
-| **Repetition** ([results](campaign/repetition/RESULTS.md)) | 7.6% of the proof is repeated in some form: the same statement more than once 6.4%, copies under other names 1.25% | duplicate proofs cite a copy their file imports, or can import by one added line (13,300 proofs); users of statements with two independent proofs cite one (−6.3 million nodes); restatements: their users cite the original (15,490 files: −35.9 million nodes, −1.9 million tokens) | a leftover batch for other theorems with one statement (8,400 files) is being compiled; what then remains needs shared files |
+| **Repetition** ([results](campaign/repetition/RESULTS.md)) | 7.6% of the proof is repeated in some form: the same statement more than once 6.4%, copies under other names 1.25% | duplicate proofs cite a copy their file imports, or can import by one added line (13,300 proofs); users of statements with two independent proofs cite one (−6.3 million nodes); restatements and other theorems with one statement: their users cite one of them (22,820 files: −38.1 million nodes, −2.3 million tokens) | what remains is second proofs that the users' files cannot see: needs shared files |
 | **Known mathematics proved inside** ([results](campaign/library-lemmas/RESULTS.md)) | published theorems: 8.4% if they were free. Lemmas stated in Mathlib terms only: 6.9%, and 12.2% of the source; they are not copies of Mathlib and automation proves 0.7% of them | one proof replaced by a different argument (Smith normal form by a dual family); zero-free regions and Siegel–Walfisz with shared bounds (−120 thousand nodes); resolution of singularities without its compatibility with base change, which the five theorems never use (−303 thousand nodes, −64 thousand tokens) | toroidal compactifications: are they needed in the generality proved? |
-| **The argument** ([map](campaign/argument-map/MAP.md)) | four lines under one chain: families 39%, covolume bound 13.6%, VWin 8.2%, Galois representations 6.1%. The counting argument is a slope inequality and costs 0.1% itself; all 46 conditions on the families are used at the strength proved; main terms cancel exactly | four large shortcuts tested and ruled out | seven candidates of at most 0.5% each |
+| **The argument** ([map](campaign/argument-map/MAP.md)) | four lines under one chain: families 39%, covolume bound 13.6%, VWin 8.2%, Galois representations 6.1%. The counting argument is a slope inequality and costs 0.1% itself; all 46 conditions on the families are used at the strength proved; main terms cancel exactly | four large shortcuts tested and ruled out. The bound on Galois cohomology (8.4%) implies an open conjecture on the K-groups of ℤ, so no published theorem can replace it. The two covolume conditions are read in one place and reduce, on paper, to one inequality on theta lattices | a direct proof of that inequality (about 10% of the proof if a short one exists; not found); seven candidates of at most 0.5% each |
 | **What the five theorems need** ([results](campaign/unneeded-parts/RESULTS.md)) | 1.07% of what is proved is never read | 46 bundles bypassed or split, 8 statements trimmed: 3,051 declarations out; 6,343 unused local steps deleted | second round of unused steps; fresh measurement |
 | **How proofs are written** ([notes](campaign/proof-shrink/RESULTS.md)) | sweeps over the whole proof, hand rewrites of the heaviest proofs | 32,172 restatements made aliases; projections in place of long patterns; explicit-argument files reprinted; about 120 heavy proofs rewritten (largest: 5.5 million nodes to 30 thousand); definitions taken out of a six-fold existential through generic helpers (−3.0 million nodes for 18 tokens) | returns falling: in most remaining heavy proofs the size is in the method (ring normalisation, long chains of witnesses), not in one fixable step |
 | **Measurement and judge** | | cone of the five theorems, three dials, judge, strict token count, patches that hold no archive text, check against stale compiles | cone tool: 144 theorems whose name exists in two files; full rebuild from source at the end |
@@ -51,15 +51,17 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
 ### Log
 
 - **2026-11-21.** Archive measured (cone, dials). Judge working. First changes recorded.
-- **2026-11-22.** Changes 3 to 54.
-- **2026-11-23.** Changes 55 to 57: users of a restatement cite the original (15,490 files).
-  Mathematics: the bound on Galois cohomology (8.4%) shown to imply an open conjecture on K-groups of ℤ, so no
-  known theorem replaces it; the two covolume conditions reduced, on paper, to one inequality on theta lattices
-  (not proved). Sweeps: restatements, citations of duplicates (two tiers), projections, unused steps,
-  explicit-argument files. Hand rewrites: waves 2 to 8 on the heaviest proofs. Statements: five lists of unneeded parts.
-  Mathematics: map of the argument; four large shortcuts ruled out; the conditions on the families and the counting
-  argument read in full; library-level lemmas and repetition measured. Tools: strict token count, patch format,
-  judge rules for added imports, stale compiles and registers.
+- **2026-11-22.** Changes 3 to 54. Sweeps: restatements, citations of duplicates (two tiers), projections, unused
+  steps, explicit-argument files. Hand rewrites: waves 2 to 13 on the heaviest proofs and definitions. Statements:
+  five lists of unneeded parts; resolution of singularities without what is never used. Mathematics: map of the
+  argument; four large shortcuts ruled out; the conditions on the families and the counting argument read in full;
+  library-level lemmas and repetition measured. Tools: strict token count, patch format, judge rules for added
+  imports, stale compiles and registers.
+- **2026-11-23.** Changes 55 to 58: users of a restatement, or of a second theorem with the same statement, cite
+  the first (22,820 files). Mathematics: the bound on Galois cohomology (8.4%) shown to imply an open conjecture
+  on the K-groups of ℤ, so no known theorem replaces it; the two covolume conditions reduced, on paper, to one
+  inequality on theta lattices (not proved). Every needed statement ranked by what hangs only on it: below the four
+  large blocks the proof splits into about 230 separate statements of at most 1% each.
 
 ## Fixed
 
