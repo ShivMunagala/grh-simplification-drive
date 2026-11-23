@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 174.7M, written-out proof size 2.65B, time change -4.70K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 173.4M, written-out proof size 2.63B, time change -4.70K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 174,702,801 | −9,545,409 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,654,574,405 | −134,729,894 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,704.9 | −4,704.9 |
+| Source size (tokens) | 184,248,210 | 173,383,567 | −10,864,643 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,628,830,310 | −160,473,989 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,702.9 | −4,702.9 |
 
-Cone: 1,241,152 declarations in 136,743 files. Recorded changes: 55. Latest row: Restatements: users cite the original theorem (part 1 of 3; 5165 files) (2026-11-23 01:53 UTC).
+Cone: 1,213,160 declarations in 114,326 files. Recorded changes: 57. Latest row: Restatements: users cite the original theorem (109 files held back for a name check) (2026-11-23 02:21 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -41,7 +41,7 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
 
 | Area | What is known | Done | Next |
 |---|---|---|---|
-| **Repetition** ([results](campaign/repetition/RESULTS.md)) | 7.6% of the proof is repeated in some form: the same statement more than once 6.4%, copies under other names 1.25% | duplicate proofs cite a copy their file imports, or can import by one added line (13,300 proofs); users of statements with two independent proofs cite one (−6.3 million nodes); restatements: their users cite the original (first third: −10.2 million nodes) | the other two thirds and a leftover batch are compiled and being judged; the rest needs shared files |
+| **Repetition** ([results](campaign/repetition/RESULTS.md)) | 7.6% of the proof is repeated in some form: the same statement more than once 6.4%, copies under other names 1.25% | duplicate proofs cite a copy their file imports, or can import by one added line (13,300 proofs); users of statements with two independent proofs cite one (−6.3 million nodes); restatements: their users cite the original (15,490 files: −35.9 million nodes, −1.9 million tokens) | a leftover batch for other theorems with one statement (8,400 files) is being compiled; what then remains needs shared files |
 | **Known mathematics proved inside** ([results](campaign/library-lemmas/RESULTS.md)) | published theorems: 8.4% if they were free. Lemmas stated in Mathlib terms only: 6.9%, and 12.2% of the source; they are not copies of Mathlib and automation proves 0.7% of them | one proof replaced by a different argument (Smith normal form by a dual family); zero-free regions and Siegel–Walfisz with shared bounds (−120 thousand nodes); resolution of singularities without its compatibility with base change, which the five theorems never use (−303 thousand nodes, −64 thousand tokens) | toroidal compactifications: are they needed in the generality proved? |
 | **The argument** ([map](campaign/argument-map/MAP.md)) | four lines under one chain: families 39%, covolume bound 13.6%, VWin 8.2%, Galois representations 6.1%. The counting argument is a slope inequality and costs 0.1% itself; all 46 conditions on the families are used at the strength proved; main terms cancel exactly | four large shortcuts tested and ruled out | seven candidates of at most 0.5% each |
 | **What the five theorems need** ([results](campaign/unneeded-parts/RESULTS.md)) | 1.07% of what is proved is never read | 46 bundles bypassed or split, 8 statements trimmed: 3,051 declarations out; 6,343 unused local steps deleted | second round of unused steps; fresh measurement |
@@ -52,7 +52,7 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
 
 - **2026-11-21.** Archive measured (cone, dials). Judge working. First changes recorded.
 - **2026-11-22.** Changes 3 to 54.
-- **2026-11-23.** Change 55: first third of the sweep that makes users of a restatement cite the original.
+- **2026-11-23.** Changes 55 to 57: users of a restatement cite the original (15,490 files).
   Mathematics: the bound on Galois cohomology (8.4%) shown to imply an open conjecture on K-groups of ℤ, so no
   known theorem replaces it; the two covolume conditions reduced, on paper, to one inequality on theta lattices
   (not proved). Sweeps: restatements, citations of duplicates (two tiers), projections, unused steps,
