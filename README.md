@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 175.3M, written-out proof size 2.67B, time change -4.64K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 175.3M, written-out proof size 2.67B, time change -4.69K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 175,308,780 | −8,939,430 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,669,602,466 | −119,701,833 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,636.3 | −4,636.3 |
+| Source size (tokens) | 184,248,210 | 175,309,169 | −8,939,041 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,665,934,328 | −123,369,971 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,687.4 | −4,687.4 |
 
-Cone: 1,252,729 declarations in 145,772 files. Recorded changes: 50. Latest row: Five GlobalTheory files: addition-law identities in plain names and projections for conjunctions (2026-11-23 00:09 UTC).
+Cone: 1,252,731 declarations in 145,772 files. Recorded changes: 52. Latest row: Seven heavy transport proofs: projections in place of long take-aparts (2026-11-23 00:35 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -45,13 +45,13 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
 | **Known mathematics proved inside** ([results](campaign/library-lemmas/RESULTS.md)) | published theorems: 8.4% if they were free. Lemmas stated in Mathlib terms only: 6.9%, and 12.2% of the source; they are not copies of Mathlib and automation proves 0.7% of them | one proof replaced by a different argument (Smith normal form by a dual family); zero-free regions and Siegel–Walfisz with shared bounds (−120 thousand nodes); resolution of singularities without its compatibility with base change, which the five theorems never use (−303 thousand nodes, −64 thousand tokens) | toroidal compactifications: are they needed in the generality proved? |
 | **The argument** ([map](campaign/argument-map/MAP.md)) | four lines under one chain: families 39%, covolume bound 13.6%, VWin 8.2%, Galois representations 6.1%. The counting argument is a slope inequality and costs 0.1% itself; all 46 conditions on the families are used at the strength proved; main terms cancel exactly | four large shortcuts tested and ruled out | seven candidates of at most 0.5% each |
 | **What the five theorems need** ([results](campaign/unneeded-parts/RESULTS.md)) | 1.07% of what is proved is never read | 46 bundles bypassed or split, 8 statements trimmed: 3,051 declarations out; 6,343 unused local steps deleted | second round of unused steps; fresh measurement |
-| **How proofs are written** ([notes](campaign/proof-shrink/RESULTS.md)) | sweeps over the whole proof, hand rewrites of the heaviest proofs | 32,172 restatements made aliases; projections in place of long patterns; explicit-argument files reprinted; about a hundred heavy proofs rewritten (largest: 5.5 million nodes to 30 thousand) | returns falling: proofs over 100,000 nodes are under 3% of the whole |
+| **How proofs are written** ([notes](campaign/proof-shrink/RESULTS.md)) | sweeps over the whole proof, hand rewrites of the heaviest proofs | 32,172 restatements made aliases; projections in place of long patterns; explicit-argument files reprinted; about 120 heavy proofs rewritten (largest: 5.5 million nodes to 30 thousand); definitions taken out of a six-fold existential through generic helpers (−3.0 million nodes for 18 tokens) | returns falling: in most remaining heavy proofs the size is in the method (ring normalisation, long chains of witnesses), not in one fixable step |
 | **Measurement and judge** | | cone of the five theorems, three dials, judge, strict token count, patches that hold no archive text, check against stale compiles | cone tool: 144 theorems whose name exists in two files; full rebuild from source at the end |
 
 ### Log
 
 - **2026-11-21.** Archive measured (cone, dials). Judge working. First changes recorded.
-- **2026-11-22.** Changes 3 to 50. Sweeps: restatements, citations of duplicates (two tiers), projections, unused steps,
+- **2026-11-22.** Changes 3 to 52. Sweeps: restatements, citations of duplicates (two tiers), projections, unused steps,
   explicit-argument files. Hand rewrites: waves 2 to 8 on the heaviest proofs. Statements: five lists of unneeded parts.
   Mathematics: map of the argument; four large shortcuts ruled out; the conditions on the families and the counting
   argument read in full; library-level lemmas and repetition measured. Tools: strict token count, patch format,

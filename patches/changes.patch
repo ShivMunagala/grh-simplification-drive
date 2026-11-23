@@ -6762,6 +6762,16 @@ have hvb
 = 4306 38
 + 7
 ).2.2.1
+== src/Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/JoinSubspaceRealDataExists.lean ab9940c813b3c372b4e27c24c001a01dd5dd0e893ff7373717e7b0a8d7dd4ccc f9af08b1401dba83128963839d31e54035aaf2d86ee2d62c469d5aa42fd1019c
+@% 15085 374 4
++ 7
+exact (
+= 15136 137
++ 150
+).imp
+    fun _ => Exists.imp fun _ => And.imp_right <| And.imp_right <| And.imp_right <| And.imp_right <| And.imp_right <| And.imp_right
+      fun hT
+= 15318 140
 == src/Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/KappaConjugateHalfPointTranslatesLastColumn.lean 1a90fd26bf7899d809b016d262d87f0286da7ad9982a8a3a877c5b7b68b9ff3a 09bad0de3f932215aada280e37b7476ab8226da8c132ff5f26adf92d684337a0
 @@ 1228 121 61
  intros; apply _root_.Formalism.L2.Theta.cA_cA <;> assumption
@@ -44163,42 +44173,52 @@ g ⊢
 @@ 6385 1760 40
 with_unfolding_all subst_vars
   exact h0
-== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/DatExtRestOfParts.lean 5f518666d37fe40c0d076f80268d02cd78cf15f8c6c89a390689da3737a02ddf a9a863a68b6f708609b54326a354d97a689acd3288d501773300ec236eb24a89
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/DatExtRestOfParts.lean 5f518666d37fe40c0d076f80268d02cd78cf15f8c6c89a390689da3737a02ddf c5f8a112d657d4aed4dca2295dd821508221e8155eb306f01c2b27ff66fa205b
+@@ 15113 172 0
+
+@@ 15305 279 607
+c.1, l := hc.2.1, c := hc.2.2.1, Dw := hc.2.2.2.1, Xo := hc.2.2.2.2.1, U := hc.2.2.2.2.2.1, V := hc.2.2.2.2.2.2.1, dict := hc.2.2.2.2.2.2.2.1, mu := hc.2.2.2.2.2.2.2.2.1, Kf := hc.2.2.2.2.2.2.2.2.2.1, cE := hc.2.2.2.2.2.2.2.2.2.2.1,
+      chiW := hc.2.2.2.2.2.2.2.2.2.2.2.1, x₀ := hc.2.2.2.2.2.2.2.2.2.2.2.2.1, iota := hc.2.2.2.2.2.2.2.2.2.2.2.2.2, ψ := rW.1, θ := rW.2.1, βW := rW.2.2.1, βY := rW.2.2.2.1, nW := rW.2.2.2.2.2.1, βV := rW.2.2.2.2.2.2.1, ΛV := rW.2.2.2.2.2.2.2.1,
+      ΛW := rW.2.2.2.2.2.2.2.2.1, Pg := rW.2.2.2.2.2.2.2.2.2.1, eG := rW.2.2.2.2.2.2.2.2.2.2.1, Sb := rW.2.2.2.2.2.2.2.2.2.2.2.1
 @% 15639 34 3
-+ 3
-hz0
-= 15658 24
-+ 51
-obtain ⟨a5, a6, a7, -⟩ := hz0.2.2
++ 36
+hz0⟩ := rW.2.2.2.2.2.2.2.2.2.2.2.2.1
+= 16322 25
++ 43
+a5, a6, a7, -⟩ := hz0.2.2
         clear hz0
 @% 15763 81 4
-+ 14
-have hz1 := rI
++ 40
+have hz1 := rW.2.2.2.2.2.2.2.2.2.2.2.2.1
 = 16322 25
 = 15792 42
 + 35
 hz1.2.2.2.2.2.2.2
         clear hz1
 @% 15998 38 3
-+ 14
-have hz2 := rI
++ 40
+have hz2 := rW.2.2.2.2.2.2.2.2.2.2.2.2.1
 = 16322 25
 + 39
 a3, a4, -⟩ := hz2.2.2
         clear hz2
+@@ 16193 2 11
+W.2.2.2.2.1
 @% 16282 137 6
 + 8
 have hz3
 = 16316 31
 = 16293 27
-+ 46
++ 72
 hz3.2
         clear hz3
-        have hz4 := rI
+        have hz4 := rW.2.2.2.2.2.2.2.2.2.2.2.2.1
 = 16322 25
 + 67
 c1, c2, -⟩ := hz4.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2
         clear hz4
+@@ 16480 2 27
+W.2.2.2.2.2.2.2.2.2.2.2.2.2
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/DefiniteBesselPeriodSesquilinear.lean 26e531f1f6a2e3e9e7a9e8c357e33d93e5eef602b2d2d532f3aca3701245c547 bcd21a4e6d302de44e27710028b728586044849dacefab79e9b4a770aa984c59
 @% 4796 36 3
 + 25
@@ -44342,6 +44362,20 @@ c1 c2 c3
 + 19
 c1 c2 c3
   subst hD
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/EnlargedBaseReadingZeroWithoutEvaluationProperty.lean 2ede8a82a9107f76dc19a31ce7255157a1090fffcc1274fd2431e4970278e787 569b87a0fe0e38bebf25a4b958c736f6a7c1d58902a4b48f25e088b6fb3c7f5d
+@@ 11588 60 27
+clear hv he hκ hRS hcl hgen
+@% 12182 80 5
++ 3
+hc.
+= 12183 38
++ 5
+hc.2.
+= 12183 38
++ 8
+hc.2.2.1
+@@ 14935 66 177
+hc.1)) ((hc.2.1)) ((hc.2.2.1)) ((hc.2.2.2.1)) ((hc.2.2.2.2.1)) ((hc.2.2.2.2.2.1)) ((hc.2.2.2.2.2.2.1)) ((hc.2.2.2.2.2.2.2.1)) ((hc.2.2.2.2.2.2.2.2.1)) ((hc.2.2.2.2.2.2.2.2.2.2.1
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/EqPlMapOfConj.lean e300716638cfa86f4414e5fd73086dcdc2425a7587ffef4ca4efc49def1d8d26 40f9dd958c1d8268a6cb53e0f35d6dfc4709c4f8ec5279c1438fa4e2cff66bfe
 @@ 3073 26 33
 hvl, hvS, hvQ, -⟩ := hg.2
@@ -45165,6 +45199,51 @@ have hr := hκ.2.2
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsRankOneIsAvg.lean e0068f6247fc7732e6babff836afadb1b67dc37ef1498d6b97847d321e95a228 a82827f52c2c7b5c4ab62ab4725ea86281ce5584d458eedeaa744b7238c617e6
 @@ 2065 3 0
 
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsReadingInMovedRowData.lean 58d281789229f318b7578e37e686730c68ec559bd44f02e02bd9c4f42285c5af 5f8bed9ed3d4226d1e107b783b341f80b7ca91ed4c07eec1764684bcd9e7786b
+@@ 11687 18 2
+k1
+@@ 12022 18 2
+k0
+@@ 12209 23 2
+kL
+@% 13237 217 7
++ 16
+k1.1, k0.1, kL.1
+= 13250 56
++ 6
+k1.2.1
+= 13309 68
++ 6
+k0.2.1
+= 13380 71
++ 6
+kL.2.1
+@@ 14497 3 8
+k1.2.2.2
+@@ 14715 3 8
+k0.2.2.2
+@@ 14936 3 10
+kL.2.2.2.1
+@% 15163 119 3
++ 8
+kL.2.2.1
+= 15166 113
++ 10
+kL.2.2.2.2
+@@ 15473 3 8
+k1.2.2.1
+@% 16321 97 7
++ 8
+k1.2.2.1
+= 16324 25
++ 8
+k0.2.2.1
+= 16352 27
++ 10
+kL.2.2.2.2
+= 16382 33
++ 10
+kL.2.2.2.1
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsRiemannFormPeriodChartGenericFibre.lean c04ca3321632217b9ce67312f6da1b683b2ce4998bf0c3237dfbd06d15794161 041648dbf6603180f53f953124b6a2a983cdfda245aeed52584372ee1bd879e1
 @@ 1756 245 74
  intros; apply _root_.GlobalTheory.PureType.hermForm_mulVec <;> assumption
@@ -46264,6 +46343,51 @@ have hsp := (
 = 8698 27
 + 26
 semi_expand <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/LiftTieOfPk.lean 88c1865ebc8ad68f33d67554c6d7334c1b1dd7435e350ca96e52b4ca170360f3 68dcc5cada738de20473ee0a50a6c8af01037d75a589411f3dd0c7a8cdebb365
+@@ 6025 18 2
+k1
+@@ 6302 18 2
+k0
+@@ 6442 23 2
+kL
+@% 7425 217 7
++ 16
+k1.1, k0.1, kL.1
+= 7438 56
++ 6
+k1.2.1
+= 7497 68
++ 6
+k0.2.1
+= 7568 71
++ 6
+kL.2.1
+@@ 8685 3 8
+k1.2.2.2
+@@ 8903 3 8
+k0.2.2.2
+@@ 9124 3 10
+kL.2.2.2.1
+@% 9351 119 3
++ 8
+kL.2.2.1
+= 9354 113
++ 10
+kL.2.2.2.2
+@@ 9661 3 8
+k1.2.2.1
+@% 10847 140 7
++ 8
+k1.2.2.1
+= 10850 38
++ 8
+k0.2.2.1
+= 10891 44
++ 10
+kL.2.2.2.2
+= 10938 46
++ 10
+kL.2.2.2.1
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/LiftedHeckeOperatorsAtGeneratorsCommute.lean 1c022126c37f01b6ff940dd2c6404e8f7fd4add8c5e9894a7633442b83b32b56 a446cd54a9f49c83fe3a0ad686588d137829acdb48c13dc7bf362033627e8862
 @@ 1687 18 24
 have hg' := h'.2
@@ -46864,7 +46988,7 @@ DivisorProofs.ExistsCoprimeIdealMulEqSpanNumberField
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/RayClassPartialZetaContinuation.lean 43df45099c3d61394e7d05c57ac86904d5f42a1c30bbe7d68649576905ace738 cfa660c1d3b5cad84a8ce05764d7e5995cceb1fba6a9558b8ac64e4ae31d3233
 @@ 11535 156 0
 
-== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ReadingEqZero.lean 28a4b350082787b9aec7524f8fc2928c9089671b00e3e43aae7585e56d056b5c 1cb1eba8b09a8d79ca8808add48c06d8be8cb44b4fb2d46f35295e20d755776c
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ReadingEqZero.lean 28a4b350082787b9aec7524f8fc2928c9089671b00e3e43aae7585e56d056b5c a4f5fc2047a9524ec92f0209778216337e406a460346ded51242057a17981dce
 @% 3598 464 13
 + 168
 eO', Kf', pb', chiW', x₀', iota', rfl⟩ : ∃ eO' Kf' pb' chiW' x₀' iota',
@@ -46903,6 +47027,41 @@ e1, e2, e3, e4, rfl⟩ : ∃ e1 e2 e3 e4, M' = @DSModel.mk _ _ _ M.H M.nacg M.ip
 = 4285 25
 + 25
   exact ⟨_, _, _, _, rfl⟩
+@@ 9903 63 0
+
+@@ 9984 0 33
+  clear hMW hRS hcl hgen hκ hcrd
+
+@% 12740 354 19
++ 3
+hc.
+= 12741 38
++ 5
+hc.2.
+= 12741 38
++ 7
+hc.2.2.
+= 12741 38
++ 9
+hc.2.2.2.
+= 12741 38
++ 11
+hc.2.2.2.2.
+= 12741 38
++ 13
+hc.2.2.2.2.2.
+= 12741 38
++ 15
+hc.2.2.2.2.2.2.
+= 12741 38
++ 17
+hc.2.2.2.2.2.2.2.
+= 12741 38
++ 19
+hc.2.2.2.2.2.2.2.2.
+= 12741 38
++ 24
+hc.2.2.2.2.2.2.2.2.2.2.1
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/RealConeCoveredByStarAtPoint.lean 352accd50c9e9ffdf67ac4e0342f766b0a634e3536dab22d94bb87facb961a7c d468eb38a9e169ac6263fdf3a13c6aa49375845247d2877a880fff9aaef43880
 @@ 4090 13 68
 intros; apply _root_.GlobalTheory.PolFan.toReal_apply <;> assumption
@@ -46959,14 +47118,27 @@ S.1.1 hS.1.2.1 hS.1.2.2.1 hS.1.2.2.2.2.2.2.1 hS.1.2.2.2.2.2.2.2.1 hS.1.2.2.2.2.2
  intros; apply _root_.GlobalTheory.ModelSum.exists_pull <;> assumption
 @@ 3578 45 75
  by intros; apply _root_.GlobalTheory.ModelSum.proper_of_map <;> assumption
-== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ResetModelsMeasuresFormsEnlargedCoefficientBase.lean 7ed5bc68856eb78ff221695950cf1adc823c76860593365100b3ea4a1ecf564c db0eb48ae113ed0544ba50d7068c7536df12e261dd19f1486188ebe2fece6004
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ResetModelsMeasuresFormsEnlargedCoefficientBase.lean 7ed5bc68856eb78ff221695950cf1adc823c76860593365100b3ea4a1ecf564c 57b7988acc1163e1695e7dc8a4ca3d2ec50e910185226c0318e2361129a7c254
 @@ 9368 53 127
 have hz0 := And.intro hA.2.2.2.2.2.2.2.2.2.2.2.1 hA.2.2.2.2.2.2.2.2.2.2.2.2
   have hcV := hz0.1
   have hjL := hz0.2
   clear hz0
-@@ 11784 3 0
-
+@@ 10447 59 25
+have k6 := hK.2.2.2.2.2.1
+@@ 10533 26 122
+have k7 := hK.2.2.2.2.2.2.1
+    have k8 := hK.2.2.2.2.2.2.2.1
+    refine ⟨hK.1, hK.2.1, hK.2.2.1, hK.2.2.2.1, hK.2.2.2.2.1
+@% 10783 53 3
++ 52
+hK.2.2.2.2.2.2.2.2.1,
+      { hK.2.2.2.2.2.2.2.2.2.1
+= 10798 35
++ 22
+hK.2.2.2.2.2.2.2.2.2.2
+@@ 11729 183 201
+refine ⟨hA0.1, hA0.2.1, hA0.2.2.1, hA0.2.2.2.1, hA0.2.2.2.2.1, HEq.rfl, hA0.2.2.2.2.2.1, hA0.2.2.2.2.2.2.1, hA0.2.2.2.2.2.2.2.1, hA0.2.2.2.2.2.2.2.2.1, hA0.2.2.2.2.2.2.2.2.2.1, hA0.2.2.2.2.2.2.2.2.2.2.
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ResidueEqZeroIff.lean 37f71aaf7cedfa1b1be47100fb82f529acc337ef5df6d56c4254d519e08932a6 28db012216f40a62dcf16c57e903ac6e576cd0155f8ca64bc52a3fbee8f775b3
 @% 243 0 2
 = 102 68
@@ -104622,9 +104794,13 @@ import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinsumDoubleCosetEq
 == src/Development/WeilBound/RepresentationTheoryGL/ArchimedeanBaseChange/ArchimedeanBaseChangeProof/SatakeExponents/UniformizerValuations/BaseChangeWeyl/ContinuousRingHom.lean 9d322b83dff2160e776d57871fb22d2bfb6dbf9a536bb511be1cba18bb1aac58 de5c9bfc250b97624ad2293268c8796d6a1fa2aae677fc65a94c20f7f9a9916e
 @@ 5076 49 0
 
-== src/Development/WeilBound/RepresentationTheoryGL/ArchimedeanBaseChange/ArchimedeanBaseChangeProof/SatakeExponents/UniformizerValuations/FrameBoundSpaces/KBsLev.lean ff28da324b6cbf4fa0768e8f3c9452aeaa5e822314acc3ec03b9c4c551a8e5fc ef258d4acd2c6046af384898b79015d2e9945c0590c0f05e97835b2a7a1842cc
-@% 2251 0 3
-+ 360
+== src/Development/WeilBound/RepresentationTheoryGL/ArchimedeanBaseChange/ArchimedeanBaseChangeProof/SatakeExponents/UniformizerValuations/FrameBoundSpaces/KBsLev.lean ff28da324b6cbf4fa0768e8f3c9452aeaa5e822314acc3ec03b9c4c551a8e5fc a46e4819a1e6e87acf755a8ad66c66c98a4ceceef83e024ed92ff37326649279
+@% 1991 259 3
++ 448
+ex6_3 (hR E)
+def rlΩ₂ := ex6_4 (hR E)
+def rlΘ₁ := ex6_5 (hR E)
+def rlΘ₂ := ex6_6 (hR E)
 
 open Rd in
 theorem rl_spec :
@@ -104634,7 +104810,7 @@ theorem rl_spec :
     rlW₁ hR E a b Ma Mb ≠ ⊥ ∧ rlW₂ hR E a b Ma Mb ≠ ⊥) ∧
   (∀ a b Ma Mb (K₁
 = 5630 31
-+ 2771
++ 2770
 ) (K₂ : Subgroup (GL (Fin b) (Af E))), IsOpen (K₁ : Set (GL (Fin a) (Af E))) →
     IsOpen (K₂ : Set (GL (Fin b) (Af E))) → Levels E (rlΘ₁ hR E a b Ma Mb K₁ K₂) ∧ Levels E (rlΘ₂ hR E a b Ma Mb K₁ K₂)) ∧
   ∀ (B : Block E) (K₁ : Subgroup (GL (Fin B.a) (Af E))) (K₂ : Subgroup (GL (Fin B.b) (Af E))),
@@ -104668,7 +104844,6 @@ theorem rl_spec :
       (rlΘ₁ hR E B.a B.b B.Ma B.Mb K₁ K₂) (rlΘ₂ hR E B.a B.b B.Ma B.Mb K₁ K₂) (rlΩ₁ hR E B.a B.b B.Ma B.Mb)
       (rlΩ₂ hR E B.a B.b B.Ma B.Mb)) :=
   ex6_spec (hR E)
-
 == src/Development/WeilBound/RepresentationTheoryGL/ArchimedeanBaseChange/ArchimedeanBaseChangeProof/SatakeExponents/UniformizerValuations/FrameBoundSpaces/MemULOfSplit.lean 8e6e1ad6d67faecfd60c8572c82286f4e2ca30629f77c033a62a40ffb1549bae d707723e08a69aac4348c4c0868f43af589a3d18b12e595bc41e146cac59d71b
 @@ 576 536 94
  intros; apply _root_.GlobalTheory.AdelicUnitaryTop.countable_heightOneSpectrum <;> assumption
@@ -104709,8 +104884,8 @@ have hFinA := (
 == src/Development/WeilBound/RepresentationTheoryGL/ArchimedeanBaseChange/ArchimedeanBaseChangeProof/SatakeExponents/UniformizerValuations/FrameReading/PairDoubleCosetFiniteSupport.lean 5b087fe6e4d753402525a380f1f538c7d31b837707f9649a1680bcfc5cc41e3b 8bc68c27941e7fe132d455e164de1ed2de4653fea6c05d9033883e25f6b7167e
 @@ 2211 56 64
  intros; apply _root_.GlobalTheory.LGrp.mem_fixed <;> assumption
-== src/Development/WeilBound/RepresentationTheoryGL/ArchimedeanBaseChange/ArchimedeanBaseChangeProof/SatakeExponents/UniformizerValuations/FrameReading/ReadLimit.lean 11189382a33d26ed93510aa87ddff74ef1e07729f07b0d7de000b2e67b46e798 36216dfa6f84661318cd744283d67880334229ae48cc4db3ef7578a93cd2f70b
-@% 766 0 5
+== src/Development/WeilBound/RepresentationTheoryGL/ArchimedeanBaseChange/ArchimedeanBaseChangeProof/SatakeExponents/UniformizerValuations/FrameReading/ReadLimit.lean 11189382a33d26ed93510aa87ddff74ef1e07729f07b0d7de000b2e67b46e798 9bcaf25fa1cc807e776538f27fb1d8780203278fc3b1149d56cad4d39421111b
+@% 766 0 13
 + 8
 
 theorem
@@ -104725,11 +104900,32 @@ ex6_spec {α₁ α₂ α₃ α₄ α₅ α₆ : Sort*} {p : α₁ → α₂ → 
 
 theorem
 = 692 27
-+ 344
++ 470
 ex6_imp {α₁ α₂ α₃ α₄ α₅ α₆ : Sort*} {p : α₁ → α₂ → α₃ → α₄ → α₅ → α₆ → Prop}
     {q : α₁ → α₂ → α₃ → α₄ → Prop} (h : ∃ a b c d e f, p a b c d e f) (hq : ∀ a b c d e f, p a b c d e f → q a b c d) :
     q h.choose h.choose_spec.choose h.choose_spec.choose_spec.choose h.choose_spec.choose_spec.choose_spec.choose :=
   hq _ _ _ _ _ _ (ex6_spec h)
+
+section
+variable {α₁ α₂ α₃ α₄ α₅ α₆ : Sort*} {p : α₁ → α₂ → α₃ → α₄ → α₅ → α₆ → Prop} (h : ∃ a b c d e f, p a b c d e f)
+
+def
+= 692 27
++ 50
+ex6_3 : α₃ := h.choose_spec.choose_spec.choose
+def
+= 692 27
++ 62
+ex6_4 : α₄ := h.choose_spec.choose_spec.choose_spec.choose
+def
+= 692 27
++ 74
+ex6_5 : α₅ := h.choose_spec.choose_spec.choose_spec.choose_spec.choose
+def
+= 692 27
++ 87
+ex6_6 : α₆ := h.choose_spec.choose_spec.choose_spec.choose_spec.choose_spec.choose
+end
 
 == src/Development/WeilBound/RepresentationTheoryGL/ArchimedeanBaseChange/ArchimedeanBaseChangeProof/SatakeExponents/UniformizerValuations/HermitianConvolution/NontrivInfPf.lean 6a139810d23c73e6963032b21fead57a913c6d9b421cc36eeab3624089d4275e 03901c53b0be6fa3e893bb21ae9f787de82bdffee5316ac36dade9a52e0d58e9
 @@ 150 0 101
@@ -104741,7 +104937,11 @@ import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.NontrivialInfin
  first | exact @_root_.GlobalTheory.CompanionTheory.UnrCM.algebraMap_int_ringOfIntegers_surjective | exact _root_.GlobalTheory.CompanionTheory.UnrCM.algebraMap_int_ringOfIntegers_surjective | (intros; apply _root_.GlobalTheory.CompanionTheory.UnrCM.algebraMap_int_ringOfIntegers_surjective <;> assumption)
 @@ 2072 1320 332
  first | exact @_root_.GlobalTheory.CompanionTheory.UnrCM.nontrivial_infinitePlace_of_forall_isUnramifiedAt | exact _root_.GlobalTheory.CompanionTheory.UnrCM.nontrivial_infinitePlace_of_forall_isUnramifiedAt | (intros; apply _root_.GlobalTheory.CompanionTheory.UnrCM.nontrivial_infinitePlace_of_forall_isUnramifiedAt <;> assumption)
-== src/Development/WeilBound/RepresentationTheoryGL/ArchimedeanBaseChange/ArchimedeanBaseChangeProof/SatakeExponents/UniformizerValuations/HyperbolicEntryBounds/AllLeavesMono.lean 488974cbc963af42d23582f73294057dcfac51d4b9d0da249d95063a98609b2a 419a989681e92947884a36602cde72bf4b8a46babf8668cf0403d49ac35a78aa
+== src/Development/WeilBound/RepresentationTheoryGL/ArchimedeanBaseChange/ArchimedeanBaseChangeProof/SatakeExponents/UniformizerValuations/HyperbolicEntryBounds/AllLeavesMono.lean 488974cbc963af42d23582f73294057dcfac51d4b9d0da249d95063a98609b2a 59df156f0ab7bce8782ce2d47c34a69e2dbf55957c140ab34c5fef8749fd5d18
+@@ 1344 37 12
+ex6_3 (hR E)
+@@ 1466 49 12
+ex6_4 (hR E)
 @@ 2840 82 270
  ∀ a b Ma Mb, KTypes E (xΩ₁ hR E a b Ma Mb) ∧ KTypes E (xΩ₂ hR E a b Ma Mb) :=
     ex6_imp (q := fun _ _ Ω₁ Ω₂ => ∀ a b Ma Mb, KTypes E (Ω₁ a b Ma Mb) ∧ KTypes E (Ω₂ a b Ma Mb)) (hR E)
