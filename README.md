@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 175.3M, written-out proof size 2.67B, time change -4.69K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 175.3M, written-out proof size 2.66B, time change -4.70K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 175,309,169 | −8,939,041 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,665,934,328 | −123,369,971 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,687.4 | −4,687.4 |
+| Source size (tokens) | 184,248,210 | 175,287,197 | −8,961,013 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,664,749,123 | −124,555,176 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,703.8 | −4,703.8 |
 
-Cone: 1,252,731 declarations in 145,772 files. Recorded changes: 52. Latest row: Seven heavy transport proofs: projections in place of long take-aparts (2026-11-23 00:35 UTC).
+Cone: 1,252,663 declarations in 145,770 files. Recorded changes: 54. Latest row: listPin_copy through the shared eliminator (added import checked on its two downstream files) [review] (2026-11-23 01:03 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -51,7 +51,7 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
 ### Log
 
 - **2026-11-21.** Archive measured (cone, dials). Judge working. First changes recorded.
-- **2026-11-22.** Changes 3 to 52. Sweeps: restatements, citations of duplicates (two tiers), projections, unused steps,
+- **2026-11-22.** Changes 3 to 54. Sweeps: restatements, citations of duplicates (two tiers), projections, unused steps,
   explicit-argument files. Hand rewrites: waves 2 to 8 on the heaviest proofs. Statements: five lists of unneeded parts.
   Mathematics: map of the argument; four large shortcuts ruled out; the conditions on the families and the counting
   argument read in full; library-level lemmas and repetition measured. Tools: strict token count, patch format,

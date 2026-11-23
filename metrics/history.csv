@@ -52,3 +52,5 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-23T00:09:22Z,d6eda1dac,Five GlobalTheory files: addition-law identities in plain names and projections for conjunctions,175308780,2669602466,-4636.3,1252729,145772
 2026-11-23T00:24:34Z,688b30858,Definitions taken out of a six-fold existential by generic helpers (3 files) [review],175308798,2666583338,-4685.5,1252731,145772
 2026-11-23T00:35:34Z,d95a32733,Seven heavy transport proofs: projections in place of long take-aparts,175309169,2665934328,-4687.4,1252731,145772
+2026-11-23T00:50:39Z,e6f671da2,Statements proved twice second part: users cite one proof (13 files; added imports checked on 332 files) [review],175287425,2665346149,-4689.6,1252663,145770
+2026-11-23T01:03:06Z,1a8e8cac9,listPin_copy through the shared eliminator (added import checked on its two downstream files) [review],175287197,2664749123,-4703.8,1252663,145770
