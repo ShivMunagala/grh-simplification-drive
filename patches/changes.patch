@@ -24707,9 +24707,11 @@ hz0⟩ := h
 + 18
 z0.2.2
   clear hz0
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ThetaSetupLabellingTransportGaloisConjugate.lean a23361adbb74b267844afcaaadab6d9a31006116958f3667d4cbce4d497be877 fd5769b96ec5aac681fff101b4ae7ecc7f98ad0d44ccdfb16011fe96ef42e1f9
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ThetaSetupLabellingTransportGaloisConjugate.lean a23361adbb74b267844afcaaadab6d9a31006116958f3667d4cbce4d497be877 9eec2f1349cef2e49fe7196456a30c4b473156a8507ec83f203ef65ada141307
 @@ 2727 101 72
  by intros; apply _root_.GlobalTheory.ZH.TestVal.charZero <;> assumption
+@@ 7482 3 0
+
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ThetaShiftFourierTermTranslationGauge.lean 33eab40771aa30bcc68eda8a9cdd0a7ababd46a18971375017b2c1322f6275ce b83c7efb88db668bf19490361232270c2889e5a195264c4aae4f9c3d270eb581
 @% 2703 97 3
 + 22
@@ -25743,6 +25745,9 @@ GlobalInterpolation.ExistsMemProjEqOnFinset
 
 @@ 3340 175 170
  first | exact @_root_.GlobalTheory.index_pi_univ_dep | exact _root_.GlobalTheory.index_pi_univ_dep | (intros; apply _root_.GlobalTheory.index_pi_univ_dep <;> assumption)
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/UnitaryLabellingTransportGaloisConjugate.lean e9ec386237bb6a8ae7dd20294581a7e5640b942b0cee98e4a6023723d3fe24bd 24de6fc3ecc8883ad09dc6512d66a78141c4da5f66128c2bab9daaba044c8744
+@@ 3368 6 0
+
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/UnitaryLieElementsGenerateOneParamLines.lean 48c1b79d11927d439db9ce2b35248f2d8c8d932c674a34cc1c133a32dbdaca4a b5c508cd07d2cc0fff66658ea61c6b6b547567eb311b59fa7b7c52c1314e9929
 @@ 2050 374 75
  intros; apply _root_.GlobalTheory.AdelicU.exists_cm_conj_ne <;> assumption
@@ -37290,6 +37295,497 @@ Hat_eq_hat_and_gram D V).2.2.2.2.2.2.2
 @@ 3717 0 17
   clear_value c₀
 
+== src/Development/AbelianVarietyTheory/Proofs/HomogeneousIdeals/DiagZEqNegAddY.lean 3dc889d583265317eb85de95a10ff8928de59ba0bca0d814246d1405bb309575 779939fda0483a837d1ae0e124023c6693a96d29e359e27046789b3e7f7f70b4
+@% 8799 8286 3
++ 70
+have g := (equation_iff _).mp hP
+  have h := (equation_iff _).mp hQ
+  
+= 8828 36
++ 7031
+
+  generalize W.a₁ = a₁, W.a₂ = a₂, W.a₃ = a₃, W.a₄ = a₄, W.a₆ = a₆, P 0 = p₀, P 1 = p₁, P 2 = p₂,
+    Q 0 = q₀, Q 1 = q₁, Q 2 = q₂ at g h ⊢
+  linear_combination (-3 * a₁ * p₂ * q₀ ^ 2 * q₁ ^ 2 - 3 * p₂ * q₀ * q₁ ^ 3
+      + 3 * a₁ ^ 2 * p₁ * q₀ ^ 3 * q₂ - a₁ ^ 3 * a₂ * p₂ * q₀ ^ 3 * q₂
+      - a₁ * a₂ ^ 2 * p₂ * q₀ ^ 3 * q₂ + 3 * a₁ ^ 2 * a₃ * p₂ * q₀ ^ 3 * q₂
+      + 3 * a₁ * a₄ * p₂ * q₀ ^ 3 * q₂ - 3 * a₁ ^ 2 * p₀ * q₀ ^ 2 * q₁ * q₂
+      - 3 * a₁ * p₁ * q₀ ^ 2 * q₁ * q₂ + a₁ ^ 2 * a₂ * p₂ * q₀ ^ 2 * q₁ * q₂
+      + a₂ ^ 2 * p₂ * q₀ ^ 2 * q₁ * q₂ - 6 * a₁ * a₃ * p₂ * q₀ ^ 2 * q₁ * q₂
+      - 3 * a₄ * p₂ * q₀ ^ 2 * q₁ * q₂ - 3 * a₁ * p₀ * q₀ * q₁ ^ 2 * q₂
+      - 3 * p₁ * q₀ * q₁ ^ 2 * q₂ - a₁ ^ 3 * p₂ * q₀ * q₁ ^ 2 * q₂
+      - a₁ * a₂ * p₂ * q₀ * q₁ ^ 2 * q₂ - 6 * a₃ * p₂ * q₀ * q₁ ^ 2 * q₂
+      - a₁ ^ 2 * p₂ * q₁ ^ 3 * q₂ - a₂ * p₂ * q₁ ^ 3 * q₂
+      + a₁ ^ 3 * a₂ * p₀ * q₀ ^ 2 * q₂ ^ 2 + a₁ * a₂ ^ 2 * p₀ * q₀ ^ 2 * q₂ ^ 2
+      - 3 * a₁ ^ 2 * a₃ * p₀ * q₀ ^ 2 * q₂ ^ 2 - 3 * a₁ * a₄ * p₀ * q₀ ^ 2 * q₂ ^ 2
+      + 4 * a₁ ^ 2 * a₂ * p₁ * q₀ ^ 2 * q₂ ^ 2 + a₂ ^ 2 * p₁ * q₀ ^ 2 * q₂ ^ 2
+      - 3 * a₁ * a₃ * p₁ * q₀ ^ 2 * q₂ ^ 2 - 3 * a₄ * p₁ * q₀ ^ 2 * q₂ ^ 2
+      - a₁ ^ 3 * a₂ ^ 2 * p₂ * q₀ ^ 2 * q₂ ^ 2 - a₁ * a₂ ^ 3 * p₂ * q₀ ^ 2 * q₂ ^ 2
+      + 4 * a₁ ^ 2 * a₂ * a₃ * p₂ * q₀ ^ 2 * q₂ ^ 2
+      + a₂ ^ 2 * a₃ * p₂ * q₀ ^ 2 * q₂ ^ 2 - 3 * a₁ * a₃ ^ 2 * p₂ * q₀ ^ 2 * q₂ ^ 2
+      + 3 * a₁ * a₂ * a₄ * p₂ * q₀ ^ 2 * q₂ ^ 2
+      - 3 * a₃ * a₄ * p₂ * q₀ ^ 2 * q₂ ^ 2 - a₁ ^ 4 * p₀ * q₀ * q₁ * q₂ ^ 2
+      - a₁ ^ 2 * a₂ * p₀ * q₀ * q₁ * q₂ ^ 2 - 3 * a₁ * a₃ * p₀ * q₀ * q₁ * q₂ ^ 2
+      - 4 * a₁ ^ 3 * p₁ * q₀ * q₁ * q₂ ^ 2 - a₁ * a₂ * p₁ * q₀ * q₁ * q₂ ^ 2
+      - 3 * a₃ * p₁ * q₀ * q₁ * q₂ ^ 2 + a₁ ^ 4 * a₂ * p₂ * q₀ * q₁ * q₂ ^ 2
+      + a₁ ^ 2 * a₂ ^ 2 * p₂ * q₀ * q₁ * q₂ ^ 2
+      - 4 * a₁ ^ 3 * a₃ * p₂ * q₀ * q₁ * q₂ ^ 2
+      - a₁ * a₂ * a₃ * p₂ * q₀ * q₁ * q₂ ^ 2 - 6 * a₃ ^ 2 * p₂ * q₀ * q₁ * q₂ ^ 2
+      - 2 * a₁ ^ 2 * a₄ * p₂ * q₀ * q₁ * q₂ ^ 2 + a₂ * a₄ * p₂ * q₀ * q₁ * q₂ ^ 2
+      - 9 * a₆ * p₂ * q₀ * q₁ * q₂ ^ 2 - a₁ ^ 3 * p₀ * q₁ ^ 2 * q₂ ^ 2
+      - a₁ * a₂ * p₀ * q₁ ^ 2 * q₂ ^ 2 - 4 * a₁ ^ 2 * p₁ * q₁ ^ 2 * q₂ ^ 2
+      - a₂ * p₁ * q₁ ^ 2 * q₂ ^ 2 + a₁ ^ 3 * a₂ * p₂ * q₁ ^ 2 * q₂ ^ 2
+      + a₁ * a₂ ^ 2 * p₂ * q₁ ^ 2 * q₂ ^ 2 - 5 * a₁ ^ 2 * a₃ * p₂ * q₁ ^ 2 * q₂ ^ 2
+      - 2 * a₂ * a₃ * p₂ * q₁ ^ 2 * q₂ ^ 2 - 3 * a₁ * a₄ * p₂ * q₁ ^ 2 * q₂ ^ 2
+      - 3 * a₁ * a₃ ^ 2 * p₀ * q₀ * q₂ ^ 3 + a₁ ^ 3 * a₄ * p₀ * q₀ * q₂ ^ 3
+      + a₁ * a₂ * a₄ * p₀ * q₀ * q₂ ^ 3 - 9 * a₁ * a₆ * p₀ * q₀ * q₂ ^ 3
+      - 3 * a₃ ^ 2 * p₁ * q₀ * q₂ ^ 3 + 4 * a₁ ^ 2 * a₄ * p₁ * q₀ * q₂ ^ 3
+      + a₂ * a₄ * p₁ * q₀ * q₂ ^ 3 - 9 * a₆ * p₁ * q₀ * q₂ ^ 3
+      - 3 * a₃ ^ 3 * p₂ * q₀ * q₂ ^ 3 - a₁ ^ 3 * a₂ * a₄ * p₂ * q₀ * q₂ ^ 3
+      - a₁ * a₂ ^ 2 * a₄ * p₂ * q₀ * q₂ ^ 3
+      + 4 * a₁ ^ 2 * a₃ * a₄ * p₂ * q₀ * q₂ ^ 3
+      + a₂ * a₃ * a₄ * p₂ * q₀ * q₂ ^ 3 + 3 * a₁ * a₄ ^ 2 * p₂ * q₀ * q₂ ^ 3
+      - 9 * a₃ * a₆ * p₂ * q₀ * q₂ ^ 3 - a₁ ^ 3 * a₃ * p₀ * q₁ * q₂ ^ 3
+      - a₁ * a₂ * a₃ * p₀ * q₁ * q₂ ^ 3 - 4 * a₁ ^ 2 * a₃ * p₁ * q₁ * q₂ ^ 3
+      - a₂ * a₃ * p₁ * q₁ * q₂ ^ 3 + a₁ ^ 3 * a₂ * a₃ * p₂ * q₁ * q₂ ^ 3
+      + a₁ * a₂ ^ 2 * a₃ * p₂ * q₁ * q₂ ^ 3
+      - 4 * a₁ ^ 2 * a₃ ^ 2 * p₂ * q₁ * q₂ ^ 3 - 2 * a₂ * a₃ ^ 2 * p₂ * q₁ * q₂ ^ 3
+      - 2 * a₁ * a₃ * a₄ * p₂ * q₁ * q₂ ^ 3 + a₄ ^ 2 * p₂ * q₁ * q₂ ^ 3
+      - 3 * a₂ * a₆ * p₂ * q₁ * q₂ ^ 3 - a₁ * a₂ * a₃ ^ 2 * p₀ * q₂ ^ 4
+      + a₁ ^ 2 * a₃ * a₄ * p₀ * q₂ ^ 4 + a₁ * a₄ ^ 2 * p₀ * q₂ ^ 4
+      - 3 * a₁ * a₂ * a₆ * p₀ * q₂ ^ 4 - a₂ * a₃ ^ 2 * p₁ * q₂ ^ 4
+      + a₁ * a₃ * a₄ * p₁ * q₂ ^ 4 + a₄ ^ 2 * p₁ * q₂ ^ 4
+      + 3 * a₁ ^ 2 * a₆ * p₁ * q₂ ^ 4 - 3 * a₂ * a₆ * p₁ * q₂ ^ 4
+      - a₂ * a₃ ^ 3 * p₂ * q₂ ^ 4 + a₁ * a₃ ^ 2 * a₄ * p₂ * q₂ ^ 4
+      + a₃ * a₄ ^ 2 * p₂ * q₂ ^ 4 - a₁ ^ 3 * a₂ * a₆ * p₂ * q₂ ^ 4
+      - a₁ * a₂ ^ 2 * a₆ * p₂ * q₂ ^ 4 + 3 * a₁ ^ 2 * a₃ * a₆ * p₂ * q₂ ^ 4
+      - 3 * a₂ * a₃ * a₆ * p₂ * q₂ ^ 4 + 3 * a₁ * a₄ * a₆ * p₂ * q₂ ^ 4) * g
+    + (3 * a₁ * p₀ ^ 2 * p₁ * p₂ * q₁ + 3 * p₀ * p₁ ^ 2 * p₂ * q₁
+      - a₁ ^ 2 * a₂ * p₀ ^ 2 * p₂ ^ 2 * q₁ - a₂ ^ 2 * p₀ ^ 2 * p₂ ^ 2 * q₁
+      + 3 * a₁ * a₃ * p₀ ^ 2 * p₂ ^ 2 * q₁ + 3 * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₁
+      + a₁ ^ 3 * p₀ * p₁ * p₂ ^ 2 * q₁ + a₁ * a₂ * p₀ * p₁ * p₂ ^ 2 * q₁
+      + 3 * a₃ * p₀ * p₁ * p₂ ^ 2 * q₁ + a₁ ^ 2 * p₁ ^ 2 * p₂ ^ 2 * q₁
+      + a₂ * p₁ ^ 2 * p₂ ^ 2 * q₁ + 3 * a₃ ^ 2 * p₀ * p₂ ^ 3 * q₁
+      - a₁ ^ 2 * a₄ * p₀ * p₂ ^ 3 * q₁ - a₂ * a₄ * p₀ * p₂ ^ 3 * q₁
+      + 9 * a₆ * p₀ * p₂ ^ 3 * q₁ + a₁ ^ 2 * a₃ * p₁ * p₂ ^ 3 * q₁
+      + a₂ * a₃ * p₁ * p₂ ^ 3 * q₁ + a₂ * a₃ ^ 2 * p₂ ^ 4 * q₁
+      - a₁ * a₃ * a₄ * p₂ ^ 4 * q₁ - a₄ ^ 2 * p₂ ^ 4 * q₁
+      + 3 * a₂ * a₆ * p₂ ^ 4 * q₁ + 6 * a₁ * p₀ ^ 2 * p₁ ^ 2 * q₂
+      + 3 * p₀ * p₁ ^ 3 * q₂ + a₁ ^ 4 * p₀ ^ 2 * p₁ * p₂ * q₂
+      - 3 * a₁ ^ 2 * a₂ * p₀ ^ 2 * p₁ * p₂ * q₂ - a₂ ^ 2 * p₀ ^ 2 * p₁ * p₂ * q₂
+      + 9 * a₁ * a₃ * p₀ ^ 2 * p₁ * p₂ * q₂ + 3 * a₄ * p₀ ^ 2 * p₁ * p₂ * q₂
+      + 5 * a₁ ^ 3 * p₀ * p₁ ^ 2 * p₂ * q₂ + 2 * a₁ * a₂ * p₀ * p₁ ^ 2 * p₂ * q₂
+      + 6 * a₃ * p₀ * p₁ ^ 2 * p₂ * q₂ + 4 * a₁ ^ 2 * p₁ ^ 3 * p₂ * q₂
+      + a₂ * p₁ ^ 3 * p₂ * q₂ + a₁ ^ 3 * a₂ ^ 2 * p₀ ^ 2 * p₂ ^ 2 * q₂
+      + a₁ * a₂ ^ 3 * p₀ ^ 2 * p₂ ^ 2 * q₂
+      - 4 * a₁ ^ 2 * a₂ * a₃ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      - a₂ ^ 2 * a₃ * p₀ ^ 2 * p₂ ^ 2 * q₂ + 6 * a₁ * a₃ ^ 2 * p₀ ^ 2 * p₂ ^ 2 * q₂
+      - a₁ ^ 3 * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      - 4 * a₁ * a₂ * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      + 3 * a₃ * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₂ + 9 * a₁ * a₆ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      - a₁ ^ 4 * a₂ * p₀ * p₁ * p₂ ^ 2 * q₂
+      - a₁ ^ 2 * a₂ ^ 2 * p₀ * p₁ * p₂ ^ 2 * q₂
+      + 5 * a₁ ^ 3 * a₃ * p₀ * p₁ * p₂ ^ 2 * q₂
+      + 2 * a₁ * a₂ * a₃ * p₀ * p₁ * p₂ ^ 2 * q₂
+      + 6 * a₃ ^ 2 * p₀ * p₁ * p₂ ^ 2 * q₂ - a₁ ^ 2 * a₄ * p₀ * p₁ * p₂ ^ 2 * q₂
+      - a₂ * a₄ * p₀ * p₁ * p₂ ^ 2 * q₂ + 9 * a₆ * p₀ * p₁ * p₂ ^ 2 * q₂
+      - a₁ ^ 3 * a₂ * p₁ ^ 2 * p₂ ^ 2 * q₂ - a₁ * a₂ ^ 2 * p₁ ^ 2 * p₂ ^ 2 * q₂
+      + 8 * a₁ ^ 2 * a₃ * p₁ ^ 2 * p₂ ^ 2 * q₂ + 2 * a₂ * a₃ * p₁ ^ 2 * p₂ ^ 2 * q₂
+      + 3 * a₁ * a₄ * p₁ ^ 2 * p₂ ^ 2 * q₂ + a₁ * a₂ * a₃ ^ 2 * p₀ * p₂ ^ 3 * q₂
+      + 3 * a₃ ^ 3 * p₀ * p₂ ^ 3 * q₂ + a₁ ^ 3 * a₂ * a₄ * p₀ * p₂ ^ 3 * q₂
+      + a₁ * a₂ ^ 2 * a₄ * p₀ * p₂ ^ 3 * q₂
+      - 5 * a₁ ^ 2 * a₃ * a₄ * p₀ * p₂ ^ 3 * q₂
+      - a₂ * a₃ * a₄ * p₀ * p₂ ^ 3 * q₂ - 4 * a₁ * a₄ ^ 2 * p₀ * p₂ ^ 3 * q₂
+      + 3 * a₁ * a₂ * a₆ * p₀ * p₂ ^ 3 * q₂ + 9 * a₃ * a₆ * p₀ * p₂ ^ 3 * q₂
+      - a₁ ^ 3 * a₂ * a₃ * p₁ * p₂ ^ 3 * q₂
+      - a₁ * a₂ ^ 2 * a₃ * p₁ * p₂ ^ 3 * q₂
+      + 4 * a₁ ^ 2 * a₃ ^ 2 * p₁ * p₂ ^ 3 * q₂ + 2 * a₂ * a₃ ^ 2 * p₁ * p₂ ^ 3 * q₂
+      + 2 * a₁ * a₃ * a₄ * p₁ * p₂ ^ 3 * q₂ - a₄ ^ 2 * p₁ * p₂ ^ 3 * q₂
+      - 3 * a₁ ^ 2 * a₆ * p₁ * p₂ ^ 3 * q₂ + 3 * a₂ * a₆ * p₁ * p₂ ^ 3 * q₂
+      + a₂ * a₃ ^ 3 * p₂ ^ 4 * q₂ - a₁ * a₃ ^ 2 * a₄ * p₂ ^ 4 * q₂
+      - a₃ * a₄ ^ 2 * p₂ ^ 4 * q₂ + a₁ ^ 3 * a₂ * a₆ * p₂ ^ 4 * q₂
+      + a₁ * a₂ ^ 2 * a₆ * p₂ ^ 4 * q₂ - 3 * a₁ ^ 2 * a₃ * a₆ * p₂ ^ 4 * q₂
+      + 3 * a₂ * a₃ * a₆ * p₂ ^ 4 * q₂ - 3 * a₁ * a₄ * a₆ * p₂ ^ 4 * q₂) * h
+@% 17241 11060 3
++ 67
+have g := (equation_iff _).mp hP
+  have h := (equation_iff _).mp hQ
+= 45086 24
++ 9414
+diagZ, addZ, negAddY]
+  generalize W.a₁ = a₁, W.a₂ = a₂, W.a₃ = a₃, W.a₄ = a₄, W.a₆ = a₆, P 0 = p₀, P 1 = p₁, P 2 = p₂,
+    Q 0 = q₀, Q 1 = q₁, Q 2 = q₂ at g h ⊢
+  linear_combination (9 * a₁ * p₁ * q₀ ^ 4 - 3 * a₁ ^ 2 * a₂ * p₂ * q₀ ^ 4
+      - 3 * a₂ ^ 2 * p₂ * q₀ ^ 4 + 9 * a₁ * a₃ * p₂ * q₀ ^ 4 + 9 * a₄ * p₂ * q₀ ^ 4
+      - 9 * a₁ * p₀ * q₀ ^ 3 * q₁ - 3 * a₁ * a₂ * p₂ * q₀ ^ 3 * q₁
+      - 9 * p₀ * q₀ ^ 2 * q₁ ^ 2 + 3 * a₁ ^ 2 * p₂ * q₀ ^ 2 * q₁ ^ 2
+      - 3 * a₂ * p₂ * q₀ ^ 2 * q₁ ^ 2 + 3 * a₁ * p₂ * q₀ * q₁ ^ 3
+      + 3 * a₁ ^ 2 * a₂ * p₀ * q₀ ^ 3 * q₂ + 3 * a₂ ^ 2 * p₀ * q₀ ^ 3 * q₂
+      - 9 * a₁ * a₃ * p₀ * q₀ ^ 3 * q₂ - 9 * a₄ * p₀ * q₀ ^ 3 * q₂
+      + 12 * a₁ * a₂ * p₁ * q₀ ^ 3 * q₂ - 3 * a₁ ^ 2 * a₂ ^ 2 * p₂ * q₀ ^ 3 * q₂
+      - 3 * a₂ ^ 3 * p₂ * q₀ ^ 3 * q₂ + 9 * a₁ * a₂ * a₃ * p₂ * q₀ ^ 3 * q₂
+      + 9 * a₂ * a₄ * p₂ * q₀ ^ 3 * q₂ - 3 * a₁ ^ 3 * p₀ * q₀ ^ 2 * q₁ * q₂
+      - 6 * a₁ * a₂ * p₀ * q₀ ^ 2 * q₁ * q₂ - 9 * a₃ * p₀ * q₀ ^ 2 * q₁ * q₂
+      - 9 * a₁ ^ 2 * p₁ * q₀ ^ 2 * q₁ * q₂ + a₁ ^ 3 * a₂ * p₂ * q₀ ^ 2 * q₁ * q₂
+      + a₁ * a₂ ^ 2 * p₂ * q₀ ^ 2 * q₁ * q₂
+      - 6 * a₁ ^ 2 * a₃ * p₂ * q₀ ^ 2 * q₁ * q₂
+      - 3 * a₂ * a₃ * p₂ * q₀ ^ 2 * q₁ * q₂ - 9 * a₁ * a₄ * p₂ * q₀ ^ 2 * q₁ * q₂
+      - 3 * a₁ ^ 2 * p₀ * q₀ * q₁ ^ 2 * q₂ - 6 * a₂ * p₀ * q₀ * q₁ ^ 2 * q₂
+      - 9 * a₁ * p₁ * q₀ * q₁ ^ 2 * q₂ + a₁ ^ 4 * p₂ * q₀ * q₁ ^ 2 * q₂
+      + 3 * a₁ ^ 2 * a₂ * p₂ * q₀ * q₁ ^ 2 * q₂ + 2 * a₂ ^ 2 * p₂ * q₀ * q₁ ^ 2 * q₂
+      - 6 * a₁ * a₃ * p₂ * q₀ * q₁ ^ 2 * q₂ - 12 * a₄ * p₂ * q₀ * q₁ ^ 2 * q₂
+      + a₁ ^ 3 * p₂ * q₁ ^ 3 * q₂ + a₁ * a₂ * p₂ * q₁ ^ 3 * q₂
+      + a₁ ^ 2 * a₂ ^ 2 * p₀ * q₀ ^ 2 * q₂ ^ 2 + a₂ ^ 3 * p₀ * q₀ ^ 2 * q₂ ^ 2
+      - 3 * a₁ * a₂ * a₃ * p₀ * q₀ ^ 2 * q₂ ^ 2 - 9 * a₃ ^ 2 * p₀ * q₀ ^ 2 * q₂ ^ 2
+      + 3 * a₁ ^ 2 * a₄ * p₀ * q₀ ^ 2 * q₂ ^ 2 - 27 * a₆ * p₀ * q₀ ^ 2 * q₂ ^ 2
+      + 3 * a₁ * a₂ ^ 2 * p₁ * q₀ ^ 2 * q₂ ^ 2 + 9 * a₁ * a₄ * p₁ * q₀ ^ 2 * q₂ ^ 2
+      - a₁ ^ 2 * a₂ ^ 3 * p₂ * q₀ ^ 2 * q₂ ^ 2 - a₂ ^ 4 * p₂ * q₀ ^ 2 * q₂ ^ 2
+      + 3 * a₁ * a₂ ^ 2 * a₃ * p₂ * q₀ ^ 2 * q₂ ^ 2
+      - 3 * a₂ * a₃ ^ 2 * p₂ * q₀ ^ 2 * q₂ ^ 2
+      - a₁ ^ 2 * a₂ * a₄ * p₂ * q₀ ^ 2 * q₂ ^ 2
+      + 2 * a₂ ^ 2 * a₄ * p₂ * q₀ ^ 2 * q₂ ^ 2
+      + 6 * a₁ * a₃ * a₄ * p₂ * q₀ ^ 2 * q₂ ^ 2 + 6 * a₄ ^ 2 * p₂ * q₀ ^ 2 * q₂ ^ 2
+      - 9 * a₂ * a₆ * p₂ * q₀ ^ 2 * q₂ ^ 2 - a₁ ^ 3 * a₂ * p₀ * q₀ * q₁ * q₂ ^ 2
+      - a₁ * a₂ ^ 2 * p₀ * q₀ * q₁ * q₂ ^ 2
+      - 3 * a₁ ^ 2 * a₃ * p₀ * q₀ * q₁ * q₂ ^ 2
+      - 6 * a₂ * a₃ * p₀ * q₀ * q₁ * q₂ ^ 2
+      - 3 * a₁ ^ 2 * a₂ * p₁ * q₀ * q₁ * q₂ ^ 2
+      - 9 * a₁ * a₃ * p₁ * q₀ * q₁ * q₂ ^ 2
+      + a₁ ^ 3 * a₂ ^ 2 * p₂ * q₀ * q₁ * q₂ ^ 2
+      + a₁ * a₂ ^ 3 * p₂ * q₀ * q₁ * q₂ ^ 2
+      - a₁ ^ 2 * a₂ * a₃ * p₂ * q₀ * q₁ * q₂ ^ 2
+      + 2 * a₂ ^ 2 * a₃ * p₂ * q₀ * q₁ * q₂ ^ 2
+      - 6 * a₁ * a₃ ^ 2 * p₂ * q₀ * q₁ * q₂ ^ 2
+      - 2 * a₁ ^ 3 * a₄ * p₂ * q₀ * q₁ * q₂ ^ 2
+      - 5 * a₁ * a₂ * a₄ * p₂ * q₀ * q₁ * q₂ ^ 2
+      - 12 * a₃ * a₄ * p₂ * q₀ * q₁ * q₂ ^ 2 + 9 * a₁ * a₆ * p₂ * q₀ * q₁ * q₂ ^ 2
+      - a₁ ^ 2 * a₂ * p₀ * q₁ ^ 2 * q₂ ^ 2 - a₂ ^ 2 * p₀ * q₁ ^ 2 * q₂ ^ 2
+      - 3 * a₁ * a₂ * p₁ * q₁ ^ 2 * q₂ ^ 2 + a₁ ^ 2 * a₂ ^ 2 * p₂ * q₁ ^ 2 * q₂ ^ 2
+      + a₂ ^ 3 * p₂ * q₁ ^ 2 * q₂ ^ 2 + a₁ ^ 3 * a₃ * p₂ * q₁ ^ 2 * q₂ ^ 2
+      - 2 * a₁ * a₂ * a₃ * p₂ * q₁ ^ 2 * q₂ ^ 2
+      - a₁ ^ 2 * a₄ * p₂ * q₁ ^ 2 * q₂ ^ 2 - 4 * a₂ * a₄ * p₂ * q₁ ^ 2 * q₂ ^ 2
+      - 6 * a₂ * a₃ ^ 2 * p₀ * q₀ * q₂ ^ 3 + a₁ ^ 2 * a₂ * a₄ * p₀ * q₀ * q₂ ^ 3
+      + a₂ ^ 2 * a₄ * p₀ * q₀ * q₂ ^ 3 + 3 * a₁ * a₃ * a₄ * p₀ * q₀ * q₂ ^ 3
+      + 3 * a₄ ^ 2 * p₀ * q₀ * q₂ ^ 3 - 18 * a₂ * a₆ * p₀ * q₀ * q₂ ^ 3
+      + 3 * a₁ * a₂ * a₄ * p₁ * q₀ * q₂ ^ 3 + 9 * a₁ * a₆ * p₁ * q₀ * q₂ ^ 3
+      - a₂ ^ 2 * a₃ ^ 2 * p₂ * q₀ * q₂ ^ 3
+      - a₁ ^ 2 * a₂ ^ 2 * a₄ * p₂ * q₀ * q₂ ^ 3 - a₂ ^ 3 * a₄ * p₂ * q₀ * q₂ ^ 3
+      + 4 * a₁ * a₂ * a₃ * a₄ * p₂ * q₀ * q₂ ^ 3
+      - 3 * a₃ ^ 2 * a₄ * p₂ * q₀ * q₂ ^ 3 + a₁ ^ 2 * a₄ ^ 2 * p₂ * q₀ * q₂ ^ 3
+      + 5 * a₂ * a₄ ^ 2 * p₂ * q₀ * q₂ ^ 3
+      - 3 * a₁ ^ 2 * a₂ * a₆ * p₂ * q₀ * q₂ ^ 3
+      - 6 * a₂ ^ 2 * a₆ * p₂ * q₀ * q₂ ^ 3 + 9 * a₁ * a₃ * a₆ * p₂ * q₀ * q₂ ^ 3
+      - a₁ ^ 2 * a₂ * a₃ * p₀ * q₁ * q₂ ^ 3 - a₂ ^ 2 * a₃ * p₀ * q₁ * q₂ ^ 3
+      - 3 * a₁ * a₂ * a₃ * p₁ * q₁ * q₂ ^ 3
+      + a₁ ^ 2 * a₂ ^ 2 * a₃ * p₂ * q₁ * q₂ ^ 3 + a₂ ^ 3 * a₃ * p₂ * q₁ * q₂ ^ 3
+      - 2 * a₁ * a₂ * a₃ ^ 2 * p₂ * q₁ * q₂ ^ 3
+      - 2 * a₁ ^ 2 * a₃ * a₄ * p₂ * q₁ * q₂ ^ 3
+      - 4 * a₂ * a₃ * a₄ * p₂ * q₁ * q₂ ^ 3 - a₁ * a₄ ^ 2 * p₂ * q₁ * q₂ ^ 3
+      + 3 * a₁ * a₂ * a₆ * p₂ * q₁ * q₂ ^ 3 - a₂ ^ 2 * a₃ ^ 2 * p₀ * q₂ ^ 4
+      + a₁ * a₂ * a₃ * a₄ * p₀ * q₂ ^ 4 + a₂ * a₄ ^ 2 * p₀ * q₂ ^ 4
+      - 3 * a₂ ^ 2 * a₆ * p₀ * q₂ ^ 4 + 3 * a₁ * a₂ * a₆ * p₁ * q₂ ^ 4
+      - a₂ * a₃ ^ 2 * a₄ * p₂ * q₂ ^ 4 + a₁ * a₃ * a₄ ^ 2 * p₂ * q₂ ^ 4
+      + a₄ ^ 3 * p₂ * q₂ ^ 4 - a₁ ^ 2 * a₂ ^ 2 * a₆ * p₂ * q₂ ^ 4
+      - a₂ ^ 3 * a₆ * p₂ * q₂ ^ 4 + 3 * a₁ * a₂ * a₃ * a₆ * p₂ * q₂ ^ 4) * g
+    + (9 * p₀ ^ 2 * p₁ ^ 2 * q₀ + 3 * a₁ ^ 3 * p₀ ^ 2 * p₁ * p₂ * q₀
+      - 3 * a₁ * a₂ * p₀ ^ 2 * p₁ * p₂ * q₀ + 9 * a₃ * p₀ ^ 2 * p₁ * p₂ * q₀
+      + 12 * a₁ ^ 2 * p₀ * p₁ ^ 2 * p₂ * q₀ + 6 * a₂ * p₀ * p₁ ^ 2 * p₂ * q₀
+      + 9 * a₁ * p₁ ^ 3 * p₂ * q₀ + 2 * a₁ ^ 2 * a₂ ^ 2 * p₀ ^ 2 * p₂ ^ 2 * q₀
+      + 2 * a₂ ^ 3 * p₀ ^ 2 * p₂ ^ 2 * q₀ - 6 * a₁ * a₂ * a₃ * p₀ ^ 2 * p₂ ^ 2 * q₀
+      + 9 * a₃ ^ 2 * p₀ ^ 2 * p₂ ^ 2 * q₀ - 3 * a₁ ^ 2 * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₀
+      - 9 * a₂ * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₀ + 27 * a₆ * p₀ ^ 2 * p₂ ^ 2 * q₀
+      - 2 * a₁ ^ 3 * a₂ * p₀ * p₁ * p₂ ^ 2 * q₀
+      - 2 * a₁ * a₂ ^ 2 * p₀ * p₁ * p₂ ^ 2 * q₀
+      + 12 * a₁ ^ 2 * a₃ * p₀ * p₁ * p₂ ^ 2 * q₀
+      + 6 * a₂ * a₃ * p₀ * p₁ * p₂ ^ 2 * q₀
+      - 2 * a₁ ^ 2 * a₂ * p₁ ^ 2 * p₂ ^ 2 * q₀ - 2 * a₂ ^ 2 * p₁ ^ 2 * p₂ ^ 2 * q₀
+      + 18 * a₁ * a₃ * p₁ ^ 2 * p₂ ^ 2 * q₀ + 9 * a₄ * p₁ ^ 2 * p₂ ^ 2 * q₀
+      + 6 * a₂ * a₃ ^ 2 * p₀ * p₂ ^ 3 * q₀
+      + 2 * a₁ ^ 2 * a₂ * a₄ * p₀ * p₂ ^ 3 * q₀
+      + 2 * a₂ ^ 2 * a₄ * p₀ * p₂ ^ 3 * q₀ - 12 * a₁ * a₃ * a₄ * p₀ * p₂ ^ 3 * q₀
+      - 12 * a₄ ^ 2 * p₀ * p₂ ^ 3 * q₀ + 18 * a₂ * a₆ * p₀ * p₂ ^ 3 * q₀
+      - 2 * a₁ ^ 2 * a₂ * a₃ * p₁ * p₂ ^ 3 * q₀
+      - 2 * a₂ ^ 2 * a₃ * p₁ * p₂ ^ 3 * q₀ + 9 * a₁ * a₃ ^ 2 * p₁ * p₂ ^ 3 * q₀
+      + 9 * a₃ * a₄ * p₁ * p₂ ^ 3 * q₀ - 9 * a₁ * a₆ * p₁ * p₂ ^ 3 * q₀
+      + a₂ ^ 2 * a₃ ^ 2 * p₂ ^ 4 * q₀ - a₁ * a₂ * a₃ * a₄ * p₂ ^ 4 * q₀
+      - a₂ * a₄ ^ 2 * p₂ ^ 4 * q₀ + 3 * a₁ ^ 2 * a₂ * a₆ * p₂ ^ 4 * q₀
+      + 6 * a₂ ^ 2 * a₆ * p₂ ^ 4 * q₀ - 9 * a₁ * a₃ * a₆ * p₂ ^ 4 * q₀
+      - 9 * a₄ * a₆ * p₂ ^ 4 * q₀ - 3 * a₁ ^ 2 * p₀ ^ 2 * p₁ * p₂ * q₁
+      - 3 * a₁ * p₀ * p₁ ^ 2 * p₂ * q₁ + a₁ ^ 3 * a₂ * p₀ ^ 2 * p₂ ^ 2 * q₁
+      + a₁ * a₂ ^ 2 * p₀ ^ 2 * p₂ ^ 2 * q₁ - 3 * a₁ ^ 2 * a₃ * p₀ ^ 2 * p₂ ^ 2 * q₁
+      - 3 * a₁ * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₁ - a₁ ^ 4 * p₀ * p₁ * p₂ ^ 2 * q₁
+      - a₁ ^ 2 * a₂ * p₀ * p₁ * p₂ ^ 2 * q₁ - 3 * a₁ * a₃ * p₀ * p₁ * p₂ ^ 2 * q₁
+      - a₁ ^ 3 * p₁ ^ 2 * p₂ ^ 2 * q₁ - a₁ * a₂ * p₁ ^ 2 * p₂ ^ 2 * q₁
+      - 3 * a₁ * a₃ ^ 2 * p₀ * p₂ ^ 3 * q₁ + a₁ ^ 3 * a₄ * p₀ * p₂ ^ 3 * q₁
+      + a₁ * a₂ * a₄ * p₀ * p₂ ^ 3 * q₁ - 9 * a₁ * a₆ * p₀ * p₂ ^ 3 * q₁
+      - a₁ ^ 3 * a₃ * p₁ * p₂ ^ 3 * q₁ - a₁ * a₂ * a₃ * p₁ * p₂ ^ 3 * q₁
+      - a₁ * a₂ * a₃ ^ 2 * p₂ ^ 4 * q₁ + a₁ ^ 2 * a₃ * a₄ * p₂ ^ 4 * q₁
+      + a₁ * a₄ ^ 2 * p₂ ^ 4 * q₁ - 3 * a₁ * a₂ * a₆ * p₂ ^ 4 * q₁
+      + 3 * a₂ * p₀ ^ 2 * p₁ ^ 2 * q₂ + a₁ ^ 3 * a₂ * p₀ ^ 2 * p₁ * p₂ * q₂
+      - 2 * a₁ * a₂ ^ 2 * p₀ ^ 2 * p₁ * p₂ * q₂
+      + 3 * a₂ * a₃ * p₀ ^ 2 * p₁ * p₂ * q₂ + 3 * a₁ * a₄ * p₀ ^ 2 * p₁ * p₂ * q₂
+      + 4 * a₁ ^ 2 * a₂ * p₀ * p₁ ^ 2 * p₂ * q₂ + a₂ ^ 2 * p₀ * p₁ ^ 2 * p₂ * q₂
+      + 3 * a₄ * p₀ * p₁ ^ 2 * p₂ * q₂ + 3 * a₁ * a₂ * p₁ ^ 3 * p₂ * q₂
+      + a₁ ^ 2 * a₂ ^ 3 * p₀ ^ 2 * p₂ ^ 2 * q₂ + a₂ ^ 4 * p₀ ^ 2 * p₂ ^ 2 * q₂
+      - 3 * a₁ * a₂ ^ 2 * a₃ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      + 3 * a₂ * a₃ ^ 2 * p₀ ^ 2 * p₂ ^ 2 * q₂
+      - 2 * a₁ ^ 2 * a₂ * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      - 5 * a₂ ^ 2 * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      + 3 * a₁ * a₃ * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₂ + 3 * a₄ ^ 2 * p₀ ^ 2 * p₂ ^ 2 * q₂
+      + 9 * a₂ * a₆ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      - a₁ ^ 3 * a₂ ^ 2 * p₀ * p₁ * p₂ ^ 2 * q₂
+      - a₁ * a₂ ^ 3 * p₀ * p₁ * p₂ ^ 2 * q₂
+      + 4 * a₁ ^ 2 * a₂ * a₃ * p₀ * p₁ * p₂ ^ 2 * q₂
+      + a₂ ^ 2 * a₃ * p₀ * p₁ * p₂ ^ 2 * q₂ + a₁ ^ 3 * a₄ * p₀ * p₁ * p₂ ^ 2 * q₂
+      + a₁ * a₂ * a₄ * p₀ * p₁ * p₂ ^ 2 * q₂
+      + 3 * a₃ * a₄ * p₀ * p₁ * p₂ ^ 2 * q₂
+      - a₁ ^ 2 * a₂ ^ 2 * p₁ ^ 2 * p₂ ^ 2 * q₂ - a₂ ^ 3 * p₁ ^ 2 * p₂ ^ 2 * q₂
+      + 6 * a₁ * a₂ * a₃ * p₁ ^ 2 * p₂ ^ 2 * q₂
+      + a₁ ^ 2 * a₄ * p₁ ^ 2 * p₂ ^ 2 * q₂ + 4 * a₂ * a₄ * p₁ ^ 2 * p₂ ^ 2 * q₂
+      + a₂ ^ 2 * a₃ ^ 2 * p₀ * p₂ ^ 3 * q₂
+      + a₁ ^ 2 * a₂ ^ 2 * a₄ * p₀ * p₂ ^ 3 * q₂ + a₂ ^ 3 * a₄ * p₀ * p₂ ^ 3 * q₂
+      - 4 * a₁ * a₂ * a₃ * a₄ * p₀ * p₂ ^ 3 * q₂
+      + 3 * a₃ ^ 2 * a₄ * p₀ * p₂ ^ 3 * q₂ - a₁ ^ 2 * a₄ ^ 2 * p₀ * p₂ ^ 3 * q₂
+      - 5 * a₂ * a₄ ^ 2 * p₀ * p₂ ^ 3 * q₂ + 3 * a₂ ^ 2 * a₆ * p₀ * p₂ ^ 3 * q₂
+      + 9 * a₄ * a₆ * p₀ * p₂ ^ 3 * q₂ - a₁ ^ 2 * a₂ ^ 2 * a₃ * p₁ * p₂ ^ 3 * q₂
+      - a₂ ^ 3 * a₃ * p₁ * p₂ ^ 3 * q₂ + 3 * a₁ * a₂ * a₃ ^ 2 * p₁ * p₂ ^ 3 * q₂
+      + a₁ ^ 2 * a₃ * a₄ * p₁ * p₂ ^ 3 * q₂
+      + 4 * a₂ * a₃ * a₄ * p₁ * p₂ ^ 3 * q₂
+      - 3 * a₁ * a₂ * a₆ * p₁ * p₂ ^ 3 * q₂ + a₂ * a₃ ^ 2 * a₄ * p₂ ^ 4 * q₂
+      - a₁ * a₃ * a₄ ^ 2 * p₂ ^ 4 * q₂ - a₄ ^ 3 * p₂ ^ 4 * q₂
+      + a₁ ^ 2 * a₂ ^ 2 * a₆ * p₂ ^ 4 * q₂ + a₂ ^ 3 * a₆ * p₂ ^ 4 * q₂
+      - 3 * a₁ * a₂ * a₃ * a₆ * p₂ ^ 4 * q₂) * h
+@% 28457 16357 3
++ 70
+have g := (equation_iff _).mp hP
+  have h := (equation_iff _).mp hQ
+  
+= 28486 42
++ 13844
+
+  generalize W.a₁ = a₁, W.a₂ = a₂, W.a₃ = a₃, W.a₄ = a₄, W.a₆ = a₆, P 0 = p₀, P 1 = p₁, P 2 = p₂,
+    Q 0 = q₀, Q 1 = q₁, Q 2 = q₂ at g h ⊢
+  linear_combination (3 * a₁ * a₂ * p₁ * q₀ ^ 4 - a₁ ^ 2 * a₂ ^ 2 * p₂ * q₀ ^ 4
+      - a₂ ^ 3 * p₂ * q₀ ^ 4 + 3 * a₁ * a₂ * a₃ * p₂ * q₀ ^ 4
+      + 3 * a₂ * a₄ * p₂ * q₀ ^ 4 - 3 * a₁ * a₂ * p₀ * q₀ ^ 3 * q₁
+      + 3 * a₁ ^ 2 * p₁ * q₀ ^ 3 * q₁ - 3 * a₁ * a₄ * p₂ * q₀ ^ 3 * q₁
+      - 3 * a₂ * p₀ * q₀ ^ 2 * q₁ ^ 2 + 6 * a₁ * p₁ * q₀ ^ 2 * q₁ ^ 2
+      + 3 * a₁ * a₃ * p₂ * q₀ ^ 2 * q₁ ^ 2 - 3 * a₄ * p₂ * q₀ ^ 2 * q₁ ^ 2
+      + 3 * p₁ * q₀ * q₁ ^ 3 + 3 * a₃ * p₂ * q₀ * q₁ ^ 3
+      + a₁ ^ 2 * a₂ ^ 2 * p₀ * q₀ ^ 3 * q₂ + a₂ ^ 3 * p₀ * q₀ ^ 3 * q₂
+      - 3 * a₁ * a₂ * a₃ * p₀ * q₀ ^ 3 * q₂ - 3 * a₂ * a₄ * p₀ * q₀ ^ 3 * q₂
+      - a₁ ^ 3 * a₂ * p₁ * q₀ ^ 3 * q₂ + 2 * a₁ * a₂ ^ 2 * p₁ * q₀ ^ 3 * q₂
+      + 3 * a₁ ^ 2 * a₃ * p₁ * q₀ ^ 3 * q₂ + 6 * a₁ * a₄ * p₁ * q₀ ^ 3 * q₂
+      - a₁ ^ 2 * a₂ ^ 3 * p₂ * q₀ ^ 3 * q₂ - a₂ ^ 4 * p₂ * q₀ ^ 3 * q₂
+      + 3 * a₁ * a₂ ^ 2 * a₃ * p₂ * q₀ ^ 3 * q₂
+      + 3 * a₂ ^ 2 * a₄ * p₂ * q₀ ^ 3 * q₂ - a₁ ^ 3 * a₂ * p₀ * q₀ ^ 2 * q₁ * q₂
+      - a₁ * a₂ ^ 2 * p₀ * q₀ ^ 2 * q₁ * q₂ - 3 * a₂ * a₃ * p₀ * q₀ ^ 2 * q₁ * q₂
+      - 3 * a₁ * a₄ * p₀ * q₀ ^ 2 * q₁ * q₂ + a₁ ^ 4 * p₁ * q₀ ^ 2 * q₁ * q₂
+      - 3 * a₁ ^ 2 * a₂ * p₁ * q₀ ^ 2 * q₁ * q₂ - a₂ ^ 2 * p₁ * q₀ ^ 2 * q₁ * q₂
+      + 9 * a₁ * a₃ * p₁ * q₀ ^ 2 * q₁ * q₂ + 3 * a₄ * p₁ * q₀ ^ 2 * q₁ * q₂
+      + a₁ ^ 3 * a₂ ^ 2 * p₂ * q₀ ^ 2 * q₁ * q₂
+      + a₁ * a₂ ^ 3 * p₂ * q₀ ^ 2 * q₁ * q₂
+      - 4 * a₁ ^ 2 * a₂ * a₃ * p₂ * q₀ ^ 2 * q₁ * q₂
+      - a₂ ^ 2 * a₃ * p₂ * q₀ ^ 2 * q₁ * q₂
+      + 3 * a₁ * a₃ ^ 2 * p₂ * q₀ ^ 2 * q₁ * q₂
+      - a₁ ^ 3 * a₄ * p₂ * q₀ ^ 2 * q₁ * q₂
+      - 4 * a₁ * a₂ * a₄ * p₂ * q₀ ^ 2 * q₁ * q₂
+      - 9 * a₁ * a₆ * p₂ * q₀ ^ 2 * q₁ * q₂ - a₁ ^ 2 * a₂ * p₀ * q₀ * q₁ ^ 2 * q₂
+      - a₂ ^ 2 * p₀ * q₀ * q₁ ^ 2 * q₂ - 3 * a₄ * p₀ * q₀ * q₁ ^ 2 * q₂
+      + 2 * a₁ ^ 3 * p₁ * q₀ * q₁ ^ 2 * q₂ - a₁ * a₂ * p₁ * q₀ * q₁ ^ 2 * q₂
+      + 6 * a₃ * p₁ * q₀ * q₁ ^ 2 * q₂ + a₁ ^ 2 * a₂ ^ 2 * p₂ * q₀ * q₁ ^ 2 * q₂
+      + a₂ ^ 3 * p₂ * q₀ * q₁ ^ 2 * q₂ + a₁ ^ 3 * a₃ * p₂ * q₀ * q₁ ^ 2 * q₂
+      - 2 * a₁ * a₂ * a₃ * p₂ * q₀ * q₁ ^ 2 * q₂
+      + 3 * a₃ ^ 2 * p₂ * q₀ * q₁ ^ 2 * q₂ - a₁ ^ 2 * a₄ * p₂ * q₀ * q₁ ^ 2 * q₂
+      - 4 * a₂ * a₄ * p₂ * q₀ * q₁ ^ 2 * q₂ - 9 * a₆ * p₂ * q₀ * q₁ ^ 2 * q₂
+      + a₁ ^ 2 * p₁ * q₁ ^ 3 * q₂ + a₂ * p₁ * q₁ ^ 3 * q₂
+      + a₁ ^ 2 * a₃ * p₂ * q₁ ^ 3 * q₂ + a₂ * a₃ * p₂ * q₁ ^ 3 * q₂
+      - 3 * a₂ * a₃ ^ 2 * p₀ * q₀ ^ 2 * q₂ ^ 2
+      + 2 * a₁ ^ 2 * a₂ * a₄ * p₀ * q₀ ^ 2 * q₂ ^ 2
+      + 2 * a₂ ^ 2 * a₄ * p₀ * q₀ ^ 2 * q₂ ^ 2
+      - 3 * a₁ * a₃ * a₄ * p₀ * q₀ ^ 2 * q₂ ^ 2 - 3 * a₄ ^ 2 * p₀ * q₀ ^ 2 * q₂ ^ 2
+      - 9 * a₂ * a₆ * p₀ * q₀ ^ 2 * q₂ ^ 2
+      - a₁ ^ 2 * a₂ * a₃ * p₁ * q₀ ^ 2 * q₂ ^ 2
+      - a₂ ^ 2 * a₃ * p₁ * q₀ ^ 2 * q₂ ^ 2 + 6 * a₁ * a₃ ^ 2 * p₁ * q₀ ^ 2 * q₂ ^ 2
+      - a₁ ^ 3 * a₄ * p₁ * q₀ ^ 2 * q₂ ^ 2
+      + 5 * a₁ * a₂ * a₄ * p₁ * q₀ ^ 2 * q₂ ^ 2
+      + 3 * a₃ * a₄ * p₁ * q₀ ^ 2 * q₂ ^ 2 + 9 * a₁ * a₆ * p₁ * q₀ ^ 2 * q₂ ^ 2
+      - 2 * a₁ ^ 2 * a₂ ^ 2 * a₄ * p₂ * q₀ ^ 2 * q₂ ^ 2
+      - 2 * a₂ ^ 3 * a₄ * p₂ * q₀ ^ 2 * q₂ ^ 2
+      + 6 * a₁ * a₂ * a₃ * a₄ * p₂ * q₀ ^ 2 * q₂ ^ 2
+      - 3 * a₃ ^ 2 * a₄ * p₂ * q₀ ^ 2 * q₂ ^ 2
+      + a₁ ^ 2 * a₄ ^ 2 * p₂ * q₀ ^ 2 * q₂ ^ 2
+      + 7 * a₂ * a₄ ^ 2 * p₂ * q₀ ^ 2 * q₂ ^ 2
+      + 3 * a₁ ^ 2 * a₂ * a₆ * p₂ * q₀ ^ 2 * q₂ ^ 2
+      + 3 * a₂ ^ 2 * a₆ * p₂ * q₀ ^ 2 * q₂ ^ 2
+      - 9 * a₁ * a₃ * a₆ * p₂ * q₀ ^ 2 * q₂ ^ 2
+      - 18 * a₄ * a₆ * p₂ * q₀ ^ 2 * q₂ ^ 2
+      - a₁ ^ 2 * a₂ * a₃ * p₀ * q₀ * q₁ * q₂ ^ 2
+      - a₂ ^ 2 * a₃ * p₀ * q₀ * q₁ * q₂ ^ 2 - a₁ ^ 3 * a₄ * p₀ * q₀ * q₁ * q₂ ^ 2
+      - a₁ * a₂ * a₄ * p₀ * q₀ * q₁ * q₂ ^ 2
+      - 3 * a₃ * a₄ * p₀ * q₀ * q₁ * q₂ ^ 2
+      + 2 * a₁ ^ 3 * a₃ * p₁ * q₀ * q₁ * q₂ ^ 2
+      - a₁ * a₂ * a₃ * p₁ * q₀ * q₁ * q₂ ^ 2 + 6 * a₃ ^ 2 * p₁ * q₀ * q₁ * q₂ ^ 2
+      - 4 * a₁ ^ 2 * a₄ * p₁ * q₀ * q₁ * q₂ ^ 2 - a₂ * a₄ * p₁ * q₀ * q₁ * q₂ ^ 2
+      + 9 * a₆ * p₁ * q₀ * q₁ * q₂ ^ 2
+      + a₁ ^ 2 * a₂ ^ 2 * a₃ * p₂ * q₀ * q₁ * q₂ ^ 2
+      + a₂ ^ 3 * a₃ * p₂ * q₀ * q₁ * q₂ ^ 2
+      - 3 * a₁ * a₂ * a₃ ^ 2 * p₂ * q₀ * q₁ * q₂ ^ 2
+      + 3 * a₃ ^ 3 * p₂ * q₀ * q₁ * q₂ ^ 2
+      + a₁ ^ 3 * a₂ * a₄ * p₂ * q₀ * q₁ * q₂ ^ 2
+      + a₁ * a₂ ^ 2 * a₄ * p₂ * q₀ * q₁ * q₂ ^ 2
+      - 5 * a₁ ^ 2 * a₃ * a₄ * p₂ * q₀ * q₁ * q₂ ^ 2
+      - 5 * a₂ * a₃ * a₄ * p₂ * q₀ * q₁ * q₂ ^ 2
+      - 3 * a₁ * a₄ ^ 2 * p₂ * q₀ * q₁ * q₂ ^ 2
+      - 3 * a₁ ^ 3 * a₆ * p₂ * q₀ * q₁ * q₂ ^ 2
+      - 3 * a₁ * a₂ * a₆ * p₂ * q₀ * q₁ * q₂ ^ 2
+      - a₁ ^ 2 * a₄ * p₀ * q₁ ^ 2 * q₂ ^ 2 - a₂ * a₄ * p₀ * q₁ ^ 2 * q₂ ^ 2
+      + 2 * a₁ ^ 2 * a₃ * p₁ * q₁ ^ 2 * q₂ ^ 2 + 2 * a₂ * a₃ * p₁ * q₁ ^ 2 * q₂ ^ 2
+      - 3 * a₁ * a₄ * p₁ * q₁ ^ 2 * q₂ ^ 2 + a₁ ^ 2 * a₃ ^ 2 * p₂ * q₁ ^ 2 * q₂ ^ 2
+      + a₂ * a₃ ^ 2 * p₂ * q₁ ^ 2 * q₂ ^ 2
+      + a₁ ^ 2 * a₂ * a₄ * p₂ * q₁ ^ 2 * q₂ ^ 2
+      + a₂ ^ 2 * a₄ * p₂ * q₁ ^ 2 * q₂ ^ 2
+      - 3 * a₁ * a₃ * a₄ * p₂ * q₁ ^ 2 * q₂ ^ 2 - 3 * a₄ ^ 2 * p₂ * q₁ ^ 2 * q₂ ^ 2
+      - 3 * a₁ ^ 2 * a₆ * p₂ * q₁ ^ 2 * q₂ ^ 2 - 3 * a₂ * a₆ * p₂ * q₁ ^ 2 * q₂ ^ 2
+      - a₂ ^ 2 * a₃ ^ 2 * p₀ * q₀ * q₂ ^ 3
+      + a₁ * a₂ * a₃ * a₄ * p₀ * q₀ * q₂ ^ 3
+      - 3 * a₃ ^ 2 * a₄ * p₀ * q₀ * q₂ ^ 3 + a₁ ^ 2 * a₄ ^ 2 * p₀ * q₀ * q₂ ^ 3
+      + 2 * a₂ * a₄ ^ 2 * p₀ * q₀ * q₂ ^ 3 - 3 * a₂ ^ 2 * a₆ * p₀ * q₀ * q₂ ^ 3
+      - 9 * a₄ * a₆ * p₀ * q₀ * q₂ ^ 3 + a₁ * a₂ * a₃ ^ 2 * p₁ * q₀ * q₂ ^ 3
+      + 3 * a₃ ^ 3 * p₁ * q₀ * q₂ ^ 3 - 2 * a₁ ^ 2 * a₃ * a₄ * p₁ * q₀ * q₂ ^ 3
+      - a₂ * a₃ * a₄ * p₁ * q₀ * q₂ ^ 3 + 2 * a₁ * a₄ ^ 2 * p₁ * q₀ * q₂ ^ 3
+      + 6 * a₁ * a₂ * a₆ * p₁ * q₀ * q₂ ^ 3 + 9 * a₃ * a₆ * p₁ * q₀ * q₂ ^ 3
+      - a₂ * a₃ ^ 2 * a₄ * p₂ * q₀ * q₂ ^ 3
+      - a₁ ^ 2 * a₂ * a₄ ^ 2 * p₂ * q₀ * q₂ ^ 3
+      - a₂ ^ 2 * a₄ ^ 2 * p₂ * q₀ * q₂ ^ 3
+      + 4 * a₁ * a₃ * a₄ ^ 2 * p₂ * q₀ * q₂ ^ 3 + 4 * a₄ ^ 3 * p₂ * q₀ * q₂ ^ 3
+      - a₁ ^ 2 * a₂ ^ 2 * a₆ * p₂ * q₀ * q₂ ^ 3 - a₂ ^ 3 * a₆ * p₂ * q₀ * q₂ ^ 3
+      + 3 * a₁ * a₂ * a₃ * a₆ * p₂ * q₀ * q₂ ^ 3
+      - 9 * a₃ ^ 2 * a₆ * p₂ * q₀ * q₂ ^ 3
+      + 3 * a₁ ^ 2 * a₄ * a₆ * p₂ * q₀ * q₂ ^ 3
+      + 3 * a₂ * a₄ * a₆ * p₂ * q₀ * q₂ ^ 3 - 27 * a₆ ^ 2 * p₂ * q₀ * q₂ ^ 3
+      - a₁ ^ 2 * a₃ * a₄ * p₀ * q₁ * q₂ ^ 3 - a₂ * a₃ * a₄ * p₀ * q₁ * q₂ ^ 3
+      + a₁ ^ 2 * a₃ ^ 2 * p₁ * q₁ * q₂ ^ 3 + 2 * a₂ * a₃ ^ 2 * p₁ * q₁ * q₂ ^ 3
+      - 4 * a₁ * a₃ * a₄ * p₁ * q₁ * q₂ ^ 3 - a₄ ^ 2 * p₁ * q₁ * q₂ ^ 3
+      + 3 * a₂ * a₆ * p₁ * q₁ * q₂ ^ 3 + a₂ * a₃ ^ 3 * p₂ * q₁ * q₂ ^ 3
+      + a₁ ^ 2 * a₂ * a₃ * a₄ * p₂ * q₁ * q₂ ^ 3
+      + a₂ ^ 2 * a₃ * a₄ * p₂ * q₁ * q₂ ^ 3
+      - 4 * a₁ * a₃ ^ 2 * a₄ * p₂ * q₁ * q₂ ^ 3
+      - 4 * a₃ * a₄ ^ 2 * p₂ * q₁ * q₂ ^ 3
+      - 3 * a₁ ^ 2 * a₃ * a₆ * p₂ * q₁ * q₂ ^ 3 - a₂ * a₃ ^ 2 * a₄ * p₀ * q₂ ^ 4
+      + a₁ * a₃ * a₄ ^ 2 * p₀ * q₂ ^ 4 + a₄ ^ 3 * p₀ * q₂ ^ 4
+      - 3 * a₂ * a₄ * a₆ * p₀ * q₂ ^ 4 + a₂ * a₃ ^ 3 * p₁ * q₂ ^ 4
+      - a₁ * a₃ ^ 2 * a₄ * p₁ * q₂ ^ 4 - a₃ * a₄ ^ 2 * p₁ * q₂ ^ 4
+      + 3 * a₂ * a₃ * a₆ * p₁ * q₂ ^ 4 + 3 * a₁ * a₄ * a₆ * p₁ * q₂ ^ 4
+      - 3 * a₂ * a₃ ^ 2 * a₆ * p₂ * q₂ ^ 4 - a₁ ^ 2 * a₂ * a₄ * a₆ * p₂ * q₂ ^ 4
+      - a₂ ^ 2 * a₄ * a₆ * p₂ * q₂ ^ 4 + 6 * a₁ * a₃ * a₄ * a₆ * p₂ * q₂ ^ 4
+      + 6 * a₄ ^ 2 * a₆ * p₂ * q₂ ^ 4 - 9 * a₂ * a₆ ^ 2 * p₂ * q₂ ^ 4) * g
+    + (-3 * a₁ ^ 2 * p₀ ^ 2 * p₁ ^ 2 * q₀ + 3 * a₂ * p₀ ^ 2 * p₁ ^ 2 * q₀
+      - 3 * a₁ * p₀ * p₁ ^ 3 * q₀ + 2 * a₁ ^ 3 * a₂ * p₀ ^ 2 * p₁ * p₂ * q₀
+      - a₁ * a₂ ^ 2 * p₀ ^ 2 * p₁ * p₂ * q₀
+      - 3 * a₁ ^ 2 * a₃ * p₀ ^ 2 * p₁ * p₂ * q₀
+      + 3 * a₂ * a₃ * p₀ ^ 2 * p₁ * p₂ * q₀ - a₁ ^ 4 * p₀ * p₁ ^ 2 * p₂ * q₀
+      + 3 * a₁ ^ 2 * a₂ * p₀ * p₁ ^ 2 * p₂ * q₀ + a₂ ^ 2 * p₀ * p₁ ^ 2 * p₂ * q₀
+      - 3 * a₁ * a₃ * p₀ * p₁ ^ 2 * p₂ * q₀ + 3 * a₄ * p₀ * p₁ ^ 2 * p₂ * q₀
+      - a₁ ^ 3 * p₁ ^ 3 * p₂ * q₀ + 2 * a₁ * a₂ * p₁ ^ 3 * p₂ * q₀
+      + a₁ ^ 2 * a₂ ^ 3 * p₀ ^ 2 * p₂ ^ 2 * q₀ + a₂ ^ 4 * p₀ ^ 2 * p₂ ^ 2 * q₀
+      - 3 * a₁ * a₂ ^ 2 * a₃ * p₀ ^ 2 * p₂ ^ 2 * q₀
+      + 3 * a₂ * a₃ ^ 2 * p₀ ^ 2 * p₂ ^ 2 * q₀
+      - 2 * a₁ ^ 2 * a₂ * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₀
+      - 5 * a₂ ^ 2 * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₀
+      + 3 * a₁ * a₃ * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₀ + 3 * a₄ ^ 2 * p₀ ^ 2 * p₂ ^ 2 * q₀
+      + 9 * a₂ * a₆ * p₀ ^ 2 * p₂ ^ 2 * q₀
+      - a₁ ^ 3 * a₂ ^ 2 * p₀ * p₁ * p₂ ^ 2 * q₀
+      - a₁ * a₂ ^ 3 * p₀ * p₁ * p₂ ^ 2 * q₀
+      + 4 * a₁ ^ 2 * a₂ * a₃ * p₀ * p₁ * p₂ ^ 2 * q₀
+      + a₂ ^ 2 * a₃ * p₀ * p₁ * p₂ ^ 2 * q₀
+      - 3 * a₁ * a₃ ^ 2 * p₀ * p₁ * p₂ ^ 2 * q₀
+      + 2 * a₁ ^ 3 * a₄ * p₀ * p₁ * p₂ ^ 2 * q₀
+      + 2 * a₁ * a₂ * a₄ * p₀ * p₁ * p₂ ^ 2 * q₀
+      + 3 * a₃ * a₄ * p₀ * p₁ * p₂ ^ 2 * q₀ - 9 * a₁ * a₆ * p₀ * p₁ * p₂ ^ 2 * q₀
+      - a₁ ^ 2 * a₂ ^ 2 * p₁ ^ 2 * p₂ ^ 2 * q₀ - a₂ ^ 3 * p₁ ^ 2 * p₂ ^ 2 * q₀
+      - a₁ ^ 3 * a₃ * p₁ ^ 2 * p₂ ^ 2 * q₀
+      + 5 * a₁ * a₂ * a₃ * p₁ ^ 2 * p₂ ^ 2 * q₀
+      + a₁ ^ 2 * a₄ * p₁ ^ 2 * p₂ ^ 2 * q₀ + 4 * a₂ * a₄ * p₁ ^ 2 * p₂ ^ 2 * q₀
+      + a₂ ^ 2 * a₃ ^ 2 * p₀ * p₂ ^ 3 * q₀
+      + a₁ ^ 2 * a₂ ^ 2 * a₄ * p₀ * p₂ ^ 3 * q₀ + a₂ ^ 3 * a₄ * p₀ * p₂ ^ 3 * q₀
+      - 4 * a₁ * a₂ * a₃ * a₄ * p₀ * p₂ ^ 3 * q₀
+      + 3 * a₃ ^ 2 * a₄ * p₀ * p₂ ^ 3 * q₀ - a₁ ^ 2 * a₄ ^ 2 * p₀ * p₂ ^ 3 * q₀
+      - 5 * a₂ * a₄ ^ 2 * p₀ * p₂ ^ 3 * q₀ + 3 * a₂ ^ 2 * a₆ * p₀ * p₂ ^ 3 * q₀
+      + 9 * a₄ * a₆ * p₀ * p₂ ^ 3 * q₀ - a₁ ^ 2 * a₂ ^ 2 * a₃ * p₁ * p₂ ^ 3 * q₀
+      - a₂ ^ 3 * a₃ * p₁ * p₂ ^ 3 * q₀ + 2 * a₁ * a₂ * a₃ ^ 2 * p₁ * p₂ ^ 3 * q₀
+      + 2 * a₁ ^ 2 * a₃ * a₄ * p₁ * p₂ ^ 3 * q₀
+      + 4 * a₂ * a₃ * a₄ * p₁ * p₂ ^ 3 * q₀ + a₁ * a₄ ^ 2 * p₁ * p₂ ^ 3 * q₀
+      - 6 * a₁ * a₂ * a₆ * p₁ * p₂ ^ 3 * q₀ + a₂ * a₃ ^ 2 * a₄ * p₂ ^ 4 * q₀
+      - a₁ * a₃ * a₄ ^ 2 * p₂ ^ 4 * q₀ - a₄ ^ 3 * p₂ ^ 4 * q₀
+      + a₁ ^ 2 * a₂ ^ 2 * a₆ * p₂ ^ 4 * q₀ + a₂ ^ 3 * a₆ * p₂ ^ 4 * q₀
+      - 3 * a₁ * a₂ * a₃ * a₆ * p₂ ^ 4 * q₀ - 3 * a₁ * p₀ ^ 2 * p₁ ^ 2 * q₁
+      - 3 * p₀ * p₁ ^ 3 * q₁ + a₁ ^ 2 * a₂ * p₀ ^ 2 * p₁ * p₂ * q₁
+      + a₂ ^ 2 * p₀ ^ 2 * p₁ * p₂ * q₁ - 6 * a₁ * a₃ * p₀ ^ 2 * p₁ * p₂ * q₁
+      - 3 * a₄ * p₀ ^ 2 * p₁ * p₂ * q₁ - a₁ ^ 3 * p₀ * p₁ ^ 2 * p₂ * q₁
+      - a₁ * a₂ * p₀ * p₁ ^ 2 * p₂ * q₁ - 6 * a₃ * p₀ * p₁ ^ 2 * p₂ * q₁
+      - a₁ ^ 2 * p₁ ^ 3 * p₂ * q₁ - a₂ * p₁ ^ 3 * p₂ * q₁
+      + a₁ ^ 2 * a₂ * a₃ * p₀ ^ 2 * p₂ ^ 2 * q₁
+      + a₂ ^ 2 * a₃ * p₀ ^ 2 * p₂ ^ 2 * q₁ - 3 * a₁ * a₃ ^ 2 * p₀ ^ 2 * p₂ ^ 2 * q₁
+      - 3 * a₃ * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₁ - a₁ ^ 3 * a₃ * p₀ * p₁ * p₂ ^ 2 * q₁
+      - a₁ * a₂ * a₃ * p₀ * p₁ * p₂ ^ 2 * q₁ - 6 * a₃ ^ 2 * p₀ * p₁ * p₂ ^ 2 * q₁
+      + a₁ ^ 2 * a₄ * p₀ * p₁ * p₂ ^ 2 * q₁ + a₂ * a₄ * p₀ * p₁ * p₂ ^ 2 * q₁
+      - 9 * a₆ * p₀ * p₁ * p₂ ^ 2 * q₁ - 2 * a₁ ^ 2 * a₃ * p₁ ^ 2 * p₂ ^ 2 * q₁
+      - 2 * a₂ * a₃ * p₁ ^ 2 * p₂ ^ 2 * q₁ - 3 * a₃ ^ 3 * p₀ * p₂ ^ 3 * q₁
+      + a₁ ^ 2 * a₃ * a₄ * p₀ * p₂ ^ 3 * q₁ + a₂ * a₃ * a₄ * p₀ * p₂ ^ 3 * q₁
+      - 9 * a₃ * a₆ * p₀ * p₂ ^ 3 * q₁ - a₁ ^ 2 * a₃ ^ 2 * p₁ * p₂ ^ 3 * q₁
+      - 2 * a₂ * a₃ ^ 2 * p₁ * p₂ ^ 3 * q₁ + a₁ * a₃ * a₄ * p₁ * p₂ ^ 3 * q₁
+      + a₄ ^ 2 * p₁ * p₂ ^ 3 * q₁ - 3 * a₂ * a₆ * p₁ * p₂ ^ 3 * q₁
+      - a₂ * a₃ ^ 3 * p₂ ^ 4 * q₁ + a₁ * a₃ ^ 2 * a₄ * p₂ ^ 4 * q₁
+      + a₃ * a₄ ^ 2 * p₂ ^ 4 * q₁ - 3 * a₂ * a₃ * a₆ * p₂ ^ 4 * q₁
+      - 3 * a₁ * a₃ * p₀ ^ 2 * p₁ ^ 2 * q₂ + 3 * a₄ * p₀ ^ 2 * p₁ ^ 2 * q₂
+      - 3 * a₃ * p₀ * p₁ ^ 3 * q₂ + a₁ ^ 2 * a₂ * a₃ * p₀ ^ 2 * p₁ * p₂ * q₂
+      + a₂ ^ 2 * a₃ * p₀ ^ 2 * p₁ * p₂ * q₂
+      - 3 * a₁ * a₃ ^ 2 * p₀ ^ 2 * p₁ * p₂ * q₂
+      + a₁ ^ 3 * a₄ * p₀ ^ 2 * p₁ * p₂ * q₂
+      - 2 * a₁ * a₂ * a₄ * p₀ ^ 2 * p₁ * p₂ * q₂
+      + 9 * a₁ * a₆ * p₀ ^ 2 * p₁ * p₂ * q₂ - a₁ ^ 3 * a₃ * p₀ * p₁ ^ 2 * p₂ * q₂
+      - a₁ * a₂ * a₃ * p₀ * p₁ ^ 2 * p₂ * q₂ - 3 * a₃ ^ 2 * p₀ * p₁ ^ 2 * p₂ * q₂
+      + 4 * a₁ ^ 2 * a₄ * p₀ * p₁ ^ 2 * p₂ * q₂ + a₂ * a₄ * p₀ * p₁ ^ 2 * p₂ * q₂
+      + 9 * a₆ * p₀ * p₁ ^ 2 * p₂ * q₂ - a₁ ^ 2 * a₃ * p₁ ^ 3 * p₂ * q₂
+      - a₂ * a₃ * p₁ ^ 3 * p₂ * q₂ + 3 * a₁ * a₄ * p₁ ^ 3 * p₂ * q₂
+      + a₁ ^ 2 * a₂ ^ 2 * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      + a₂ ^ 3 * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      - 3 * a₁ * a₂ * a₃ * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      + 3 * a₃ ^ 2 * a₄ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      - a₁ ^ 2 * a₄ ^ 2 * p₀ ^ 2 * p₂ ^ 2 * q₂
+      - 4 * a₂ * a₄ ^ 2 * p₀ ^ 2 * p₂ ^ 2 * q₂
+      - 3 * a₁ ^ 2 * a₂ * a₆ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      - 3 * a₂ ^ 2 * a₆ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      + 9 * a₁ * a₃ * a₆ * p₀ ^ 2 * p₂ ^ 2 * q₂
+      + 18 * a₄ * a₆ * p₀ ^ 2 * p₂ ^ 2 * q₂ - 3 * a₃ ^ 3 * p₀ * p₁ * p₂ ^ 2 * q₂
+      - a₁ ^ 3 * a₂ * a₄ * p₀ * p₁ * p₂ ^ 2 * q₂
+      - a₁ * a₂ ^ 2 * a₄ * p₀ * p₁ * p₂ ^ 2 * q₂
+      + 5 * a₁ ^ 2 * a₃ * a₄ * p₀ * p₁ * p₂ ^ 2 * q₂
+      + 2 * a₂ * a₃ * a₄ * p₀ * p₁ * p₂ ^ 2 * q₂
+      + 3 * a₁ ^ 3 * a₆ * p₀ * p₁ * p₂ ^ 2 * q₂
+      + 3 * a₁ * a₂ * a₆ * p₀ * p₁ * p₂ ^ 2 * q₂
+      - a₁ ^ 2 * a₃ ^ 2 * p₁ ^ 2 * p₂ ^ 2 * q₂ - a₂ * a₃ ^ 2 * p₁ ^ 2 * p₂ ^ 2 * q₂
+      - a₁ ^ 2 * a₂ * a₄ * p₁ ^ 2 * p₂ ^ 2 * q₂
+      - a₂ ^ 2 * a₄ * p₁ ^ 2 * p₂ ^ 2 * q₂
+      + 6 * a₁ * a₃ * a₄ * p₁ ^ 2 * p₂ ^ 2 * q₂ + 3 * a₄ ^ 2 * p₁ ^ 2 * p₂ ^ 2 * q₂
+      + 3 * a₁ ^ 2 * a₆ * p₁ ^ 2 * p₂ ^ 2 * q₂ + 3 * a₂ * a₆ * p₁ ^ 2 * p₂ ^ 2 * q₂
+      + a₂ * a₃ ^ 2 * a₄ * p₀ * p₂ ^ 3 * q₂
+      + a₁ ^ 2 * a₂ * a₄ ^ 2 * p₀ * p₂ ^ 3 * q₂
+      + a₂ ^ 2 * a₄ ^ 2 * p₀ * p₂ ^ 3 * q₂
+      - 4 * a₁ * a₃ * a₄ ^ 2 * p₀ * p₂ ^ 3 * q₂ - 4 * a₄ ^ 3 * p₀ * p₂ ^ 3 * q₂
+      + 9 * a₃ ^ 2 * a₆ * p₀ * p₂ ^ 3 * q₂
+      - 3 * a₁ ^ 2 * a₄ * a₆ * p₀ * p₂ ^ 3 * q₂ + 27 * a₆ ^ 2 * p₀ * p₂ ^ 3 * q₂
+      - a₂ * a₃ ^ 3 * p₁ * p₂ ^ 3 * q₂
+      - a₁ ^ 2 * a₂ * a₃ * a₄ * p₁ * p₂ ^ 3 * q₂
+      - a₂ ^ 2 * a₃ * a₄ * p₁ * p₂ ^ 3 * q₂
+      + 4 * a₁ * a₃ ^ 2 * a₄ * p₁ * p₂ ^ 3 * q₂
+      + 4 * a₃ * a₄ ^ 2 * p₁ * p₂ ^ 3 * q₂
+      + 3 * a₁ ^ 2 * a₃ * a₆ * p₁ * p₂ ^ 3 * q₂
+      - 3 * a₁ * a₄ * a₆ * p₁ * p₂ ^ 3 * q₂ + 3 * a₂ * a₃ ^ 2 * a₆ * p₂ ^ 4 * q₂
+      + a₁ ^ 2 * a₂ * a₄ * a₆ * p₂ ^ 4 * q₂ + a₂ ^ 2 * a₄ * a₆ * p₂ ^ 4 * q₂
+      - 6 * a₁ * a₃ * a₄ * a₆ * p₂ ^ 4 * q₂ - 6 * a₄ ^ 2 * a₆ * p₂ ^ 4 * q₂
+      + 9 * a₂ * a₆ ^ 2 * p₂ ^ 4 * q₂) * h
 == src/Development/AbelianVarietyTheory/Proofs/HomogeneousIdeals/ExistsUniqueLiftSpecOfIsLocalizationAway.lean 7688d0f0d23e6b93dfde33107b9726ec2353c19f40457139fbe8503274d2c0fb 18cfecfa44ba549a66cb81efad63bd9e1a50d5812867ba874559f62432e4fc76
 @@ 8969 3 0
 
@@ -44821,6 +45317,34 @@ hiX, hsp⟩ := (
 = 17037 68
 + 5
 ).2.2
+== src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExtendedDataLiftBlockDatumBaseChangeOneMatrix.lean 71042a9901282abd4825f9ae445b1e929c479fafdf6814fcdde99f6ba6f0b8d7 5ca2707de0165f1d3b4c9e223bec8a4adec1412f2840c67ff07b979ed394da7e
+@% 11981 1072 17
++ 13
+e, he⟩ := H.1
+= 12044 123
++ 4
+.2.1
+= 12168 121
++ 6
+.2.2.1
+= 12290 131
++ 8
+.2.2.2.1
+= 12422 125
++ 10
+.2.2.2.2.1
+= 12548 124
++ 12
+.2.2.2.2.2.1
+= 12673 124
++ 14
+.2.2.2.2.2.2.1
+= 12798 129
++ 16
+.2.2.2.2.2.2.2.1
+= 12928 124
++ 16
+.2.2.2.2.2.2.2.2
 == src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExtendedDataNonzeroIndexPlacesCorrespond.lean a669852bddb44dd68e9ead0bc490ce59daa7c5764374a49d585c73a0c78b0785 9457eddf860c1908a46f8db8727275c08942d3d289e9e7a004af9180ebd2ad6c
 @@ 2964 384 76
  intros; apply _root_.GlobalTheory.Mem.R3.Tr.exists_iota_comp <;> assumption
@@ -47868,6 +48392,14 @@ eg_lin <;> assumption
 = 4947 46
 + 19
 egDP <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/IsUnitIffNotIsUnitOfCoprime.lean 41d7404e2cd9b187680420f0a1c21ea9bedb80e0dd926230c1c0e8f39e22e044 6be6ca5b36fc6e9211632eac30814101baacac098c9dd2761e4a3ff71e615432
+@% 8566 109 4
+= 8582 26
++ 8
+.2.2.2.2
+= 8608 53
++ 42
+hbox.1, hbox.2.1, hbox.2.2.1, hbox.2.2.2.1
 == src/Development/AbelianVarietyTheory/Proofs/JetHarmonics/KLeSubOneOfLt.lean e70eb0580f317521053efeaa3cfe101da80ceb4ce135d608ec67e93cfe228f6b f9593c3d0bf760f2ec159a2dfde443f7f9eac471d1eef7476031439d7bc9990e
 @% 2393 47 3
 + 12

@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 175.3M, written-out proof size 2.67B, time change -4.63K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 175.3M, written-out proof size 2.67B, time change -4.64K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 175,310,966 | −8,937,244 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,669,666,299 | −119,638,000 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,634.9 | −4,634.9 |
+| Source size (tokens) | 184,248,210 | 175,308,780 | −8,939,430 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,669,602,466 | −119,701,833 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -4,636.3 | −4,636.3 |
 
-Cone: 1,252,729 declarations in 145,772 files. Recorded changes: 49. Latest row: Six heavy proofs in Formalism: records read by projection and not rebuilt (2026-11-22 23:57 UTC).
+Cone: 1,252,729 declarations in 145,772 files. Recorded changes: 50. Latest row: Five GlobalTheory files: addition-law identities in plain names and projections for conjunctions (2026-11-23 00:09 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -51,7 +51,7 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
 ### Log
 
 - **2026-11-21.** Archive measured (cone, dials). Judge working. First changes recorded.
-- **2026-11-22.** Changes 3 to 49. Sweeps: restatements, citations of duplicates (two tiers), projections, unused steps,
+- **2026-11-22.** Changes 3 to 50. Sweeps: restatements, citations of duplicates (two tiers), projections, unused steps,
   explicit-argument files. Hand rewrites: waves 2 to 8 on the heaviest proofs. Statements: five lists of unneeded parts.
   Mathematics: map of the argument; four large shortcuts ruled out; the conditions on the families and the counting
   argument read in full; library-level lemmas and repetition measured. Tools: strict token count, patch format,
