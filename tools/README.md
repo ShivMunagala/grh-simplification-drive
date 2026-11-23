@@ -89,6 +89,13 @@ executes anything from a compiled file; it maps the file and walks the data, als
   check, sizes and time before and after, and `PRECHECK: pass` or `fail`.
 - `alias_wrappers.py` — find theorems that only restate another theorem and cite it, and rewrite them
   as `alias`.
+- `proof_edits.py` — sweeps that edit many proofs by one rule. A generator lists candidate edits
+  (`import-citations`, `shorten`, `unused-steps`, `repoint`, `recite`); `variants` writes the edited files for a
+  batch compile (all edits of a file, then one at a time where that failed); `choose` keeps per file what
+  passed; `apply` writes it to `proof/`, refusing files that have changed since. `repoint`: where a theorem
+  only restates another and cites it, every proof that uses the restatement cites the original, so the
+  restatement is no longer needed. `recite`: the same for any two theorems with one statement, when the
+  user's file can see the other.
 - `batch_compile.py` — compile many edited files in parallel on a machine with room for it and run the
   equivalence check on each; `--recheck` runs the check again without compiling.
 - `remote/` — `bootstrap.sh` sets a rented machine up from nothing; `compile_there.py` compiles single

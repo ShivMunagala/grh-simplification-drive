@@ -54,3 +54,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-23T00:35:34Z,d95a32733,Seven heavy transport proofs: projections in place of long take-aparts,175309169,2665934328,-4687.4,1252731,145772
 2026-11-23T00:50:39Z,e6f671da2,Statements proved twice second part: users cite one proof (13 files; added imports checked on 332 files) [review],175287425,2665346149,-4689.6,1252663,145770
 2026-11-23T01:03:06Z,1a8e8cac9,listPin_copy through the shared eliminator (added import checked on its two downstream files) [review],175287197,2664749123,-4703.8,1252663,145770
+2026-11-23T01:53:29Z,c91baa58f,Restatements: users cite the original theorem (part 1 of 3; 5165 files),174702801,2654574405,-4704.9,1241152,136743

@@ -17,6 +17,12 @@ elsewhere), so they are guesses: each one has to compile and pass the equivalenc
                                                                # `clear_value x` after `set x := e with h`
   tools/proof_edits.py drop-restate --out build/x/edits.jsonl [--min-nodes N]
                                                                # delete `show T` / `change T` / bare `dsimp only`
+  tools/proof_edits.py repoint     --out build/x/edits.jsonl [--max-files N]
+  tools/proof_edits.py recite      --out build/x/edits.jsonl [--max-files N] [--skip-edits E ...]
+                                                               # the same for any two theorems with one
+                                                               # statement, when the users can see the other
+                                                               # users of a restatement cite the original;
+                                                               # choose with --keep-equal
   tools/proof_edits.py variants --edits E --work W [--single-from W/results.jsonl]
   tools/proof_edits.py choose   --edits E --work W            # after tools/batch_variants.py ran
   tools/proof_edits.py apply    --chosen W/chosen.jsonl [--expect W/final/sources.tsv [--drop-stale]]
@@ -34,7 +40,7 @@ Because every file is rebuilt from the accepted commit and the edit list, applyi
 edits on another machine gives byte-identical files. `choose` records the checksum of each source
 it kept (W/final/sources.tsv) and `apply --expect` refuses to write anything that differs from it.
 """
-import argparse, collections, hashlib, json, os, re, shutil, subprocess, sys, time
+import argparse, bisect, collections, hashlib, json, os, re, shutil, subprocess, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common as C
@@ -1034,6 +1040,314 @@ def gen_unused_steps(out, table, max_modules):
         f'statements to delete; written to {out}')
 
 
+def comment_spans(text):
+    """Sorted (start, end) of the comments of a Lean source: `--` to the end of the line, and nested
+    `/- -/` blocks (doc comments included). String literals are skipped."""
+    out = []
+    i, n = 0, len(text)
+    while i < n:
+        c = text[i]
+        if c == '"':
+            i += 1
+            while i < n and text[i] != '"':
+                i += 2 if text[i] == '\\' else 1
+            i += 1
+        elif c == '-' and text.startswith('--', i):
+            j = text.find('\n', i)
+            j = n if j < 0 else j
+            out.append((i, j))
+            i = j
+        elif c == '/' and text.startswith('/-', i):
+            depth, j = 1, i + 2
+            while j < n and depth:
+                if text.startswith('/-', j):
+                    depth += 1; j += 2
+                elif text.startswith('-/', j):
+                    depth -= 1; j += 2
+                else:
+                    j += 1
+            out.append((i, j))
+            i = j
+        else:
+            i += 1
+    return out
+
+
+def name_char(c):
+    return c.isalnum() or c in "_'!?"
+
+
+def mentions(src, lo, hi, name, comments):
+    """Spans in src[lo:hi], outside comments, where the declaration `name` is mentioned by its name: the
+    whole dotted token is the name or ends it (`T.foo` for `A.T.foo`), with `_root_.` in front or not."""
+    last = name.rsplit('.', 1)[-1]
+    out = []
+    i = src.find(last, lo, hi)
+    while i >= 0:
+        j = i + len(last)
+        nxt = i + 1
+        if (j >= len(src) or not name_char(src[j])) and (i == 0 or not name_char(src[i - 1])):
+            k = i
+            while k > 0 and (name_char(src[k - 1]) or src[k - 1] == '.'):
+                k -= 1
+            tok = src[k:j]
+            plain = tok[7:] if tok.startswith('_root_.') else tok
+            if plain and plain[0] != '.' and (plain == name or name.endswith('.' + plain)):
+                lo_c = bisect.bisect_right(comments, (k, len(src) + 1)) - 1
+                if not (lo_c >= 0 and comments[lo_c][0] <= k < comments[lo_c][1]):
+                    out.append((k, j))
+            nxt = j
+        i = src.find(last, nxt, hi)
+    return out
+
+
+RESTATE_SKIP = re.compile(r"(\._proof_\d|\._simp_\d|\.eq_\d+$|\.eq_def$|\._abel_\d|\._ring_\d|\.match_\d|\._auxLemma|\.congr_simp$)")
+
+
+def gen_repoint(out, max_files):
+    """Edits that make the users of a restatement cite the theorem it restates.
+
+    A restatement is a theorem whose statement is, term for term, the statement of another theorem and
+    whose proof mentions that theorem and nothing else of the tree. Once every proof the five theorems
+    need cites the original, the restatement is no longer needed by them. Only the users' files are
+    edited (one name is replaced by another, so a file's own sizes do not change: run `choose` with
+    --keep-equal); the restatement stays where it is.
+
+    A restatement is taken only if the five theorems use it in proofs alone (a use inside a statement
+    or a definition would change that declaration), and only if every proof that uses it mentions it by
+    name in its own source (the dotted name, or an ending of it). Whether a mention found this way is
+    the right one is settled by compiling: the file must compile with every statement unchanged.
+    Restatements are taken in the order of nodes saved per file to recompile, up to `max_files` files."""
+    t0 = time.time()
+
+    def say(msg):
+        print(f'{msg}  [{time.time() - t0:.0f}s]', flush=True)
+
+    overlay_consts = os.path.join(C.DATA_OVERLAY, 'consts.tsv')
+    g = CONE.load_graph(C.DATA_BASE, overlay_consts if os.path.exists(overlay_consts) else None, (), say)
+    by = CONE.find_names(g, set(C.TARGETS))
+    cone = CONE.reach(g, [by[t] for t in C.TARGETS])
+    te, to, ve, vo = g.t_edges, g.t_off, g.v_edges, g.v_off
+    cites = {}
+    for i in range(g.n):
+        if not cone[i] or g.kinds[i] != 'thm' or g.tsize[i] <= 12 or vo[i + 1] - vo[i] != 1 or RESTATE_SKIP.search(g.names[i]):
+            continue
+        a = ve[vo[i]]
+        if (a != i and g.kinds[a] == 'thm' and g.thash[a] == g.thash[i] and g.tsize[a] == g.tsize[i]
+                and g.vsize[i] <= g.tsize[i] + 40):
+            cites[i] = a
+
+    def original(i):
+        seen = set()
+        while i in cites and i not in seen:
+            seen.add(i)
+            i = cites[i]
+        return i
+
+    orig = {b: original(b) for b in cites}
+    orig = {b: a for b, a in orig.items() if not g.names[a].startswith('_private.') and '«' not in g.names[a]}
+    users, elsewhere = collections.defaultdict(set), set()
+    for i in range(g.n):
+        if not cone[i]:
+            continue
+        for j in te[to[i]:to[i + 1]]:
+            if j in orig and j != i:
+                elsewhere.add(j)
+        proof = g.kinds[i] == 'thm'
+        for j in ve[vo[i]:vo[i + 1]]:
+            if j in orig and j != i:
+                if proof:
+                    users[j].add(i)
+                else:
+                    elsewhere.add(j)
+    cand = {b for b in orig if b not in elsewhere and users.get(b)}
+    say(f'{len(cites):,} restatements among what the five theorems need; {len(orig) - len(cand):,} left out '
+        f'(the original is private, or the restatement is used in a statement or a definition)')
+    files = {b: {g.mods[u] for u in users[b] if u not in cand} for b in cand}
+    gain = {b: g.tsize[b] + g.vsize[b] for b in cand}
+    order = sorted(cand, key=lambda b: -gain[b] / (1 + len(files[b])))
+    picked, mods = [], set()
+    for b in order:
+        new = files[b] - mods
+        if len(mods) + len(new) > max_files:
+            continue
+        mods |= new
+        picked.append(b)
+    say(f'{len(picked):,} restatements taken, {sum(gain[b] for b in picked):,} nodes if all of them leave; '
+        f'{len(mods):,} files to edit')
+    write_repoints(g, picked, orig, {b: [u for u in users[b] if u not in cand] for b in picked}, gain, out, say)
+
+
+def gen_recite(out, max_files, skip_files=None, skip_names=None):
+    """Like `repoint`, for any theorems with the same statement, however each is proved.
+
+    Among the theorems the five need that share one statement, one is kept; another can go when every
+    proof that uses it lies in a file that imports the kept one's file, since then that proof can cite
+    the kept one instead. (A user that is itself one of those to go does not count.) The kept one is
+    the member for which most can go. Users' files are edited; nothing is deleted.
+
+    `skip_files`: modules that may not be edited (a batch already under way); `skip_names`: declarations
+    already dealt with there."""
+    t0 = time.time()
+
+    def say(msg):
+        print(f'{msg}  [{time.time() - t0:.0f}s]', flush=True)
+
+    overlay_consts = os.path.join(C.DATA_OVERLAY, 'consts.tsv')
+    g = CONE.load_graph(C.DATA_BASE, overlay_consts if os.path.exists(overlay_consts) else None, (), say)
+    by = CONE.find_names(g, set(C.TARGETS))
+    cone = CONE.reach(g, [by[t] for t in C.TARGETS])
+    te, to, ve, vo = g.t_edges, g.t_off, g.v_edges, g.v_off
+    groups = collections.defaultdict(list)
+    for i in range(g.n):
+        if cone[i] and g.kinds[i] == 'thm' and g.tsize[i] > 12 and not IFACE.AUX.search(g.names[i]) \
+                and not RESTATE_SKIP.search(g.names[i]):
+            groups[(g.thash[i], g.tsize[i])].append(i)
+    groups = {k: v for k, v in groups.items() if len(v) > 1}
+    member = {i: k for k, v in groups.items() for i in v}
+    users, elsewhere = collections.defaultdict(set), set()
+    aux = collections.Counter()
+    for i in range(g.n):
+        if not cone[i]:
+            continue
+        mm = IFACE.AUX.search(g.names[i])
+        if mm:
+            aux[(g.mods[i], g.names[i][:mm.start()])] += g.tsize[i] + g.vsize[i]
+        for j in te[to[i]:to[i + 1]]:
+            if j in member and j != i:
+                elsewhere.add(j)
+        proof = g.kinds[i] == 'thm'
+        for j in ve[vo[i]:vo[i + 1]]:
+            if j in member and j != i:
+                if proof:
+                    users[j].add(i)
+                else:
+                    elsewhere.add(j)
+    closure, bit, _topo = import_closures(g, {g.mods[i] for i in member})
+    say(f'{len(groups):,} statements with more than one theorem ({len(member):,} theorems)')
+
+    def sees(u, o):
+        mu, mo = g.mods[u], g.mods[o]
+        return mu != mo and (closure[mu] >> bit[mo]) & 1
+
+    skipn = skip_names or set()
+    size = {i: g.tsize[i] + g.vsize[i] + aux.get((g.mods[i], g.names[i]), 0) for i in member}
+    orig, real, gain = {}, {}, {}
+    for key, members in groups.items():
+        best = None
+        for o in members:
+            if g.names[o].startswith('_private.') or '«' in g.names[o]:
+                continue
+            go = {d for d in members if d != o and d not in elsewhere and users.get(d) and g.names[d] not in skipn}
+            changed = True
+            while changed and go:
+                changed = False
+                for d in list(go):
+                    if any(u not in go and not sees(u, o) for u in users[d]):
+                        go.discard(d)
+                        changed = True
+            if go:
+                val = sum(size[d] for d in go)
+                if best is None or val > best[0]:
+                    best = (val, o, go)
+        if best:
+            _val, o, go = best
+            for d in go:
+                orig[d] = o
+                real[d] = [u for u in users[d] if u not in go]
+                gain[d] = size[d]
+    say(f'{len(orig):,} theorems could go ({sum(gain.values()):,} nodes, their own helpers included), '
+        f'cited through {len(set(orig.values())):,} kept ones')
+    skipf = skip_files or set()
+    files = {d: {g.mods[u] for u in real[d]} for d in orig}
+    order = sorted((d for d in orig if not any(g.modnames[m] in skipf for m in files[d])),
+                   key=lambda d: -gain[d] / (1 + len(files[d])))
+    picked, mods = [], set()
+    for d in order:
+        new = files[d] - mods
+        if len(mods) + len(new) > max_files:
+            continue
+        mods |= new
+        picked.append(d)
+    say(f'{len(picked):,} taken, {sum(gain[d] for d in picked):,} nodes if all of them leave; {len(mods):,} files to edit'
+        + (f' ({len(orig) - len(order):,} left for later: a file they need is being edited by another batch)' if skipf else ''))
+    write_repoints(g, picked, orig, real, gain, out, say)
+
+
+def write_repoints(g, picked, orig, real_users, gain, out, say):
+    """Edits that replace, in the source of every user in `real_users[b]`, the mentions of `b` by the full
+    name of `orig[b]`; a `b` with a user that does not mention it by name is left out."""
+    need = collections.defaultdict(lambda: collections.defaultdict(list))   # module -> restatement -> its users there
+    for b in picked:
+        for u in real_users[b]:
+            need[g.mods[u]][b].append(u)
+    names = {b: CD.user_name(g.names[b]) for b in picked}
+    ranges = CD.load_ranges(g.patched)
+    spans = collections.defaultdict(dict)                 # module -> restatement -> [(start, end, old, enclosing)]
+    broken = collections.Counter()
+    dead = set()
+    modlist = sorted(need, key=lambda m: g.modnames[m])
+    for lo in range(0, len(modlist), 2000):
+        chunk = modlist[lo:lo + 2000]
+        text = texts_at(accepted_commit(), [g.modnames[m] for m in chunk])
+        for m in chunk:
+            mn = g.modnames[m]
+            src = text.get(mn)
+            if src is None:
+                dead |= set(need[m])
+                broken['restatements used in a file whose source was not found'] += len(need[m])
+                continue
+            lines = src.split('\n')
+            comments = comment_spans(src)
+            for b, us in need[m].items():
+                found, fine = set(), True
+                for u in us:
+                    nm, r = g.names[u], None
+                    for _ in range(4):                    # a helper (`foo._proof_3`) lies in the range of `foo`
+                        r = ranges.get((mn, nm))
+                        if r is not None or '.' not in nm:
+                            break
+                        nm = nm.rsplit('.', 1)[0]
+                    if r is None:
+                        fine = False
+                        broken['restatements with a user whose place in the source is not known'] += 1
+                        break
+                    here = mentions(src, CD.offset(lines, r[0], r[1]), CD.offset(lines, r[2], r[3]), names[b], comments)
+                    if not here:
+                        fine = False
+                        broken['restatements with a user that does not mention the name plainly'] += 1
+                        break
+                    found.update((a0, a1, src[a0:a1], nm) for a0, a1 in here)
+                if fine:
+                    spans[m][b] = sorted(found)
+                else:
+                    dead.add(b)
+    edits = []
+    for m in modlist:
+        for b, found in spans[m].items():
+            if b in dead:
+                continue
+            for a0, a1, old, parent in found:
+                edits.append({'module': g.modnames[m], 'theorem': parent or g.names[b],
+                              'first_line': 0, 'first_col': a0, 'start': a0, 'end': a1,
+                              'old_sha': hashlib.sha256(old.encode('utf-8')).hexdigest(),
+                              'body': g.names[orig[b]], 'tag': 'repoint', 'size': gain[b], 'tokens': 0,
+                              'drops': g.names[b]})
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
+    with open(out, 'w', encoding='utf-8') as fh:
+        for e in edits:
+            fh.write(json.dumps(e, ensure_ascii=False) + '\n')
+    with open(out + '.pairs.tsv', 'w', encoding='utf-8') as fh:
+        for b in picked:
+            if b not in dead:
+                fh.write(f'{g.names[b]}\t{g.names[orig[b]]}\t{gain[b]}\t{len({g.mods[u] for u in real_users[b]})}\n')
+    for k, v in broken.items():
+        print(f'  {k}: {v:,}')
+    live = [b for b in picked if b not in dead]
+    say(f'{len(edits):,} edits in {len({e["module"] for e in edits}):,} files for {len(live):,} restatements '
+        f'({sum(gain[b] for b in live):,} nodes if all leave); written to {out}')
+
+
 def load_edits(path):
     per = collections.defaultdict(list)
     with open(path, encoding='utf-8') as fh:
@@ -1125,6 +1439,7 @@ def variants(edits_path, work, single_from, modules_file=None):
 
 
 EXCHANGE = 1000                    # nodes of written-out size that one added source token must buy (the judge's rate)
+KEEP_EQUAL = False                 # set for edits whose gain is elsewhere (a restatement stops being needed): --keep-equal
 
 
 def strict_tokens(text):
@@ -1171,7 +1486,7 @@ def choose(edits_path, work):
                 continue
             with open(C.module_path(m, os.path.join(work, 'v', vid)), encoding='utf-8') as fh:
                 added = strict_tokens(fh.read()) - before
-            if added < 0 or (w < old and (added == 0 or old - w >= EXCHANGE * added)):
+            if added < 0 or (w < old and (added == 0 or old - w >= EXCHANGE * added)) or (KEEP_EQUAL and added == 0):
                 paying.append((w, vid, used, added))
         if not paying:
             stats['files where nothing got smaller, or the gain does not pay for the added source'] += 1
@@ -1227,7 +1542,12 @@ def apply(chosen_path, src=C.SRC, expect=None, drop_stale=False):
     out, stale = {}, []
     for m, es in sorted(per.items()):
         new, failed = apply_edits(text[m], es)
-        if failed or (expect and hashlib.sha256(new.encode('utf-8')).hexdigest() != want[m]):
+        try:
+            with open(C.module_path(m, src), encoding='utf-8', newline='') as fh:
+                touched = fh.read() != text[m]            # someone is working on this file: leave it
+        except OSError:
+            touched = True
+        if failed or touched or (expect and hashlib.sha256(new.encode('utf-8')).hexdigest() != want[m]):
             stale.append(m)
         else:
             out[m] = new
@@ -1269,6 +1589,14 @@ def main():
     us.add_argument('--out', required=True)
     us.add_argument('--table', required=True, help='module, declaration, nodes, names of unused local steps')
     us.add_argument('--max-modules', type=int, default=3000)
+    rp = sub.add_parser('repoint')
+    rp.add_argument('--out', required=True)
+    rp.add_argument('--max-files', type=int, default=10000)
+    rc = sub.add_parser('recite')
+    rc.add_argument('--out', required=True)
+    rc.add_argument('--max-files', type=int, default=10000)
+    rc.add_argument('--skip-edits', default=None, nargs='*',
+                    help='edit lists of batches under way: their files are not edited, their restatements not taken')
     v = sub.add_parser('variants')
     v.add_argument('--edits', required=True); v.add_argument('--work', required=True)
     v.add_argument('--single-from', default=None); v.add_argument('--modules', default=None)
@@ -1276,6 +1604,8 @@ def main():
     c = sub.add_parser('choose')
     c.add_argument('--edits', required=True); c.add_argument('--work', required=True)
     c.add_argument('--allow-imports', action='store_true')
+    c.add_argument('--keep-equal', action='store_true',
+                   help='keep a file whose sizes are unchanged (the gain is in what stops being needed)')
     a = sub.add_parser('apply')
     a.add_argument('--chosen', required=True)
     a.add_argument('--expect', default=None, help='W/final/sources.tsv: refuse unless the files come out byte-identical')
@@ -1289,6 +1619,18 @@ def main():
         gen(args.cmd, args.out, args.form, args.min_proof_tokens)
     elif args.cmd == 'shorten':
         gen_shorten(args.out, args.candidates)
+    elif args.cmd == 'repoint':
+        gen_repoint(args.out, args.max_files)
+    elif args.cmd == 'recite':
+        skip_files, skip_names = set(), set()
+        for path in args.skip_edits or ():
+            with open(path, encoding='utf-8') as fh:
+                for line in fh:
+                    e = json.loads(line)
+                    skip_files.add(e['module'])
+                    if e.get('drops'):
+                        skip_names.add(e['drops'])
+        gen_recite(args.out, args.max_files, skip_files, skip_names)
     elif args.cmd == 'unused-steps':
         gen_unused_steps(args.out, args.table, args.max_modules)
     elif args.cmd in REWRITES:
@@ -1302,6 +1644,8 @@ def main():
         os.makedirs(args.work, exist_ok=True)
         variants(args.edits, args.work, args.single_from, args.modules)
     elif args.cmd == 'choose':
+        if args.keep_equal:
+            globals()['KEEP_EQUAL'] = True
         choose(args.edits, args.work)
     else:
         apply(args.chosen, expect=args.expect, drop_stale=args.drop_stale)
