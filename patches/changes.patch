@@ -326,12 +326,284 @@ Irr.
 == src/CompanionTheory/AutomorphicTheory/NumberFieldModels/HsVecProjLe.lean 8b995b2d7e024c996d9b712b7ae6092ea3eab01d12acb6c25de0c9b782803a55 5bea3351e8c830294355141007e5223382c25485554d62105763dd8e266a4657
 @@ 5644 34 30
 have hsp := (he.2 q.1.2 q.2.2)
-== src/CompanionTheory/AutomorphicTheory/PadicUnitaryWeights/DixmierMalliavin/DecompDirection.lean d1843a84c9ba35586f71a2a6f78ff90cf864b7ca03e703993d60d59267f33106 99b976334a0518514fc386450b0a3ad968451cceade7428c5e1a09b39bf995a5
-@@ 1035 28 25
-have hf₁ := (hser c hc).1
-== src/CompanionTheory/AutomorphicTheory/PadicUnitaryWeights/DixmierMalliavin/DixmierMalliavinFactorisationHolds.lean a79bb30aa5bb5bf5d8b38d365d8b923678e4764e796acd07d92a6e7c4b2b50a7 2a0dfea81869fb2561df8e350fe23ce57e93ddbc635722742581b1b59284d846
-@@ 2681 40 14
-glue_smooth_of
+== src/CompanionTheory/AutomorphicTheory/PadicCyclotomicFields/GcohCmp.lean f44f122874b1221638d04ecaddc779f3d75f34b7aeba2391d810ac35b7524b96 84ed21d119300c7aae35cdc42c4afdf0aa569bd04346dbc4f5caa6a838a7ed9b
+@@ 72 0 78
+import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohCmp
+
+@% 73 76 16
+= 150 25
++ 26
+
+export PositivityTheory (
+= 176 27
++ 12
+.cont_of_lc 
+= 176 27
++ 5
+.gc0 
+= 176 27
++ 5
+.gc1 
+= 176 27
++ 5
+.gc2 
+= 176 27
++ 7
+.gcRep 
+= 176 27
++ 5
+.gcn 
+= 176 27
++ 32
+.lc_of_cont)
+end CompanionTheory
+@@ 204 9621 0
+
+== src/CompanionTheory/AutomorphicTheory/PadicCyclotomicFields/GcohCmpA.lean d0b7f48be03ad36309a51461bf4b4fedd7d300863abaf6b9723220182a82ebc3 4efc12f158fb8fd4b90964701443ef511380b698ca9770c99da292e0fe8d2247
+@@ 72 0 79
+import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohCmpA
+
+@% 73 76 26
+= 150 25
++ 26
+
+export PositivityTheory (
+= 176 27
++ 9
+.coc_inj 
+= 176 27
++ 10
+.core_hom 
+= 176 27
++ 11
+.core_quot 
+= 176 27
++ 8
+.d_comp 
+= 176 27
++ 8
+.dn_app 
+= 176 27
++ 8
+.dn_one 
+= 176 27
++ 8
+.dn_two 
+= 176 27
++ 9
+.dn_zero 
+= 176 27
++ 12
+.exists_coc 
+= 176 27
++ 19
+.neg_one_pow_smul' 
+= 176 27
++ 21
+.pi_succ_eq_zero_iff 
+= 176 27
++ 41
+.pi_zero_eq_zero_iff)
+end CompanionTheory
+@@ 204 5882 0
+
+== src/CompanionTheory/AutomorphicTheory/PadicCyclotomicFields/GcohDefs.lean 5ecc27af70fba99f1ef438ff095bdae723d3725d89cbcaf7513080bb2f2bb53e 073147ebc39760d7f5e2d3a4866b351d601d363b825cde3627bd050aa0a50366
+@@ 155 0 79
+import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohDefs
+
+@% 156 76 16
+= 233 25
++ 26
+
+export PositivityTheory (
+= 259 27
++ 6
+.Sgc0 
+= 259 27
++ 6
+.Sgc1 
+= 259 27
++ 6
+.Sgc2 
+= 259 27
++ 10
+.SgcField 
+= 259 27
++ 7
+.SgcMu 
+= 259 27
++ 8
+.SgcRep 
+= 259 27
++ 26
+.Sgcn)
+end CompanionTheory
+@@ 287 3104 0
+
+== src/CompanionTheory/AutomorphicTheory/PadicCyclotomicFields/GcohEuler.lean d7fa057cbe4df9a1c1b30e0e632ee96b70c7b33fa7bb327b443c712796e8df1e e0670ac8ab748d9aa989104eff3b07b3cd8c5cfa590ac0b0ebf329b08c4bca65
+@@ 161 0 80
+import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohEuler
+
+@% 162 76 6
+= 239 25
++ 26
+
+export PositivityTheory (
+= 265 27
++ 10
+.euler_of 
+= 265 27
++ 40
+.exists_card_eq_pow)
+end CompanionTheory
+@@ 293 1764 0
+
+== src/CompanionTheory/AutomorphicTheory/PadicCyclotomicFields/GcohField.lean 407f39588d8fec9e65fca8d38521487ebc164832b1b8c625981c9d4f28ee6e41 0cc9f83bca9dd7d1b63c2d6c73c33091e2f9285407b00c4b805cc16164922c9d
+@@ 236 0 80
+import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohField
+
+@% 237 76 10
+= 314 25
++ 26
+
+export PositivityTheory (
+= 340 27
++ 21
+.card_quotient_padic 
+= 340 27
++ 9
+.gcField 
+= 340 27
++ 18
+.integer_padic_eq 
+= 340 27
++ 40
+.isSepClosure_padic)
+end CompanionTheory
+@@ 368 1546 0
+
+== src/CompanionTheory/AutomorphicTheory/PadicCyclotomicFields/GcohMu.lean 8eb3df2d4d36f6ef04962401843cf259ca21aff25339349b23d9cd825c055905 2725d27b410c8da9ede9ccbeda6806dcb4ee3e04d15771eb6602a1f2440a6141
+@@ 72 0 77
+import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohMu
+
+@% 73 76 6
+= 150 25
++ 26
+
+export PositivityTheory (
+= 176 27
++ 10
+.cycKSpec 
+= 176 27
++ 26
+.gcMu)
+end CompanionTheory
+@@ 204 1295 0
+
+== src/CompanionTheory/AutomorphicTheory/PadicCyclotomicFields/GcohTate.lean 8f78cb6f2ad761a5b49c4179ba7f3111eafa1d6b1a24da076f7895b53155ab2f df75ca00aa182d785e2a3ba277405effdadeb37f3bc0e66cf48168799bbd7e7a
+@@ 73 0 79
+import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohTate
+
+@% 74 120 6
+= 195 25
++ 26
+
+export PositivityTheory (
+= 221 27
++ 11
+.tate_core 
+= 221 27
++ 29
+.tate_of)
+end CompanionTheory
+@@ 249 4099 0
+
+== src/CompanionTheory/AutomorphicTheory/PadicCyclotomicFields/GcohTateA.lean d448ee8e59802868c02917e84a46fbb442ec19ac804061a4bc2785d7d5006718 686a9feebebac2a63b1e20dba32d59824f8bf2a3f7c366fbddc3c71dd656febb
+@@ 72 0 80
+import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohTateA
+
+@% 73 93 10
+= 167 25
++ 26
+
+export PositivityTheory (
+= 193 27
++ 10
+.bij_flip 
+= 193 27
++ 15
+.bij_transport 
+= 193 27
++ 18
+.exists_dualEquiv 
+= 193 27
++ 32
+.nsmul_zmod)
+end CompanionTheory
+@@ 221 3868 0
+
+== src/CompanionTheory/AutomorphicTheory/PadicCyclotomicFields/GcohTateB.lean 99b9601271407c75e688967070f5f8afda7f72f6e791e75d1b787d565a67cd16 e5b4fb54480284e5140d18b7bb92d62dbb6dd89e15dcca4b3608c70a4d3e96c5
+@@ 73 0 80
+import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohTateB
+
+@% 74 93 13
+= 168 25
++ 26
+
+export PositivityTheory (
+= 194 27
++ 1
+.
+= 1733 28
+= 194 27
++ 1
+.
+= 3713 28
+= 194 27
++ 1
+.
+= 2702 28
+= 194 27
++ 41
+.exists_cocycle_zero)
+end CompanionTheory
+@@ 222 4518 0
+
+== src/CompanionTheory/AutomorphicTheory/PadicUnitaryWeights/DixmierMalliavin/DecompDirection.lean d1843a84c9ba35586f71a2a6f78ff90cf864b7ca03e703993d60d59267f33106 49a0d27399230140111b3557040ce88068e6129539b87c1ec465bc2754a453a7
+@@ 54 0 99
+import Development.WeilBound.CoreStatements.AbelianHeightsDuality.DixmierMalliavin.DecompDirection
+
+@% 55 0 2
+= 55 25
++ 110
+
+export PositivityTheory (DM.decomp_direction DM.decomp_iter DM.factor DM.smooth_density)
+end CompanionTheory
+
+@@ 84 12024 0
+
+== src/CompanionTheory/AutomorphicTheory/PadicUnitaryWeights/DixmierMalliavin/DixmierMalliavinFactorisationHolds.lean a79bb30aa5bb5bf5d8b38d365d8b923678e4764e796acd07d92a6e7c4b2b50a7 a60a497371671d7698b2131cc97c83701f87764559777fe1f10b082568d179fb
+@% 394 0 3
++ 82
+import Development.WeilBound.CoreStatements.AbelianHeightsDuality.DixmierMalliavin
+= 6421 30
++ 6
+Holds
+
+@% 395 0 4
+= 395 25
++ 26
+
+export PositivityTheory (
+= 6358 39
++ 69
+DM.exists_lie DM.factor_abs DM.mem_ccSmooth_iff)
+end CompanionTheory
+
+@@ 424 5861 0
+
+@@ 6309 715 0
+
 == src/CompanionTheory/AutomorphicTheory/PieriRules/HarishChandraFormalDegree.lean 3a7b5de51e77df1f142ddfc5a2109788882ff2f0cd1f008c4faa73b8aae25a58 eed699e0cc1eaca609fb395bb9ca6337088a41f7b4d16ef0b85ad0b53d81f8d2
 @% 1983 33 2
 = 708 37
@@ -295681,6 +295953,18 @@ GlobalTheory.RealPar.DerivedAdjoint.Jm_mul_Jm
  first | exact @_root_.GlobalTheory.CompanionTheory.CMAdele.eq_zero_of_piInf | exact _root_.GlobalTheory.CompanionTheory.CMAdele.eq_zero_of_piInf | (intros; apply _root_.GlobalTheory.CompanionTheory.CMAdele.eq_zero_of_piInf <;> assumption)
 @@ 9394 12 38
 GlobalTheory.AdelicU.exists_cm_conj_ne
+== src/Development/WeilBound/ThetaLifts/CartanFactorisation/EqOfInner.lean 12256ff5b7a8c3bc149656476694516da81c64594bd4b9e865ddc00bbfd95b95 5337a2846807ff772967a65d512df92f36138d74263a14cc7c196d4dc24eab50
+@@ 211 0 79
+import CompanionTheory.ThickeningEstimates.InnerProductFactorization.EqOfInner
+
+@% 213 146 2
+= 361 25
++ 339
+
+export CompanionTheory (ThKF.E.Impl ThKF.E.Impl.continuous ThKF.E.Impl.dRho ThKF.E.Impl.impl ThKF.E.Impl.inner ThKF.E.Impl.mk ThKF.E.Impl.norm ThKF.E.Impl.scalar ThKF.E.eq_of_inner ThKF.E.exists_exp ThKF.E.exists_lift ThKF.E.exists_ne_zero ThKF.E.exists_rho ThKF.E.lie ThKF.E.quad_mem ThKF.E.sympl_eq ThKF.E.toLp_rho)
+end PositivityTheory
+@@ 394 18153 0
+
 == src/Development/WeilBound/ThetaLifts/CartanFactorisation/FockSecondActionMatrixUnitEq.lean f5831b894b29a3bf1e94e0054434c28ac78f878b8a1037fba9df0e816d6317dd b5357e3c2fe5f1c0017434966e01e48421ab06f6afc097f6bee640f52674bf6a
 @@ 1655 58 68
  intros; apply _root_.PositivityTheory.RL.Jm_mul_self <;> assumption
@@ -296463,12 +296747,219 @@ by intros; apply _root_.
 = 1032 35
 + 14
 <;> assumption
+== src/Development/WeilBound/ThetaLifts/Reductions/HasDerivAtSchwartzToL2.lean 093d193338fc361572f5168c9dc7eacc227ca20e91fd6891922484960816e52b 87a27f243c2d438ae46b971cb5a1eed39135866798635f0cc40a2e28c2dead21
+@@ 59 0 84
+import CompanionTheory.ThickeningEstimates.LieGroupReduction.HasDerivAtSchwartzToL2
+
+@% 61 147 4
+= 210 25
++ 177
+
+export CompanionTheory (ThKR.LL.LD ThKR.LL.LD.const ThKR.LL.LD.differentiableAt ThKR.LL.LD.hasDerivAt ThKR.LL.LD.mul ThKR.LL.LD.smul ThKR.LL.csmul ThKR.LL.exists_decay ThKR.LL.
+= 754 26
++ 39
+ThKR.LL.weyl_step)
+end PositivityTheory
+@@ 244 8631 0
+
+== src/Development/WeilBound/ThetaLifts/Reductions/IsoOfIntegral.lean 325b2a04083de0791b8431fa97524bb6e731b13596737acaddb7193abb60ccf5 0c64d6ab806a96c47f94ce32f75cb6ce2e4d1534e15e1b9976fd0ffe6b7865cd
+@@ 74 0 75
+import CompanionTheory.ThickeningEstimates.LieGroupReduction.IsoOfIntegral
+
+@% 76 186 2
+= 264 25
++ 736
+
+export CompanionTheory (ThKR.LL.Eu ThKR.LL.Intw ThKR.LL.Intw.mul ThKR.LL.Intw.smul ThKR.LL.Iso ThKR.LL.Iso.mul ThKR.LL.big ThKR.LL.big_one ThKR.LL.dil ThKR.LL.dil_apply ThKR.LL.dil_mul ThKR.LL.dil_one ThKR.LL.fou ThKR.LL.fouInv ThKR.LL.fouInv_apply ThKR.LL.fouInv_mul_fou ThKR.LL.fou_apply ThKR.LL.fou_mul_fouInv ThKR.LL.intw_big ThKR.LL.intw_dil ThKR.LL.intw_fou ThKR.LL.intw_fouInv ThKR.LL.intw_ph ThKR.LL.isUnit_big ThKR.LL.isUnit_dil ThKR.LL.isUnit_fou ThKR.LL.isUnit_fouInv ThKR.LL.isUnit_ph ThKR.LL.iso_big ThKR.LL.iso_dil ThKR.LL.iso_fou ThKR.LL.iso_fouInv ThKR.LL.iso_of_integral ThKR.LL.iso_ph ThKR.LL.ph ThKR.LL.ph_apply ThKR.LL.ph_mul ThKR.LL.ph_zero ThKR.LL.rf ThKR.LL.rhoFun_eq ThKR.LL.temperate_quad)
+end PositivityTheory
+@@ 298 9602 0
+
 == src/Development/WeilBound/ThetaLifts/Reductions/LocalPoly.lean 997e1011a03832df167ca269e58e61ef28627c25dd8c4d7ce7f18bdadc2aae87 dead6880f57b2164aac75e0c8c9673032ea5d297c5580a309db360ebf57d0b80
 @@ 105 0 84
 import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IntertwineAeval
 
 @@ 656 364 215
  first | exact @_root_.GlobalTheory.IntertwineAeval.intertwine_aeval | exact _root_.GlobalTheory.IntertwineAeval.intertwine_aeval | (intros; apply _root_.GlobalTheory.IntertwineAeval.intertwine_aeval <;> assumption)
+== src/Development/WeilBound/ThetaLifts/Reductions/MetaplecticDerivatives/ContinuousPair.lean 6bd036ef3b4222bb97db1a1887efdba09f36bd010289f6f39cca458b3b0377f0 3ffd93656437bb5dbde4ad2ad3742f79a7a2068a1d802561971114d2baad34a2
+@% 61 0 3
++ 61
+import CompanionTheory.ThickeningEstimates.LieGroupReduction.
+= 7389 25
++ 14
+.ContinuousOm
+
+@% 63 181 4
+= 246 25
++ 584
+
+export CompanionTheory (ThKR.Mp.Amb ThKR.Mp.Ann ThKR.Mp.Ann.map ThKR.Mp.Cover ThKR.Mp.DdNe ThKR.Mp.G ThKR.Mp.Ker ThKR.Mp.Mat ThKR.Mp.Mem ThKR.Mp.Mem.compat ThKR.Mp.Mem.dRho ThKR.Mp.Mem.mk ThKR.Mp.Mem.nrm ThKR.Mp.Mem.rho ThKR.Mp.MkElt ThKR.Mp.NearOne ThKR.Mp.Nrm ThKR.Mp.NrmUp ThKR.Mp.OnePar ThKR.Mp.Qd ThKR.Mp.SecDer ThKR.Mp.SecEx ThKR.Mp.Smooth ThKR.Mp.Sp ThKR.Mp.Surj ThKR.Mp.TopG ThKR.Mp.continuous_om ThKR.Mp.continuous_pair ThKR.Mp.continuous_pr ThKR.Mp.dd ThKR.Mp.loQ ThKR.Mp.mem ThKR.Mp.om ThKR.Mp.omS ThKR.Mp.omS_dRho ThKR.Mp.omS_nrm ThKR.Mp.om_rho ThKR.Mp.om_sch ThKR.Mp.pr 
+= 7181 33
++ 69
+ ThKR.Mp.sec ThKR.Mp.sub ThKR.Mp.upperParabolic)
+end PositivityTheory
+@@ 280 6846 0
+
+@@ 7156 466 0
+
+== src/Development/WeilBound/ThetaLifts/Reductions/MetaplecticDerivatives/ContinuousTo.lean 7dac93433b1422d6afa1c6bc11ebec6298877f77d764c786f3c71b59d6dc68bf 60c3c23e08e8d37491b4b4626f137507216c2e70b1a49ed1bb39bffe89df5a37
+@@ 150 0 100
+import CompanionTheory.ThickeningEstimates.LieGroupReduction.MetaplecticRepresentation.ContinuousTo
+
+@% 152 20 8
+= 345 25
++ 495
+
+export CompanionTheory (ThKR.Mp.MpA.G_ext ThKR.Mp.MpA.ann_gs ThKR.Mp.MpA.continuous_to ThKR.Mp.MpA.dd_one ThKR.Mp.MpA.dense_sch ThKR.Mp.MpA.eps ThKR.Mp.MpA.eps_mem ThKR.Mp.MpA.eps_ne ThKR.Mp.MpA.ext ThKR.Mp.MpA.ext_sch ThKR.Mp.MpA.fderiv_gs ThKR.Mp.MpA.gs ThKR.Mp.MpA.gs_zero ThKR.Mp.MpA.omS_eps ThKR.Mp.MpA.om_cont2 ThKR.Mp.MpA.om_eps ThKR.Mp.MpA.om_mul ThKR.Mp.MpA.om_of_omS ThKR.Mp.MpA.pr_eps ThKR.Mp.MpA.sp_inv ThKR.Mp.MpA.sp_mul ThKR.Mp.ker ThKR.Mp.mkElt ThKR.Mp.topG)
+end PositivityTheory
+= 343 36
+= 10089 29
+= 344 34
++ 4
+.MpA
+= 10088 29
++ 4
+.MpA
+@@ 174 9950 0
+
+== src/Development/WeilBound/ThetaLifts/Reductions/MetaplecticDerivatives/HasFDerivAtOfCurves.lean 41b0c1b75653ba3e8eb01a9e76831143928a23f70fadbf727035b1c14a750807 ceb83c1eb6c3d1d0973e363c158977f847596ec3160a41b1e56d67cb951cec24
+@@ 81 0 107
+import CompanionTheory.ThickeningEstimates.LieGroupReduction.MetaplecticRepresentation.HasFDerivAtOfCurves
+
+@% 83 181 4
+= 266 25
++ 82
+
+export CompanionTheory (ThKR.Mp.MpG.curve ThKR.Mp.MpG.hasDerivAt_det_one ThKR.Mp.
+= 7947 26
++ 36
+ThKR.Mp.secDer)
+end PositivityTheory
+@@ 304 7066 0
+
+@@ 7403 1 0
+
+@@ 7439 1117 0
+
+@@ 8586 5 0
+
+== src/Development/WeilBound/ThetaLifts/Reductions/MetaplecticDerivatives/HasFDerivAtOrb.lean 975f28ea24de73d1be5626546274d955f3388eb594f82bf2b5b09f548f900ddb d67d80c87e0b2dcafbc42c77c082b7944f6152428cf943ebcd558dd2c2dc32d0
+@@ 81 0 102
+import CompanionTheory.ThickeningEstimates.LieGroupReduction.MetaplecticRepresentation.HasFDerivAtOrb
+
+@% 83 181 2
+= 266 25
++ 131
+
+export CompanionTheory (ThKR.Mp.contDiff_dm ThKR.Mp.dm ThKR.Mp.hasFDerivAt_orb ThKR.Mp.orb ThKR.Mp.smooth_of)
+end PositivityTheory
+@@ 300 4729 0
+
+== src/Development/WeilBound/ThetaLifts/Reductions/MetaplecticDerivatives/MapOfRealMul.lean 2c98f92816b7696ef323a517f378eb8d06724c79e4a328194a022d8ae931a20c 36dc7e60271690346ba87ece6575bd8af1b2d42b2dbb32f1d108cd0034a86c99
+@@ 89 0 100
+import CompanionTheory.ThickeningEstimates.LieGroupReduction.MetaplecticRepresentation.MapOfRealMul
+
+@% 91 20 8
+= 265 25
++ 363
+
+export CompanionTheory (ThKR.Mp.C.blocks_symm ThKR.Mp.C.dd_mul_eq ThKR.Mp.C.det_map_ofReal ThKR.Mp.C.exists_det_ne ThKR.Mp.C.isSymm_inv_mul ThKR.Mp.C.lo ThKR.Mp.C.lo_mem ThKR.Mp.C.lo_mul ThKR.Mp.C.map_ofReal_mul ThKR.Mp.C.sec_apply_zero ThKR.Mp.C.sympl_sp ThKR.Mp.C.toBlocks₁₁_mul_lo ThKR.Mp.C.upperPart_mul ThKR.Mp.secEx_of ThKR.Mp.surj_of)
+end PositivityTheory
+= 263 36
+= 10523 29
+= 264 34
++ 2
+.C
+= 10522 29
++ 2
+.C
+@@ 113 10440 0
+
+== src/Development/WeilBound/ThetaLifts/Reductions/MetaplecticDerivatives/MetaplecticGroupT2Space.lean 16a3c42159a1f09d1ad5e5bef8158c16ce675fd257624a72c1e9ead7fd5d81af 2b1b8dbeb4af32336f6cf1e23d6d584242ca5e15f8ebae60694b9777a31368b8
+@@ 89 0 111
+import CompanionTheory.ThickeningEstimates.LieGroupReduction.MetaplecticRepresentation.MetaplecticGroupT2Space
+
+@% 91 20 10
+= 274 25
++ 152
+
+export CompanionTheory (ThKR.Mp.MpE.eventually_det_pos ThKR.Mp.MpE.eventually_det_pos_G ThKR.Mp.MpE.exists_sch_ne ThKR.Mp.MpE.isInducing_F ThKR.Mp.MpE.
+= 5362 26
++ 129
+ThKR.Mp.MpE.sec_one ThKR.Mp.MpE.tendsto_sec ThKR.Mp.MpE.toBlocks₁₁_one' ThKR.Mp.cover_of ThKR.Mp.nearOne_of)
+end PositivityTheory
+= 272 36
+= 9249 29
+= 273 34
++ 4
+.MpE
+= 9248 29
++ 4
+.MpE
+@@ 113 9166 0
+
+== src/Development/WeilBound/ThetaLifts/Reductions/MetaplecticDerivatives/MetaplecticUnipotentBlockSecondDiag.lean a370a5f428b50abadef01b5230ed1ffdddc43244e82197d4ce604c2792870006 7d3f78fc8ea01c66504299ca625bfd4841177849ce5a3f6f15e01b8ba4320582
+@@ 89 0 123
+import CompanionTheory.ThickeningEstimates.LieGroupReduction.MetaplecticRepresentation.MetaplecticUnipotentBlockSecondDiag
+
+@% 91 221 10
+= 314 25
++ 326
+
+export CompanionTheory (ThKR.Mp.J_mul_transpose_inl ThKR.Mp.J_mul_transpose_inr ThKR.Mp.UU ThKR.Mp.UU_dRho ThKR.Mp.UU_zero ThKR.Mp.dRho_eval_zero ThKR.Mp.ddNe ThKR.Mp.fou_zero ThKR.Mp.hasDerivAt_UU ThKR.Mp.hasDerivAt_det ThKR.Mp.hess ThKR.Mp.impl_UU ThKR.Mp.inner_sym ThKR.Mp.intw_UU ThKR.Mp.isUnit_UU ThKR.Mp.loQ_nn ThKR.Mp.
+= 5368 39
++ 8
+ThKR.Mp.
+= 5760 34
++ 8
+ThKR.Mp.
+= 5902 40
++ 8
+ThKR.Mp.
+= 5533 34
++ 142
+ThKR.Mp.nn ThKR.Mp.nn_mem ThKR.Mp.nrmUp ThKR.Mp.sp_rel ThKR.Mp.tc_apply ThKR.Mp.trace_eq ThKR.Mp.upperPart_unipotent_mul)
+end PositivityTheory
+@@ 348 18196 0
+
+== src/Development/WeilBound/ThetaLifts/Reductions/MetaplecticDerivatives/MpFOne.lean b3bede722922404c65af2146b554a7288170a73ef4b2af1fbac951d3d4d564c4 975ac7bd716ecce0e44c286b0eb9cbb54d0d802bcc49a50490cdc627f0699774
+@@ 89 0 94
+import CompanionTheory.ThickeningEstimates.LieGroupReduction.MetaplecticRepresentation.MpFOne
+
+@% 91 203 2
+= 296 25
++ 178
+
+export CompanionTheory (ThKR.Mp.exp_mem_sp ThKR.Mp.mq_add' ThKR.Mp.mq_smul' ThKR.Mp.onePar_of ThKR.Mp.qdLin ThKR.Mp.qd_sum ThKR.Mp.vf_add' ThKR.Mp.vf_smul')
+end PositivityTheory
+@@ 330 5853 0
+
+== src/Development/WeilBound/ThetaLifts/Reductions/MetaplecticDerivatives/RealMetaplecticRepresentationHolds.lean ef29284cd565a7ccc5650e5877c44523d05d1dc86087581d89e587d0d732808e 3b42b726a7510bf19a47b182c884f3dd13603f69f15fe2e0699d1970f7218a69
+@% 565 0 4
++ 61
+import CompanionTheory.ThickeningEstimates.LieGroupReduction.
+= 633 25
+= 689 30
++ 6
+Holds
+
+@@ 566 33 0
+
+@% 725 313 2
++ 9
+Companion
+= 617 47
+== src/Development/WeilBound/ThetaLifts/Reductions/NormExpSubLe.lean 25f5da00b002fadeacecdfc89b41241a4cf78c2d56a4d8df10bee0ad3d2a944a 25b262f58b48b14684db97ff46a74a9a97817936069c7378d785edcf68751acc
+@@ 65 0 74
+import CompanionTheory.ThickeningEstimates.LieGroupReduction.NormExpSubLe
+
+@% 67 186 2
+= 255 25
++ 208
+
+export CompanionTheory (ThKR.LL.exists_lip ThKR.LL.ld_big ThKR.LL.ld_dil ThKR.LL.ld_dil_one ThKR.LL.ld_ph ThKR.LL.mq ThKR.LL.mq_apply ThKR.LL.norm_exp_sub_le ThKR.LL.vf ThKR.LL.vf_apply)
+end PositivityTheory
+@@ 289 7197 0
+
 == src/Development/WeilBound/ThetaLifts/Reductions/SiegelAbs.lean a3936e838fa6d013797b103af80caf53403df4bcd713c8970877253a7cce7909 ebaf687562bb96ed8eeb2760a912abed58fc7b9d0b8cfa84fb075c08bc879caa
 @@ 3594 156 66
  intros; apply _root_.GlobalTheory.Doubling.hom_pos <;> assumption
