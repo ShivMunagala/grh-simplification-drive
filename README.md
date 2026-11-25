@@ -31,7 +31,7 @@ One point per recorded change, placed at the time of its commit.
 | Written-out proof size (term nodes) | 2,789,304,299 | 2,620,263,376 | −169,040,923 |
 | Time (CPU seconds on recompiled files, running total) | 0.0 | -5,178.5 | −5,178.5 |
 
-Cone: 1,203,147 declarations in 111,766 files. Recorded changes: 63. Latest row: Siegel separation lemmas proved from their generic forms (13 files) [review] (2026-11-25 16:57 UTC).
+Cone: 1,203,147 declarations in 111,766 files. Recorded changes: 64. Latest row: Delete 22 files that Main.lean no longer imports (2026-11-25 17:06 UTC).
 <!-- dials:end -->
 
 ## Milestones

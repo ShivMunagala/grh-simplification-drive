@@ -350134,69 +350134,6 @@ l, hl, h0⟩ := hyO.2
 = 406 48
 + 25
 .Deg2.exists_normal_index
-== src/ReciprocityTheory/ClassFieldTheory/LocalClassField/Existence.lean adb77763442bdd54248773ecf6b0da54f226823855bbfbb394acd7f02df4a7b7 0b190f6f64f858571555ff9e1f1dbb64041b8e4a261b334d6f763e2c2aae8c01
-@% 2340 9 2
-= 583 48
-+ 17
-.card_character_n
-@% 2434 21 2
-= 583 48
-+ 23
-.finiteIndex_range_pow'
-@% 3279 38 3
-+ 25
- by intros; apply _root_.
-= 583 48
-+ 36
-.RecCyc.exists_ofK_eq <;> assumption
-@% 3369 250 3
-+ 22
- intros; apply _root_.
-= 583 48
-+ 29
-.ofK_injective <;> assumption
-@% 3973 17 3
-= 583 48
-+ 1
-.
-= 2920 30
-@% 4289 57 6
-= 583 48
-+ 1
-.
-= 976 30
-+ 13
-]
-    exact (
-= 583 48
-+ 23
-.finiteIndex_range_pow'
-@% 4573 6 3
-= 583 48
-+ 1
-.
-= 1588 26
-@% 4725 22 3
-= 583 48
-+ 1
-.
-= 3136 27
-@% 4967 81 5
-= 583 48
-+ 27
-.normHom_comp_normHom_of_le
-= 4980 53
-= 583 48
-+ 21
-.RecCyc.exists_ofK_eq
-@% 5255 15 2
-= 583 48
-+ 21
-.RecCyc.exists_ofK_eq
-@% 5401 14 2
-= 583 48
-+ 14
-.ofK_injective
 == src/ReciprocityTheory/ClassFieldTheory/LocalClassField/ExistsDvdQKPowSubOne.lean 8849af35c09850de680a3d4116ac15c0e5aacf616a3925b7df2c4c5d48925c64 a0d3b7c8863a111116140a1fb7474cd28cb62600d79300920d5f84661be5286a
 @% 5483 0 2
 = 352 48
@@ -350232,48 +350169,6 @@ l, hl, h0⟩ := hyO.2
 ReciprocityTheory.Coh.Cx.mem_B_succ
 @@ 3435 4 35
 ReciprocityTheory.Coh.Cx.mem_B_succ
-== src/ReciprocityTheory/ClassFieldTheory/LocalClassField/Kummer.lean be5e3c1417987ebeff2429bb0438b6d00322064bd29b036b3c9f6b157a90f63f 32d5e91fffc65cac6e0429611dd4e9cdf7b89618fbb718ab0a2951fd430b59cf
-@@ 5056 114 0
-
-== src/ReciprocityTheory/ClassFieldTheory/LocalClassField/NormLimit.lean 8439bc2dae795ed7e3f5d5bad76225a27f6e299ae3d8b957024b464359d8ef54 828ff94e821114e2ba27932b180055cb9780ea2334b8b2d8625b4fe962c366af
-@% 4948 257 3
-+ 22
- intros; apply _root_.
-= 275 48
-+ 36
-.RecCyc.exists_ofK_eq <;> assumption
-@% 6356 16 2
-= 275 48
-+ 21
-.RecCyc.exists_ofK_eq
-@% 6568 57 5
-= 275 48
-+ 27
-.normHom_comp_normHom_of_le
-= 6581 31
-= 275 48
-+ 27
-.normHom_comp_normHom_of_le
-@% 9747 12 2
-= 275 48
-+ 19
-.normGroup_antitone
-@% 10141 16 2
-= 275 48
-+ 21
-.RecCyc.exists_ofK_eq
-@% 10372 13 2
-= 275 48
-+ 27
-.normHom_comp_normHom_of_le
-@% 10955 16 2
-= 275 48
-+ 21
-.RecCyc.exists_ofK_eq
-@% 11880 13 2
-= 275 48
-+ 27
-.normHom_comp_normHom_of_le
 == src/ReciprocityTheory/ClassFieldTheory/LocalClassField/NormOpen.lean 40b44de5211d882200a3a2e795b3275897baff30626b748888785290e25b9266 cef512fb2e62e57ffc7356f73df338d24d64f82be5fa3f1a01ea774694a6d059
 @% 2282 20 2
 = 295 48
@@ -350293,38 +350188,6 @@ import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EmbeddingClo
 GlobalTheory.CoefEmbed.norm_prime
 @% 7088 19 1
 = 6533 25
-== src/ReciprocityTheory/ClassFieldTheory/LocalClassField/PairKEqZeroOfMemNormGrp.lean b2ff0dab57927613c17fe8330c985fa062e7b5a63ecb18a71921604d89bea3a0 9212d9776ed30b45492f4eb580ea3f2d1d9fbbdcd6befd4b97aa27b283f26644
-@% 4664 12 2
-= 624 48
-+ 22
-.normGroup_self_eq_top
-== src/ReciprocityTheory/ClassFieldTheory/LocalClassField/RecAbC.lean 2bf88deb598f30fe98e452cff63be82e62fb2e8fd493316173e1317768a9f6f3 4ba0c300922ca64720822db1799e0321f192eba17fc8ef953e4f1448c4c6ab0f
-@% 1088 239 3
-+ 22
- intros; apply _root_.
-= 429 48
-+ 36
-.RecCyc.exists_ofK_eq <;> assumption
-@% 1542 0 2
-= 429 48
-+ 8
-.RecCyc.
-@% 2036 0 2
-= 429 48
-+ 8
-.RecCyc.
-@% 2917 0 2
-= 429 48
-+ 8
-.RecCyc.
-@% 3113 13 2
-= 429 48
-+ 27
-.normHom_comp_normHom_of_le
-@% 3267 13 2
-= 429 48
-+ 27
-.normHom_comp_normHom_of_le
 == src/ReciprocityTheory/ClassFieldTheory/LocalClassField/RecCyclicA.lean 431c617bff9222ef160bc9152a9e2c258c6196352c8ef828768390cc8b28d53d 6e05f9a33f27a48e15eb26b16cd4678874aed36558fa098e65510e3501e916d4
 @% 2001 354 3
 + 22
@@ -350336,25 +350199,6 @@ defect_isLocallyConstant <;> assumption
 = 380 49
 + 23
 defect_isLocallyConstan
-== src/ReciprocityTheory/ClassFieldTheory/LocalClassField/TransportBB.lean 5d623c9f98974a5390c4ee1388e16a44de25b1c3da71ee1aca592b0caf052737 c55ee7ca1658637c2b099557c374ad49534667f485879a99e107d28c7fe2d77d
-@@ 85 0 89
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousOfForallExistsFix
-
-@@ 465 933 289
- first | exact @_root_.GlobalTheory.ContinuityFromFixedPoints.continuous_of_forall_exists_fix | exact _root_.GlobalTheory.ContinuityFromFixedPoints.continuous_of_forall_exists_fix | (intros; apply _root_.GlobalTheory.ContinuityFromFixedPoints.continuous_of_forall_exists_fix <;> assumption
-@@ 4994 17 66
-GlobalTheory.ContinuityFromFixedPoints.continuous_of_forall_exists
-@@ 5211 17 66
-GlobalTheory.ContinuityFromFixedPoints.continuous_of_forall_exists
-== src/ReciprocityTheory/ClassFieldTheory/LocalClassField/TransportBC.lean 5a7d6c1bfbe632043cbb5266a0b72feb0bdd1b51676d9b1f5f03a41eb0764289 1fbd59c374af2be2769bb0d4a1a82bc7ccbacd8f975f87cf266e1372a25423f1
-@% 7033 19 2
-= 228 48
-+ 21
-.normHom_eq_algebra_n
-@% 7629 19 2
-= 228 48
-+ 21
-.normHom_eq_algebra_n
 == src/ReciprocityTheory/ClassFieldTheory/LocalClassField/UnitsCT.lean d62eeae6e99699a35cc811aade54beb79beb50be808c98a64060cf1ada9b76af d73a1c89bef752d743d7e13b86860417be22fa5d93a71aa843a412839c772545
 @% 10660 16 2
 = 689 48

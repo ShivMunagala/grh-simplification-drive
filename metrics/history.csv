@@ -63,3 +63,4 @@ time,proof_commit,label,source_tokens,written_out_size,time_cpu_s,cone_declarati
 2026-11-23T19:38:26Z,502060312c,Siegel-Weil development and its copy: 23 more twin theorems share one proof (38 files),172808569,2621798750,-4989.5,1203614,111795
 2026-11-24T00:11:43Z,fe26bce3c8,Files that were copies of another file under another root namespace point at the original (24 files) [review],172764319,2620941780,-5168.6,1203203,111772
 2026-11-25T16:57:16Z,a191344f5a,Siegel separation lemmas proved from their generic forms (13 files) [review],172740439,2620263376,-5178.5,1203147,111766
+2026-11-25T17:06:59Z,62fbef817c,Delete 22 files that Main.lean no longer imports,172740439,2620263376,-5178.5,1203147,111766
