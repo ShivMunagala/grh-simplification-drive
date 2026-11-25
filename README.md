@@ -68,6 +68,19 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
   Change 61: 23 more twin theorems of the Siegel–Weil development and its copy share a proof.
 - **2026-11-24.** Change 62: 24 files that were copies of another file under another root namespace now import
   it and keep their names as aliases. Measured: 254 needed files in 127 groups are such copies (0.20% of the proof).
+  Merge of 104 more groups prepared (0.10%); not recorded, each step needs hundreds of downstream checks.
+- **2026-11-25.** Mathematics, eight studies of the argument itself; no large shortcut, and the reasons why.
+  Known results are 8.4% of the proof at baseline and 8.3% now; the rest is on top of them.
+  The top level (frame theorem, counting inequality, Landau step) is already minimal: the frame theorem has a
+  25-line proof on paper with the same constants. The chain of lifts runs on definite groups with the explicit
+  theory of one CM elliptic curve; one local theorem on formal groups of height 2 gives the gain at inert primes
+  and the twist exponent together. The heavy geometry (toroidal compactifications, heights, p-adic Hodge theory,
+  Galois representations) is consumed on the other side: interlacing forces the comparison spaces onto unitary
+  groups of signature (k+j−1, m−j), and all of it serves the division step. About a quarter of the proof exists
+  only for that step; without the twist the chain proves nothing at the archive's parameters. The four blocks
+  that pay for it bound different pieces of one number (a local discriminant of the lattice of integral forms),
+  and no cheaper bound was found. Candidates left: building each family member in one pass (about 1%),
+  one argument for the Siegel and unitary Poincaré-series developments (0.2%).
 
 ## Fixed
 
