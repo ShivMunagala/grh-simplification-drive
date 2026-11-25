@@ -37491,15 +37491,15 @@ alias
 = 1828 24
 + 13
 Tower.div_lam
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/DividingThetaConstantsGenerateIntegralTorsionLab.lean 3248e24b38d1ffb681663bd7ff09bab8a0c54c0a72239b011ae5ddacb4a96d4a 91e20a026302cf290e1851227d12680e374f26b3f8b58d4405c7451bfa476b58
-@@ 6956 51 23
-Poinc.Sep.Labels.yy_hom
-@% 8608 184 3
-+ 39
-Poinc.Sep.DivInt.label_zero_of_mem_supI
-= 8661 74
-+ 44
-Poinc.Sep.TorTrans.exists_translate_mem_supI
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/DividingThetaConstantsGenerateIntegralTorsionLab.lean 3248e24b38d1ffb681663bd7ff09bab8a0c54c0a72239b011ae5ddacb4a96d4a 74a9818085037d23b5a4ebc5a521108960cd496db76127fd35d878d602610dc2
+@% 500 0 2
+= 150 61
++ 30
+MemDividingLabelsIffClassZero
+
+@@ 6886 1958 153
+1 V _ _ _ ev X _ m t δ 𝔪
+  exact GlobalTheory.GSep.mem_HH_iff_yy_zero _ (GlobalTheory.GSep.ofSetup X₁) z₁ _ x₀ h1 _ ev _ _ _ (GlobalTheory.GSep.ofUMem 𝔪)
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/DivisionPointCharactersGaloisFixedOfRationalBase.lean d578776b122947716f25d31c8e8b7a9037622a0735331ba17698bf077bc2eabe 0db66950d6ca848af880a948808ca695f86eaf07244a1cd7702033d2dd60a204
 @@ 3050 46 25
 Mum.EDiv.exists_fixed_roo
@@ -49071,36 +49071,15 @@ VeryAmplePow.isUnit_sval
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsMemRightTranslateMemIdentityComponent.lean d4ae546ec09d69bfe6b6e9953cced0cde0791909d2d6ebf1aefd851dd03865b4 e8a93f785eec35f501f59d6a50d5bc10a54cfee0d2ad8503f67689ab6b0b1f9b
 @@ 943 54 57
 isOpen_and_isIrreducible_sectionComponent_of_smooth_field
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsMemberTermsIntegralUnitShift.lean c17cabccccbdca175a44bdeada2e4c90805dd494238389964f4e808d53b8a8c5 e118a4fff867f8356a329a389e7a208913d54a6f4cd36be3a57d6929c137d958
-@% 5002 179 4
-+ 13
-Poinc.IntTerm
-= 5003 27
-= 5057 78
-+ 30
-Poinc.IntTerm.unit_ne_zero_dvd
-@@ 5420 54 35
-Poinc.IntTerm.FrameInt.exists_frRel
-@@ 6568 50 19
-Poinc.TorsLift.lift
-@@ 6893 45 30
-Poinc.IntEval.eval_at_integral
-@% 7705 369 6
-+ 30
-Poinc.IntTerm.exhausts_of_gene
-= 7748 153
-+ 31
-Poinc.IntTerm.torsion_lies_unde
-= 5473 30
-= 7986 45
-+ 21
-Poinc.IntTerm.torsion
-@@ 8576 38 31
-Poinc.IntTerm.term_eq_const_psi
-@@ 8843 43 31
-Poinc.IntTerm.exists_unitAt_mul
-@@ 9381 45 23
-Poinc.AdicTerm.sumF_mul
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsMemberTermsIntegralUnitShift.lean c17cabccccbdca175a44bdeada2e4c90805dd494238389964f4e808d53b8a8c5 d09ee13a81480db5e1987ebdef80db75f478f0f957e6d70e4f133fa96266c265
+@% 2012 0 2
+= 1327 62
++ 39
+hetaMemberExistsIntegralTermsUnitShift
+
+@@ 4574 6563 155
+1 V _ _ _ ev X _ m t δ 𝔪
+  exact GlobalTheory.GSep.IntTerm.exists_terms _ (GlobalTheory.GSep.ofSetup X₁) z₁ _ x₀ h1 _ ev _ _ _ (GlobalTheory.GSep.ofUMem 𝔪)
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsMetricShiftIsNefPowTensAmple.lean 1f86414badf8c6939299078485b338c90a32e0c723f5a5a73e963858431392ee 6e7af721a084724ff614ed0bb173b9b027accde04a8a4647cbc7c311fe38b1d1
 @% 1671 278 5
 + 31
@@ -50384,6 +50363,18 @@ UCanon.exists_taut_through
 ProductAcyclic.acyclic_of_over_affine_and_converse
 @@ 4888 51 50
 ProductAcyclic.acyclic_of_over_affine_and_converse
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsPointsFramesThetaSectionGenericFibreMember.lean 24076305cae40f0af6a9852b704cc47e10b13111cd009d5f8197270b7d42bb35 add7127409386e43e65c730dda04dfb1d8525af3b9cb38de4edc251b53bdc944
+@% 197 0 2
+= 15 67
++ 31
+PointsFramesThetaSectionMember
+
+@% 2046 2246 3
++ 24
+exact GlobalTheory.GSep.
+= 930 27
++ 76
+_ (GlobalTheory.GSep.ofSetup X₁) z₁ _ _ ev _ _ _ (GlobalTheory.GSep.ofUMem 𝔪
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsPointsTranslationFamilyChartsThickenings.lean a6ee3a4ee8ca8b4ad8dae52bb7e652bb76abe35304ce9055571db0a60847cf69 2af3264b47bcc0398732ff4c36d4a6c32d0aeb20213eeb9951d966453bd333c3
 @@ 1922 41 31
 AnPer.exists_tensorLift_of_DObj
@@ -53182,9 +53173,15 @@ Mum.tensPsi_exis
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsTermNonzeroClosed.lean 927250af400185d08e08c824212e0f75a5b92ab6878f179c7058765d00ed62a6 5dfcb5315c6f60f226d0c3f0ecb3644fe68d59e49923a5fe19a2258c1308c4af
 @@ 1408 105 83
 hsurj, -, hterm⟩ := (GlobalTheory.Mum.ext_smooth_affine_surj_terms R D.toPre Y).2.2
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsTermsDividingLabelGroupMember.lean 697eb99d3537010839ae3315266470225f3348b2a66dde01db1afa7c6a75998d a267d836f60ab42420eb414bedc1b21928a69e5ed3dfc2664d10f8d10bfb87f1
-@@ 1789 41 26
-Poinc.IntTerm.exists_terms
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsTermsDividingLabelGroupMember.lean 697eb99d3537010839ae3315266470225f3348b2a66dde01db1afa7c6a75998d 69a6742ed6aad0ca892b41e1989d2bad49adbc5d60b4e0e4b6e52f515bab2426
+@% 268 0 2
+= 15 61
++ 41
+ThetaMemberExistsTermsDividingGroupLabel
+
+@@ 1660 448 163
+1 V1 _ _ _ ev1 Y1 _ m1 t1 δ1 𝔪1
+  exact GlobalTheory.GSep.exists_terms_single _ (GlobalTheory.GSep.ofSetup X₁) z₁ _ x₀ h1 _ ev1 _ _ _ (GlobalTheory.GSep.ofUMem 𝔪1)
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsTermsMumfordFormalSectionTranslates.lean 8c87c0d44565027f7f78ee44e083afe9759504002c448aa790041cb920f9895c 2b30b47f474c9476b675aa5d82360412b0e9b4654e395145e284b6babda8bd00
 @% 4199 158 3
 + 20
@@ -53984,6 +53981,34 @@ TanMod
 TanMod
 @@ 11500 27 25
 orusPart.extend_torus_hom
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsTorusTorsionPointOfLabelOrthogonal.lean 53997b4930fa303ac6fccdbbdd9543184b1d5a48f58b1935ba4c7b76ec1738c5 16e72d8b9b40f4eb42b6cf17befa49ba2c53e52bd73db7dd534b4237aeecbb12
+@% 15 0 2
+= 15 67
++ 35
+TorusCharOfLabelOrthogonalDividing
+
+@% 2718 721 3
++ 6
+
+  fun
+= 2729 46
++ 121
+=> GlobalTheory.GSep.TorPt.torus_label_over _ (GlobalTheory.GSep.ofSetup X₁) z₁ _ V ev _ _ _ (GlobalTheory.GSep.ofUMem 𝔪)
+@% 3441 5792 4
+= 7013 621
++ 6
+
+  fun
+= 2729 46
++ 115
+=> GlobalTheory.GSep.TorPt.labels_hom _ (GlobalTheory.GSep.ofSetup X₁) z₁ _ V ev _ _ _ (GlobalTheory.GSep.ofUMem 𝔪)
+@% 10213 4786 3
++ 6
+
+  fun
+= 2729 46
++ 122
+=> GlobalTheory.GSep.TorPt.exists_torus_char _ (GlobalTheory.GSep.ofSetup X₁) z₁ _ V ev _ _ _ (GlobalTheory.GSep.ofUMem 𝔪)
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsTotalExponentTopWeightBound.lean 09c634a6e0bf2fed6c6d7f2513d531076b6b1a2e5a379c338d7875c959a61358 f04033b696236ec028c61fed2aa8ce1988571642d4cd0089b39aefc1b8f7493d
 @@ 7674 56 129
 have hz0 := And.intro hS.2.2.2.2.2.2.2.2.2.2.2.1 hS.2.2.2.2.2.2.2.2.2.2.2.2.1
@@ -55879,6 +55904,15 @@ JSW.Orbit.isClopen_orbit
 @@ 5122 85 151
 GlobalTheory.Unif.PolyStep.gs_stalkMap β (𝟙 X) z _ hk, GlobalTheory.Unif.PolyStep.gs_stalkMap β (𝟙 X) z _ hk,
     GlobalTheory.Unif.PolyStep.gs_stalkMa
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsYy.lean ad3058468d2194cc5f14ba2d26a3e47544dd6ae69fb26c19d6de1f4a0837c80d fa55d4fdbe6bb6815bcbddd80d9a49292942a25bae35ff5d0870c2073868b23c
+@% 163 0 2
+= 15 67
++ 6
+YyAlt
+
+@@ 1423 1614 119
+
+  exact GlobalTheory.GSep.GMem.exists_yy _ (GlobalTheory.GSep.ofSetup X₁) z₁ _ _ ev _ _ _ (GlobalTheory.GSep.ofUMem 𝔪)
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsZarhinObject.lean 81d3682c8ea8f4b4d4a0e24174f4680c1001d55277d067bdd88cbaaf07e96fe9 67c6900049f4db9a8871312ff6c0074603e71eeecad996f71207eeaf3267065c
 @@ 2101 33 24
 ZarhinFam.exists_kappaOK
@@ -60347,6 +60381,15 @@ USep.thetaConst_eq_lam_root_mul
 + 6
 ValExt
 = 2012 28
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/GeometricTorsionPointGenericFibreMemberHasLabel.lean b9c8af8cf86faa1f544e8e14591b62b0359e5669ad6da5fee8cdf72622d1eced e6d0a017c7058f666dadf95ddeffc00a883f56fa1f09cb8ab4897b0628d2bba7
+@% 75 0 2
+= 0 61
++ 36
+GeometricTorsionPointMemberHasLabel
+
+@@ 1496 503 130
+
+  exact GlobalTheory.GSep.IntTerm.torsion_has_label _ (GlobalTheory.GSep.ofSetup X₁) z₁ _ _ ev _ _ _ (GlobalTheory.GSep.ofUMem 𝔪)
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/GeometricallyIntegralOpen.lean 592d4ab8199557b8930aacb5db76669451509998a3c897a85487e33826fd0550 84e856d021066a2b021bf61889f1dc2530c2892dda8a5130393b8fb0796b3505
 @% 26259 174 5
 + 9
@@ -74359,17 +74402,17 @@ Poinc.Sep.Spz.endOn_exists
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MemberRowsOfKernelDatumSizes.lean ddf938e534b545104da7dcb434725af20f65a9c088170bd3ce11060e9e813dd7 2456a7e192c938dbfead1ee264db97a2baaf61782a6d5b28805be832ba9dc9fc
 @@ 3054 33 27
 ColRowsTopS.rowsBody_colFac
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MemberTermsIsThetaTermsTorsionFrames.lean 89121dfc78c27670e6c311b0f94d62d00fbdcb612bfa7917bf7f8a2eb6e8b542 62ad31eaee0261973289f5bf0aeb700da14ea0b6766d209c238c196de0e74a10
-@@ 5714 48 26
-Poinc.Renorm.exists_renorm
-@@ 6458 41 25
-Poinc.Tors.torsion_extend
-@@ 6723 43 36
-Poinc.Tors.torsion_exhaust_geometric
-@@ 7140 45 33
-Poinc.Tors.OneOver.eq_of_liesOver
-@@ 9059 42 31
-Poinc.Tors.FrameTors.frame_tors
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MemberTermsIsThetaTermsTorsionFrames.lean 89121dfc78c27670e6c311b0f94d62d00fbdcb612bfa7917bf7f8a2eb6e8b542 2d306662160edda9974f1874f14ab90cad9ced4e25e77bec945c239f450ee67f
+@% 1338 0 2
+= 904 62
++ 41
+hetaMemberTermsIsThetaTermsTorsionFrames
+
+@@ 2634 931 77
+exact GlobalTheory.GSep.ThetaTerms.yK_ne_zero hd (GlobalTheory.GSep.ofUMem 𝔪)
+@@ 4251 5585 168
+1 V _ _ _ ev X _ m t δ 𝔪
+  exact GlobalTheory.GSep.ThetaTerms.isThetaTerms₀_of_terms _ (GlobalTheory.GSep.ofSetup X₁) z₁ _ x₀ h1 _ ev _ _ _ (GlobalTheory.GSep.ofUMem 𝔪)
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MetaplecticCoverWeilRepresentation.lean 9f3a867f90a5a481fb46742c8b4856bbcfba8be44cb6751766cb183d1fab732b dd567e471075bcafaef75209f9ef0a77b16414f10a5e568b9080239a2850c2b8
 @% 2165 34 1
 = 2167 29
@@ -87145,6 +87188,15 @@ ZHAbLocusNonempty.ab
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ThetaConstantFourierPartsBoundedClassMinima.lean fe4cd2a6f93f8d37130c02fec541cbc25d8783a91a74124bcf8179ade4af563e 171b2c5426bdf8644d6369652a10b59d37901fde5a23aee8864ef249eeffb2b1
 @@ 7249 43 19
 Poinc.TestAtPt.main
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ThetaConstantLeCommonBoundMonomial.lean 4b437030809de188c1106e89dba968699842532fe8a5ece43433a2b6c0e741c2 d19d731ba3eeb4bacd3949f3613bbe1545ad2a79e0a2449b3abf4a2092e02fe9
+@% 537 0 2
+= 165 61
++ 47
+ThetaConstantValuationLeCommonBoundMulMonomial
+
+@@ 2172 2093 125
+
+  exact GlobalTheory.GSep.DivBound.theta_pow_le _ (GlobalTheory.GSep.ofSetup X₁) z₁ _ _ ev _ _ _ (GlobalTheory.GSep.ofUMem 𝔪
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ThetaConstantListFieldExtensionEqUpToPerm.lean 6f48cc2c3c766da48c1d7fe5f66146bcae017420323aab609abc912e18c4e56f cafb7b64d473787996b11f27ea1e52a6f917cb7373d37af28aed506a4fac72bc
 @% 705 0 2
 = 260 61
@@ -87893,13 +87945,15 @@ KeyVals.LieRel.lieRel
 = 13048 61
 + 28
 KeySecRel.locSec_eq_germ_mul
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ThetaLabelClassZeroOfDividesAllThetaConstants.lean 446202aa452dcaa0cdcd67ec7613eba59abbd17b9ef02f7ae29c4b38dd515da0 0ea56f39c18a619ddb8b344542f49ecc5cbd5a10cccb5f85fe36e8de1ee0d632
-@@ 3698 28 24
-Poinc.Sep.UMem.exists_th
-@@ 3962 49 30
-DivVal.exists_valuation_centre
-@@ 4263 39 31
-Poinc.Sep.DivBound.theta_pow_le
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ThetaLabelClassZeroOfDividesAllThetaConstants.lean 446202aa452dcaa0cdcd67ec7613eba59abbd17b9ef02f7ae29c4b38dd515da0 a07c76561e7f061abc3f36fb44fd7a18ccaf07939422afd1179e5bc80054b86e
+@% 486 0 2
+= 165 66
++ 29
+MemberDividingLabelClassZero
+
+@@ 3616 1280 133
+
+  exact GlobalTheory.GSep.DivInt.label_zero_of_mem_supI _ (GlobalTheory.GSep.ofSetup X₁) z₁ _ _ ev _ _ _ (GlobalTheory.GSep.ofUMem 𝔪
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ThetaLabelsSurjectiveHomLatticeModLevel.lean a8642e82ea6d104c40ca2f736c1bf2b958d89dcbe6a51e3fc4baeb6984202cd1 3d040523165009a883a9816493b7a93cea6de01bc9c70100171d79d9369da891
 @@ 1582 131 79
  intros; apply _root_.GlobalTheory.SemiAbTorsion.comp_pow_points <;> assumption
@@ -89307,13 +89361,15 @@ have hs := (
 = 1269 65
 + 5
 ).2.1
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TorsionPointWithTermsLabelClassZero.lean 3e4c99cf2988087ddd8bfb135ad93db6824c97f796793773ef66507e4c91c86f 10ec0da512ca3c0a1850daeec6abcebc4f0a90f6c879a8afe705a369b8604447
-@@ 3692 53 35
-Poinc.Tors.LiesOverExt.liesOver_ext
-@@ 4124 44 38
-Poinc.Tors.ValPair.liesOver_of_qkToAkU
-@@ 4293 45 33
-Poinc.Tors.OneOver.eq_of_liesOver
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TorsionPointWithTermsLabelClassZero.lean 3e4c99cf2988087ddd8bfb135ad93db6824c97f796793773ef66507e4c91c86f d5e13ae11df57ed956c7c4fbd29ee74ff2ef87c467170f7bab853c3534c542ae
+@% 951 0 2
+= 375 61
++ 30
+LatticeClassZeroOfMemberTerms
+
+@@ 2290 2560 135
+
+  exact GlobalTheory.GSep.TermsLabel.yy_zero_of_terms _ (GlobalTheory.GSep.ofSetup X₁) z₁ _ x₀ _ ev _ _ _ (GlobalTheory.GSep.ofUMem 𝔪)
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TorsionPointsAdditiveParametrization.lean 398fbfd3ad246294e81c7f05979eff1feb38c8e5ae0db9990c11e7275d8a09cb 56f6f974d805c1ce05b61668d34e00663c0eb87c4e1892534ee72b77232b505f
 @@ 4569 40 36
 AbDivPt.exists_pow_eq_of_isAlgClosed
@@ -90615,6 +90671,22 @@ val_mul <;> assumption
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TwistUpperBound.lean 4c6b82fc259f8aadce059b11d50a49046cb97e14950ef2efa164417c9fbe3b06 c00485786244f3f9c16883b74b1111c3f824e1e1bb3125352da85ad880d438c0
 @@ 2711 1294 80
  intros; apply _root_.GlobalTheory.BigOn.Exp.baseOf_of_realPin_at <;> assumption
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TwistWeightWellDefinedOnLatticeClass.lean cd2fae8871f3ca000ac018fba569069c7d4e07adb6c6eb5b1dc425585bc7cd9b ce82cd081ae02fd59cbbe6357f3ed2a947f3fd5987a66021c26171cd86faf8be
+@% 394 0 2
+= 15 61
++ 41
+ThetaMemberTwistWeightWellDefinedLattice
+
+@@ 2160 2126 113
+
+  exact GlobalTheory.GSep.WtWd.qkSub (GlobalTheory.GSep.ofSetup X₁) z₁ _ _ ev _ _ _ (GlobalTheory.GSep.ofUMem 𝔪)
+@% 6825 760 3
++ 1
+1
+= 6826 30
++ 123
+
+  exact GlobalTheory.GSep.WtWd.wt_wd _ (GlobalTheory.GSep.ofSetup X₁) z₁ _ x₀ h1 _ ev1 _ _ _ (GlobalTheory.GSep.ofUMem 𝔪1)
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TwistedCentralizerBlockLeParabolic.lean 5c8464d90af54f25ddede646b19b575043a0f42d961ccc01b72a6aa05b4b944d 208d3205b96cdf730c3462092f0e77fcc8a8482bb613783d85a0c19562f4cb3a
 @@ 3436 32 83
 GlobalTheory.IntertwinerCoprimeCharpoly.eq_zero_of_intertwine_of_isCoprime_charpoly
@@ -91312,13 +91384,17 @@ Poinc.Sep.TwistResid.twist_resid
 Poinc.Sep.neg_mem_supI
 @@ 12738 42 20
 Poinc.Sep.WtWd.wt_wd
-== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TwistedThetaSumZetaPowerResidueDividingLabel.lean afdf40a4f10b8029c96413b5644e266d0c17df166124f684f69f7827151913bc 108090460784e869e7427465651c75bb6e4ac4ddc2ec722cd93b7dc9a59d3eed
-@@ 2978 42 20
-Poinc.Sep.WtWd.wt_wd
-@@ 4395 19 20
-Poinc.Sep.HighTerms.
-@@ 4788 44 33
-Poinc.Sep.UMem.const_term_sub_mem
+== src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TwistedThetaSumZetaPowerResidueDividingLabel.lean afdf40a4f10b8029c96413b5644e266d0c17df166124f684f69f7827151913bc b34395fd1adb7a17940fcd3aa406e7ebaeb56328a9cb8b05e7c86ea8c8e2384a
+@% 603 0 2
+= 282 66
++ 35
+edSumZetaPowerResidueDividingLabel
+
+@% 2289 2816 2
+= 2301 32
++ 166
+1 V1 _ _ _ ev1 Y1 _ m1 t1 δ1 𝔪1
+  exact GlobalTheory.GSep.TwistResid.twist_resid _ (GlobalTheory.GSep.ofSetup X₁) z₁ _ x₀ h1 _ ev1 _ _ _ (GlobalTheory.GSep.ofUMem 𝔪1)
 == src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/TwistedVirtualCharacterNormOneSupport.lean 3b67d4b11993a02c8c8ca38f408ccc6cde448cf31042226bad26b4c95e0d23e7 46263d39d287cd733cbed5b587a1b49cededc42fd7ae508a8f46071d6412bbbe
 @@ 1793 30 22
 Shin.virt_coset_norm_o

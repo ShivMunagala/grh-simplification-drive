@@ -22,16 +22,16 @@ One point per recorded change, placed at the time of its commit.
 <!-- dials:start -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="metrics/dials-dark.svg">
-  <img alt="The three dials over time, one point per recorded commit. Latest: source size 172.8M, written-out proof size 2.62B, time change -5.17K" src="metrics/dials-light.svg">
+  <img alt="The three dials over time, one point per recorded commit. Latest: source size 172.7M, written-out proof size 2.62B, time change -5.18K" src="metrics/dials-light.svg">
 </picture>
 
 | Dial | Baseline | Now | Change |
 |---|---:|---:|---:|
-| Source size (tokens) | 184,248,210 | 172,764,319 | −11,483,891 |
-| Written-out proof size (term nodes) | 2,789,304,299 | 2,620,941,780 | −168,362,519 |
-| Time (CPU seconds on recompiled files, running total) | 0.0 | -5,168.6 | −5,168.6 |
+| Source size (tokens) | 184,248,210 | 172,740,439 | −11,507,771 |
+| Written-out proof size (term nodes) | 2,789,304,299 | 2,620,263,376 | −169,040,923 |
+| Time (CPU seconds on recompiled files, running total) | 0.0 | -5,178.5 | −5,178.5 |
 
-Cone: 1,203,203 declarations in 111,772 files. Recorded changes: 62. Latest row: Files that were copies of another file under another root namespace point at the original (24 files) [review] (2026-11-24 00:11 UTC).
+Cone: 1,203,147 declarations in 111,766 files. Recorded changes: 63. Latest row: Siegel separation lemmas proved from their generic forms (13 files) [review] (2026-11-25 16:57 UTC).
 <!-- dials:end -->
 
 ## Milestones
@@ -44,7 +44,7 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
 | **Repetition** ([results](campaign/repetition/RESULTS.md)) | 7.6% of the proof is repeated in some form: the same statement more than once 6.4%, copies under other names 1.25% | duplicate proofs cite a copy their file imports, or can import by one added line (13,300 proofs); users of statements with two independent proofs cite one (−6.3 million nodes); restatements and other theorems with one statement: their users cite one of them (22,820 files: −38.1 million nodes, −2.3 million tokens) | being carried out: one hypothesis for both copies of the Siegel–Weil development (0.4%; 33 twin theorems share a proof so far; the rest needs the copy's parallel structures and a second copied family, the Eisenstein series, merged first). Done: local class field theory once and one proof per theorem over a structure that was defined three ways (−4.6 million nodes). Files that are copies of another file under other names: 127 groups, 5.2 million nodes beyond one copy; the first 24 files point at their original (−0.86 million). Measured: local names for Mathlib objects are defined several times over (finite adeles six times), which keeps copies of lemmas apart (up to 1.25%). Second proofs that the users' files cannot see need shared files |
 | **Known mathematics proved inside** ([results](campaign/library-lemmas/RESULTS.md)) | published theorems: 8.4% if they were free. Lemmas stated in Mathlib terms only: 6.9%, and 12.2% of the source; they are not copies of Mathlib and automation proves 0.7% of them. Proofs that blow up (150 nodes per source token or more) hold 2.2%: half is records moved between copies of a structure, then `simp` 0.66%, case enumeration 0.21%, `omega` 0.15% | one proof replaced by a different argument (Smith normal form by a dual family); zero-free regions and Siegel–Walfisz with shared bounds (−120 thousand nodes); resolution of singularities without its compatibility with base change, which the five theorems never use (−303 thousand nodes, −64 thousand tokens) | toroidal compactifications: are they needed in the generality proved? |
 | **The argument** ([map](campaign/argument-map/MAP.md)) | four lines under one chain: families 39%, covolume bound 13.6%, VWin 8.2%, Galois representations 6.1%. The counting argument is a slope inequality and costs 0.1% itself; all 46 conditions on the families are used at the strength proved; main terms cancel exactly | four large shortcuts tested and ruled out. The bound on Galois cohomology (8.4%) implies an open conjecture on the K-groups of ℤ, so no published theorem can replace it. The two covolume conditions are read in one place and are equivalent to one divisibility statement between twisted and untwisted theta lattices; that statement is the division step of the argument itself and carries the main term, so it is no shortcut. The four large blocks all pay for the twist: the untwisted chain needs none of them and gives a weaker bound | seven candidates of at most 0.5% each |
-| **What the five theorems need** ([results](campaign/unneeded-parts/RESULTS.md)) | 1.07% of what is proved is never read | 46 bundles bypassed or split, 8 statements trimmed: 3,051 declarations out; 6,343 unused local steps deleted | second round of unused steps; fresh measurement. Option, not started: delete the text the five theorems do not need at all. Of 17.4 million lines, about 6.8 million are outside what the five theorems use (28,651 whole files, and unneeded declarations inside needed files); the files have lost 0.22 million lines so far. Deleting it moves neither dial |
+| **What the five theorems need** ([results](campaign/unneeded-parts/RESULTS.md)) | 1.07% of what is proved is never read | 46 bundles bypassed or split, 8 statements trimmed: 3,051 declarations out; 6,343 unused local steps deleted | second round of unused steps; fresh measurement. Decided 2026-11-25, in preparation: delete the text the five theorems do not need at all. Of 17.15 million lines, about 3.7 million are outside what the five theorems use (63,393 whole files, and 0.97 million lines of unused declarations inside needed files). Each edited file must compile again; about 45,000 files. Deleting it moves neither dial |
 | **How proofs are written** ([notes](campaign/proof-shrink/RESULTS.md)) | sweeps over the whole proof, hand rewrites of the heaviest proofs | 32,172 restatements made aliases; projections in place of long patterns; explicit-argument files reprinted; about 120 heavy proofs rewritten (largest: 5.5 million nodes to 30 thousand); definitions taken out of a six-fold existential through generic helpers (−3.0 million nodes for 18 tokens) | returns falling: in most remaining heavy proofs the size is in the method (ring normalisation, long chains of witnesses), not in one fixable step |
 | **Measurement and judge** | | cone of the five theorems, three dials, judge, strict token count, patches that hold no archive text, check against stale compiles | cone tool: 144 theorems whose name exists in two files; full rebuild from source at the end |
 
@@ -81,6 +81,17 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
   that pay for it bound different pieces of one number (a local discriminant of the lattice of integral forms),
   and no cheaper bound was found. Candidates left: building each family member in one pass (about 1%),
   one argument for the Siegel and unitary Poincaré-series developments (0.2%).
+  Later the same day both candidates and three more were studied on paper and closed: one pass, a weaker frame
+  theorem, the flat-degree step (already proved without p-adic Hodge theory), a single coset for the top places,
+  a uniform gain. A study of sharpness: the exponent 1/2 cannot improve; two blocks (bound on Galois cohomology,
+  Galois representations) serve only the step from exponent 2/3 to 1/2; the auxiliary lattice could be smaller.
+  Change 63: thirteen files proved lemmas about the Siegel set-up that the archive also proves over a general
+  set-up; each is now one application of its generic form. The 95 files that newly see the generic files were
+  compiled again: 94 identical to their accepted compiled form, 1 with the same statements and sizes.
+  Measured: 282,967 theorems the five theorems need have statements about library objects only; they and what
+  only they need are 10.8% of the proof. Next place to look for repetition.
+  Decided: delete the text the five theorems do not need. Sized at about 3.7 million of 17.15 million lines
+  (63,393 files with nothing used, and 0.97 million lines of unused declarations in needed files).
 
 ## Fixed
 
