@@ -6,6 +6,15 @@ Dirichlet L-functions, announced on 2026-11-20 ([remark](https://alpo.ge/remark.
 This repository does not contain his archive. It contains the tools, the measurements, and our changes to
 the proof as differences from the archive (`patches/`). The archive is fetched and checked by sha256.
 
+> **A much shorter proof exists: see [lsernau/grh-lean](https://github.com/lsernau/grh-lean).**
+> That project has done a lot more on this than this repository. It is a rewriting of the same proof, not an
+> edit of the archive: the same five theorems, with the same statements word for word, in about 76,000 lines
+> of Lean (and a readable edition of about 300,000), against about 13 million lines that the five theorems
+> use here. It follows the method of the original and proves many steps by other arguments.
+>
+> Work in this repository stopped on 2026-11-26 at 64 recorded changes. What follows is the final state and
+> the record of what was tried. For a short proof, start there.
+
 ## Goal
 
 Make the proof smaller and easier to follow without changing what it proves: delete what is not needed,
@@ -92,6 +101,12 @@ in `campaign/`; every recorded change is a row of `metrics/history.csv`.
   only they need are 10.8% of the proof. Next place to look for repetition.
   Decided: delete the text the five theorems do not need. Sized at about 3.7 million of 17.15 million lines
   (63,393 files with nothing used, and 0.97 million lines of unused declarations in needed files).
+  Change 64: the first 22 such files, which nothing imports. A trial on unused declarations inside needed
+  files compiled after three rules were added, but removing a declaration changes what its file registers,
+  so every file downstream must be checked again: the bulk of the deletion needs a full rebuild. Not done.
+- **2026-11-26.** Stopped. [lsernau/grh-lean](https://github.com/lsernau/grh-lean) proves the same five
+  theorems in about 76,000 lines by rewriting the proof; by our token count it is 118 times smaller than
+  the state reached here. Editing the archive cannot get near that.
 
 ## Fixed
 
